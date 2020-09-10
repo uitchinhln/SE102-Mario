@@ -140,12 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="Mario.h" />
+    <ClInclude Include="Package1\Mario.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="Package1\Mario.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Mario.rc" />

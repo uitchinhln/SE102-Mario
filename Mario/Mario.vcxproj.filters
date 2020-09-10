@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Source1">
+      <UniqueIdentifier>{9df301b0-881e-4e13-9e7f-a368d0533a5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Source1\Source1">
+      <UniqueIdentifier>{b65f2d0a-ff31-4844-9943-4580c1868d34}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -24,12 +30,12 @@
     <ClInclude Include="Resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Mario.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Package1\Mario.h">
+      <Filter>Header Files\Source1</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Mario.cpp">
+    <ClCompile Include="Package1\Mario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
