@@ -19,6 +19,12 @@
     <Filter Include="Header Files\Source1\Source1">
       <UniqueIdentifier>{b65f2d0a-ff31-4844-9943-4580c1868d34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Source1">
+      <UniqueIdentifier>{963bd5b8-7b32-4014-9fc2-c87993cd9e94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Source1\Source1">
+      <UniqueIdentifier>{96411b52-b04e-45e3-a209-84fa8b11d7be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -49,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Mario.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Source1\Source1</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
