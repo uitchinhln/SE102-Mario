@@ -13,17 +13,113 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Source1">
-      <UniqueIdentifier>{9df301b0-881e-4e13-9e7f-a368d0533a5c}</UniqueIdentifier>
+    <Filter Include="Header Files\world">
+      <UniqueIdentifier>{4f391c77-14d9-41a9-a6bb-ce37de34b2dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Source1\Source1">
-      <UniqueIdentifier>{b65f2d0a-ff31-4844-9943-4580c1868d34}</UniqueIdentifier>
+    <Filter Include="Header Files\world\entity">
+      <UniqueIdentifier>{44a8aff3-b91c-44de-aa04-c87b7902266f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Source1">
-      <UniqueIdentifier>{963bd5b8-7b32-4014-9fc2-c87993cd9e94}</UniqueIdentifier>
+    <Filter Include="Header Files\world\phys">
+      <UniqueIdentifier>{f9f4b874-8283-4f1d-bc3d-b4ba8283aa7f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Source1\Source1">
-      <UniqueIdentifier>{96411b52-b04e-45e3-a209-84fa8b11d7be}</UniqueIdentifier>
+    <Filter Include="Header Files\world\item">
+      <UniqueIdentifier>{641bf69d-a338-4429-8740-05e7c1316a84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\effect">
+      <UniqueIdentifier>{456d75a5-cfc0-4da1-8871-fb6d8ea6001d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\damagesource">
+      <UniqueIdentifier>{fa538f25-8852-4f8d-ad69-7c28526082bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\entity\ai">
+      <UniqueIdentifier>{d69cbf99-fc96-4917-aed9-e870975ab6cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\entity\npc">
+      <UniqueIdentifier>{5701bc01-46ce-46cd-9a66-2d36c6325138}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\entity\ai\behavior">
+      <UniqueIdentifier>{b3aba98a-d9e3-47b6-9224-1ea1614d9d7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\entity\ai\control">
+      <UniqueIdentifier>{1b9fce9c-97ab-4858-bcdd-4ef42953e25b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\entity\ai\goal">
+      <UniqueIdentifier>{41ca3555-853d-4843-bc87-34f79295149d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\entity\player">
+      <UniqueIdentifier>{c573601a-6035-499a-9c03-48490b1bdc45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\entity\projectile">
+      <UniqueIdentifier>{a8e26731-cc7e-4999-a23b-c92e77b406ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\entity\npc\boss">
+      <UniqueIdentifier>{4ab6bcaf-0dc6-4927-827c-6c023a0c26d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\entity\npc\monster">
+      <UniqueIdentifier>{447cc4c6-a0a0-4521-a46e-d079f83af6a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\level">
+      <UniqueIdentifier>{6aa4bd92-7793-4f75-ba63-6f831ca0c6a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\level\block">
+      <UniqueIdentifier>{68ef5e9e-f517-409f-b349-329608a823a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\world\level\dimension">
+      <UniqueIdentifier>{f70716b5-cc27-48cf-add8-732fa2e7dccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world">
+      <UniqueIdentifier>{64ca60d5-755c-4e2d-b7ea-ac92ca089e44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\phys">
+      <UniqueIdentifier>{c3b060f3-cbbb-4fd5-84f2-9af92b7dafe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\level">
+      <UniqueIdentifier>{3c734aa5-99af-4755-9949-08a1e99e2445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\level\block">
+      <UniqueIdentifier>{d193b509-9e6c-4ea5-baed-16f479354abf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\level\dimension">
+      <UniqueIdentifier>{98d88301-c065-495d-a4d4-d5dc78663dfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\damagesource">
+      <UniqueIdentifier>{06f19523-3d1b-47df-8fb0-0d5ffeb84529}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\effect">
+      <UniqueIdentifier>{886db447-56c3-4942-a61b-bde0d1665c4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\item">
+      <UniqueIdentifier>{c94a03f0-bb5a-46ad-a5fe-b82fd734f08c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\entity">
+      <UniqueIdentifier>{b1216ead-d2c5-42a4-8588-8014f685dabb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\entity\ai">
+      <UniqueIdentifier>{03a99734-5a1c-4f35-8735-22d15504e307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\entity\npc">
+      <UniqueIdentifier>{f168127c-183b-41c3-8df2-ec62b5664d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\entity\player">
+      <UniqueIdentifier>{169ed0a6-1d80-478d-9fc1-736274f60076}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\entity\projectile">
+      <UniqueIdentifier>{510d5f51-149b-47fc-a21e-a638f996dc14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\entity\npc\boss">
+      <UniqueIdentifier>{2fb05581-4971-4d44-94bd-73d28e978859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\entity\npc\monster">
+      <UniqueIdentifier>{0c81aa40-be90-4c30-8d29-67d83e618905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\entity\ai\control">
+      <UniqueIdentifier>{e54332f4-d05b-465d-9735-5617285044d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\entity\ai\behavior">
+      <UniqueIdentifier>{f31bc951-bc02-43bc-a830-74d503ab6760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\world\entity\ai\goal">
+      <UniqueIdentifier>{9c46c40e-9a99-4bde-8975-3c14f67deed5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -37,7 +133,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Mario.h">
-      <Filter>Header Files\Source1\Source1</Filter>
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2.h">
+      <Filter>Header Files\world\phys</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +154,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Mario.cpp">
-      <Filter>Source Files\Source1\Source1</Filter>
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vec2.cpp">
+      <Filter>Source Files\world\phys</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
