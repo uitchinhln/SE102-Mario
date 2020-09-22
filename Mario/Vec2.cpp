@@ -1,38 +1,55 @@
 #include "Vec2.h"
 
-void Vec2::SetX(float x)
+void CVec2::SetX(float x)
 {
 	this->x = x;
 }
 
-float Vec2::GetX()
+float CVec2::GetX()
 {
 	return this->x;
 }
 
-void Vec2::SetY(float y)
+void CVec2::SetY(float y)
 {
 	this->y = y;
 }
 
-float Vec2::GetY()
+float CVec2::GetY()
 {
 	return this->y;
 }
 
-float Vec2::ToAbsoluteValue()
+float CVec2::ToAbsoluteValue()
 {
 	return sqrt(pow(this->x, 2) + pow(this->y, 2));
 }
 
-void Vec2::SetAbsoluteValue(float value)
+void CVec2::SetAbsoluteValue(float value)
 {
+	if (this->x + this->y == 0) return;
 	float _Scale = value / this->ToAbsoluteValue();
 	this->SetX(this->GetX() * _Scale);
 	this->SetY(this->GetY() * _Scale);
 }
 
-Vec2 Vec2::operator+(const Vec2&)
+CVec2* CVec2::Add(CVec2* vec)
 {
-	return Vec2();
+	this->x += vec->GetX();
+	this->y += vec->GetY();
+	return this;
+}
+
+CVec2* CVec2::Subtract(CVec2* vec)
+{
+	this->x -= vec->GetX();
+	this->y -= vec->GetY();
+	return this;
+}
+
+CVec2* CVec2::Multipli(float k)
+{
+	this->x *= k;
+	this->y *= k;
+	return this;
 }

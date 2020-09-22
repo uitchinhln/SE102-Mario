@@ -3,18 +3,18 @@
 
 using namespace std;
 
-class Vec2
+class CVec2
 {
 private:
 	float x;
 	float y;
 public:
-	Vec2() {
+	CVec2() {
 		this->x = 0;
 		this->y = 0;
 	}
 
-	Vec2(float x, float y) {
+	CVec2(float x, float y) {
 		this->x = x;
 		this->y = y;
 	}
@@ -31,9 +31,16 @@ public:
 
 	void SetAbsoluteValue(float value);
 
-	Vec2 operator+(const Vec2&);
-	Vec2 operator-(const Vec2&);
-	Vec2 operator*(const Vec2&);
-	Vec2 operator/(const Vec2&);
+	CVec2* Add(CVec2* vec);
+
+	CVec2* Subtract(CVec2* vec);
+
+	CVec2* Multipli(float k);
+
+	//CVec2* Multipli(CVec2* vec);
+
+	//CVec2* Divide(CVec2* vec);
 };
+
+typedef CVec2* Vec2;
 
