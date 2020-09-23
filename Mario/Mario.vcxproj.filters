@@ -16,11 +16,26 @@
     <Filter Include="Framework">
       <UniqueIdentifier>{a6bc5e77-970a-4ac9-b922-250aa1d9455c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\phys">
-      <UniqueIdentifier>{44b9eb36-1188-495e-92ae-0ed6e95bd7fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\event">
       <UniqueIdentifier>{d84a5208-ee2b-40e2-a542-ed3a4e0742b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\world">
+      <UniqueIdentifier>{78358702-487f-4571-8a70-f33b5fc2d9e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\data">
+      <UniqueIdentifier>{7f66f3dc-29c6-470f-960a-0bc51eb5d43d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\world\phys">
+      <UniqueIdentifier>{44b9eb36-1188-495e-92ae-0ed6e95bd7fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\world\item">
+      <UniqueIdentifier>{66f81f02-3e68-4592-a44f-9c8b40d3bfc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\world\entity">
+      <UniqueIdentifier>{ec4cfd72-71ba-4992-84e4-18b8151377cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\world\dmgsource">
+      <UniqueIdentifier>{836800b0-916c-411a-9c87-52b48355f3fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -32,22 +47,37 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Framework</Filter>
-    </ClCompile>
     <ClCompile Include="Vec2.cpp">
-      <Filter>Framework\phys</Filter>
+      <Filter>Framework\world\phys</Filter>
     </ClCompile>
     <ClCompile Include="EventManager.cpp">
       <Filter>Framework\event</Filter>
     </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Framework\world\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vec2.h">
-      <Filter>Framework\phys</Filter>
+      <Filter>Framework\world\phys</Filter>
     </ClInclude>
     <ClInclude Include="EventManager.h">
       <Filter>Framework\event</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Framework\world\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Direction.h">
+      <Filter>Framework\world\phys</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
