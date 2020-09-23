@@ -1,15 +1,17 @@
 #include "EventManager.h"
 
+EventManager* EventManager::__instance = nullptr;
+
 EventManager* EventManager::GetInstance()
 {
-	return Instance;
+	return __instance;
 }
 
-EventManager* EventManager::StartService(bool force = false)
+EventManager* EventManager::StartService(bool force)
 {
-	if (Instance == nullptr || force) {
-		delete Instance;
-		Instance = new EventManager();
+	if (__instance == nullptr || force) {
+		delete __instance;
+		__instance = new EventManager();
 	}
-	return Instance;
+	return __instance;
 }

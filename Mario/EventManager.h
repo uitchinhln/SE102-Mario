@@ -1,22 +1,20 @@
 #pragma once
-#include <vector>
-#include "EventHandler.h"
 
 using namespace std;
 
 class EventManager
 {
 private:
-	vector<EventHandler*> handlers;
+	//vector<EventHandler*> handlers;
 	
-	static EventManager* Instance;
+	static EventManager* __instance;
 
-	EventManager();
+	EventManager() {};
 
 public:
 
 	static EventManager* GetInstance();
 
-	static EventManager* StartService(bool force = false);
+	static EventManager* StartService(bool force);
 };
 

@@ -22,14 +22,6 @@
     <Filter Include="Framework\event">
       <UniqueIdentifier>{d84a5208-ee2b-40e2-a542-ed3a4e0742b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\world">
-      <UniqueIdentifier>{90ea3b3c-8348-4ef0-981e-47cb21c4e1ca}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Mario.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="small.ico">
@@ -49,18 +41,12 @@
     <ClCompile Include="EventManager.cpp">
       <Filter>Framework\event</Filter>
     </ClCompile>
-    <ClCompile Include="EventHandler.cpp">
-      <Filter>Framework\event</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vec2.h">
       <Filter>Framework\phys</Filter>
     </ClInclude>
     <ClInclude Include="EventManager.h">
-      <Filter>Framework\event</Filter>
-    </ClInclude>
-    <ClInclude Include="EventHandler.h">
       <Filter>Framework\event</Filter>
     </ClInclude>
   </ItemGroup>

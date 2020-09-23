@@ -36,10 +36,6 @@ public:
 	CVec2* Subtract(CVec2* vec);
 
 	CVec2* Multipli(float k);
-
-	//CVec2* Multipli(CVec2* vec);
-
-	//CVec2* Divide(CVec2* vec);
 };
 
 typedef CVec2* Vec2;
