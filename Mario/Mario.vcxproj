@@ -143,10 +143,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Image Include="Mario.ico" />
-    <Image Include="small.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="GameObject.cpp" />

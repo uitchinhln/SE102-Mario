@@ -1,107 +1,99 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Framework">
       <UniqueIdentifier>{a6bc5e77-970a-4ac9-b922-250aa1d9455c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\event">
-      <UniqueIdentifier>{d84a5208-ee2b-40e2-a542-ed3a4e0742b1}</UniqueIdentifier>
+    <Filter Include="Framework\Animation">
+      <UniqueIdentifier>{e732c9c8-d2fa-44e3-8e1b-718e81cd6cce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\world">
+    <Filter Include="Framework\Camera">
+      <UniqueIdentifier>{18ef8892-4a0b-4944-a0a9-be7b640db725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Sound">
+      <UniqueIdentifier>{3789352a-1e58-4080-ac2c-e67f066e763b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World">
       <UniqueIdentifier>{78358702-487f-4571-8a70-f33b5fc2d9e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\data">
-      <UniqueIdentifier>{7f66f3dc-29c6-470f-960a-0bc51eb5d43d}</UniqueIdentifier>
+    <Filter Include="Framework\Event">
+      <UniqueIdentifier>{d84a5208-ee2b-40e2-a542-ed3a4e0742b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\world\phys">
-      <UniqueIdentifier>{44b9eb36-1188-495e-92ae-0ed6e95bd7fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\world\item">
-      <UniqueIdentifier>{66f81f02-3e68-4592-a44f-9c8b40d3bfc3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\world\entity">
-      <UniqueIdentifier>{ec4cfd72-71ba-4992-84e4-18b8151377cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\world\dmgsource">
+    <Filter Include="Framework\World\DamageSource">
       <UniqueIdentifier>{836800b0-916c-411a-9c87-52b48355f3fc}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="Mario.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <Filter Include="Framework\World\Entity">
+      <UniqueIdentifier>{ec4cfd72-71ba-4992-84e4-18b8151377cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Item">
+      <UniqueIdentifier>{66f81f02-3e68-4592-a44f-9c8b40d3bfc3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Phys">
+      <UniqueIdentifier>{44b9eb36-1188-495e-92ae-0ed6e95bd7fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Time">
+      <UniqueIdentifier>{f886c99e-fe86-40bb-abea-1fe452c247fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Phys\Collision">
+      <UniqueIdentifier>{c21a2d39-2b90-471f-b34c-f3ba20d14506}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Vec2.cpp">
-      <Filter>Framework\world\phys</Filter>
+      <Filter>Framework\World\Phys</Filter>
     </ClCompile>
     <ClCompile Include="EventManager.cpp">
-      <Filter>Framework\event</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Framework\Event</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>Framework\world\entity</Filter>
+      <Filter>Framework\World\Entity</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Framework\world</Filter>
+      <Filter>Framework\World</Filter>
     </ClCompile>
     <ClCompile Include="TileEntity.cpp">
-      <Filter>Framework\world\entity</Filter>
+      <Filter>Framework\World\Entity</Filter>
     </ClCompile>
     <ClCompile Include="PlayerEntity.cpp">
-      <Filter>Framework\world\entity</Filter>
+      <Filter>Framework\World\Entity</Filter>
     </ClCompile>
     <ClCompile Include="NPC.cpp">
-      <Filter>Framework\world\entity</Filter>
+      <Filter>Framework\World\Entity</Filter>
     </ClCompile>
     <ClCompile Include="Monster.cpp">
-      <Filter>Framework\world\entity</Filter>
+      <Filter>Framework\World\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Vec2.h">
-      <Filter>Framework\world\phys</Filter>
+      <Filter>Framework\World\Phys</Filter>
     </ClInclude>
     <ClInclude Include="EventManager.h">
-      <Filter>Framework\event</Filter>
+      <Filter>Framework\Event</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Framework\world\entity</Filter>
+      <Filter>Framework\World\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Direction.h">
-      <Filter>Framework\world\phys</Filter>
+      <Filter>Framework\World\Phys</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Framework\world</Filter>
+      <Filter>Framework\World</Filter>
     </ClInclude>
     <ClInclude Include="TileEntity.h">
-      <Filter>Framework\world\entity</Filter>
+      <Filter>Framework\World\Entity</Filter>
     </ClInclude>
     <ClInclude Include="PlayerEntity.h">
-      <Filter>Framework\world\entity</Filter>
+      <Filter>Framework\World\Entity</Filter>
     </ClInclude>
     <ClInclude Include="NPC.h">
-      <Filter>Framework\world\entity</Filter>
+      <Filter>Framework\World\Entity</Filter>
     </ClInclude>
     <ClInclude Include="Monster.h">
-      <Filter>Framework\world\entity</Filter>
+      <Filter>Framework\World\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
