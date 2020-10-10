@@ -1,17 +1,5 @@
-/* =============================================================
-	INTRODUCTION TO GAME PROGRAMMING SE102
-
-	SAMPLE 01 - SKELETON CODE
-
-	This sample illustrates how to:
-
-	1/ Re-Organize intro code to allow better scalability
-================================================================ */
-
-#include <windows.h>
-#include <d3d9.h>
-#include <d3dx9.h>
-#include <vector>
+#include "libs.h"
+#include "Game.h"
 
 #define WINDOW_CLASS_NAME L"Mario_Name"
 #define MAIN_WINDOW_TITLE L"Mario_Title"
@@ -22,145 +10,9 @@
 
 #define MAX_FRAME_RATE 120
 
-using namespace std;
 
 /*
-	Update world status for this frame
-	dt: time period between beginning of last frame and beginning of this frame
-*/
-void Update(DWORD dt)
-{
-	
-}
-
-/*
-	Render a frame
-*/
-void Render()
-{
-	//LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3DDevice();
-	//LPDIRECT3DSURFACE9 bb = game->GetBackBuffer();
-	//LPD3DXSPRITE spriteHandler = game->GetSpriteHandler();
-
-	//if (d3ddv->BeginScene())
-	//{
-	//	// Clear back buffer with a color
-	//	d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
-
-	//	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-
-
-
-	//	spriteHandler->End();
-	//	d3ddv->EndScene();
-	//}
-
-	//// Display back buffer content to the screen
-	//d3ddv->Present(NULL, NULL, NULL, NULL);
-}
-
-
-#pragma region create window
-
-LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message) {
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
-
-	return 0;
-}
-
-HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
-{
-	WNDCLASSEX wc;
-	wc.cbSize = sizeof(WNDCLASSEX);
-
-	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.hInstance = hInstance;
-
-	wc.lpfnWndProc = (WNDPROC)WinProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hIcon = NULL;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	wc.lpszMenuName = NULL;
-	wc.lpszClassName = WINDOW_CLASS_NAME;
-	wc.hIconSm = NULL;
-
-	RegisterClassEx(&wc);
-
-	HWND hWnd =
-		CreateWindow(
-			WINDOW_CLASS_NAME,
-			MAIN_WINDOW_TITLE,
-			WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
-			(GetSystemMetrics(SM_CXSCREEN) - ScreenWidth) / 2,
-			(GetSystemMetrics(SM_CYSCREEN) - ScreenHeight) / 2,
-			ScreenWidth,
-			ScreenHeight,
-			NULL,
-			NULL,
-			hInstance,
-			NULL);
-
-	if (!hWnd)
-	{
-		OutputDebugString(L"[ERROR] CreateWindow failed");
-		DWORD ErrCode = GetLastError();
-		return FALSE;
-	}
-
-	ShowWindow(hWnd, nCmdShow);
-	UpdateWindow(hWnd);
-
-	return hWnd;
-}
-#pragma endregion
-
-int Run()
-{
-	MSG msg;
-	int done = 0;
-	DWORD frameStart = GetTickCount();
-	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
-
-	while (!done)
-	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT) done = 1;
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-
-			frameStart = GetTickCount() - tickPerFrame;
-		}
-
-		DWORD now = GetTickCount();
-		DWORD dt = now - frameStart;
-
-		if (dt >= tickPerFrame)
-		{
-			frameStart = now;
-			Update(dt);
-			Render();
-		}
-		else
-			Sleep(tickPerFrame - dt);
-	}
-
-	return 1;
-}
-
-
-/*
-	Load all game resources. In this example, create a brick object and mario object
+	Load all game resources.
 */
 void LoadResources()
 {
@@ -169,13 +21,9 @@ void LoadResources()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
-
-	/*game = CGame::GetInstance();
-	game->Init(hWnd);*/
-
-	//LoadResources();
-	Run();
+	CGame::GetInstance()->Init(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_CLASS_NAME, MAIN_WINDOW_TITLE);
+	LoadResources();
+	CGame::GetInstance()->Run(MAX_FRAME_RATE);
 
 	return 0;
 }

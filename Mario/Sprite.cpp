@@ -1,0 +1,23 @@
+#include "Sprite.h"
+#include "Game.h"
+
+CSprite::CSprite(string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 texture)
+{
+	this->id = id;
+	this->left = left;
+	this->top = top;
+	this->width = width;
+	this->height = height;
+	this->texture = texture;
+}
+
+void CSprite::Draw(float x, float y, Vec2 scale, float rotation, D3DCOLOR mix = D3DCOLOR_ARGB(255, 255, 255, 255))
+{
+	RECT r;
+	r.left = this->left;
+	r.top = this->top;
+	r.right = this->left + this->width;
+	r.bottom = this->top + this->height;
+
+	CGame::GetInstance()->Draw(x, y, this->texture, r, scale, rotation, mix);
+}

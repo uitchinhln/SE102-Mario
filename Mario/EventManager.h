@@ -1,6 +1,5 @@
 #pragma once
-
-using namespace std;
+#include "libs.h"
 
 class EventManager
 {
