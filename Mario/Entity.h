@@ -1,11 +1,9 @@
 #pragma once
-#include "Direction.h"
-#include "Vec2.h"
+#include "libs.h"
 #include "GameObject.h"
 
-class CEntity : CGameObject
+class CEntity : public CGameObject
 {
-	Direction direction;
 	Vec2 velocity;
 };
 

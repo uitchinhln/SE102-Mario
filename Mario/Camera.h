@@ -1,14 +1,14 @@
 #pragma once
-#include "Position.h"
+#include "libs.h"
 
 class Camera
 {
 protected:
-	LPPosition position;
+	Transform* transform;
 
 public:
 	Camera();
 
-	LPPosition GetPosition();
+	Transform* GetTransform();
 };
 

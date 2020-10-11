@@ -2,10 +2,11 @@
 
 Camera::Camera()
 {
-	this->position = new Position(0, 0);
+	this->transform = new Transform;
 }
 
-LPPosition Camera::GetPosition()
+Transform* Camera::GetTransform()
 {
-	return this->position;
+	return this->transform;
 }
+

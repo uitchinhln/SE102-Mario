@@ -9,6 +9,17 @@ CAnimation::CAnimation(int defaultFrameTime)
 	this->frames.clear();
 }
 
+CAnimation::CAnimation(CAnimation* origin) : CAnimation(origin->defaultFrameTime)
+{
+	this->transform->Position = origin->transform->Position;
+	this->transform->Scale = origin->transform->Scale;
+	this->transform->Rotation = origin->transform->Rotation;
+	this->frames = vector<AnimationFrame>(origin->frames);
+	this->lastFrameTime = origin->lastFrameTime;
+	this->currentFrame = origin->currentFrame;
+	this->defaultFrameTime = origin->defaultFrameTime;
+}
+
 void CAnimation::AddFrame(Sprite sprite, DWORD frameTime)
 {
 	frameTime = frameTime == 0 ? defaultFrameTime : frameTime;
@@ -16,7 +27,7 @@ void CAnimation::AddFrame(Sprite sprite, DWORD frameTime)
 	this->frames.push_back(frame);
 }
 
-void CAnimation::Render()
+void CAnimation::Render(D3DCOLOR overlay)
 {
 	DWORD now = CGame::GetInstance()->CurrentGameTime();
 
@@ -36,5 +47,13 @@ void CAnimation::Render()
 		}
 	}
 
-	frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
+	frames[currentFrame]->GetSprite()->Draw(
+		this->transform->Position.x, this->transform->Position.y, 
+		this->transform->Scale, this->transform->Rotation,
+		overlay);
+}
+
+Animation CAnimation::Clone()
+{
+	return new CAnimation(this);
 }

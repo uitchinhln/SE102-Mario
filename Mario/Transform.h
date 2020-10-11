@@ -7,6 +7,7 @@ typedef D3DXVECTOR2 Vec2;
 class Transform
 {
 public:
+	Vec2 Position;
 	Vec2 Scale;
 	float Rotation;
 

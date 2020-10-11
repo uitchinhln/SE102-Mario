@@ -17,12 +17,15 @@ class CAnimation
 
 public:
 	CAnimation(int defaultFrameTime = 100);
+	CAnimation(CAnimation* origin);
 
 	virtual Transform* GetTransform() { return this->transform; }
 
 	virtual void AddFrame(Sprite sprite, DWORD frameTime = 0);
 
-	virtual void Render();
+	virtual void Render(D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	virtual CAnimation* Clone();
 };
 
 typedef CAnimation* Animation;

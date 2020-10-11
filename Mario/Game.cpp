@@ -5,7 +5,7 @@ CGame * CGame::__instance = NULL;
 /*
 	Utility function to wrap LPD3DXSPRITE::Draw 
 */
-void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Vec2 scale, float rotation, D3DCOLOR mix = D3DCOLOR_ARGB(255, 255, 255, 255))
+void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Vec2 scale, float rotation, D3DCOLOR overlay)
 {
 	D3DXVECTOR3 p(x, y, 0);
 	D3DXMATRIX oldMatrix, newMatrix;
@@ -17,7 +17,7 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Vec2 scal
 	D3DXMatrixTransformation2D(&newMatrix, new Vec2(x, y), 0, &scale, new Vec2(x, y), rotation, &Vector0());
 	spriteHandler->SetTransform(&newMatrix);
 
-	spriteHandler->Draw(texture, &r, NULL, &p, mix);
+	spriteHandler->Draw(texture, &r, NULL, &p, overlay);
 
 	/* Restore state before of sprite */
 	spriteHandler->SetTransform(&oldMatrix);

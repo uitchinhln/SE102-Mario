@@ -11,7 +11,7 @@ CSprite::CSprite(string id, int left, int top, int width, int height, LPDIRECT3D
 	this->texture = texture;
 }
 
-void CSprite::Draw(float x, float y, Vec2 scale, float rotation, D3DCOLOR mix = D3DCOLOR_ARGB(255, 255, 255, 255))
+void CSprite::Draw(float x, float y, Vec2 scale, float rotation, D3DCOLOR mix)
 {
 	RECT r;
 	r.left = this->left;

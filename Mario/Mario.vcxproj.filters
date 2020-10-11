@@ -61,6 +61,9 @@
     <Filter Include="Framework\Phys\Collision">
       <UniqueIdentifier>{c21a2d39-2b90-471f-b34c-f3ba20d14506}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\CommonsAndPattern">
+      <UniqueIdentifier>{8a696a53-e3f3-499e-b682-ddb4dde2f6c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EventManager.cpp">
