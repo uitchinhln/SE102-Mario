@@ -1,6 +1,8 @@
-#include "libs.h"
+#include "Utils.h"
 #include "Game.h"
-#include "Animation.h"
+#include "GameMap.h"
+#include "AnimationManager.h"
+#include "TextureManager.h"
 
 #define WINDOW_CLASS_NAME L"Mario_Name"
 #define MAIN_WINDOW_TITLE L"Mario_Title"
@@ -17,21 +19,15 @@
 */
 void LoadResources()
 {
-
+	TextureManager::GetInstance()->Add("tex-mario", L"Resource/Xml/Textures/Mario/NES - Super Mario Bros 3 - Mario Luigi x 3.png", D3DCOLOR_ARGB(0, 0, 0, 0));
+	SpriteManager::GetInstance()->LoadFromXml("Resource/Xml/Textures/Mario/MarioDB.xml");
+	AnimationManager::GetInstance()->LoadFromXml("Resource/Xml/Textures/Mario/MarioAnim.xml");
+	CGame::GetInstance()->gameMap = CGameMap::FromTMX("Resource/Xml/NewMap/BigMap", "world-1-1-map.tmx");
+	CGame::GetInstance()->gameMap->SetCamera(new Camera(Vec2(500, 800) ,Vec2(SCREEN_WIDTH, SCREEN_HEIGHT)));
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	Animation ani = new CAnimation();
-	ani->GetTransform()->Rotation = 10;
-
-	Animation ani2 = ani->Clone();
-	DebugOut(L"ani2 orig: %f\n", ani2->GetTransform()->Rotation);
-
-	ani2->GetTransform()->Rotation = 20;
-	DebugOut(L"ani1 edit: %f\n", ani->GetTransform()->Rotation);
-	DebugOut(L"ani2 edit: %f\n", ani2->GetTransform()->Rotation);
-
 	CGame::GetInstance()->Init(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT, WINDOW_CLASS_NAME, MAIN_WINDOW_TITLE);
 	LoadResources();
 	CGame::GetInstance()->Run(MAX_FRAME_RATE);

@@ -1,8 +1,5 @@
 #pragma once
-#include <d3d9.h>
-#include <d3dx9.h>
-
-typedef D3DXVECTOR2 Vec2;
+#include "Utils.h"
 
 class Transform
 {
@@ -11,9 +8,7 @@ public:
 	Vec2 Scale;
 	float Rotation;
 
-	Transform() {};
+	Transform() { this->Rotation = 0.0f; this->Scale = Vec2(1.0f, 1.0f); };
 	Transform(Vec2 scale, float rotation) { this->Scale = scale; this->Rotation = rotation; }
 };
-
-Vec2 Vector0();
 

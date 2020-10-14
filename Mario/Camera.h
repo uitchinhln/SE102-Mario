@@ -1,14 +1,21 @@
 #pragma once
-#include "libs.h"
+#include "Utils.h"
+#include "Transform.h"
 
 class Camera
 {
 protected:
-	Transform* transform;
+	Vec2 position;
+	Vec2 size;
 
 public:
 	Camera();
+	Camera(Vec2 pos, Vec2 size);
 
-	Transform* GetTransform();
+	Vec2 GetPosition();
+
+	Vec2 GetCamSize();
+
+	void Update(int dt);
 };
 

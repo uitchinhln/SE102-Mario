@@ -2,11 +2,26 @@
 
 Camera::Camera()
 {
-	this->transform = new Transform;
+	this->position = VECTOR_0;
 }
 
-Transform* Camera::GetTransform()
+Camera::Camera(Vec2 pos, Vec2 size)
 {
-	return this->transform;
+	this->position = Vec2(pos.x, pos.y);
+	this->size = Vec2(size.x, size.y);
+}
+
+Vec2 Camera::GetPosition()
+{
+	return this->position;
+}
+
+Vec2 Camera::GetCamSize()
+{
+	return this->size;
+}
+
+void Camera::Update(int dt)
+{
 }
 

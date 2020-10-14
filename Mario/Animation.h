@@ -1,5 +1,6 @@
 #pragma once
-#include "libs.h"
+#include "Utils.h"
+#include "Transform.h"
 #include "Game.h"
 #include "AnimationFrame.h"
 #include "Sprite.h"
@@ -10,6 +11,8 @@ class CAnimation
 	DWORD lastFrameTime;
 	int currentFrame;
 	int defaultFrameTime;
+
+	float playScale;
 
 	Transform* transform;
 
@@ -25,7 +28,13 @@ public:
 
 	virtual void Render(D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
 
+	virtual float GetPlayScale() { return this->playScale; }
+
+	virtual void SetPlayScale(float scale) { this->playScale = scale; }
+
 	virtual CAnimation* Clone();
+
+	~CAnimation();
 };
 
 typedef CAnimation* Animation;

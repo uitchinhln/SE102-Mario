@@ -3,6 +3,7 @@
 CAnimation::CAnimation(int defaultFrameTime)
 {
 	this->defaultFrameTime = defaultFrameTime;
+	this->playScale = 1.0f;
 	this->lastFrameTime = 0;
 	this->currentFrame = 0;
 	this->transform = new Transform();
@@ -18,6 +19,7 @@ CAnimation::CAnimation(CAnimation* origin) : CAnimation(origin->defaultFrameTime
 	this->lastFrameTime = origin->lastFrameTime;
 	this->currentFrame = origin->currentFrame;
 	this->defaultFrameTime = origin->defaultFrameTime;
+	this->playScale = origin->playScale;
 }
 
 void CAnimation::AddFrame(Sprite sprite, DWORD frameTime)
@@ -39,7 +41,7 @@ void CAnimation::Render(D3DCOLOR overlay)
 	else
 	{
 		DWORD t = frames[currentFrame]->GetTime();
-		if (now - lastFrameTime > t)
+		if ((now - lastFrameTime)*playScale > t)
 		{
 			currentFrame++;
 			lastFrameTime = now;
@@ -47,13 +49,15 @@ void CAnimation::Render(D3DCOLOR overlay)
 		}
 	}
 
-	frames[currentFrame]->GetSprite()->Draw(
-		this->transform->Position.x, this->transform->Position.y, 
-		this->transform->Scale, this->transform->Rotation,
-		overlay);
+	frames[currentFrame]->GetSprite()->Draw(transform->Position.x, transform->Position.y, transform->Scale, transform->Rotation, overlay);
 }
 
 Animation CAnimation::Clone()
 {
 	return new CAnimation(this);
+}
+
+CAnimation::~CAnimation()
+{
+	delete this->transform;
 }

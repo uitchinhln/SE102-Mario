@@ -22,91 +22,55 @@
     <Filter Include="Framework\Utils">
       <UniqueIdentifier>{2f029ec5-d81f-4dfa-aaad-a7782e02d801}</UniqueIdentifier>
     </Filter>
-    <Filter Include="TinyXML">
-      <UniqueIdentifier>{262edcf2-cc9a-424f-9152-5f4e06298010}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Utils\Debug">
-      <UniqueIdentifier>{14857ec5-9284-4c29-99d0-3351e399792f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Scene">
-      <UniqueIdentifier>{723972ca-fd7d-4360-822c-6d511b6680fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Scene\World">
-      <UniqueIdentifier>{78358702-487f-4571-8a70-f33b5fc2d9e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Scene\World\DamageSource">
-      <UniqueIdentifier>{836800b0-916c-411a-9c87-52b48355f3fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Scene\World\Entity">
-      <UniqueIdentifier>{ec4cfd72-71ba-4992-84e4-18b8151377cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Scene\World\Item">
-      <UniqueIdentifier>{66f81f02-3e68-4592-a44f-9c8b40d3bfc3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Scene\World\Time">
-      <UniqueIdentifier>{f886c99e-fe86-40bb-abea-1fe452c247fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Scene\Camera">
-      <UniqueIdentifier>{18ef8892-4a0b-4944-a0a9-be7b640db725}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Sound">
       <UniqueIdentifier>{3789352a-1e58-4080-ac2c-e67f066e763b}</UniqueIdentifier>
     </Filter>
     <Filter Include="MarioGame">
       <UniqueIdentifier>{ee56872d-e573-4a56-b0db-c81b54dca8d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Phys">
+    <Filter Include="Framework\TinyXML">
+      <UniqueIdentifier>{262edcf2-cc9a-424f-9152-5f4e06298010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World">
+      <UniqueIdentifier>{3cff32c4-2f80-4375-a5d2-f1a211094984}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Scene">
+      <UniqueIdentifier>{723972ca-fd7d-4360-822c-6d511b6680fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Scene\Camera">
+      <UniqueIdentifier>{18ef8892-4a0b-4944-a0a9-be7b640db725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Phys">
       <UniqueIdentifier>{44b9eb36-1188-495e-92ae-0ed6e95bd7fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Phys\Collision">
+    <Filter Include="Framework\World\Phys\Collision">
       <UniqueIdentifier>{c21a2d39-2b90-471f-b34c-f3ba20d14506}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\CommonsAndPattern">
-      <UniqueIdentifier>{8a696a53-e3f3-499e-b682-ddb4dde2f6c4}</UniqueIdentifier>
+    <Filter Include="Framework\World\Scene\Map">
+      <UniqueIdentifier>{8e3c9221-d0cf-4ac7-817b-629f525185a9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EventManager.cpp">
       <Filter>Framework\Event</Filter>
     </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Framework\Scene\World\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Framework\Scene\World</Filter>
-    </ClCompile>
-    <ClCompile Include="TileEntity.cpp">
-      <Filter>Framework\Scene\World\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerEntity.cpp">
-      <Filter>Framework\Scene\World\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="NPC.cpp">
-      <Filter>Framework\Scene\World\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="Monster.cpp">
-      <Filter>Framework\Scene\World\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Framework\Scene\Camera</Filter>
+      <Filter>Framework\World\Scene\Camera</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Framework\Model\Texture</Filter>
     </ClCompile>
     <ClCompile Include="TinyXML\tinyxmlparser.cpp">
-      <Filter>TinyXML</Filter>
+      <Filter>Framework\TinyXML</Filter>
     </ClCompile>
     <ClCompile Include="TinyXML\tinystr.cpp">
-      <Filter>TinyXML</Filter>
+      <Filter>Framework\TinyXML</Filter>
     </ClCompile>
     <ClCompile Include="TinyXML\tinyxml.cpp">
-      <Filter>TinyXML</Filter>
+      <Filter>Framework\TinyXML</Filter>
     </ClCompile>
     <ClCompile Include="TinyXML\tinyxmlerror.cpp">
-      <Filter>TinyXML</Filter>
-    </ClCompile>
-    <ClCompile Include="debug.cpp">
-      <Filter>Framework\Utils\Debug</Filter>
+      <Filter>Framework\TinyXML</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Framework</Filter>
@@ -120,9 +84,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>MarioGame</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Framework\Model\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationManager.cpp">
       <Filter>Framework\Model\Animation</Filter>
     </ClCompile>
@@ -130,48 +91,48 @@
       <Filter>Framework\Model\Animation</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Framework\Phys</Filter>
+      <Filter>Framework\World\Phys</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils.cpp">
+      <Filter>Framework\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Framework\Model\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Framework\World\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Framework\World\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Framework\World</Filter>
+    </ClCompile>
+    <ClCompile Include="TileSet.cpp">
+      <Filter>Framework\World\Scene\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Layer.cpp">
+      <Filter>Framework\World\Scene\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GameMap.cpp">
+      <Filter>Framework\World\Scene\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EventManager.h">
       <Filter>Framework\Event</Filter>
     </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Framework\Scene\World\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Framework\Scene\World</Filter>
-    </ClInclude>
-    <ClInclude Include="TileEntity.h">
-      <Filter>Framework\Scene\World\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerEntity.h">
-      <Filter>Framework\Scene\World\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="NPC.h">
-      <Filter>Framework\Scene\World\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="Monster.h">
-      <Filter>Framework\Scene\World\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Framework\Scene\Camera</Filter>
+      <Filter>Framework\World\Scene\Camera</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>Framework\Model\Texture</Filter>
     </ClInclude>
-    <ClInclude Include="libs.h">
-      <Filter>Framework\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="TinyXML\tinystr.h">
-      <Filter>TinyXML</Filter>
+      <Filter>Framework\TinyXML</Filter>
     </ClInclude>
     <ClInclude Include="TinyXML\tinyxml.h">
-      <Filter>TinyXML</Filter>
-    </ClInclude>
-    <ClInclude Include="debug.h">
-      <Filter>Framework\Utils\Debug</Filter>
+      <Filter>Framework\TinyXML</Filter>
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Framework</Filter>
@@ -182,9 +143,6 @@
     <ClInclude Include="SpriteManager.h">
       <Filter>Framework\Model\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Framework\Model\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationManager.h">
       <Filter>Framework\Model\Animation</Filter>
     </ClInclude>
@@ -192,7 +150,31 @@
       <Filter>Framework\Model\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>Framework\Phys</Filter>
+      <Filter>Framework\World\Phys</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Framework\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Framework\Model\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Framework\World\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Framework\World\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Framework\World</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSet.h">
+      <Filter>Framework\World\Scene\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Layer.h">
+      <Filter>Framework\World\Scene\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GameMap.h">
+      <Filter>Framework\World\Scene\Map</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

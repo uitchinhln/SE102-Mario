@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "AnimationManager.h"
 
 CGame * CGame::__instance = NULL;
 
@@ -8,19 +9,19 @@ CGame * CGame::__instance = NULL;
 void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Vec2 scale, float rotation, D3DCOLOR overlay)
 {
 	D3DXVECTOR3 p(x, y, 0);
-	D3DXMATRIX oldMatrix, newMatrix;
+	//D3DXMATRIX oldMatrix, newMatrix;
 
-	//Backup old transform of sprite
-	spriteHandler->GetTransform(&oldMatrix); 
+	////Backup old transform of sprite
+	//spriteHandler->GetTransform(&oldMatrix); 
 
-	/* Create and apply new transform */
-	D3DXMatrixTransformation2D(&newMatrix, new Vec2(x, y), 0, &scale, new Vec2(x, y), rotation, &Vector0());
-	spriteHandler->SetTransform(&newMatrix);
+	///* Create and apply new transform */
+	//D3DXMatrixTransformation2D(&newMatrix, new Vec2(x, y), 0, &scale, new Vec2(x, y), rotation, &VECTOR_0);
+	//spriteHandler->SetTransform(&newMatrix);
 
 	spriteHandler->Draw(texture, &r, NULL, &p, overlay);
 
 	/* Restore state before of sprite */
-	spriteHandler->SetTransform(&oldMatrix);
+	//spriteHandler->SetTransform(&oldMatrix);
 }
 
 /*
@@ -37,25 +38,25 @@ void CGame::Update(DWORD dt)
 */
 void CGame::Render()
 {
-	//LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3DDevice();
-	//LPDIRECT3DSURFACE9 bb = game->GetBackBuffer();
-	//LPD3DXSPRITE spriteHandler = game->GetSpriteHandler();
+	if (d3ddv->BeginScene())
+	{
+		// Clear back buffer with a color
+		d3ddv->ColorFill(backBuffer, NULL, backgroundColor);
+		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-	//if (d3ddv->BeginScene())
-	//{
-	//	// Clear back buffer with a color
-	//	d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		string id = "ani-raccoon-mario-fly";
+		AnimationManager::GetInstance()->Get(id)->SetPlayScale(2.0f);
+		AnimationManager::GetInstance()->Get(id)->GetTransform()->Position.x = 100;
+		AnimationManager::GetInstance()->Get(id)->GetTransform()->Position.y = 100;
+		AnimationManager::GetInstance()->Get(id)->Render();
+		gameMap->Render();
 
-	//	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-
-
-
-	//	spriteHandler->End();
-	//	d3ddv->EndScene();
-	//}
-
-	//// Display back buffer content to the screen
-	//d3ddv->Present(NULL, NULL, NULL, NULL);
+		spriteHandler->End();
+		d3ddv->EndScene();
+	}
+	       
+	// Display back buffer content to the screen
+	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
 
 int CGame::Run(int frameRate)
@@ -96,6 +97,16 @@ int CGame::Run(int frameRate)
 
 	isRunning = false;
 	return 1;
+}
+
+void CGame::SetBackgroundColor(int r, int g, int b, int a)
+{
+	this->backgroundColor = D3DCOLOR_ARGB(a, r, g, b);
+}
+
+void CGame::SetBackgroundColor(D3DCOLOR color)
+{
+	this->backgroundColor = color;
 }
 
 DWORD CGame::CurrentGameTime()

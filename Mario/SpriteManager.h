@@ -1,5 +1,5 @@
 #pragma once
-#include "libs.h"
+#include "Utils.h"
 #include "Sprite.h"
 
 class SpriteManager
@@ -9,9 +9,11 @@ class SpriteManager
 
 	unordered_map<string, Sprite> sprites;
 public:
-	virtual void Add(string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex);
+	virtual Sprite Add(string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex);
 
 	virtual Sprite Get(string id);
+
+	virtual void LoadFromXml(const char* filePath);
 
 	static SpriteManager* GetInstance();
 	~SpriteManager();

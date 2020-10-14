@@ -67,5 +67,8 @@ TextureManager::TextureManager() {
 
 TextureManager::~TextureManager()
 {
+	if (__instance) {
+		delete __instance;
+	}
 	__instance = nullptr;
 }

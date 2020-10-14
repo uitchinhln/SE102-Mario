@@ -1,5 +1,6 @@
 #pragma once
-#include "libs.h"
+#include "Utils.h"
+#include "GameMap.h"
 
 class CGame
 {
@@ -19,6 +20,8 @@ class CGame
 
 	DWORD gameTime = 0;
 
+	D3DCOLOR backgroundColor = D3DCOLOR_ARGB(255, 255, 255, 255);
+
 public:
 	void Init(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight, LPCWSTR WinClassName, LPCWSTR Title);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Vec2 scale, float rotation, D3DCOLOR mix = D3DCOLOR_ARGB(255, 255, 255, 255));
@@ -31,7 +34,12 @@ public:
 	void Render();
 	int Run(int frameRate = 60);
 
-	DWORD CurrentGameTime();
+	void SetBackgroundColor(int r, int g, int b, int a);
+	void SetBackgroundColor(D3DCOLOR color);
+
+	DWORD CurrentGameTime(); 
+
+	GameMap gameMap;
 
 	static CGame * GetInstance();
 
