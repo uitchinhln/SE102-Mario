@@ -9,19 +9,7 @@ CGame * CGame::__instance = NULL;
 void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Vec2 scale, float rotation, D3DCOLOR overlay)
 {
 	D3DXVECTOR3 p(x, y, 0);
-	//D3DXMATRIX oldMatrix, newMatrix;
-
-	////Backup old transform of sprite
-	//spriteHandler->GetTransform(&oldMatrix); 
-
-	///* Create and apply new transform */
-	//D3DXMatrixTransformation2D(&newMatrix, new Vec2(x, y), 0, &scale, new Vec2(x, y), rotation, &VECTOR_0);
-	//spriteHandler->SetTransform(&newMatrix);
-
 	spriteHandler->Draw(texture, &r, NULL, &p, overlay);
-
-	/* Restore state before of sprite */
-	//spriteHandler->SetTransform(&oldMatrix);
 }
 
 /*
