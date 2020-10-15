@@ -27,7 +27,7 @@ void LoadResources()
 	TextureManager::GetInstance()->Add("tex-misc", L"Resource/Xml/Textures/Misc/Misc (Goods_Item)/misc_x3.png", D3DCOLOR_ARGB(0, 0, 0, 0));
 	TextureManager::GetInstance()->Add("tex-ui", L"Resource/Xml/Textures/Misc/UI/UI_x3.png", D3DCOLOR_ARGB(0, 0, 0, 0));
 	CGame::GetInstance()->gameMap = CGameMap::FromTMX("Resource/Xml/NewMap/BigMap", "world-1-1-map.tmx");
-	CGame::GetInstance()->gameMap->SetCamera(new Camera(Vec2(0, 740) ,Vec2(SCREEN_WIDTH, SCREEN_HEIGHT)));
+	CGame::GetInstance()->gameMap->SetCamera(new Camera(Vec2(0, 735) ,Vec2(SCREEN_WIDTH, SCREEN_HEIGHT)));
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)

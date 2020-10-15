@@ -39,7 +39,7 @@ void CGame::Render()
 		AnimationManager::GetInstance()->Get(id)->SetPlayScale(2.0f);
 		AnimationManager::GetInstance()->Get(id)->GetTransform()->Position.x = 100;
 		AnimationManager::GetInstance()->Get(id)->GetTransform()->Position.y = 100;
-		AnimationManager::GetInstance()->Get(id)->Render();
+		//AnimationManager::GetInstance()->Get(id)->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();
@@ -78,7 +78,7 @@ int CGame::Run(int frameRate)
 		{
 			gameTime += now - frameStart;
 			frameStart = now;
-			Update(dt);
+			Update(dt*0.8);
 			Render();
 		}
 		else

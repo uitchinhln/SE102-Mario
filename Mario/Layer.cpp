@@ -2,6 +2,7 @@
 
 CLayer::CLayer()
 {
+	this->id = 0;
 	this->width = 1;
 	this->height = 1;
 }
@@ -9,6 +10,7 @@ CLayer::CLayer()
 //,  = 44
 CLayer::CLayer(TiXmlElement* data)
 {
+	data->QueryIntAttribute("id", &this->id);
 	data->QueryIntAttribute("width", &this->width);
 	data->QueryIntAttribute("height", &this->height);
 	

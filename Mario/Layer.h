@@ -5,6 +5,8 @@
 
 class CLayer
 {
+	int id;
+
 	int width;
 	int height;
 

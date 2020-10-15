@@ -26,6 +26,8 @@ public:
 
 	virtual void SetCamera(Camera* camera) { this->camera = camera; }
 
+	virtual Vec2 GetBound();
+
 	virtual TileSet GetTileSetByTileID(int id);
 
 	virtual void AddTileSet(int firstgid, TileSet tileSet);

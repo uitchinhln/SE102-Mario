@@ -13,6 +13,11 @@ CGameMap::CGameMap(int width, int height, int tileWidth, int tileHeight)
 	this->tileWidth = tileWidth;
 }
 
+Vec2 CGameMap::GetBound()
+{
+	return Vec2(this->width * tileWidth, this->height * tileHeight);
+}
+
 TileSet CGameMap::GetTileSetByTileID(int id)
 {
 	return floor_entry(tilesets, id).second;
@@ -44,8 +49,10 @@ void CGameMap::Render()
 
 	for (int i = col; i < camSize.x + col + 2; i++) {
 		for (int j = row; j < camSize.y + row + 2; j++) {
+
 			int x = i * tileWidth - this->camera->GetPosition().x;
 			int y = j * tileHeight - this->camera->GetPosition().y;
+
 			for (Layer layer : layers) {
 				int id = layer->GetTileID(i % width, j % height);
 				this->GetTileSetByTileID(id)->Draw(id, x, y);
