@@ -18,7 +18,8 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Vec2 scal
 */
 void CGame::Update(DWORD dt)
 {
-
+	Vec2 old = this->gameMap->GetCamera()->GetPosition();
+	this->gameMap->GetCamera()->Update(dt);
 }
 
 /*
@@ -32,12 +33,13 @@ void CGame::Render()
 		d3ddv->ColorFill(backBuffer, NULL, backgroundColor);
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
+		gameMap->Render();
+
 		string id = "ani-raccoon-mario-fly";
 		AnimationManager::GetInstance()->Get(id)->SetPlayScale(2.0f);
 		AnimationManager::GetInstance()->Get(id)->GetTransform()->Position.x = 100;
 		AnimationManager::GetInstance()->Get(id)->GetTransform()->Position.y = 100;
 		AnimationManager::GetInstance()->Get(id)->Render();
-		gameMap->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();

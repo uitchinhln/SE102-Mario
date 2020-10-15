@@ -23,5 +23,6 @@ Vec2 Camera::GetCamSize()
 
 void Camera::Update(int dt)
 {
+	this->position.x += rand() % 50;
 }
 
