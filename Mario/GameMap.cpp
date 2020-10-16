@@ -39,8 +39,8 @@ void CGameMap::Update(int dt)
 
 void CGameMap::Render()
 {
-	int col = this->camera->GetPosition().x / tileWidth;
-	int row = this->camera->GetPosition().y / tileHeight;
+	int col = this->camera->Position.x / tileWidth;
+	int row = this->camera->Position.y / tileHeight;
 
 	if (col > 0) col--;
 	if (row > 0) row--;
@@ -50,8 +50,8 @@ void CGameMap::Render()
 	for (int i = col; i < camSize.x + col + 2; i++) {
 		for (int j = row; j < camSize.y + row + 2; j++) {
 
-			int x = i * tileWidth - this->camera->GetPosition().x;
-			int y = j * tileHeight - this->camera->GetPosition().y;
+			int x = i * tileWidth - this->camera->Position.x;
+			int y = j * tileHeight - this->camera->Position.y;
 
 			for (Layer layer : layers) {
 				int id = layer->GetTileID(i % width, j % height);
@@ -95,5 +95,20 @@ CGameMap* CGameMap::FromTMX(string filePath, string fileName)
 
 CGameMap::~CGameMap()
 {
-	
+	if (camera) {
+		delete camera;
+		camera = nullptr;
+	}
+
+	for each (Layer layer in layers)
+	{
+		if (layer) delete layer;
+	}
+	layers.clear();
+
+	for each (auto entry in tilesets)
+	{
+		if (entry.second) delete entry.second;
+	}
+	tilesets.clear();
 }

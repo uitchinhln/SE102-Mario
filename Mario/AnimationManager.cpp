@@ -9,6 +9,7 @@ void AnimationManager::Add(string id, Animation animation)
 
 Animation AnimationManager::Get(string id)
 {
+	if (animations.find(id) == animations.end()) return nullptr;
 	return animations[id];
 }
 
@@ -51,7 +52,7 @@ void AnimationManager::LoadFromXml(const char* filePath)
 				}
 
 				this->Add(aniNode->Attribute("aniId"), ani);
-				DebugOut(L"Animation %s loaded. Id = %s\n", ToLPCWSTR(aniNode->Attribute("name")), ToLPCWSTR(aniNode->Attribute("aniId")));
+				DebugOut(L"Animation loaded. Id = %s\n", ToLPCWSTR(aniNode->Attribute("aniId")));
 			}
 		}
 	}

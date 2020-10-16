@@ -35,10 +35,10 @@ wstring ToWSTR(string st);
 
 LPCWSTR ToLPCWSTR(string st);
 
-template<typename key_type, typename value_type>
+template<class key_type, class value_type>
 pair<key_type, value_type> floor_entry(const map<key_type, value_type> &input, const key_type& key);
 
-template<typename key_type, typename value_type>
+template<class key_type, class value_type>
 inline pair<key_type, value_type> floor_entry(const map<key_type, value_type>& input, const key_type& key)
 {
 	if (input.size() < 2) 

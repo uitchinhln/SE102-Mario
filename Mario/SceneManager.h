@@ -8,10 +8,16 @@ class SceneManager
 	static SceneManager* __instance;
 	SceneManager();
 
-	Scene current;
+	unordered_map<string, Scene> scenes;
+
+	string activeSceneID;
 
 public:
+	void AddScene(string id, Scene scene);
 
+	bool ActiveScene(string id);
+
+	Scene GetActiveScene();
 
 	static SceneManager* GetInstance();
 	~SceneManager();

@@ -1,5 +1,7 @@
 #include "Game.h"
 #include "AnimationManager.h"
+#include "SceneManager.h"
+#include "InputProcessor.h"
 
 CGame * CGame::__instance = NULL;
 
@@ -18,8 +20,7 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Vec2 scal
 */
 void CGame::Update(DWORD dt)
 {
-	Vec2 old = this->gameMap->GetCamera()->GetPosition();
-	this->gameMap->GetCamera()->Update(dt);
+	SceneManager::GetInstance()->GetActiveScene()->Update(dt);
 }
 
 /*
@@ -33,13 +34,13 @@ void CGame::Render()
 		d3ddv->ColorFill(backBuffer, NULL, backgroundColor);
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		gameMap->Render();
+		SceneManager::GetInstance()->GetActiveScene()->Render();
 
-		string id = "ani-raccoon-mario-fly";
-		AnimationManager::GetInstance()->Get(id)->SetPlayScale(2.0f);
+		string id = "ani-big-mario-walk";
+		AnimationManager::GetInstance()->Get(id)->SetPlayScale(1.0f);
 		AnimationManager::GetInstance()->Get(id)->GetTransform()->Position.x = 100;
 		AnimationManager::GetInstance()->Get(id)->GetTransform()->Position.y = 100;
-		//AnimationManager::GetInstance()->Get(id)->Render();
+		AnimationManager::GetInstance()->Get(id)->Render();
 
 		spriteHandler->End();
 		d3ddv->EndScene();
@@ -78,6 +79,9 @@ int CGame::Run(int frameRate)
 		{
 			gameTime += now - frameStart;
 			frameStart = now;
+
+			InputProcessor::GetInstance()->ProcessKeyboard();
+
 			Update(dt*0.8);
 			Render();
 		}
@@ -102,6 +106,11 @@ void CGame::SetBackgroundColor(D3DCOLOR color)
 DWORD CGame::CurrentGameTime()
 {
 	return this->gameTime;
+}
+
+Vec2 CGame::GetScreenSize()
+{
+	return screenSize;
 }
 
 
@@ -193,6 +202,8 @@ HWND CGame::CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth,
 */
 void CGame::Init(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight, LPCWSTR WinClassName, LPCWSTR Title)
 {
+	this->screenSize = Vec2(ScreenWidth, ScreenHeight);
+
 	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
 
 	this->hWnd = this->CreateGameWindow(hInstance, nCmdShow, ScreenWidth, ScreenHeight, WinClassName, Title);
@@ -230,6 +241,8 @@ void CGame::Init(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenH
 
 	// Initialize sprite helper from Direct3DX helper library
 	D3DXCreateSprite(d3ddv, &spriteHandler);
+
+	InputProcessor::GetInstance()->InitKeyboard(hWnd);
 
 	OutputDebugString(L"[INFO] InitGame done;\n");
 }

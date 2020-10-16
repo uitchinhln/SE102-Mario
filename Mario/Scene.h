@@ -4,6 +4,7 @@
 #include "GameObject.h"
 class CScene
 {
+protected:
 	string id;
 
 	Camera* camera;
@@ -14,11 +15,8 @@ class CScene
 public:
 	virtual void Load() = 0;
 	virtual void Unload();
-	virtual void Update();
+	virtual void Update(int dt);
 	virtual void Render();
-
-	
-
 };
 
 typedef CScene* Scene;

@@ -20,6 +20,8 @@ class CGame
 
 	DWORD gameTime = 0;
 
+	Vec2 screenSize;
+
 	D3DCOLOR backgroundColor = D3DCOLOR_ARGB(255, 255, 255, 255);
 
 public:
@@ -38,8 +40,7 @@ public:
 	void SetBackgroundColor(D3DCOLOR color);
 
 	DWORD CurrentGameTime(); 
-
-	GameMap gameMap;
+	Vec2 GetScreenSize();
 
 	static CGame * GetInstance();
 

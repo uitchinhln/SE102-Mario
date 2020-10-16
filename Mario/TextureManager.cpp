@@ -50,6 +50,7 @@ void TextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor)
 
 LPDIRECT3DTEXTURE9 TextureManager::Get(string i)
 {
+	if (textures.find(i) == textures.end()) return nullptr;
 	return textures[i];
 }
 

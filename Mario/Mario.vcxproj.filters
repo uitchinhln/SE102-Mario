@@ -49,11 +49,14 @@
     <Filter Include="Framework\World\Scene\Map">
       <UniqueIdentifier>{8e3c9221-d0cf-4ac7-817b-629f525185a9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Scene1">
+      <UniqueIdentifier>{4ac2ba6b-bb58-4ccd-88c0-c7c4a26c1d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Input">
+      <UniqueIdentifier>{c8542165-1d6c-4bfc-be38-14b6e58198bb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EventManager.cpp">
-      <Filter>Framework\Event</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Framework\World\Scene\Camera</Filter>
     </ClCompile>
@@ -117,11 +120,17 @@
     <ClCompile Include="GameMap.cpp">
       <Filter>Framework\World\Scene\Map</Filter>
     </ClCompile>
+    <ClCompile Include="DemoScene.cpp">
+      <Filter>MarioGame\Scene1</Filter>
+    </ClCompile>
+    <ClCompile Include="InputProcessor.cpp">
+      <Filter>Framework\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Events.cpp">
+      <Filter>Framework\Event</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="EventManager.h">
-      <Filter>Framework\Event</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Framework\World\Scene\Camera</Filter>
     </ClInclude>
@@ -175,6 +184,15 @@
     </ClInclude>
     <ClInclude Include="GameMap.h">
       <Filter>Framework\World\Scene\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="DemoScene.h">
+      <Filter>MarioGame\Scene1</Filter>
+    </ClInclude>
+    <ClInclude Include="InputProcessor.h">
+      <Filter>Framework\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Events.h">
+      <Filter>Framework\Event</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

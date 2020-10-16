@@ -14,6 +14,7 @@ Sprite SpriteManager::Add(string id, int left, int top, int width, int height, L
 
 Sprite SpriteManager::Get(string id)
 {
+	if (sprites.find(id) == sprites.end()) return nullptr;
 	return sprites[id];
 }
 
@@ -27,7 +28,7 @@ void SpriteManager::LoadFromXml(const char* filePath)
 		if (pRoot)
 		{
 			TiXmlElement* pSprites = pRoot->FirstChildElement();
-			LPDIRECT3DTEXTURE9 texture = TextureManager::GetInstance()->Get(pSprites->Attribute("id"));
+			LPDIRECT3DTEXTURE9 texture = TextureManager::GetInstance()->Get(pSprites->Attribute("textureId"));
 
 			for (TiXmlElement* pNode = pSprites->FirstChildElement(); pNode != nullptr; pNode = pNode->NextSiblingElement()) {
 				string id = pNode->Attribute("id");

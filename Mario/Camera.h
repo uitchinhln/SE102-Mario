@@ -2,20 +2,29 @@
 #include "Utils.h"
 #include "Transform.h"
 
+[event_receiver(native)]
 class Camera
 {
 protected:
-	Vec2 position;
 	Vec2 size;
+
+	virtual void HookEvent();
+	virtual void UnHookEvent();
 
 public:
 	Camera();
 	Camera(Vec2 pos, Vec2 size);
 
-	Vec2 GetPosition();
+	Vec2 Position;
 
-	Vec2 GetCamSize();
+	virtual Vec2 GetCamSize();
 
-	void Update(int dt);
+	virtual void Update(int dt);
+
+	virtual void OnKeyUp(int key);
+
+	virtual void OnKeyDown(int key);
+
+	~Camera();
 };
 
