@@ -3,11 +3,15 @@
 
 SweptAABBResult IColliable::SweptAABB(RectF m, Vec2 distance, RectF s)
 {
-	float dx_entry, dx_exit, tx_entry, tx_exit;
-	float dy_entry, dy_exit, ty_entry, ty_exit;
+	float dx_entry = 0, dx_exit, tx_entry, tx_exit;
+	float dy_entry = 0, dy_exit, ty_entry, ty_exit;
 
 	float t_entry;
 	float t_exit;
+
+	/*DebugOut(L"Moving bounding: top=%f\tleft=%f\tbottom=%f\tright=%f\t\n", m.top, m.left, m.bottom, m.right);
+	DebugOut(L"Static bounding: top=%f\tleft=%f\tbottom=%f\tright=%f\t\n", s.top, s.left, s.bottom, s.right);
+	DebugOut(L"Distance: x=%f\ty=%f\n", distance.x, distance.y);*/
 
 	//
 	// Broad-phase test 
@@ -69,7 +73,9 @@ SweptAABBResult IColliable::SweptAABB(RectF m, Vec2 distance, RectF s)
 		ty_entry = dy_entry / distance.y;
 		ty_exit = dy_exit / distance.y;
 	}
-
+	
+	/*DebugOut(L"dx_entry=%f\tdy_entry=%f\n", dx_entry, dy_entry);
+	DebugOut(L"tx_entry=%f\tty_entry=%f\n", tx_entry, ty_entry);*/
 
 	if ((tx_entry < 0.0f && ty_entry < 0.0f) || tx_entry > 1.0f || ty_entry > 1.0f)
 		return SweptAABBResult::Empty();
@@ -96,5 +102,5 @@ SweptAABBResult IColliable::SweptAABB(RectF m, Vec2 distance, RectF s)
 		else
 			direction = Direction::Bottom;
 	}
-	return SweptAABBResult{ t_entry, direction };
+	return SweptAABBResult{ t_entry, direction, distance };
 }

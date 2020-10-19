@@ -27,6 +27,8 @@ public:
 
 	CGameObject();
 
+	virtual Vec2 GetPosition();
+
 	virtual Direction GetDirection();
 
 	virtual void SetDirection(Direction direction);

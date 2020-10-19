@@ -5,6 +5,7 @@
 struct SweptAABBResult {
 	float TimeToCollide;
 	Direction Direction;
+	Vec2 Distance;
 
 	static SweptAABBResult Empty()
 	{

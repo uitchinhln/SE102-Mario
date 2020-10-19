@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Game>
+    <Settings>
+        <GameLoop>
+            <TickRate value="120"/>
+        </GameLoop>    
+        <Window>
+            <ScreenSize width="800" height="600" />
+            <SindowTitle value="Mario Game"/>
+            <Icon path=""/>
+        </Window>
+        <KeyMap>
+            <MoveLeft key=""/>
+            <MoveRight key=""/>
+            <MoveDown key=""/>
+            <MoveUp key=""/>
+            <Sit key=""/>
+            <Jump key=""/>
+            <HighJump key=""/>
+            <Accelerate key=""/>
+            <Choose key=""/>
+        </KeyMap>
+    </Settings>
+    <Resources>
+        <Resource textureId="tex-mario">
+            <Texture path="Resource/Xml/Textures/Mario/Mario_x3.png" transparent="0,255,255,255"/>
+            <SpriteDB path="Resource/Xml/Textures/Mario/MarioDB.xml"/>
+            <AnimationDB path="Resource/Xml/Textures/Mario/MarioAnim.xml"/>
+        </Resource>
+        <Resource textureId="tex-enemy">
+            <Texture path="Resource/Xml/Textures/Enemy/enemy_x3.png" transparent="0,255,255,255"/>
+            <SpriteDB path="Resource/Xml/Textures/Enemy/EnemyDB.xml"/>
+            <AnimationDB path="Resource/Xml/Textures/Enemy/EnemyAnim.xml"/>
+        </Resource>
+        <Resource textureId="tex-intro">
+            <Texture path="Resource/Xml/Textures/Misc/Intro/intro_x3.png" transparent="0,255,255,255"/>
+            <SpriteDB path="Resource/Xml/Textures/Misc/Intro/IntroDB.xml"/>
+            <AnimationDB path="Resource/Xml/Textures/Misc/Intro/IntroAnim.xml"/>
+        </Resource>
+        <Resource textureId="tex-misc">
+            <Texture path="Resource/Xml/Textures/Misc/Misc (Goods_Item)/misc_x3.png" transparent="0,255,255,255"/>
+            <SpriteDB path="Resource/Xml/Textures/Misc/Misc (Goods_Item)/MiscDB.xml"/>
+            <AnimationDB path="Resource/Xml/Textures/Misc/Misc (Goods_Item)/MiscAnim.xml"/>
+        </Resource>
+        <Resource textureId="tex-ui">
+            <Texture path="Resource/Xml/Textures/Misc/UI/UI_x3.png" transparent="0,255,255,255"/>
+            <SpriteDB path="Resource/Xml/Textures/Misc/UI/UiDB.xml"/>
+            <AnimationDB path="Resource/Xml/Textures/Misc/UI/UiAnim.xml"/>
+        </Resource>
+    </Resources>
+    <GameContent>
+        <Scenes start="demo">
+            <Scene id="demo">
+                <TmxMap path="Resource/Xml/NewMap/BigMap/world-1-1-map.tmx">
+                    <SpecialBlock tileId="">
+                        <CollisionEffect>
+                            <Top allowThrough="false">
+                                <Object type="Mario" allowThrough="true"/>
+                                <Object type="Goomba" allowThrough="true"/>
+                            </Top>
+                            <Left allowThrough="true"/>
+                            <Bottom allowThrough="true"/>
+                            <Right allowThrough="true"/>
+                        </CollisionEffect>
+                    </SpecialBlock>
+                </TmxMap>
+            </Scene>
+        </Scenes>
+    </GameContent>
+</Game>

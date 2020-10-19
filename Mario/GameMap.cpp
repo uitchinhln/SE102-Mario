@@ -74,7 +74,7 @@ vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePos
 
 	for (int i = -r.x; i <= r.x; i++) {
 		for (int j = -r.y; j <= r.y; j++) {
-			if (i == j == 0) continue;
+			//if (i == j == 0) continue;
 			if ((center.x + i >= width) || (center.y + j >= height)) continue;
 			for (shared_ptr<CLayer> layer : layers) {
 				int id = layer->GetTileID(center.x + i, center.y + j);
@@ -82,8 +82,8 @@ vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePos
 				if (tileset) {
 					shared_ptr<ColliableTile> tile = tileset->GetColliableTile(id);
 					if (tile) {
-						int x = (center.x + i) * tileWidth;
-						int y = (center.y + j) * tileHeight;
+						int x = ((int)center.x + i) * tileWidth;
+						int y = ((int)center.y + j) * tileHeight;
 						shared_ptr<ColliableTileAdapter> adapter = make_shared<ColliableTileAdapter>(tile, Vec2(x, y));
 						result.push_back(adapter);
 					}
@@ -91,7 +91,6 @@ vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePos
 			}
 		}
 	}
-
 	return result;
 }
 

@@ -1,5 +1,6 @@
 #include "DemoScene.h"
 #include "Game.h"
+#include "Mario.h"
 
 void DemoScene::Load()
 {
@@ -8,6 +9,8 @@ void DemoScene::Load()
 
 	this->gameMap = CGameMap::FromTMX("Resource/Xml/NewMap/BigMap", "world-1-1-map.tmx");
 	this->gameMap->SetCamera(camera);
+
+	this->objects.push_back(make_shared<Mario>());
 }
 
 void DemoScene::Update()

@@ -28,7 +28,7 @@ CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
 	{
 		int id = 0; node->QueryIntAttribute("id", &id);
 		TiXmlElement* objects = node->FirstChildElement("objectgroup");
-		for (TiXmlElement* object = data->FirstChildElement("tile"); object != nullptr; object = object->NextSiblingElement("tile")) {
+		for (TiXmlElement* object = objects->FirstChildElement("object"); object != nullptr; object = object->NextSiblingElement("object")) {
 			if (object->Attribute("height") != NULL && object->NoChildren()) {
 				shared_ptr<ColliableTile> tile;
 

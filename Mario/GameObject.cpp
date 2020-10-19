@@ -7,6 +7,8 @@ void CGameObject::CalcPotentialCollisions(vector<shared_ptr<IColliable>>* object
 	{
 		CollisionResult result = SweptAABBEx(objects->at(i));
 
+		DebugOut(L"t=%f\n", result.SAABBResult.TimeToCollide);
+
 		if (result.SAABBResult.TimeToCollide > 0 && result.SAABBResult.TimeToCollide <= 1.0f)
 			results.push_back(result);
 	}
@@ -24,6 +26,11 @@ CollisionResult CGameObject::SweptAABBEx(shared_ptr<IColliable> coO)
 CGameObject::CGameObject()
 {
 	InitResource();
+}
+
+Vec2 CGameObject::GetPosition()
+{
+	return Position;
 }
 
 Direction CGameObject::GetDirection()
