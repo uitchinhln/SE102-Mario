@@ -7,6 +7,6 @@ class DemoScene :
 {
 public:
     void Load();
-    void Update(int dt);
+    void Update();
 };
 

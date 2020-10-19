@@ -88,9 +88,10 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_UNICODE;UNICODE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -147,20 +148,36 @@
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ColliableTile.cpp" />
+    <ClCompile Include="ColliableTileAdapter.cpp" />
+    <ClCompile Include="CollisionResult.cpp" />
     <ClCompile Include="DemoScene.cpp" />
+    <ClCompile Include="Direction.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameGraphic.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="InputProcessor.cpp" />
+    <ClCompile Include="GameProperty.cpp" />
+    <ClCompile Include="GameWindow.cpp" />
+    <ClCompile Include="IColliable.cpp" />
+    <ClCompile Include="IRenderable.cpp" />
+    <ClCompile Include="IState.cpp" />
+    <ClCompile Include="KeyboardProcessor.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="GameMap.cpp" />
+    <ClCompile Include="Mario.cpp" />
+    <ClCompile Include="MarioGame.cpp" />
+    <ClCompile Include="RectF.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="StopWatch.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TileSet.cpp" />
+    <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="TimeSpan.cpp" />
     <ClCompile Include="TinyXML\tinystr.cpp" />
     <ClCompile Include="TinyXML\tinyxml.cpp" />
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
@@ -173,19 +190,35 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="ColliableTile.h" />
+    <ClInclude Include="ColliableTileAdapter.h" />
+    <ClInclude Include="CollisionResult.h" />
     <ClInclude Include="DemoScene.h" />
+    <ClInclude Include="Direction.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameGraphic.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="InputProcessor.h" />
+    <ClInclude Include="GameProperty.h" />
+    <ClInclude Include="GameWindow.h" />
+    <ClInclude Include="IColliable.h" />
+    <ClInclude Include="IRenderable.h" />
+    <ClInclude Include="IState.h" />
+    <ClInclude Include="KeyboardProcessor.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="GameMap.h" />
+    <ClInclude Include="Mario.h" />
+    <ClInclude Include="MarioGame.h" />
+    <ClInclude Include="RectF.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
+    <ClInclude Include="StopWatch.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileSet.h" />
+    <ClInclude Include="GameTime.h" />
+    <ClInclude Include="TimeSpan.h" />
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="Transform.h" />

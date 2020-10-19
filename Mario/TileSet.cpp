@@ -1,6 +1,7 @@
 #include "TileSet.h"
 #include "Game.h"
 #include "TextureManager.h"
+#include "Events.h"
 
 CTileSet::CTileSet(int firstgid, Vec2 tileSize, int tileCount, int columns, string imgPath)
 {
@@ -22,6 +23,33 @@ CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
 	TiXmlElement* imgDom = data->FirstChildElement("image");
 	string imgPath = xmlPath + "/" + imgDom->Attribute("source");
 	this->texture = TextureManager::Load(ToLPCWSTR(imgPath), D3DCOLOR_ARGB(0, 0, 0, 0));
+
+	for (TiXmlElement* node = data->FirstChildElement("tile"); node != nullptr ; node = node->NextSiblingElement("tile"))
+	{
+		int id = 0; node->QueryIntAttribute("id", &id);
+		TiXmlElement* objects = node->FirstChildElement("objectgroup");
+		for (TiXmlElement* object = data->FirstChildElement("tile"); object != nullptr; object = object->NextSiblingElement("tile")) {
+			if (object->Attribute("height") != NULL && object->NoChildren()) {
+				shared_ptr<ColliableTile> tile;
+
+				__raise (*Events::GetInstance()).ColliableTilePreLoadEvent(id, tile);
+				if (!tile) tile = make_shared<ColliableTile>(id);
+
+				RectF rect;
+				object->QueryFloatAttribute("x", &rect.left);
+				object->QueryFloatAttribute("y", &rect.top);
+				object->QueryFloatAttribute("width", &rect.right);
+				object->QueryFloatAttribute("height", &rect.bottom);
+
+				rect.right = rect.right + rect.left;
+				rect.bottom = rect.top + rect.bottom;
+
+				tile->SetBoundingBox(rect);
+
+				this->colliableTiles[id] = tile;
+			}
+		}
+	}
 }
 
 int CTileSet::GetFirstGID()
@@ -29,7 +57,14 @@ int CTileSet::GetFirstGID()
 	return firstgid;
 }
 
-void CTileSet::Draw(int gid, float x, float y, D3DCOLOR overlay)
+shared_ptr<ColliableTile> CTileSet::GetColliableTile(int id)
+{
+	if (id < firstgid) return nullptr;
+	if (colliableTiles.find(id) == colliableTiles.end()) return nullptr;
+	return colliableTiles[id];
+}
+
+void CTileSet::Draw(int gid, float x, float y, Transform& transform, D3DCOLOR overlay)
 {
 	if (gid < firstgid) return;
 	RECT r;
@@ -38,7 +73,7 @@ void CTileSet::Draw(int gid, float x, float y, D3DCOLOR overlay)
 	r.bottom = r.top + tileSize.y;
 	r.right = r.left + tileSize.x;
 
-	CGame::GetInstance()->Draw(x, y, texture, r, Vec2(1, 1), 0, overlay);
+	CGame::GetInstance()->GetGraphic().Draw(x, y, texture, r, transform, overlay);
 }
 
 CTileSet::~CTileSet()

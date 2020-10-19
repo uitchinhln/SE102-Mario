@@ -1,48 +1,53 @@
 #pragma once
 #include "Utils.h"
-#include "GameMap.h"
+#include "GameProperty.h"
+#include "GameWindow.h"
+#include "GameGraphic.h"
+#include "KeyboardProcessor.h"
+#include "GameTime.h"
+#include "StopWatch.h"
 
 class CGame
 {
-	CGame();
-	static CGame * __instance;
-
-	HWND hWnd;									// Window handle
-
-	LPDIRECT3D9 d3d = NULL;						// Direct3D handle
-	LPDIRECT3DDEVICE9 d3ddv = NULL;				// Direct3D device object
-
-	LPDIRECT3DSURFACE9 backBuffer = NULL;		
-	LPD3DXSPRITE spriteHandler = NULL;			// Sprite helper library to help us draw 2D image on the screen
-
-	HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight, LPCWSTR WinClassName, LPCWSTR Title);
-	bool isRunning = false;
-
-	DWORD gameTime = 0;
-
-	Vec2 screenSize;
-
-	D3DCOLOR backgroundColor = D3DCOLOR_ARGB(255, 255, 255, 255);
-
 public:
-	void Init(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight, LPCWSTR WinClassName, LPCWSTR Title);
-	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Vec2 scale, float rotation, D3DCOLOR mix = D3DCOLOR_ARGB(255, 255, 255, 255));
+	virtual void LoadResources();
+	virtual void Update();
+	virtual void Draw();
 
-	LPDIRECT3DDEVICE9 GetDirect3DDevice() { return this->d3ddv; }
-	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }
-	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
+	int Run();
 
-	void Update(DWORD dt);
-	void Render();
-	int Run(int frameRate = 60);
+	GameGraphic& GetGraphic();
+	GameWindow& GetWindow();
+	KeyboardProcessor& GetKeyBoard();
 
-	void SetBackgroundColor(int r, int g, int b, int a);
-	void SetBackgroundColor(D3DCOLOR color);
+	static GameTime Time();
 
-	DWORD CurrentGameTime(); 
-	Vec2 GetScreenSize();
-
-	static CGame * GetInstance();
-
+	static CGame* GetInstance();
 	~CGame();
+
+protected:
+	CGame();
+
+	unique_ptr<GameWindow> window;
+	unique_ptr<GameGraphic> graphic;
+	unique_ptr<KeyboardProcessor> keyboard;
+
+	void Init(GameProperties properties);
+
+private:
+	static CGame* __instance;
+
+	static GameTime gameTime;
+
+	Stopwatch gameTimer;
+
+	bool initialized = false;
+
+	bool isRunning = false;
+	
+	GameProperties properties;
+
+	bool ProcessMessage(MSG& msg);
+
+	void Render();
 };

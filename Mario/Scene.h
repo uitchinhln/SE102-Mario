@@ -7,15 +7,15 @@ class CScene
 protected:
 	string id;
 
-	Camera* camera;
-	GameMap gameMap;
+	shared_ptr<Camera> camera;
+	shared_ptr<CGameMap> gameMap;
 
-	vector<GameObject> objects;
+	vector<shared_ptr<CGameObject>> objects;
 
 public:
 	virtual void Load() = 0;
 	virtual void Unload();
-	virtual void Update(int dt);
+	virtual void Update();
 	virtual void Render();
 };
 

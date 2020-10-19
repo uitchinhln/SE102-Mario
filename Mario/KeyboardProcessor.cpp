@@ -1,12 +1,8 @@
-﻿#include "InputProcessor.h"
+﻿#include "KeyboardProcessor.h"
 #include "Events.h"
 
-InputProcessor* InputProcessor::__instance = nullptr;
-
-void InputProcessor::InitKeyboard(HWND hWnd)
+void KeyboardProcessor::InitKeyboard(HWND hWnd)
 {
-	this->hWnd = hWnd;
-
 	HRESULT
 		hr = DirectInput8Create
 		(
@@ -73,7 +69,7 @@ void InputProcessor::InitKeyboard(HWND hWnd)
 	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
 }
 
-void InputProcessor::ProcessKeyboard()
+void KeyboardProcessor::ProcessKeyboard()
 {
 	HRESULT hr;
 
@@ -125,28 +121,20 @@ void InputProcessor::ProcessKeyboard()
 	}
 }
 
-bool InputProcessor::IsKeyDown(int keyCode)
+bool KeyboardProcessor::IsKeyDown(int keyCode)
 {
 	return (keyStates[keyCode] & 0x80);
 }
 
-bool InputProcessor::IsKeyUp(int keyCode)
+bool KeyboardProcessor::IsKeyUp(int keyCode)
 {
 	return !(keyStates[keyCode] & 0x80);
 }
 
-InputProcessor* InputProcessor::GetInstance()
-{
-	if (__instance == nullptr) {
-		__instance = new InputProcessor();
-	}
-	return __instance;
-}
-
-InputProcessor::InputProcessor()
+KeyboardProcessor::KeyboardProcessor()
 {
 }
 
-InputProcessor::~InputProcessor()
+KeyboardProcessor::~KeyboardProcessor()
 {
 }

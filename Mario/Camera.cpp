@@ -1,6 +1,6 @@
 #include "Camera.h"
-#include "InputProcessor.h"
 #include "Events.h"
+#include "Game.h"
 
 void Camera::HookEvent()
 {
@@ -23,7 +23,6 @@ Camera::Camera(Vec2 pos, Vec2 size)
 {
 	this->Position = Vec2(pos.x, pos.y);
 	this->size = Vec2(size.x, size.y);
-	HookEvent();
 }
 
 Vec2 Camera::GetCamSize()
@@ -31,18 +30,22 @@ Vec2 Camera::GetCamSize()
 	return this->size;
 }
 
-void Camera::Update(int dt)
+void Camera::Update()
 {
-	//this->Position.x += 0.07*dt;
+	if (CGame::GetInstance()->GetKeyBoard().IsKeyDown(DIK_RIGHT)) {
+		this->Position.x += 5;
+	}
 }
 
 void Camera::OnKeyUp(int key)
 {
-	this->Position.x += 5;
 }
 
 void Camera::OnKeyDown(int key)
 {
+	if (key == DIK_RIGHT) {
+		this->Position.x += 5;
+	}
 }
 
 Camera::~Camera()

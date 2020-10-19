@@ -1,4 +1,6 @@
 #include "AnimationManager.h"
+#include "TextureManager.h"
+#include "SpriteManager.h"
 
 AnimationManager* AnimationManager::__instance = NULL;
 
@@ -13,7 +15,7 @@ Animation AnimationManager::Get(string id)
 	return animations[id];
 }
 
-void AnimationManager::LoadFromXml(const char* filePath)
+void AnimationManager::ImportFromXml(const char* filePath)
 {
 	TiXmlDocument doc(filePath);
 	if (doc.LoadFile())

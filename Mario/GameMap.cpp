@@ -1,4 +1,6 @@
 #include "GameMap.h"
+#include "Transform.h"
+#include "ColliableTileAdapter.h"
 
 CGameMap::CGameMap()
 {
@@ -18,22 +20,22 @@ Vec2 CGameMap::GetBound()
 	return Vec2(this->width * tileWidth, this->height * tileHeight);
 }
 
-TileSet CGameMap::GetTileSetByTileID(int id)
+shared_ptr<CTileSet> CGameMap::GetTileSetByTileID(int id)
 {
 	return floor_entry(tilesets, id).second;
 }
 
-void CGameMap::AddTileSet(int firstgid, TileSet tileSet)
+void CGameMap::AddTileSet(int firstgid, shared_ptr<CTileSet> tileSet)
 {
 	this->tilesets[firstgid] = tileSet;
 }
 
-void CGameMap::AddLayer(Layer layer)
+void CGameMap::AddLayer(shared_ptr<CLayer> layer)
 {
 	this->layers.push_back(layer);
 }
 
-void CGameMap::Update(int dt)
+void CGameMap::Update()
 {
 }
 
@@ -53,22 +55,54 @@ void CGameMap::Render()
 			int x = i * tileWidth - this->camera->Position.x;
 			int y = j * tileHeight - this->camera->Position.y;
 
-			for (Layer layer : layers) {
+			for (shared_ptr<CLayer> layer : layers) {
+				if (layer->Hidden) continue;
 				int id = layer->GetTileID(i % width, j % height);
-				this->GetTileSetByTileID(id)->Draw(id, x, y);
+				this->GetTileSetByTileID(id)->Draw(id, x, y, Transform());
 			}
 		}
 	}
 }
 
-CGameMap* CGameMap::FromTMX(string filePath, string fileName)
+vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePosition, Vec2 radius)
+{
+	Vec2 r = Vec2(radius.x / tileWidth + 1, radius.y / tileHeight + 1);
+
+	Vec2 center = Vec2(absolutePosition.x / tileWidth, absolutePosition.y / tileHeight);
+
+	vector<shared_ptr<IColliable>> result;
+
+	for (int i = -r.x; i <= r.x; i++) {
+		for (int j = -r.y; j <= r.y; j++) {
+			if (i == j == 0) continue;
+			if ((center.x + i >= width) || (center.y + j >= height)) continue;
+			for (shared_ptr<CLayer> layer : layers) {
+				int id = layer->GetTileID(center.x + i, center.y + j);
+				shared_ptr<CTileSet> tileset = GetTileSetByTileID(id);
+				if (tileset) {
+					shared_ptr<ColliableTile> tile = tileset->GetColliableTile(id);
+					if (tile) {
+						int x = (center.x + i) * tileWidth;
+						int y = (center.y + j) * tileHeight;
+						shared_ptr<ColliableTileAdapter> adapter = make_shared<ColliableTileAdapter>(tile, Vec2(x, y));
+						result.push_back(adapter);
+					}
+				}
+			}
+		}
+	}
+
+	return result;
+}
+
+shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 {
 	string fullPath = filePath + "/" + fileName;
 	TiXmlDocument doc(fullPath.c_str());
 
 	if (doc.LoadFile()) {
 		TiXmlElement* root = doc.RootElement();
-		GameMap gameMap = new CGameMap();
+		shared_ptr<CGameMap> gameMap = make_shared<CGameMap>();
 
 		root->QueryIntAttribute("width", &gameMap->width);
 		root->QueryIntAttribute("height", &gameMap->height);
@@ -77,38 +111,24 @@ CGameMap* CGameMap::FromTMX(string filePath, string fileName)
 
 		//Load tileset
 		for (TiXmlElement* node = root->FirstChildElement("tileset"); node != nullptr; node = node->NextSiblingElement("tileset")) {
-			CTileSet* tileSet = new CTileSet(node, filePath);
-			gameMap->tilesets[tileSet->GetFirstGID()] = tileSet;
+			shared_ptr<CTileSet> tileSet = make_shared<CTileSet>(node, filePath);
+			gameMap->tilesets[tileSet->GetFirstGID()] = shared_ptr<CTileSet>(tileSet);
 		}
 
 		//Load layer
 		for (TiXmlElement* node = root->FirstChildElement("layer"); node != nullptr; node = node->NextSiblingElement("layer")) {
-			Layer layer = new CLayer(node);
+			shared_ptr<CLayer> layer = make_shared<CLayer>(node);
 			gameMap->AddLayer(layer);
 		}
 
 		return gameMap;
 	}
 
-	return nullptr;
+	throw "Load map that bai!!";
 }
 
 CGameMap::~CGameMap()
 {
-	if (camera) {
-		delete camera;
-		camera = nullptr;
-	}
-
-	for each (Layer layer in layers)
-	{
-		if (layer) delete layer;
-	}
 	layers.clear();
-
-	for each (auto entry in tilesets)
-	{
-		if (entry.second) delete entry.second;
-	}
 	tilesets.clear();
 }

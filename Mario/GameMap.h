@@ -5,6 +5,7 @@
 #include "TinyXML/tinyxml.h"
 #include "TinyXML/tinystr.h"
 #include "Camera.h"
+#include "IColliable.h"
 
 class CGameMap
 {
@@ -13,32 +14,34 @@ class CGameMap
 	int tileWidth;
 	int tileHeight;
 
-	Camera* camera;
+	shared_ptr<Camera> camera;
 
-	map<int, TileSet> tilesets;
-	vector<Layer> layers;
+	map<int, shared_ptr<CTileSet>> tilesets;
+	vector<shared_ptr<CLayer>> layers;
 	
 public:
 	CGameMap();
 	CGameMap(int width, int height, int tileWidth, int tileHeight);
 
-	virtual Camera* GetCamera() { return this->camera; }
+	virtual shared_ptr<Camera> GetCamera() { return this->camera; }
 
-	virtual void SetCamera(Camera* camera) { this->camera = camera; }
+	virtual void SetCamera(shared_ptr<Camera> camera) { this->camera = camera; }
 
 	virtual Vec2 GetBound();
 
-	virtual TileSet GetTileSetByTileID(int id);
+	virtual shared_ptr<CTileSet> GetTileSetByTileID(int id);
 
-	virtual void AddTileSet(int firstgid, TileSet tileSet);
+	virtual void AddTileSet(int firstgid, shared_ptr<CTileSet> tileSet);
 
-	virtual void AddLayer(Layer layer);
+	virtual void AddLayer(shared_ptr<CLayer> layer);
 
-	virtual void Update(int dt);
+	virtual void Update();
 
 	virtual void Render();
 
-	static CGameMap* FromTMX(string filePath, string fileName);
+	virtual vector<shared_ptr<IColliable>> GetColliableTileAround(Vec2 absolutePosition, Vec2 radius);
+
+	static shared_ptr<CGameMap> FromTMX(string filePath, string fileName);
 	~CGameMap();
 };
 

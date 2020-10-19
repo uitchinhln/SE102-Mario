@@ -1,248 +1,139 @@
 #include "Game.h"
-#include "AnimationManager.h"
-#include "SceneManager.h"
-#include "InputProcessor.h"
 
-CGame * CGame::__instance = NULL;
+CGame* CGame::__instance = nullptr;
+GameTime CGame::gameTime = GameTime();
 
-/*
-	Utility function to wrap LPD3DXSPRITE::Draw 
-*/
-void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Vec2 scale, float rotation, D3DCOLOR overlay)
+void CGame::LoadResources()
 {
-	D3DXVECTOR3 p(x, y, 0);
-	spriteHandler->Draw(texture, &r, NULL, &p, overlay);
 }
 
-/*
-	Update world status for this frame
-	dt: time period between beginning of last frame and beginning of this frame
-*/
-void CGame::Update(DWORD dt)
+void CGame::Update()
 {
-	SceneManager::GetInstance()->GetActiveScene()->Update(dt);
 }
 
-/*
-	Render a frame
-*/
+void CGame::Draw()
+{
+}
+
 void CGame::Render()
 {
-	if (d3ddv->BeginScene())
+	if (graphic->GetDirect3DDevice()->BeginScene())
 	{
 		// Clear back buffer with a color
-		d3ddv->ColorFill(backBuffer, NULL, backgroundColor);
-		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+		graphic->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
-		SceneManager::GetInstance()->GetActiveScene()->Render();
+		Draw();
 
-		string id = "ani-big-mario-walk";
-		AnimationManager::GetInstance()->Get(id)->SetPlayScale(1.0f);
-		AnimationManager::GetInstance()->Get(id)->GetTransform()->Position.x = 100;
-		AnimationManager::GetInstance()->Get(id)->GetTransform()->Position.y = 100;
-		AnimationManager::GetInstance()->Get(id)->Render();
-
-		spriteHandler->End();
-		d3ddv->EndScene();
-	}
-	       
+		graphic->GetSpriteHandler()->End();
+		graphic->GetDirect3DDevice()->EndScene();
+	}	       
 	// Display back buffer content to the screen
-	d3ddv->Present(NULL, NULL, NULL, NULL);
+	graphic->GetDirect3DDevice()->Present(NULL, NULL, NULL, NULL);
 }
 
-int CGame::Run(int frameRate)
+int CGame::Run()
 {
 	if (isRunning) return 0;
 	isRunning = true;
 
 	MSG msg;
-	int done = 0;
-	DWORD frameStart = GetTickCount();
-	DWORD tickPerFrame = 1000 / frameRate;
+	gameTimer.Start();
+	DWORD tickPerFrame = 1000 / properties->TickRate;
 
-	while (!done)
+	while (ProcessMessage(msg))
 	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		//tick
+		DWORD now = gameTimer.ElapsedMilliseconds();
+		auto accumulatedTime = TimeSpan::FromMilliseconds(now - gameTime.GetPreviousTicks());
+		gameTime.SetPreviousTicks(now);
+		gameTime.ElapsedGameTime = accumulatedTime;
+		gameTime.TotalGameTime += accumulatedTime;
+
+		auto deltaTime = (int)gameTime.ElapsedGameTime.Milliseconds();
+
+		if (deltaTime >= tickPerFrame)
 		{
-			if (msg.message == WM_QUIT) done = 1;
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-
-			frameStart = GetTickCount() - tickPerFrame;
-		}
-
-		DWORD now = GetTickCount();
-		DWORD dt = now - frameStart;
-
-		if (dt >= tickPerFrame)
-		{
-			gameTime += now - frameStart;
-			frameStart = now;
-
-			InputProcessor::GetInstance()->ProcessKeyboard();
-
-			Update(dt*0.8);
+			keyboard->ProcessKeyboard();
+			Update();
 			Render();
 		}
 		else
-			Sleep(tickPerFrame - dt);
+			Sleep(tickPerFrame - deltaTime);
 	}
 
 	isRunning = false;
 	return 1;
 }
 
-void CGame::SetBackgroundColor(int r, int g, int b, int a)
-{
-	this->backgroundColor = D3DCOLOR_ARGB(a, r, g, b);
-}
-
-void CGame::SetBackgroundColor(D3DCOLOR color)
-{
-	this->backgroundColor = color;
-}
-
-DWORD CGame::CurrentGameTime()
-{
-	return this->gameTime;
-}
-
-Vec2 CGame::GetScreenSize()
-{
-	return screenSize;
-}
-
 
 CGame::CGame() {
+	__instance = this;
+	LoadResources();
+	DebugOut(L"Scenes: %d\n", 456);
+}
 
+GameGraphic& CGame::GetGraphic()
+{
+	return *graphic;
+}
+
+GameWindow& CGame::GetWindow()
+{
+	return *window;
+}
+
+KeyboardProcessor& CGame::GetKeyBoard()
+{
+	return *keyboard;
+}
+
+GameTime CGame::Time()
+{
+	return gameTime;
+}
+
+CGame* CGame::GetInstance()
+{
+	return __instance;
 }
 
 CGame::~CGame()
 {
-	if (spriteHandler != NULL) spriteHandler->Release();
-	if (backBuffer != NULL) backBuffer->Release();
-	if (d3ddv != NULL) d3ddv->Release();
-	if (d3d != NULL) d3d->Release();
 }
 
-
-CGame *CGame::GetInstance()
+bool CGame::ProcessMessage(MSG& msg)
 {
-	if (__instance == NULL) __instance = new CGame();
-	return __instance;
-}
-
-
-LRESULT WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-	switch (message) {
-	case WM_DESTROY:
-		PostQuitMessage(0);
-		break;
-	default:
-		return DefWindowProc(hWnd, message, wParam, lParam);
-	}
-
-	return 0;
-}
-
-HWND CGame::CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight, LPCWSTR WinClassName, LPCWSTR Title)
-{
-	WNDCLASSEX wc;
-	wc.cbSize = sizeof(WNDCLASSEX);
-
-	wc.style = CS_HREDRAW | CS_VREDRAW;
-	wc.hInstance = hInstance;
-
-	wc.lpfnWndProc = (WNDPROC)WinProc;
-	wc.cbClsExtra = 0;
-	wc.cbWndExtra = 0;
-	wc.hIcon = NULL;
-	wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-	wc.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	wc.lpszMenuName = NULL;
-	wc.lpszClassName = WinClassName;
-	wc.hIconSm = NULL;
-
-	RegisterClassEx(&wc);
-
-	HWND hWnd =
-		CreateWindow(
-			WinClassName,
-			Title,
-			WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
-			(GetSystemMetrics(SM_CXSCREEN) - ScreenWidth) / 2,
-			(GetSystemMetrics(SM_CYSCREEN) - ScreenHeight) / 2,
-			ScreenWidth,
-			ScreenHeight,
-			NULL,
-			NULL,
-			hInstance,
-			NULL);
-
-	if (!hWnd)
+	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
-		OutputDebugString(L"[ERROR] CreateWindow failed");
-		DWORD ErrCode = GetLastError();
-		return FALSE;
+		if (msg.message == WM_QUIT) return false;
+
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+
+		//if (GetTickCount() - waste >= 3) {
+		//	//DebugOut(L"Waste detected!!!\n");
+		//	frameStart = GetTickCount() - tickPerFrame;
+		//}
 	}
-
-	ShowWindow(hWnd, nCmdShow);
-	UpdateWindow(hWnd);
-
-	return hWnd;
+	return true;
 }
 
-/*
-	Initialize DirectX, create a Direct3D device for rendering within the window, initial Sprite library for
-	rendering 2D images
-	- hInst: Application instance handle
-	- hWnd: Application window handle
-*/
-void CGame::Init(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight, LPCWSTR WinClassName, LPCWSTR Title)
+void CGame::Init(GameProperties properties)
 {
-	this->screenSize = Vec2(ScreenWidth, ScreenHeight);
+	if (initialized) return;
 
-	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
+	window = make_unique<GameWindow>(properties);
+	window->CreateGameWindow();
 
-	this->hWnd = this->CreateGameWindow(hInstance, nCmdShow, ScreenWidth, ScreenHeight, WinClassName, Title);
+	graphic = make_unique<GameGraphic>();
+	graphic->Init(properties->d3dpp, window->GetWindowHandler());
 
-	D3DPRESENT_PARAMETERS d3dpp;
+	keyboard = make_unique<KeyboardProcessor>();
+	keyboard->InitKeyboard(window->GetWindowHandler());
 
-	ZeroMemory(&d3dpp, sizeof(d3dpp));
+	this->properties = properties;
 
-	d3dpp.Windowed = TRUE;
-	d3dpp.SwapEffect = D3DSWAPEFFECT_DISCARD;
-	d3dpp.BackBufferFormat = D3DFMT_X8R8G8B8;
-	d3dpp.BackBufferCount = 1;
+	LoadResources();
 
-	RECT r;
-	GetClientRect(hWnd, &r);	// retrieve Window width & height 
-
-	d3dpp.BackBufferHeight = r.bottom + 1;
-	d3dpp.BackBufferWidth = r.right + 1;
-
-	d3d->CreateDevice(
-		D3DADAPTER_DEFAULT,
-		D3DDEVTYPE_HAL,
-		hWnd,
-		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
-		&d3dpp,
-		&d3ddv);
-
-	if (d3ddv == NULL)
-	{
-		OutputDebugString(L"[ERROR] CreateDevice failed\n");
-		return;
-	}
-
-	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
-
-	// Initialize sprite helper from Direct3DX helper library
-	D3DXCreateSprite(d3ddv, &spriteHandler);
-
-	InputProcessor::GetInstance()->InitKeyboard(hWnd);
-
-	OutputDebugString(L"[INFO] InitGame done;\n");
+	initialized = true;
 }

@@ -12,3 +12,5 @@ public:
 	Transform(Vec2 scale, float rotation) { this->Scale = scale; this->Rotation = rotation; }
 };
 
+Transform FlipX();
+

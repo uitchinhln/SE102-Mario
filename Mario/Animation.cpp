@@ -1,4 +1,7 @@
 #include "Animation.h"
+#include "Sprite.h"
+#include "SpriteManager.h"
+#include "Game.h"
 
 CAnimation::CAnimation(int defaultFrameTime)
 {
@@ -31,7 +34,7 @@ void CAnimation::AddFrame(Sprite sprite, DWORD frameTime)
 
 void CAnimation::Render(D3DCOLOR overlay)
 {
-	DWORD now = CGame::GetInstance()->CurrentGameTime();
+	DWORD now = CGame::Time().TotalGameTime.Milliseconds();
 
 	if (currentFrame == -1)
 	{
@@ -49,7 +52,7 @@ void CAnimation::Render(D3DCOLOR overlay)
 		}
 	}
 
-	frames[currentFrame]->GetSprite()->Draw(transform->Position.x, transform->Position.y, transform->Scale, transform->Rotation, overlay);
+	frames[currentFrame]->GetSprite()->Draw(transform->Position.x, transform->Position.y, *transform, overlay);
 }
 
 Animation CAnimation::Clone()

@@ -15,7 +15,7 @@ LPDIRECT3DTEXTURE9 TextureManager::Load(LPCWSTR texturePath, D3DCOLOR transparen
 		return NULL;
 	}
 
-	LPDIRECT3DDEVICE9 d3ddv = CGame::GetInstance()->GetDirect3DDevice();
+	LPDIRECT3DDEVICE9 d3ddv = CGame::GetInstance()->GetGraphic().GetDirect3DDevice();
 
 	result = D3DXCreateTextureFromFileEx(
 		d3ddv,								// Pointer to Direct3D device object

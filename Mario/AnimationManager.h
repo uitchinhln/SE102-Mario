@@ -1,7 +1,6 @@
 #pragma once
 #include "Utils.h"
 #include "Animation.h"
-#include "TextureManager.h"
 #include "TinyXML/tinyxml.h"
 #include "TinyXML/tinystr.h"
 
@@ -17,7 +16,7 @@ public:
 	
 	virtual Animation Get(string id);
 
-	virtual void LoadFromXml(const char* filePath);
+	virtual void ImportFromXml(const char* filePath);
 
 	static AnimationManager* GetInstance();
 

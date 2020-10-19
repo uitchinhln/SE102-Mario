@@ -18,7 +18,7 @@ Sprite SpriteManager::Get(string id)
 	return sprites[id];
 }
 
-void SpriteManager::LoadFromXml(const char* filePath)
+void SpriteManager::ImportFromXml(const char* filePath)
 {
 	TiXmlDocument doc(filePath);
 	if (doc.LoadFile())

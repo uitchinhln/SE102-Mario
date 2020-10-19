@@ -34,20 +34,8 @@
     <Filter Include="Framework\World">
       <UniqueIdentifier>{3cff32c4-2f80-4375-a5d2-f1a211094984}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\World\Scene">
-      <UniqueIdentifier>{723972ca-fd7d-4360-822c-6d511b6680fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\World\Scene\Camera">
-      <UniqueIdentifier>{18ef8892-4a0b-4944-a0a9-be7b640db725}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\World\Phys">
       <UniqueIdentifier>{44b9eb36-1188-495e-92ae-0ed6e95bd7fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\World\Phys\Collision">
-      <UniqueIdentifier>{c21a2d39-2b90-471f-b34c-f3ba20d14506}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\World\Scene\Map">
-      <UniqueIdentifier>{8e3c9221-d0cf-4ac7-817b-629f525185a9}</UniqueIdentifier>
     </Filter>
     <Filter Include="MarioGame\Scene1">
       <UniqueIdentifier>{4ac2ba6b-bb58-4ccd-88c0-c7c4a26c1d06}</UniqueIdentifier>
@@ -55,10 +43,40 @@
     <Filter Include="Framework\Input">
       <UniqueIdentifier>{c8542165-1d6c-4bfc-be38-14b6e58198bb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\World\Phys\Collision">
+      <UniqueIdentifier>{bf5a3f68-84ef-4fde-9323-ea026e1b7916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity">
+      <UniqueIdentifier>{a08d8d72-8f37-4eee-a83d-ef6575aabf5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Time">
+      <UniqueIdentifier>{c43a8594-04a0-4d55-b364-58a6617e00b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Graphic">
+      <UniqueIdentifier>{18edc2a2-ecd6-401c-ae31-b0c87d87a182}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Scene">
+      <UniqueIdentifier>{723972ca-fd7d-4360-822c-6d511b6680fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Scene\Camera">
+      <UniqueIdentifier>{18ef8892-4a0b-4944-a0a9-be7b640db725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Scene\Map">
+      <UniqueIdentifier>{8e3c9221-d0cf-4ac7-817b-629f525185a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\GameObject">
+      <UniqueIdentifier>{ce153eed-76eb-46ac-bb3b-32d8d2d3d8c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\GameObject\States">
+      <UniqueIdentifier>{edf50899-e339-487c-a205-159af9a915bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Scene\Map\Tile">
+      <UniqueIdentifier>{a20bc20e-cd26-4207-aef0-57ade6059f8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
-      <Filter>Framework\World\Scene\Camera</Filter>
+      <Filter>Framework\Scene\Camera</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Framework\Model\Texture</Filter>
@@ -87,9 +105,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>MarioGame</Filter>
     </ClCompile>
-    <ClCompile Include="AnimationManager.cpp">
-      <Filter>Framework\Model\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationFrame.cpp">
       <Filter>Framework\Model\Animation</Filter>
     </ClCompile>
@@ -103,36 +118,87 @@
       <Filter>Framework\Model\Animation</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Framework\World\Scene</Filter>
+      <Filter>Framework\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Framework\World\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Framework\World</Filter>
-    </ClCompile>
-    <ClCompile Include="TileSet.cpp">
-      <Filter>Framework\World\Scene\Map</Filter>
+      <Filter>Framework\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Layer.cpp">
-      <Filter>Framework\World\Scene\Map</Filter>
+      <Filter>Framework\Scene\Map</Filter>
     </ClCompile>
     <ClCompile Include="GameMap.cpp">
-      <Filter>Framework\World\Scene\Map</Filter>
+      <Filter>Framework\Scene\Map</Filter>
     </ClCompile>
     <ClCompile Include="DemoScene.cpp">
       <Filter>MarioGame\Scene1</Filter>
     </ClCompile>
-    <ClCompile Include="InputProcessor.cpp">
-      <Filter>Framework\Input</Filter>
-    </ClCompile>
     <ClCompile Include="Events.cpp">
       <Filter>Framework\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="RectF.cpp">
+      <Filter>Framework\World\Phys</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>MarioGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardProcessor.cpp">
+      <Filter>Framework\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationManager.cpp">
+      <Filter>Framework\Model\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeSpan.cpp">
+      <Filter>Framework\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="GameTime.cpp">
+      <Filter>Framework\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="GameProperty.cpp">
+      <Filter>Framework\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="GameGraphic.cpp">
+      <Filter>Framework\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="Direction.cpp">
+      <Filter>Framework\World\Phys</Filter>
+    </ClCompile>
+    <ClCompile Include="GameWindow.cpp">
+      <Filter>Framework\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="IRenderable.cpp">
+      <Filter>Framework\Graphic</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionResult.cpp">
+      <Filter>Framework\World\Phys\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioGame.cpp">
+      <Filter>MarioGame</Filter>
+    </ClCompile>
+    <ClCompile Include="StopWatch.cpp">
+      <Filter>Framework\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="IState.cpp">
+      <Filter>Framework\World\GameObject\States</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Framework\World\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="IColliable.cpp">
+      <Filter>Framework\World\Phys\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliableTile.cpp">
+      <Filter>Framework\Scene\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="TileSet.cpp">
+      <Filter>Framework\Scene\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="ColliableTileAdapter.cpp">
+      <Filter>Framework\Scene\Map\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
-      <Filter>Framework\World\Scene\Camera</Filter>
+      <Filter>Framework\Scene\Camera</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>Framework\Model\Texture</Filter>
@@ -152,9 +218,6 @@
     <ClInclude Include="SpriteManager.h">
       <Filter>Framework\Model\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationManager.h">
-      <Filter>Framework\Model\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationFrame.h">
       <Filter>Framework\Model\Animation</Filter>
     </ClInclude>
@@ -168,31 +231,82 @@
       <Filter>Framework\Model\Animation</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Framework\World\Scene</Filter>
+      <Filter>Framework\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Framework\World\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Framework\World</Filter>
-    </ClInclude>
-    <ClInclude Include="TileSet.h">
-      <Filter>Framework\World\Scene\Map</Filter>
+      <Filter>Framework\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Layer.h">
-      <Filter>Framework\World\Scene\Map</Filter>
+      <Filter>Framework\Scene\Map</Filter>
     </ClInclude>
     <ClInclude Include="GameMap.h">
-      <Filter>Framework\World\Scene\Map</Filter>
+      <Filter>Framework\Scene\Map</Filter>
     </ClInclude>
     <ClInclude Include="DemoScene.h">
       <Filter>MarioGame\Scene1</Filter>
     </ClInclude>
-    <ClInclude Include="InputProcessor.h">
-      <Filter>Framework\Input</Filter>
-    </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>Framework\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="RectF.h">
+      <Filter>Framework\World\Phys</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>MarioGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardProcessor.h">
+      <Filter>Framework\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationManager.h">
+      <Filter>Framework\Model\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeSpan.h">
+      <Filter>Framework\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="GameTime.h">
+      <Filter>Framework\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="GameProperty.h">
+      <Filter>Framework\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GameGraphic.h">
+      <Filter>Framework\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="Direction.h">
+      <Filter>Framework\World\Phys</Filter>
+    </ClInclude>
+    <ClInclude Include="GameWindow.h">
+      <Filter>Framework\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="IRenderable.h">
+      <Filter>Framework\Graphic</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionResult.h">
+      <Filter>Framework\World\Phys\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioGame.h">
+      <Filter>MarioGame</Filter>
+    </ClInclude>
+    <ClInclude Include="StopWatch.h">
+      <Filter>Framework\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="IState.h">
+      <Filter>Framework\World\GameObject\States</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Framework\World\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="IColliable.h">
+      <Filter>Framework\World\Phys\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliableTile.h">
+      <Filter>Framework\Scene\Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="TileSet.h">
+      <Filter>Framework\Scene\Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="ColliableTileAdapter.h">
+      <Filter>Framework\Scene\Map\Tile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

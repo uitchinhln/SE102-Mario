@@ -13,7 +13,7 @@ public:
 
 	virtual Sprite Get(string id);
 
-	virtual void LoadFromXml(const char* filePath);
+	virtual void ImportFromXml(const char* filePath);
 
 	static SpriteManager* GetInstance();
 	~SpriteManager();

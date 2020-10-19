@@ -15,6 +15,8 @@ public:
 	CLayer();
 	CLayer(TiXmlElement* data);
 
+	bool Hidden = false;
+
 	int GetTileID(int x, int y);
 
 	~CLayer();

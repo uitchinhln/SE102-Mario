@@ -1,10 +1,7 @@
 #pragma once
 #include "Utils.h"
 #include "Transform.h"
-#include "Game.h"
 #include "AnimationFrame.h"
-#include "Sprite.h"
-#include "SpriteManager.h"
 
 class CAnimation
 {

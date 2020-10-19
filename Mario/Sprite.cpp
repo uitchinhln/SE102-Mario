@@ -11,7 +11,7 @@ CSprite::CSprite(string id, int left, int top, int width, int height, LPDIRECT3D
 	this->texture = texture;
 }
 
-void CSprite::Draw(float x, float y, Vec2 scale, float rotation, D3DCOLOR overlay)
+void CSprite::Draw(float x, float y, Transform& transform, D3DCOLOR overlay)
 {
 	RECT r;
 	r.left = this->left;
@@ -19,5 +19,5 @@ void CSprite::Draw(float x, float y, Vec2 scale, float rotation, D3DCOLOR overla
 	r.right = this->left + this->width;
 	r.bottom = this->top + this->height;
 
-	CGame::GetInstance()->Draw(x, y, this->texture, r, scale, rotation, overlay);
+	CGame::GetInstance()->GetGraphic().Draw(x, y, this->texture, r, transform, overlay);
 }

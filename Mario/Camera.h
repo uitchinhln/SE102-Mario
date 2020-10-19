@@ -8,8 +8,6 @@ class Camera
 protected:
 	Vec2 size;
 
-	virtual void HookEvent();
-	virtual void UnHookEvent();
 
 public:
 	Camera();
@@ -19,11 +17,15 @@ public:
 
 	virtual Vec2 GetCamSize();
 
-	virtual void Update(int dt);
+	virtual void Update();
 
 	virtual void OnKeyUp(int key);
 
 	virtual void OnKeyDown(int key);
+
+	virtual void HookEvent();
+
+	virtual void UnHookEvent();
 
 	~Camera();
 };

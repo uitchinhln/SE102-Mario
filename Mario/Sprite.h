@@ -1,5 +1,6 @@
 #pragma once
 #include "Utils.h"
+#include "Transform.h"
 
 class CSprite
 {
@@ -15,7 +16,7 @@ class CSprite
 public:
 	CSprite(string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 texture);
 
-	virtual void Draw(float x, float y, Vec2 scale, float rotation, D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
+	virtual void Draw(float x, float y, Transform& transform, D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
 };
 
 typedef CSprite* Sprite;

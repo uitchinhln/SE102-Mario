@@ -9,12 +9,8 @@
 
 #define DIRECTINPUT_VERSION 0x0800
 
-class InputProcessor
+class KeyboardProcessor
 {
-	static InputProcessor* __instance;
-	InputProcessor();
-
-	HWND hWnd;
 	LPDIRECTINPUT8       di;								// The DirectInput object         
 	LPDIRECTINPUTDEVICE8 didv;								// The keyboard device 
 
@@ -22,6 +18,8 @@ class InputProcessor
 	DIDEVICEOBJECTDATA keyEvents[KEYBOARD_BUFFER_SIZE];		// Buffered keyboard data
 
 public:
+	KeyboardProcessor();
+
 	void InitKeyboard(HWND hWnd);
 
 	void ProcessKeyboard();
@@ -29,7 +27,6 @@ public:
 	bool IsKeyDown(int keyCode);
 	bool IsKeyUp(int keyCode);
 
-	static InputProcessor* GetInstance();
-	~InputProcessor();
+	~KeyboardProcessor();
 };
 #endif

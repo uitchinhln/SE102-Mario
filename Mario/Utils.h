@@ -13,7 +13,9 @@
 #include <map>
 #include <xtree>
 #include <unordered_map>
-//#include "BMap.h"
+#include <algorithm>
+#include <memory>
+#include "RectF.h"
 
 #ifndef PI
 #define PI 3.1416f
