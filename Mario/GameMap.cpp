@@ -72,17 +72,20 @@ vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePos
 	int col_end = trunc(col + (boundingBox.right - boundingBox.left) / tileWidth);
 	int row_end = trunc(row + (boundingBox.bottom - boundingBox.top) / tileHeight);
 
-	Vec2 r = Vec2((abs(radius.x) + tileWidth * 1) / tileWidth, (abs(radius.y) + tileHeight * 1) / tileHeight);
+	Vec2 r = Vec2((abs(radius.x) + tileWidth * 2) / tileWidth, (abs(radius.y) + tileHeight * 2) / tileHeight);
 
 	//DebugOut(L"R (%f, %f)\n", r.x, r.y);
 
 	vector<shared_ptr<IColliable>> result;
+	int is = col - r.x < 0 ? 0 : col - r.x;
+	int ie = col_end + r.x > width ? width : col_end + r.x;
+	int js = row - r.y < 0 ? 0 : row - r.y;
+	int je = row_end + r.y > height ? height : row_end + r.y;
 
-	for (int i = col-r.x; i <= col_end + r.x; i++) {
-		for (int j = row-r.y; j <= row_end + r.y; j++) {
+	for (int i = is; i <= ie; i++) {
+		for (int j = js; j <= je; j++) {
 
 			if (i >= col && i <= col_end && j >= row && j <= row_end) continue;
-			if ((i > width) || (i < 0) || (j > height) || (j < 0)) continue;
 
 			for (shared_ptr<CLayer> layer : layers) {
 				int id = layer->GetTileID(i, j);

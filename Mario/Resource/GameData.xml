@@ -48,17 +48,11 @@
             <AnimationDB path="Resource/Xml/Textures/Misc/UI/UiAnim.xml"/>
         </Resource>
     </Resources>
-    <GameContent>
-        <GameObjects>
-            <Mario>
-                <ObjectState>
-
-                </States>
-            </Mario>
-        </GameObjects>
+    <GameContent>        
         <Scenes start="demo">
             <Scene id="demo">
                 <TmxMap path="Resource/Xml/NewMap/BigMap/world-1-1-map.tmx">
+                    <TileBehaviorDatabase path=""/>
                 </TmxMap>
             </Scene>
         </Scenes>

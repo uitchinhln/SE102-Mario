@@ -14,7 +14,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 	if (shared_ptr<IColliable> sp = object.lock()) {
 		for each (shared_ptr<IColliable> coO in (*objects))
 		{
-			SweptAABBResult aabbResult = SweptAABB(sp->GetHitBox(), sp->GetDistance() - coO->GetDistance(), coO->GetHitBox());
+			SweptAABBResult aabbResult = SweptAABB(sp->GetHitBox(), sp->GetDistance() - coO->GetDistance(), coO->GetHitBox(), debug);
 			shared_ptr<CollisionResult> result = make_shared<CollisionResult>(aabbResult, coO);
 
 			if (debug)
@@ -86,6 +86,8 @@ Vec2 CollisionCalculator::GetNewDistance()
 		}
 		jet = Vec2(nx, ny);
 		return Vec2(min_tx * d.x + nx * 0.4f, min_ty * d.y + ny * 0.4f);
+		/*float min_t = min_tx < min_ty ? min_tx : min_ty;
+		return Vec2(min_t * d.x + nx * 0.4f, min_t * d.y + ny * 0.4f);*/
 	}
 	return VECTOR_0;
 }
@@ -180,6 +182,11 @@ SweptAABBResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, 
 
 	t_entry = max(tx_entry, ty_entry);
 	t_exit = min(tx_exit, ty_exit);
+
+	if (debug) {
+		DebugOut(L"tx_exit=%f\ty_exit=%f\n", tx_exit, ty_exit);
+		DebugOut(L"t_entry=%f\t_exit=%f\n", t_entry, t_exit);
+	}
 
 	if (t_entry > t_exit)
 		return SweptAABBResult::Empty();

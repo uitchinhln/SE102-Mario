@@ -42,7 +42,7 @@ void Mario::OnKeyDown(int key)
 
 Mario::Mario()
 {
-	this->Position = Vec2(100, 800);
+	this->Position = Vec2(100, 0);
 	this->Velocity = Vec2(0, 0);
 	HookEvent();
 }
@@ -53,9 +53,7 @@ void Mario::InitResource()
 
 void Mario::Update(vector<shared_ptr<IColliable>>* coObj)
 {
-	Velocity.y += 0.002f * CGame::Time().ElapsedGameTime;
-
-	vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj);
+	vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);
 
 	// No collision occured, proceed normally
 	if (coResult.size() == 0)
@@ -72,6 +70,7 @@ void Mario::Update(vector<shared_ptr<IColliable>>* coObj)
 		if (jet.x != 0) Velocity.x = 0;
 		if (jet.y != 0) Velocity.y = 0;
 	}
+	Velocity.y += 0.002f * CGame::Time().ElapsedGameTime;
 	//DebugOut(L"Pos(%f, %f)\tVeloc(%f, %f)\n", Position.x, Position.y, Velocity.x, Velocity.y);
 }
 
