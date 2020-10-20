@@ -34,6 +34,11 @@ void CGameObject::SetCollisionCalculator(unique_ptr<CollisionCalculator> calc)
 	this->collisionCal = move(calc);
 }
 
+shared_ptr<DataTag> CGameObject::getDataTag()
+{
+	return tags;
+}
+
 Vec2 CGameObject::GetDistance()
 {
 	return Velocity;

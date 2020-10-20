@@ -5,6 +5,7 @@
 #include "IColliable.h"
 #include "CollisionResult.h"
 #include "CollisionCalculator.h"
+#include "DataTag.h"
 
 class CGameObject : public IColliable
 {
@@ -21,7 +22,7 @@ protected:
 
 	unique_ptr<CollisionCalculator> collisionCal;
 
-	//Need DataTag System
+	shared_ptr<DataTag> tags;
 
 public:
 
@@ -42,6 +43,8 @@ public:
 	virtual void SetState(int state) { this->state = state; }
 
 	virtual void SetCollisionCalculator(unique_ptr<CollisionCalculator>);
+
+	virtual shared_ptr<DataTag> getDataTag();
 
 	//Override from ICollidable
 	virtual Vec2 GetDistance() override;

@@ -3,6 +3,7 @@
 ColliableTile::ColliableTile(int id)
 {
     this->id = id;
+    this->tags = make_shared<DataTag>("ColliableTile_" + id);
 }
 
 Vec2 ColliableTile::GetDistance()
@@ -18,6 +19,11 @@ RectF ColliableTile::GetBoundingBox()
 void ColliableTile::SetBoundingBox(RectF r)
 {
     this->boundingBox = r;
+}
+
+shared_ptr<DataTag> ColliableTile::getDataTag()
+{
+    return tags;
 }
 
 bool ColliableTile::IsGetThrough(IColliable& object, Direction direction)

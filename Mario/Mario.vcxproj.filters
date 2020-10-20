@@ -73,7 +73,7 @@
     <Filter Include="Framework\Model\Texture">
       <UniqueIdentifier>{f16a48bb-0ba6-4e10-a72c-bf80a9e061f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\World\GameObject\DataTag">
+    <Filter Include="Framework\DataTag">
       <UniqueIdentifier>{985a2b1e-4593-4c48-86ad-8062a5e558ff}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -198,23 +198,8 @@
     <ClCompile Include="CollisionCalculator.cpp">
       <Filter>Framework\World\Phys\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="ITag.cpp">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
-    </ClCompile>
-    <ClCompile Include="TagArray.cpp">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
-    </ClCompile>
-    <ClCompile Include="TagCompound.cpp">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
-    </ClCompile>
-    <ClCompile Include="TagFloat.cpp">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
-    </ClCompile>
-    <ClCompile Include="TagLong.cpp">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
-    </ClCompile>
-    <ClCompile Include="TagString.cpp">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
+    <ClCompile Include="DataTag.cpp">
+      <Filter>Framework\DataTag</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -329,23 +314,8 @@
     <ClInclude Include="CollisionCalculator.h">
       <Filter>Framework\World\Phys\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="ITag.h">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
-    </ClInclude>
-    <ClInclude Include="TagArray.h">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
-    </ClInclude>
-    <ClInclude Include="TagCompound.h">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
-    </ClInclude>
-    <ClInclude Include="TagFloat.h">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
-    </ClInclude>
-    <ClInclude Include="TagLong.h">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
-    </ClInclude>
-    <ClInclude Include="TagString.h">
-      <Filter>Framework\World\GameObject\DataTag</Filter>
+    <ClInclude Include="DataTag.h">
+      <Filter>Framework\DataTag</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

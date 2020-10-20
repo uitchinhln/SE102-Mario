@@ -67,7 +67,6 @@ int CGame::Run()
 CGame::CGame() {
 	__instance = this;
 	LoadResources();
-	DebugOut(L"Scenes: %d\n", 456);
 }
 
 GameGraphic& CGame::GetGraphic()

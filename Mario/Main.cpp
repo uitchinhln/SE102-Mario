@@ -1,5 +1,6 @@
 #include "Utils.h"
 #include "MarioGame.h";
+#include "DataTag.h"
 
 void LoadResources()
 {
