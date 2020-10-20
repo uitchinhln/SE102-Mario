@@ -6,16 +6,16 @@ class Stopwatch
 public:
 	Stopwatch();
 
-	void Start();
-	void Stop();
-	void Reset();
-	void Restart();
+	virtual void Start();
+	virtual void Stop();
+	virtual void Reset();
+	virtual void Restart();
 
-	bool IsRunning();
+	virtual bool IsRunning();
 
-	long Elapsed();
+	virtual long Elapsed();
 
-private:
+protected:
 	long elapsed;
 	long startTimeStamp;
 	bool isRunning;

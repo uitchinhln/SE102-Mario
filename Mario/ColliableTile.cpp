@@ -11,7 +11,7 @@ Vec2 ColliableTile::GetDistance()
     return Vec2(0, 0);
 }
 
-RectF ColliableTile::GetBoundingBox()
+RectF ColliableTile::GetHitBox()
 {
     return boundingBox;
 }

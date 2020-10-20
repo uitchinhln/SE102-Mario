@@ -12,6 +12,8 @@ void DemoScene::Load()
 
 	this->objects.push_back(make_shared<Mario>());
 	this->objects[0]->SetCollisionCalculator(make_unique<CollisionCalculator>(objects[0]));
+
+	this->camera->SetTracking(objects[0]);
 }
 
 void DemoScene::Update()

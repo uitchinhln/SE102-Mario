@@ -31,6 +31,8 @@ CLayer::CLayer(TiXmlElement* data)
 
 int CLayer::GetTileID(int x, int y)
 {
+	if (x < 0 || x >= width) return 0;
+	if (y < 0 || y >= width) return 0;
 	return tiles[x][y];
 }
 

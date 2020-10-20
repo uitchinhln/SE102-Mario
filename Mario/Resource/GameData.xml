@@ -51,25 +51,14 @@
     <GameContent>
         <GameObjects>
             <Mario>
-                <States>
-                    
+                <ObjectState>
+
                 </States>
             </Mario>
         </GameObjects>
         <Scenes start="demo">
             <Scene id="demo">
                 <TmxMap path="Resource/Xml/NewMap/BigMap/world-1-1-map.tmx">
-                    <SpecialBlock tileId="">
-                        <CollisionEffect>
-                            <Top allowThrough="false">
-                                <Object type="Mario" allowThrough="true"/>
-                                <Object type="Goomba" allowThrough="true"/>
-                            </Top>
-                            <Left allowThrough="true"/>
-                            <Bottom allowThrough="true"/>
-                            <Right allowThrough="true"/>
-                        </CollisionEffect>
-                    </SpecialBlock>
                 </TmxMap>
             </Scene>
         </Scenes>

@@ -8,9 +8,10 @@ void CScene::Unload()
 void CScene::Update()
 {
 	gameMap->Update();
+	camera->Update();
 	
 	for (shared_ptr<CGameObject> obj : objects) {
-		obj->Update(&gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetBoundingBox(), obj->GetDistance()));
+		obj->Update(&gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance()));
 	}
 }
 
@@ -22,4 +23,14 @@ void CScene::Render()
 	{
 		obj->Render();
 	}
+}
+
+shared_ptr<Camera> CScene::GetCamera()
+{
+	return camera;
+}
+
+shared_ptr<CGameMap> CScene::GetGameMap()
+{
+	return gameMap;
 }

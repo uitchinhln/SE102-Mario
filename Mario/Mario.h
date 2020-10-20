@@ -25,7 +25,7 @@ public:
 
 	Vec2 GetDistance() override;
 
-	RectF GetBoundingBox() override;
+	RectF GetHitBox() override;
 
 	bool IsGetThrough(IColliable& object, Direction direction) override;
 };

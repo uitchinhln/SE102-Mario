@@ -1,6 +1,8 @@
 #include "Camera.h"
 #include "Events.h"
 #include "Game.h"
+#include "GameObject.h"
+#include "SceneManager.h"
 
 void Camera::HookEvent()
 {
@@ -30,10 +32,22 @@ Vec2 Camera::GetCamSize()
 	return this->size;
 }
 
+void Camera::SetTracking(weak_ptr<CGameObject> target)
+{
+	this->target = target;
+}
+
 void Camera::Update()
 {
-	if (CGame::GetInstance()->GetKeyBoard().IsKeyDown(DIK_RIGHT)) {
-		//this->Position.x += 5;
+	if (shared_ptr<CGameObject> obj = target.lock()) {
+		Position = obj->GetPosition() - size / 2;
+		Position.y = obj->GetPosition().y - size.y + 27*3 + 16*3;
+		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
+
+		if (Position.x < 0) Position.x = 0;
+		if (Position.y < 0) Position.y = 0;
+		if (Position.x > mapBound.x) Position.x = mapBound.x;
+		if (Position.y > mapBound.y) Position.y = mapBound.y;
 	}
 }
 
@@ -43,9 +57,7 @@ void Camera::OnKeyUp(int key)
 
 void Camera::OnKeyDown(int key)
 {
-	if (key == DIK_RIGHT) {
-		//this->Position.x += 5;
-	}
+	
 }
 
 Camera::~Camera()

@@ -34,6 +34,10 @@ void Mario::OnKeyDown(int key)
 	if (key == DIK_RIGHT) {
 		Velocity.x += 0.2;
 	}
+	if (key == DIK_R) {
+		this->Position = Vec2(100, 800);
+		this->Velocity = Vec2(0, 0);
+	}
 }
 
 Mario::Mario()
@@ -60,17 +64,23 @@ void Mario::Update(vector<shared_ptr<IColliable>>* coObj)
 	}
 	else {
 		Vec2 d = collisionCal->GetNewDistance();
+		Vec2 jet = collisionCal->GetJet();
 		Position += d;
-
-		if (d.x == 0) Velocity.x = 0;
-		if (d.y == 0) Velocity.y = 0;
+		if (Position.x < 0.3) Position.x = 0.3;
+		if (Position.y < 0.3) Position.y = 0.3;
+		
+		if (jet.x != 0) Velocity.x = 0;
+		if (jet.y != 0) Velocity.y = 0;
 	}
+	//DebugOut(L"Pos(%f, %f)\tVeloc(%f, %f)\n", Position.x, Position.y, Velocity.x, Velocity.y);
 }
 
 void Mario::Render()
 {
+	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
+
 	string testid = "ani-big-mario-walk";
-	AnimationManager::GetInstance()->Get(testid)->GetTransform()->Position = this->Position - Vec2(0, 734);
+	AnimationManager::GetInstance()->Get(testid)->GetTransform()->Position = this->Position - cam;
 	AnimationManager::GetInstance()->Get(testid)->Render();
 }
 
@@ -79,9 +89,9 @@ Vec2 Mario::GetDistance()
 	return Velocity*CGame::Time().ElapsedGameTime;
 }
 
-RectF Mario::GetBoundingBox()
+RectF Mario::GetHitBox()
 {
-	return RectF(Position.x, Position.y, Position.x + 19 * 3, Position.y + 27 * 3);
+	return RectF(Position.x, Position.y, Position.x + 15 * 3, Position.y + 27 * 3);
 }
 
 bool Mario::IsGetThrough(IColliable& object, Direction direction)

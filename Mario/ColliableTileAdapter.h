@@ -12,7 +12,7 @@ public:
 
 	virtual Vec2 GetDistance() override;
 
-	virtual RectF GetBoundingBox() override;
+	virtual RectF GetHitBox() override;
 
 	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
 };

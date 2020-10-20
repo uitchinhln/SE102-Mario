@@ -19,7 +19,7 @@ public:
 
 	virtual Vec2 GetDistance() override;
 
-	virtual RectF GetBoundingBox() override;
+	virtual RectF GetHitBox() override;
 	virtual void SetBoundingBox(RectF r);
 
 	virtual shared_ptr<DataTag> getDataTag();

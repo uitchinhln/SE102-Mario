@@ -8,7 +8,7 @@ class IColliable
 {
 public:
 	virtual Vec2 GetDistance() = 0;
-	virtual RectF GetBoundingBox() = 0;
+	virtual RectF GetHitBox() = 0;
 	virtual bool IsGetThrough(IColliable& object, Direction direction) = 0;
 };
 

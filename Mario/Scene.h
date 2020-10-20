@@ -17,6 +17,9 @@ public:
 	virtual void Unload();
 	virtual void Update();
 	virtual void Render();
+
+	virtual shared_ptr<Camera> GetCamera();
+	virtual shared_ptr<CGameMap> GetGameMap();
 };
 
 typedef CScene* Scene;

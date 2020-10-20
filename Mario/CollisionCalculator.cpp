@@ -14,7 +14,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 	if (shared_ptr<IColliable> sp = object.lock()) {
 		for each (shared_ptr<IColliable> coO in (*objects))
 		{
-			SweptAABBResult aabbResult = SweptAABB(sp->GetBoundingBox(), sp->GetDistance() - coO->GetDistance(), coO->GetBoundingBox());
+			SweptAABBResult aabbResult = SweptAABB(sp->GetHitBox(), sp->GetDistance() - coO->GetDistance(), coO->GetHitBox());
 			shared_ptr<CollisionResult> result = make_shared<CollisionResult>(aabbResult, coO);
 
 			if (debug)
@@ -35,7 +35,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 				else {
 					dis.x *= result->SAABBResult.TimeToCollide * 0.999;
 				}
-				SweptAABBResult aabbResult = SweptAABB(sp->GetBoundingBox(), dis, coll->GameColliableObject->GetBoundingBox());
+				SweptAABBResult aabbResult = SweptAABB(sp->GetHitBox(), dis, coll->GameColliableObject->GetHitBox());
 				if (aabbResult.TimeToCollide <= 0 || aabbResult.TimeToCollide > 1.0f) {
 					coll->SAABBResult.TimeToCollide = 9999.0f;
 					break;
@@ -51,7 +51,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 		}
 		sort(results.begin(), results.end(), CollisionResult::LPCompare);
 	}	
-
+	GetNewDistance();
 	return results;
 }
 
@@ -84,9 +84,15 @@ Vec2 CollisionCalculator::GetNewDistance()
 				rdy = c->SAABBResult.Distance.y;
 			}
 		}
+		jet = Vec2(nx, ny);
 		return Vec2(min_tx * d.x + nx * 0.4f, min_ty * d.y + ny * 0.4f);
 	}
 	return VECTOR_0;
+}
+
+Vec2 CollisionCalculator::GetJet()
+{
+	return jet;
 }
 
 SweptAABBResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, bool debug)

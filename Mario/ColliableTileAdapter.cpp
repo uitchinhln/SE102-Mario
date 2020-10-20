@@ -11,9 +11,9 @@ Vec2 ColliableTileAdapter::GetDistance()
 	return source->GetDistance();
 }
 
-RectF ColliableTileAdapter::GetBoundingBox()
+RectF ColliableTileAdapter::GetHitBox()
 {
-	RectF sourceRect = source->GetBoundingBox();
+	RectF sourceRect = source->GetHitBox();
 	return RectF(sourceRect.left + position.x, 
 		sourceRect.top + position.y, 
 		sourceRect.right + position.x, 
