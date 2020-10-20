@@ -39,7 +39,7 @@ public:
 
 	virtual void Render();
 
-	virtual vector<shared_ptr<IColliable>> GetColliableTileAround(Vec2 absolutePosition, Vec2 radius);
+	virtual vector<shared_ptr<IColliable>> GetColliableTileAround(Vec2 absolutePosition, RectF boundingBox, Vec2 radius);
 
 	static shared_ptr<CGameMap> FromTMX(string filePath, string fileName);
 	~CGameMap();

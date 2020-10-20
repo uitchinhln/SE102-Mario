@@ -1,14 +1,13 @@
 #pragma once
-
-#include "TimeSpan.h"
+#include "Utils.h"
 
 class GameTime
 {
 	long previousTicks = 0;
 
 public:
-	TimeSpan TotalGameTime = TimeSpan::Zero();
-	TimeSpan ElapsedGameTime = TimeSpan::Zero();
+	DWORD TotalGameTime = 0;
+	DWORD ElapsedGameTime = 0;
 
 	long GetPreviousTicks()
 	{

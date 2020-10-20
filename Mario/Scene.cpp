@@ -10,7 +10,7 @@ void CScene::Update()
 	gameMap->Update();
 	
 	for (shared_ptr<CGameObject> obj : objects) {
-		obj->Update(&gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetDistance()));
+		obj->Update(&gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetBoundingBox(), obj->GetDistance()));
 	}
 }
 

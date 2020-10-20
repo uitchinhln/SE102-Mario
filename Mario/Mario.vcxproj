@@ -150,6 +150,7 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ColliableTile.cpp" />
     <ClCompile Include="ColliableTileAdapter.cpp" />
+    <ClCompile Include="CollisionCalculator.cpp" />
     <ClCompile Include="CollisionResult.cpp" />
     <ClCompile Include="DemoScene.cpp" />
     <ClCompile Include="Direction.cpp" />
@@ -177,7 +178,6 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="GameTime.cpp" />
-    <ClCompile Include="TimeSpan.cpp" />
     <ClCompile Include="TinyXML\tinystr.cpp" />
     <ClCompile Include="TinyXML\tinyxml.cpp" />
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
@@ -192,6 +192,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ColliableTile.h" />
     <ClInclude Include="ColliableTileAdapter.h" />
+    <ClInclude Include="CollisionCalculator.h" />
     <ClInclude Include="CollisionResult.h" />
     <ClInclude Include="DemoScene.h" />
     <ClInclude Include="Direction.h" />
@@ -218,7 +219,6 @@
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="GameTime.h" />
-    <ClInclude Include="TimeSpan.h" />
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="Transform.h" />

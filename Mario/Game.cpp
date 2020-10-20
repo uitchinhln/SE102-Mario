@@ -43,22 +43,20 @@ int CGame::Run()
 	while (ProcessMessage(msg))
 	{
 		//tick
-		DWORD now = gameTimer.ElapsedMilliseconds();
-		auto accumulatedTime = TimeSpan::FromMilliseconds(now - gameTime.GetPreviousTicks());
+		DWORD now = gameTimer.Elapsed();
+		DWORD accumulatedTime = now - gameTime.GetPreviousTicks();
 		gameTime.SetPreviousTicks(now);
 		gameTime.ElapsedGameTime = accumulatedTime;
 		gameTime.TotalGameTime += accumulatedTime;
 
-		auto deltaTime = (int)gameTime.ElapsedGameTime.Milliseconds();
-
-		if (deltaTime >= tickPerFrame)
+		if (gameTime.ElapsedGameTime >= tickPerFrame)
 		{
 			keyboard->ProcessKeyboard();
 			Update();
 			Render();
 		}
 		else
-			Sleep(tickPerFrame - deltaTime);
+			Sleep(tickPerFrame - gameTime.ElapsedGameTime);
 	}
 
 	isRunning = false;
@@ -103,6 +101,7 @@ CGame::~CGame()
 
 bool CGame::ProcessMessage(MSG& msg)
 {
+	DWORD now = gameTimer.Elapsed();
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
 		if (msg.message == WM_QUIT) return false;
@@ -110,10 +109,11 @@ bool CGame::ProcessMessage(MSG& msg)
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 
-		//if (GetTickCount() - waste >= 3) {
-		//	//DebugOut(L"Waste detected!!!\n");
-		//	frameStart = GetTickCount() - tickPerFrame;
-		//}
+		if (gameTimer.Elapsed() - now >= 3) {
+			//DebugOut(L"Waste detected!!!\n");
+			int tps = 1000 / properties->TickRate;
+			gameTime.SetPreviousTicks(gameTimer.Elapsed() - tps);
+		}
 	}
 	return true;
 }

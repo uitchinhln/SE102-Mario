@@ -26,6 +26,13 @@ void GameGraphic::Init(D3DPRESENT_PARAMETERS d3dpp, HWND hwnd)
 	OutputDebugString(L"[INFO] InitGame done;\n");
 }
 
+Vec2 GameGraphic::GetViewportSize()
+{
+	D3DVIEWPORT9 viewport;
+	this->d3ddv->GetViewport(&viewport);
+	return Vec2(viewport.Width, viewport.Height);
+}
+
 void GameGraphic::Clear(D3DCOLOR color)
 {
 	d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, color, 1.0f, 0);

@@ -49,6 +49,13 @@
         </Resource>
     </Resources>
     <GameContent>
+        <GameObjects>
+            <Mario>
+                <States>
+                    
+                </States>
+            </Mario>
+        </GameObjects>
         <Scenes start="demo">
             <Scene id="demo">
                 <TmxMap path="Resource/Xml/NewMap/BigMap/world-1-1-map.tmx">

@@ -6,6 +6,14 @@ enum MarioState;
 
 class Mario : public CGameObject
 {
+protected:
+	virtual void HookEvent();
+
+	virtual void UnHookEvent();
+
+	virtual void OnKeyUp(int key);
+
+	virtual void OnKeyDown(int key);
 public:
 	Mario();
 

@@ -4,6 +4,7 @@
 #include "Direction.h"
 #include "IColliable.h"
 #include "CollisionResult.h"
+#include "CollisionCalculator.h"
 
 class CGameObject : public IColliable
 {
@@ -18,8 +19,7 @@ protected:
 
 	vector<shared_ptr<CAnimation>> animations;
 
-	void CalcPotentialCollisions(vector<shared_ptr<IColliable>>* objects, vector<CollisionResult>& result);
-	CollisionResult SweptAABBEx(shared_ptr<IColliable> coO);
+	unique_ptr<CollisionCalculator> collisionCal;
 
 	//Need DataTag System
 
@@ -40,6 +40,8 @@ public:
 
 	virtual int GetState() { return this->state; }
 	virtual void SetState(int state) { this->state = state; }
+
+	virtual void SetCollisionCalculator(unique_ptr<CollisionCalculator>);
 
 	//Override from ICollidable
 	virtual Vec2 GetDistance() override;

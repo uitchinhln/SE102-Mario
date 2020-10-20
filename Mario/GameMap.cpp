@@ -64,26 +64,35 @@ void CGameMap::Render()
 	}
 }
 
-vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePosition, Vec2 radius)
+vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePosition, RectF boundingBox, Vec2 radius)
 {
-	Vec2 r = Vec2(radius.x / tileWidth + 1, radius.y / tileHeight + 1);
+	int col = trunc(absolutePosition.x / tileWidth);
+	int row = trunc(absolutePosition.y / tileHeight);
 
-	Vec2 center = Vec2(absolutePosition.x / tileWidth, absolutePosition.y / tileHeight);
+	int col_end = trunc(col + (boundingBox.right - boundingBox.left) / tileWidth);
+	int row_end = trunc(row + (boundingBox.bottom - boundingBox.top) / tileHeight);
+
+	Vec2 r = Vec2((abs(radius.x) + tileWidth * 1) / tileWidth, (abs(radius.y) + tileHeight * 1) / tileHeight);
+
+	//DebugOut(L"R (%f, %f)\n", r.x, r.y);
 
 	vector<shared_ptr<IColliable>> result;
 
-	for (int i = -r.x; i <= r.x; i++) {
-		for (int j = -r.y; j <= r.y; j++) {
-			//if (i == j == 0) continue;
-			if ((center.x + i >= width) || (center.y + j >= height)) continue;
+	for (int i = col-r.x; i <= col_end + r.x; i++) {
+		for (int j = row-r.y; j <= row_end + r.y; j++) {
+
+			if (i >= col && i <= col_end && j >= row && j <= row_end) continue;
+			if ((i > width) || (i < 0) || (j > height) || (j < 0)) continue;
+
 			for (shared_ptr<CLayer> layer : layers) {
-				int id = layer->GetTileID(center.x + i, center.y + j);
+				int id = layer->GetTileID(i, j);
+				//if (id == 107) DebugOut(L"id = %d\n", id);
 				shared_ptr<CTileSet> tileset = GetTileSetByTileID(id);
 				if (tileset) {
 					shared_ptr<ColliableTile> tile = tileset->GetColliableTile(id);
 					if (tile) {
-						int x = ((int)center.x + i) * tileWidth;
-						int y = ((int)center.y + j) * tileHeight;
+						int x = i * tileWidth;
+						int y = j * tileHeight;
 						shared_ptr<ColliableTileAdapter> adapter = make_shared<ColliableTileAdapter>(tile, Vec2(x, y));
 						result.push_back(adapter);
 					}

@@ -1,4 +1,6 @@
 #pragma once
+#include "Utils.h"
+
 enum class Direction
 {
 	Left,
@@ -7,6 +9,10 @@ enum class Direction
 	Bottom,
 	None,
 };
+
+Vec2 ToVector(Direction direction);
+
+string GetDirectionName(Direction direction);
 
 Direction Opposite(Direction input);
 

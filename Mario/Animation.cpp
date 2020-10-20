@@ -34,7 +34,7 @@ void CAnimation::AddFrame(Sprite sprite, DWORD frameTime)
 
 void CAnimation::Render(D3DCOLOR overlay)
 {
-	DWORD now = CGame::Time().TotalGameTime.Milliseconds();
+	DWORD now = CGame::Time().TotalGameTime;
 
 	if (currentFrame == -1)
 	{

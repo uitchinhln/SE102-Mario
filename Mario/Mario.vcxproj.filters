@@ -7,18 +7,6 @@
     <Filter Include="Framework\Event">
       <UniqueIdentifier>{d84a5208-ee2b-40e2-a542-ed3a4e0742b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Model">
-      <UniqueIdentifier>{5154eeb2-49ed-4252-aa77-4b5fe150339b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Model\Animation">
-      <UniqueIdentifier>{e732c9c8-d2fa-44e3-8e1b-718e81cd6cce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Model\Sprite">
-      <UniqueIdentifier>{a9c70b0e-f5a0-4853-a2b0-29e40dd594e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Model\Texture">
-      <UniqueIdentifier>{f16a48bb-0ba6-4e10-a72c-bf80a9e061f0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Utils">
       <UniqueIdentifier>{2f029ec5-d81f-4dfa-aaad-a7782e02d801}</UniqueIdentifier>
     </Filter>
@@ -72,6 +60,18 @@
     </Filter>
     <Filter Include="Framework\Scene\Map\Tile">
       <UniqueIdentifier>{a20bc20e-cd26-4207-aef0-57ade6059f8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Model">
+      <UniqueIdentifier>{5154eeb2-49ed-4252-aa77-4b5fe150339b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Model\Animation">
+      <UniqueIdentifier>{e732c9c8-d2fa-44e3-8e1b-718e81cd6cce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Model\Sprite">
+      <UniqueIdentifier>{a9c70b0e-f5a0-4853-a2b0-29e40dd594e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\Model\Texture">
+      <UniqueIdentifier>{f16a48bb-0ba6-4e10-a72c-bf80a9e061f0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -147,9 +147,6 @@
     <ClCompile Include="AnimationManager.cpp">
       <Filter>Framework\Model\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="TimeSpan.cpp">
-      <Filter>Framework\Time</Filter>
-    </ClCompile>
     <ClCompile Include="GameTime.cpp">
       <Filter>Framework\Time</Filter>
     </ClCompile>
@@ -194,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="ColliableTileAdapter.cpp">
       <Filter>Framework\Scene\Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionCalculator.cpp">
+      <Filter>Framework\World\Phys\Collision</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -260,9 +260,6 @@
     <ClInclude Include="AnimationManager.h">
       <Filter>Framework\Model\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="TimeSpan.h">
-      <Filter>Framework\Time</Filter>
-    </ClInclude>
     <ClInclude Include="GameTime.h">
       <Filter>Framework\Time</Filter>
     </ClInclude>
@@ -307,6 +304,9 @@
     </ClInclude>
     <ClInclude Include="ColliableTileAdapter.h">
       <Filter>Framework\Scene\Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionCalculator.h">
+      <Filter>Framework\World\Phys\Collision</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

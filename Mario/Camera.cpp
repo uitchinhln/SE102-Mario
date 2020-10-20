@@ -33,7 +33,7 @@ Vec2 Camera::GetCamSize()
 void Camera::Update()
 {
 	if (CGame::GetInstance()->GetKeyBoard().IsKeyDown(DIK_RIGHT)) {
-		this->Position.x += 5;
+		//this->Position.x += 5;
 	}
 }
 
@@ -44,7 +44,7 @@ void Camera::OnKeyUp(int key)
 void Camera::OnKeyDown(int key)
 {
 	if (key == DIK_RIGHT) {
-		this->Position.x += 5;
+		//this->Position.x += 5;
 	}
 }
 
