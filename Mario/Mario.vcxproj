@@ -163,6 +163,7 @@
     <ClCompile Include="IColliable.cpp" />
     <ClCompile Include="IRenderable.cpp" />
     <ClCompile Include="IState.cpp" />
+    <ClCompile Include="ITag.cpp" />
     <ClCompile Include="KeyboardProcessor.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -175,6 +176,11 @@
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="StopWatch.cpp" />
+    <ClCompile Include="TagArray.cpp" />
+    <ClCompile Include="TagCompound.cpp" />
+    <ClCompile Include="TagFloat.cpp" />
+    <ClCompile Include="TagLong.cpp" />
+    <ClCompile Include="TagString.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="GameTime.cpp" />
@@ -205,6 +211,7 @@
     <ClInclude Include="IColliable.h" />
     <ClInclude Include="IRenderable.h" />
     <ClInclude Include="IState.h" />
+    <ClInclude Include="ITag.h" />
     <ClInclude Include="KeyboardProcessor.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="GameMap.h" />
@@ -216,6 +223,11 @@
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="StopWatch.h" />
+    <ClInclude Include="TagArray.h" />
+    <ClInclude Include="TagCompound.h" />
+    <ClInclude Include="TagFloat.h" />
+    <ClInclude Include="TagLong.h" />
+    <ClInclude Include="TagString.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="GameTime.h" />
