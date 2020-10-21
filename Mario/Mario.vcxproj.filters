@@ -55,9 +55,6 @@
     <Filter Include="Framework\World\GameObject">
       <UniqueIdentifier>{ce153eed-76eb-46ac-bb3b-32d8d2d3d8c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\World\GameObject\States">
-      <UniqueIdentifier>{edf50899-e339-487c-a205-159af9a915bf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Scene\Map\Tile">
       <UniqueIdentifier>{a20bc20e-cd26-4207-aef0-57ade6059f8d}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,12 @@
     </Filter>
     <Filter Include="Framework\DataTag">
       <UniqueIdentifier>{985a2b1e-4593-4c48-86ad-8062a5e558ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\Mario">
+      <UniqueIdentifier>{22ada859-0c44-45a9-a58a-83eae5589ffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\Mario\MarioState">
+      <UniqueIdentifier>{8fdccc8c-35ba-4469-92e5-f2dbe1a8bcf2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -138,9 +141,6 @@
     <ClCompile Include="RectF.cpp">
       <Filter>Framework\World\Phys</Filter>
     </ClCompile>
-    <ClCompile Include="Mario.cpp">
-      <Filter>MarioGame\Entity</Filter>
-    </ClCompile>
     <ClCompile Include="KeyboardProcessor.cpp">
       <Filter>Framework\Input</Filter>
     </ClCompile>
@@ -171,9 +171,6 @@
     <ClCompile Include="StopWatch.cpp">
       <Filter>Framework\Time</Filter>
     </ClCompile>
-    <ClCompile Include="IState.cpp">
-      <Filter>Framework\World\GameObject\States</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Framework\World\GameObject</Filter>
     </ClCompile>
@@ -194,6 +191,15 @@
     </ClCompile>
     <ClCompile Include="DataTag.cpp">
       <Filter>Framework\DataTag</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>MarioGame\Entity\Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="Small.cpp">
+      <Filter>MarioGame\Entity\Mario\MarioState</Filter>
+    </ClCompile>
+    <ClCompile Include="AbstractMarioState.cpp">
+      <Filter>MarioGame\Entity\Mario\MarioState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -251,9 +257,6 @@
     <ClInclude Include="RectF.h">
       <Filter>Framework\World\Phys</Filter>
     </ClInclude>
-    <ClInclude Include="Mario.h">
-      <Filter>MarioGame\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="KeyboardProcessor.h">
       <Filter>Framework\Input</Filter>
     </ClInclude>
@@ -284,9 +287,6 @@
     <ClInclude Include="StopWatch.h">
       <Filter>Framework\Time</Filter>
     </ClInclude>
-    <ClInclude Include="IState.h">
-      <Filter>Framework\World\GameObject\States</Filter>
-    </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Framework\World\GameObject</Filter>
     </ClInclude>
@@ -307,6 +307,15 @@
     </ClInclude>
     <ClInclude Include="DataTag.h">
       <Filter>Framework\DataTag</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>MarioGame\Entity\Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="Small.h">
+      <Filter>MarioGame\Entity\Mario\MarioState</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractMarioState.h">
+      <Filter>MarioGame\Entity\Mario\MarioState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

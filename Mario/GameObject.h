@@ -36,7 +36,9 @@ public:
 
 	virtual void InitResource();
 
+	virtual void PhysicUpdate();
 	virtual void Update(vector<shared_ptr<IColliable>>* coObj);
+
 	virtual void Render() = 0;
 
 	virtual int GetState() { return this->state; }

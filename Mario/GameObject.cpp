@@ -24,6 +24,10 @@ void CGameObject::InitResource()
 {
 }
 
+void CGameObject::PhysicUpdate()
+{
+}
+
 void CGameObject::Update(vector<shared_ptr<IColliable>>* coObj)
 {
 

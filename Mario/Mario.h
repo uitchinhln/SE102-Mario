@@ -1,12 +1,17 @@
 #pragma once
 #include "Utils.h"
 #include "GameObject.h"
+#include "AbstractMarioState.h"
 
 enum MarioState;
 
 class Mario : public CGameObject
 {
 protected:
+	Vec2 accelerate;
+
+	AbstractMarioState mState;
+
 	virtual void HookEvent();
 
 	virtual void UnHookEvent();
@@ -18,6 +23,8 @@ public:
 	Mario();
 
 	void InitResource() override;
+
+	virtual void PhysicUpdate();
 
 	void Update(vector<shared_ptr<IColliable>>* coObj) override;
 
