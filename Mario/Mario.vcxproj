@@ -162,11 +162,9 @@
     <ClCompile Include="GameProperty.cpp" />
     <ClCompile Include="GameWindow.cpp" />
     <ClCompile Include="IColliable.cpp" />
-    <ClCompile Include="IRenderable.cpp" />
     <ClCompile Include="IState.cpp" />
     <ClCompile Include="KeyboardProcessor.cpp" />
     <ClCompile Include="Layer.cpp" />
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioGame.cpp" />
@@ -205,7 +203,6 @@
     <ClInclude Include="GameProperty.h" />
     <ClInclude Include="GameWindow.h" />
     <ClInclude Include="IColliable.h" />
-    <ClInclude Include="IRenderable.h" />
     <ClInclude Include="IState.h" />
     <ClInclude Include="KeyboardProcessor.h" />
     <ClInclude Include="Layer.h" />

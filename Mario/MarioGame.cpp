@@ -46,3 +46,10 @@ void MarioGame::Draw()
 	graphic->Clear(D3DCOLOR_XRGB(255, 255, 255));
 	SceneManager::GetInstance()->Render();
 }
+
+
+int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+{
+	(new MarioGame())->Run();
+	return 0;
+}

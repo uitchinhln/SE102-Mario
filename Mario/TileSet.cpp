@@ -46,7 +46,7 @@ CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
 
 				tile->SetBoundingBox(rect);
 
-				this->colliableTiles[id] = tile;
+				this->colliableTiles[id+firstgid] = tile;
 			}
 		}
 	}

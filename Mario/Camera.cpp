@@ -42,7 +42,9 @@ void Camera::Update()
 	if (shared_ptr<CGameObject> obj = target.lock()) {
 		Position = obj->GetPosition() - size / 2;
 		Position.y = obj->GetPosition().y - size.y + 27*3 + 16*3;
+		
 		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
+		mapBound -= size;
 
 		if (Position.x < 0) Position.x = 0;
 		if (Position.y < 0) Position.y = 0;

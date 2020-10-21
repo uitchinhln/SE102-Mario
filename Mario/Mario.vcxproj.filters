@@ -105,9 +105,6 @@
     <ClCompile Include="SpriteManager.cpp">
       <Filter>Framework\Model\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>MarioGame</Filter>
-    </ClCompile>
     <ClCompile Include="AnimationFrame.cpp">
       <Filter>Framework\Model\Animation</Filter>
     </ClCompile>
@@ -163,9 +160,6 @@
       <Filter>Framework\World\Phys</Filter>
     </ClCompile>
     <ClCompile Include="GameWindow.cpp">
-      <Filter>Framework\Graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="IRenderable.cpp">
       <Filter>Framework\Graphic</Filter>
     </ClCompile>
     <ClCompile Include="CollisionResult.cpp">
@@ -279,9 +273,6 @@
       <Filter>Framework\World\Phys</Filter>
     </ClInclude>
     <ClInclude Include="GameWindow.h">
-      <Filter>Framework\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="IRenderable.h">
       <Filter>Framework\Graphic</Filter>
     </ClInclude>
     <ClInclude Include="CollisionResult.h">

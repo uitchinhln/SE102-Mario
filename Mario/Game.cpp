@@ -111,7 +111,7 @@ bool CGame::ProcessMessage(MSG& msg)
 		if (gameTimer.Elapsed() - now >= 3) {
 			//DebugOut(L"Waste detected!!!\n");
 			int tps = 1000 / properties->TickRate;
-			gameTime.SetPreviousTicks(gameTimer.Elapsed() - tps);
+			//gameTime.SetPreviousTicks(gameTimer.Elapsed() - tps);
 		}
 	}
 	return true;

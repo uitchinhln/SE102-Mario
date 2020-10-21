@@ -18,6 +18,6 @@ void DemoScene::Load()
 
 void DemoScene::Update()
 {
-	camera->Update();
 	CScene::Update();
+	camera->Update();
 }
