@@ -14,6 +14,10 @@ void AbstractMarioState::Update(vector<shared_ptr<CollisionResult>> collisions)
 {
 }
 
+void AbstractMarioState::PhysicUpdate()
+{
+}
+
 void AbstractMarioState::Render()
 {
 }
