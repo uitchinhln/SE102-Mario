@@ -79,6 +79,9 @@
     <Filter Include="MarioGame\Entity\Mario\MarioState">
       <UniqueIdentifier>{8fdccc8c-35ba-4469-92e5-f2dbe1a8bcf2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\World\Phys\Enviroment">
+      <UniqueIdentifier>{9b42d7be-a11e-4e04-97a5-e92646bafb5e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">

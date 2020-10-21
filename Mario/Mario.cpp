@@ -19,20 +19,25 @@ void Mario::UnHookEvent()
 void Mario::OnKeyUp(int key)
 {
 	if (key == DIK_LEFT) {
-		accelerate.x = -0.0015;
+		accelerate.x = 0;
 	}
 	if (key == DIK_RIGHT) {
-		accelerate.x = 0.0015;
+		accelerate.x = 0;
 	}
 }
 
 void Mario::OnKeyDown(int key)
 {
 	if (key == DIK_LEFT) {
-		accelerate.x = 0;
+		accelerate.x = -0.7/1000.0f;
+		facing = -1;
 	}
 	if (key == DIK_RIGHT) {
-		accelerate.x = 0;
+		accelerate.x = 0.7/1000.0f;
+		facing = 1;
+	}	
+	if (key == DIK_A) {
+		accelerate.x += 0.7 / 1000.0f;
 	}
 	if (key == DIK_R) {
 		this->Position = Vec2(1000, 800);
@@ -42,7 +47,7 @@ void Mario::OnKeyDown(int key)
 
 Mario::Mario()
 {
-	this->Position = Vec2(0, 0);
+	this->Position = Vec2(100, 300);
 	this->Velocity = Vec2(0, 0);
 	this->accelerate = Vec2(0, 0);
 	HookEvent();
@@ -54,13 +59,20 @@ void Mario::InitResource()
 
 void Mario::PhysicUpdate()
 {
-	accelerate.y = 0.00098;
-	Velocity += accelerate * 0.5 * CGame::Time().ElapsedGameTime * CGame::Time().ElapsedGameTime;
+	DWORD dt = CGame::Time().ElapsedGameTime;
+	accelerate.y = 10.0f/1000;
+	Distance = Velocity * dt + 0.5 * accelerate * dt * dt;
+
+	//update for next tick
+	Velocity += accelerate * dt;
+	if (accelerate.x == 0) {
+		Velocity.x *= pow(0.993, dt);
+	}
 }
 
 void Mario::Update(vector<shared_ptr<IColliable>>* coObj)
 {
-	vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, true);
+	vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);
 
 	// No collision occured, proceed normally
 	if (coResult.size() == 0)
@@ -68,17 +80,23 @@ void Mario::Update(vector<shared_ptr<IColliable>>* coObj)
 		Position += GetDistance();
 	}
 	else {
-		Vec2 d = collisionCal->GetNewDistance();
+		Distance = collisionCal->GetNewDistance();
 		Vec2 jet = collisionCal->GetJet();
-		Position += d;
+		Position += GetDistance();
 		
 		if (jet.x != 0) Velocity.x = 0;
 		if (jet.y != 0) Velocity.y = 0;
 	}
 
 	//fixed position
-	if (Position.x < 0.3) Position.x = 0.3;
-	if (Position.y < 0.3) Position.y = 0.3;
+	if (Position.x < 0.3) {
+		Position.x = 0.3;
+		Velocity.x = 0;
+	}
+	if (Position.y < 0.3) {
+		Position.y = 0.3;
+		Velocity.y = 0;
+	}
 }
 
 void Mario::Render()
@@ -92,7 +110,7 @@ void Mario::Render()
 
 Vec2 Mario::GetDistance()
 {
-	return Velocity*CGame::Time().ElapsedGameTime;
+	return Distance;
 }
 
 RectF Mario::GetHitBox()

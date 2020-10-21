@@ -14,6 +14,8 @@ protected:
 
 	Vec2 Velocity;
 
+	int facing = 1;
+
 	int state;
 
 	Direction direction;

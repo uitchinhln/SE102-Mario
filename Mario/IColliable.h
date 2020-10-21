@@ -6,6 +6,9 @@ struct SweptAABBResult;
 
 class IColliable
 {
+protected:
+	Vec2 Distance;
+
 public:
 	virtual Vec2 GetDistance() = 0;
 	virtual RectF GetHitBox() = 0;
