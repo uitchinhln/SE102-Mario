@@ -11,6 +11,8 @@ public:
 
 	virtual void Update(vector<shared_ptr<CollisionResult>> collisions);
 
+	virtual void PhysicUpdate();
+
 	virtual void Render();
 
 protected:

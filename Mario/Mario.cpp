@@ -65,9 +65,6 @@ void Mario::PhysicUpdate()
 
 	//update for next tick
 	Velocity += accelerate * dt;
-	if (accelerate.x == 0) {
-		Velocity.x *= pow(0.993, dt);
-	}
 }
 
 void Mario::Update(vector<shared_ptr<IColliable>>* coObj)
