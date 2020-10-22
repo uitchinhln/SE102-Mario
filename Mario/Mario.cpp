@@ -103,7 +103,7 @@ void Mario::Render()
 {
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
-	string testid = "ani-big-mario-walk";
+	string testid = "ani-big-mario-idle";
 	AnimationManager::GetInstance()->Get(testid)->GetTransform()->Position = this->Position - cam;
 	AnimationManager::GetInstance()->Get(testid)->Render();
 }

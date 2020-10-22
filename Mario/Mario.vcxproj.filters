@@ -82,6 +82,9 @@
     <Filter Include="Framework\World\Phys\Enviroment">
       <UniqueIdentifier>{9b42d7be-a11e-4e04-97a5-e92646bafb5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Config">
+      <UniqueIdentifier>{fc5cf9a3-42e1-4660-8b60-480e1d4f296a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
