@@ -89,7 +89,6 @@ vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePos
 
 			for (shared_ptr<CLayer> layer : layers) {
 				int id = layer->GetTileID(i, j);
-				//if (id == 107) DebugOut(L"id = %d\n", id);
 				shared_ptr<CTileSet> tileset = GetTileSetByTileID(id);
 				if (tileset) {
 					shared_ptr<ColliableTile> tile = tileset->GetColliableTile(id);

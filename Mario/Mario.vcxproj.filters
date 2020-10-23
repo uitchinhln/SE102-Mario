@@ -76,14 +76,14 @@
     <Filter Include="MarioGame\Entity\Mario">
       <UniqueIdentifier>{22ada859-0c44-45a9-a58a-83eae5589ffb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\Entity\Mario\MarioState">
-      <UniqueIdentifier>{8fdccc8c-35ba-4469-92e5-f2dbe1a8bcf2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\World\Phys\Enviroment">
       <UniqueIdentifier>{9b42d7be-a11e-4e04-97a5-e92646bafb5e}</UniqueIdentifier>
     </Filter>
     <Filter Include="MarioGame\Config">
       <UniqueIdentifier>{fc5cf9a3-42e1-4660-8b60-480e1d4f296a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\Mario\MarioPowerUps">
+      <UniqueIdentifier>{8fdccc8c-35ba-4469-92e5-f2dbe1a8bcf2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -137,9 +137,6 @@
     </ClCompile>
     <ClCompile Include="GameMap.cpp">
       <Filter>Framework\Scene\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="DemoScene.cpp">
-      <Filter>MarioGame\Scene1</Filter>
     </ClCompile>
     <ClCompile Include="Events.cpp">
       <Filter>Framework\Event</Filter>
@@ -202,11 +199,21 @@
       <Filter>MarioGame\Entity\Mario</Filter>
     </ClCompile>
     <ClCompile Include="Small.cpp">
-      <Filter>MarioGame\Entity\Mario\MarioState</Filter>
+      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractMarioState.cpp">
-      <Filter>MarioGame\Entity\Mario\MarioState</Filter>
+    <ClCompile Include="Config.cpp">
+      <Filter>MarioGame\Config</Filter>
     </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>MarioGame\Scene1</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioPowerUp.cpp">
+      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
+    </ClCompile>
+    <ClCompile Include="BigMario.cpp">
+      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
+    </ClCompile>
+    <ClCompile Include="FireMario.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -253,9 +260,6 @@
     </ClInclude>
     <ClInclude Include="GameMap.h">
       <Filter>Framework\Scene\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="DemoScene.h">
-      <Filter>MarioGame\Scene1</Filter>
     </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>Framework\Event</Filter>
@@ -318,10 +322,23 @@
       <Filter>MarioGame\Entity\Mario</Filter>
     </ClInclude>
     <ClInclude Include="Small.h">
-      <Filter>MarioGame\Entity\Mario\MarioState</Filter>
+      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractMarioState.h">
-      <Filter>MarioGame\Entity\Mario\MarioState</Filter>
+    <ClInclude Include="Config.h">
+      <Filter>MarioGame\Config</Filter>
     </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>MarioGame\Scene1</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioPowerUp.h">
+      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityType.h">
+      <Filter>MarioGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="BigMario.h">
+      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="FireMario.h" />
   </ItemGroup>
 </Project>

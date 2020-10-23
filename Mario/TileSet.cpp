@@ -44,7 +44,7 @@ CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
 				rect.right = rect.right + rect.left;
 				rect.bottom = rect.top + rect.bottom;
 
-				tile->SetBoundingBox(rect);
+				tile->SetHitBox(rect);
 
 				this->colliableTiles[id+firstgid] = tile;
 			}

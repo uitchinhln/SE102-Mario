@@ -11,7 +11,7 @@ void CScene::Update()
 	camera->Update();
 	
 	for (shared_ptr<CGameObject> obj : objects) {
-		obj->PhysicUpdate();
+		vector<shared_ptr<IColliable>> objs;
 		obj->Update(&gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance()));
 	}
 }

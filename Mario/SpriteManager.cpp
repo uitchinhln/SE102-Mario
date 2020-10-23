@@ -18,7 +18,7 @@ Sprite SpriteManager::Get(string id)
 	return sprites[id];
 }
 
-void SpriteManager::ImportFromXml(const char* filePath)
+void SpriteManager::ImportFromXml(string textureId, const char* filePath)
 {
 	TiXmlDocument doc(filePath);
 	if (doc.LoadFile())
@@ -28,7 +28,7 @@ void SpriteManager::ImportFromXml(const char* filePath)
 		if (pRoot)
 		{
 			TiXmlElement* pSprites = pRoot->FirstChildElement();
-			LPDIRECT3DTEXTURE9 texture = TextureManager::GetInstance()->Get(pSprites->Attribute("textureId"));
+			LPDIRECT3DTEXTURE9 texture = TextureManager::GetInstance()->Get(textureId);
 
 			for (TiXmlElement* pNode = pSprites->FirstChildElement(); pNode != nullptr; pNode = pNode->NextSiblingElement()) {
 				string id = pNode->Attribute("id");

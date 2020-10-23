@@ -1,16 +1,46 @@
 #pragma once
 #include "Utils.h"
 #include "GameObject.h"
-#include "AbstractMarioState.h"
+#include "MarioPowerUp.h"
 
-enum MarioState;
+enum class MovingStates {
+	IDLE,
+	WALK,
+	RUN,
+	CROUCH
+};
 
-class Mario : public CGameObject
+enum class JumpingStates {
+	IDLE,
+	JUMP,
+	HIGH_JUMP,
+	FALLING
+};
+
+class Mario : 
+	public CGameObject,
+	public std::enable_shared_from_this<Mario>
 {
+private:
+
 protected:
+	bool onGround = true;
+
+	float drag = 0;
+
+	int skid = 0;
+
+	int canHighJump = true;
+
+	float powerMeter = 0;
+
 	Vec2 accelerate;
 
-	AbstractMarioState mState;
+	MovingStates movingState = MovingStates::IDLE;
+
+	JumpingStates jumpingState = JumpingStates::IDLE;
+
+	shared_ptr<MarioPowerUp> powerUp;
 
 	virtual void HookEvent();
 
@@ -22,35 +52,48 @@ protected:
 public:
 	Mario();
 
-	void InitResource() override;
+	virtual void InitResource() override;
 
-	virtual void PhysicUpdate();
+	virtual void Update(vector<shared_ptr<IColliable>>* coObj) override;
 
-	void Update(vector<shared_ptr<IColliable>>* coObj) override;
+	virtual void Render() override;
 
-	void Render() override;
+	virtual float& GetDrag();
 
-	Vec2 GetDistance() override;
+	virtual void SetDrag(float drag);
 
-	RectF GetHitBox() override;
+	virtual int& GetSkid();
+
+	virtual void SetSkid(int skid);
+
+	virtual int& CanHighJump();
+
+	virtual void SetCanHighJump(bool value);
+
+	virtual float& GetPowerMeter();
+
+	virtual void SetPowerMeter(float value);
+	
+	virtual bool IsOnGround();
+
+	virtual void SetOnGround(bool value);
+
+	virtual Vec2& GetDistance() override;
+
+	virtual Vec2& GetAccelerate();
+
+	virtual RectF GetHitBox() override;
+
+	virtual MovingStates& GetMovingState();
+
+	virtual void SetMovingState(MovingStates state);
+
+	virtual JumpingStates& GetJumpingState();
+
+	virtual void SetJumpingState(JumpingStates state);
+
+	virtual int GetObjectType();
 
 	bool IsGetThrough(IColliable& object, Direction direction) override;
-};
-
-enum MarioState {
-	IDLE_FRONT,
-	IDLE,
-	WALK,
-	SKID,
-	RUN,
-	JUMP,
-	HIGH_JUMP,
-	DIE,
-	SLIDE,
-	HOLD,
-	KICK,
-	DIVE,
-	SWIM,
-	CLIMB
 };
 

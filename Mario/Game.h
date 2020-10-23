@@ -26,7 +26,7 @@ public:
 	~CGame();
 
 protected:
-	CGame();
+	CGame(GameProperties properties);
 
 	unique_ptr<GameWindow> window;
 	unique_ptr<GameGraphic> graphic;

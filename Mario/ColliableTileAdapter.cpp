@@ -6,7 +6,7 @@ ColliableTileAdapter::ColliableTileAdapter(shared_ptr<ColliableTile> source, Vec
 	this->position = position;
 }
 
-Vec2 ColliableTileAdapter::GetDistance()
+Vec2& ColliableTileAdapter::GetDistance()
 {
 	return source->GetDistance();
 }

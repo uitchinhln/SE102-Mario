@@ -6,7 +6,7 @@ ColliableTile::ColliableTile(int id)
     this->tags = make_shared<DataTag>("ColliableTile_" + id);
 }
 
-Vec2 ColliableTile::GetDistance()
+Vec2& ColliableTile::GetDistance()
 {
     return Vec2(0, 0);
 }
@@ -16,7 +16,7 @@ RectF ColliableTile::GetHitBox()
     return boundingBox;
 }
 
-void ColliableTile::SetBoundingBox(RectF r)
+void ColliableTile::SetHitBox(RectF r)
 {
     this->boundingBox = r;
 }

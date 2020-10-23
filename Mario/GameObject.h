@@ -10,6 +10,8 @@
 class CGameObject : public IColliable
 {
 protected:
+	float Gravity = 0;
+
 	Vec2 Position;
 
 	Vec2 Velocity;
@@ -18,11 +20,9 @@ protected:
 
 	int state;
 
-	Direction direction;
-
 	vector<shared_ptr<CAnimation>> animations;
 
-	unique_ptr<CollisionCalculator> collisionCal;
+	shared_ptr<CollisionCalculator> collisionCal;
 
 	shared_ptr<DataTag> tags;
 
@@ -30,28 +30,40 @@ public:
 
 	CGameObject();
 
-	virtual Vec2 GetPosition();
+	virtual float& GetGravity();
 
-	virtual Direction GetDirection();
+	virtual Vec2& GetPosition();
 
-	virtual void SetDirection(Direction direction);
+	virtual void SetPosition(Vec2 pos);
+
+	virtual Vec2& GetVelocity();
+
+	virtual void SetVelocity(Vec2 velocity);
+
+	virtual int GetFacing();
+
+	virtual void SetFacing(int direction);
 
 	virtual void InitResource();
 
-	virtual void PhysicUpdate();
 	virtual void Update(vector<shared_ptr<IColliable>>* coObj);
 
 	virtual void Render() = 0;
 
 	virtual int GetState() { return this->state; }
+
 	virtual void SetState(int state) { this->state = state; }
 
-	virtual void SetCollisionCalculator(unique_ptr<CollisionCalculator>);
+	virtual void SetCollisionCalculator(shared_ptr<CollisionCalculator>);
+
+	virtual shared_ptr<CollisionCalculator> GetCollisionCalc();
 
 	virtual shared_ptr<DataTag> getDataTag();
 
 	//Override from ICollidable
-	virtual Vec2 GetDistance() override;
+	virtual Vec2& GetDistance() override;
+
+	virtual int GetObjectType() = 0;
 
 	~CGameObject();
 };

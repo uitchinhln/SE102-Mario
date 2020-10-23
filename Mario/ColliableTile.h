@@ -17,10 +17,10 @@ public:
 
 	int GetID() { return this->id; }
 
-	virtual Vec2 GetDistance() override;
+	virtual Vec2& GetDistance() override;
 
 	virtual RectF GetHitBox() override;
-	virtual void SetBoundingBox(RectF r);
+	virtual void SetHitBox(RectF r);
 
 	virtual shared_ptr<DataTag> getDataTag();
 

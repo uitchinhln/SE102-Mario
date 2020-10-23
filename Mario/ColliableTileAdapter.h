@@ -10,7 +10,7 @@ class ColliableTileAdapter : public IColliable
 public:
 	ColliableTileAdapter(shared_ptr<ColliableTile> source, Vec2 position);
 
-	virtual Vec2 GetDistance() override;
+	virtual Vec2& GetDistance() override;
 
 	virtual RectF GetHitBox() override;
 

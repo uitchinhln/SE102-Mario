@@ -144,7 +144,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AbstractMarioState.cpp" />
+    <ClCompile Include="BigMario.cpp" />
+    <ClCompile Include="FireMario.cpp" />
+    <ClCompile Include="MarioPowerUp.cpp" />
     <ClCompile Include="Animation.cpp" />
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
@@ -153,8 +155,8 @@
     <ClCompile Include="ColliableTileAdapter.cpp" />
     <ClCompile Include="CollisionCalculator.cpp" />
     <ClCompile Include="CollisionResult.cpp" />
+    <ClCompile Include="Config.cpp" />
     <ClCompile Include="DataTag.cpp" />
-    <ClCompile Include="DemoScene.cpp" />
     <ClCompile Include="Direction.cpp" />
     <ClCompile Include="Events.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -168,6 +170,7 @@
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioGame.cpp" />
+    <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="RectF.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -186,7 +189,10 @@
     <ClCompile Include="Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractMarioState.h" />
+    <ClInclude Include="BigMario.h" />
+    <ClInclude Include="EntityType.h" />
+    <ClInclude Include="FireMario.h" />
+    <ClInclude Include="MarioPowerUp.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="AnimationManager.h" />
@@ -195,8 +201,8 @@
     <ClInclude Include="ColliableTileAdapter.h" />
     <ClInclude Include="CollisionCalculator.h" />
     <ClInclude Include="CollisionResult.h" />
+    <ClInclude Include="Config.h" />
     <ClInclude Include="DataTag.h" />
-    <ClInclude Include="DemoScene.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="Game.h" />
@@ -210,6 +216,7 @@
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioGame.h" />
+    <ClInclude Include="PlayScene.h" />
     <ClInclude Include="RectF.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />

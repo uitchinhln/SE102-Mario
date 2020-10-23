@@ -1,26 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Game>
-    <Settings>
-        <GameLoop>
-            <TickRate value="120"/>
-        </GameLoop>    
-        <Window>
-            <ScreenSize width="800" height="600" />
-            <SindowTitle value="Mario Game"/>
-            <Icon path=""/>
-        </Window>
-        <KeyMap>
-            <MoveLeft key=""/>
-            <MoveRight key=""/>
-            <MoveDown key=""/>
-            <MoveUp key=""/>
-            <Sit key=""/>
-            <Jump key=""/>
-            <HighJump key=""/>
-            <Accelerate key=""/>
-            <Choose key=""/>
-        </KeyMap>
-    </Settings>
     <Resources>
         <Resource textureId="tex-mario">
             <Texture path="Resource/Xml/Textures/Mario/Mario_x3.png" transparent="0,255,255,255"/>
@@ -49,6 +28,19 @@
         </Resource>
     </Resources>
     <GameContent>        
+        <Objects>
+            <Mario>
+                <PowerUps>
+                    <Small>
+                        <Idle aniId=""/>
+                        <Walk aniId=""/>
+                    </Small>
+                    <Big>
+                        <Idle aniId=""/>
+                    </Big>
+                </PowerUps>
+            </Mario>
+        </Objects>
         <Scenes start="demo">
             <Scene id="demo">
                 <TmxMap path="Resource/Xml/NewMap/BigMap/world-1-1-map.tmx">

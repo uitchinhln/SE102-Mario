@@ -64,8 +64,9 @@ int CGame::Run()
 }
 
 
-CGame::CGame() {
+CGame::CGame(GameProperties properties) {
 	__instance = this;
+	Init(properties);
 	LoadResources();
 }
 
@@ -131,8 +132,6 @@ void CGame::Init(GameProperties properties)
 	keyboard->InitKeyboard(window->GetWindowHandler());
 
 	this->properties = properties;
-
-	LoadResources();
 
 	initialized = true;
 }

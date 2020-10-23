@@ -16,7 +16,7 @@ public:
 	
 	virtual Animation Get(string id);
 
-	virtual void ImportFromXml(const char* filePath);
+	virtual void ImportFromXml(string textureId, const char* filePath);
 
 	static AnimationManager* GetInstance();
 

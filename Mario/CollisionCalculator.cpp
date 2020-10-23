@@ -30,10 +30,12 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 				if (result->GameColliableObject->IsGetThrough(*sp, result->SAABBResult.Direction)) continue;
 				Vec2 dis = (sp->GetDistance() - coll->GameColliableObject->GetDistance());
 				if (ToVector(coll->SAABBResult.Direction).x != 0) {
-					dis.y *= result->SAABBResult.TimeToCollide * 0.999;
+					dis.y *= result->SAABBResult.TimeToCollide;
+					dis.y -= 0.1;
 				}
 				else {
-					dis.x *= result->SAABBResult.TimeToCollide * 0.999;
+					dis.x *= result->SAABBResult.TimeToCollide;
+					dis.x -= 0.1;
 				}
 				SweptAABBResult aabbResult = SweptAABB(sp->GetHitBox(), dis, coll->GameColliableObject->GetHitBox());
 				if (aabbResult.TimeToCollide <= 0 || aabbResult.TimeToCollide > 1.0f) {

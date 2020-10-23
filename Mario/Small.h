@@ -1,10 +1,10 @@
 #pragma once
-#include "AbstractMarioState.h"
+#include "MarioPowerUp.h"
 class Small :
-	public AbstractMarioState
+	public MarioPowerUp
 {
 public:
-
+	Small(shared_ptr<Mario> mario);
 protected:
 	
 };

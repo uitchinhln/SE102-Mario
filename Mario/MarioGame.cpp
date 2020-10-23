@@ -1,39 +1,37 @@
 #include "MarioGame.h"
-#include "DemoScene.h"
 #include "AnimationManager.h"
 #include "TextureManager.h"
 #include "SpriteManager.h"
 #include "SceneManager.h"
 
-MarioGame::MarioGame() {
-	GameProperties properties = new CGameProperties();
-	Init(properties);
+MarioGame::MarioGame() : CGame(new CGameProperties())
+{
+	LoadResources();
 }
 
 void MarioGame::LoadResources()
 {
-	TextureManager::GetInstance()->Add("tex-mario", L"Resource/Xml/Textures/Mario/Mario_x3.png", D3DCOLOR_ARGB(0, 255, 255, 255));
-	SpriteManager::GetInstance()->ImportFromXml("Resource/Xml/Textures/Mario/MarioDB.xml");
-	AnimationManager::GetInstance()->ImportFromXml("Resource/Xml/Textures/Mario/MarioAnim.xml");
+	TiXmlDocument doc("Resource/GameData.xml");
 
-	TextureManager::GetInstance()->Add("tex-enemy", L"Resource/Xml/Textures/Enemy/enemy_x3.png", D3DCOLOR_ARGB(0, 255, 255, 255));
-	SpriteManager::GetInstance()->ImportFromXml("Resource/Xml/Textures/Enemy/EnemyDB.xml");
-	AnimationManager::GetInstance()->ImportFromXml("Resource/Xml/Textures/Enemy/EnemyAnim.xml");
+	if (doc.LoadFile()) {
+		TiXmlElement* root = doc.RootElement();
+		TiXmlElement* resources = root->FirstChildElement("Resources");
 
-	TextureManager::GetInstance()->Add("tex-intro", L"Resource/Xml/Textures/Misc/Intro/intro_x3.png", D3DCOLOR_ARGB(0, 255, 255, 255));
-	SpriteManager::GetInstance()->ImportFromXml("Resource/Xml/Textures/Misc/Intro/IntroDB.xml");
-	AnimationManager::GetInstance()->ImportFromXml("Resource/Xml/Textures/Misc/Intro/IntroAnim.xml");
+		for (TiXmlElement* node = resources->FirstChildElement("Resource"); node !=nullptr; node = node->NextSiblingElement("Resource"))
+		{
+			string textureId = node->Attribute("textureId");
+			string texturesPath = node->FirstChildElement("Texture")->Attribute("path");
+			string spritesPath = node->FirstChildElement("SpriteDB")->Attribute("path");
+			string animationsPath = node->FirstChildElement("AnimationDB")->Attribute("path");
 
-	TextureManager::GetInstance()->Add("tex-misc", L"Resource/Xml/Textures/Misc/Misc (Goods_Item)/misc_x3.png", D3DCOLOR_ARGB(0, 255, 255, 255));
-	SpriteManager::GetInstance()->ImportFromXml("Resource/Xml/Textures/Misc/Misc (Goods_Item)/MiscDB.xml");
-	AnimationManager::GetInstance()->ImportFromXml("Resource/Xml/Textures/Misc/Misc (Goods_Item)/MiscAnim.xml");
+			TextureManager::GetInstance()->Add(textureId, ToLPCWSTR(texturesPath), D3DCOLOR_ARGB(0, 255, 255, 255));
+			SpriteManager::GetInstance()->ImportFromXml(textureId, spritesPath.c_str());
+			AnimationManager::GetInstance()->ImportFromXml(textureId, animationsPath.c_str());
+		}
+		
 
-	TextureManager::GetInstance()->Add("tex-ui", L"Resource/Xml/Textures/Misc/UI/UI_x3.png", D3DCOLOR_ARGB(0, 0, 0, 0));
-	SpriteManager::GetInstance()->ImportFromXml("Resource/Xml/Textures/Misc/UI/UiDB.xml");
-	AnimationManager::GetInstance()->ImportFromXml("Resource/Xml/Textures/Misc/UI/UiAnim.xml");
+	}
 
-	SceneManager::GetInstance()->AddScene("demo", make_shared<DemoScene>());
-	SceneManager::GetInstance()->ActiveScene("demo");
 }
 
 void MarioGame::Update()
@@ -43,10 +41,9 @@ void MarioGame::Update()
 
 void MarioGame::Draw()
 {
-	graphic->Clear(D3DCOLOR_XRGB(255, 255, 255));
+	graphic->Clear(D3DCOLOR_XRGB(181, 235, 242));
 	SceneManager::GetInstance()->Render();
 }
-
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
