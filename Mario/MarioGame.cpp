@@ -30,6 +30,8 @@ void MarioGame::LoadResources()
 		}
 		
 
+		TiXmlElement* objects = root->FirstChildElement("GameContent")->FirstChildElement("Objects");
+
 	}
 
 }

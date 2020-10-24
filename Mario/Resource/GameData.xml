@@ -29,17 +29,8 @@
     </Resources>
     <GameContent>        
         <Objects>
-            <Mario>
-                <PowerUps>
-                    <Small>
-                        <Idle aniId=""/>
-                        <Walk aniId=""/>
-                    </Small>
-                    <Big>
-                        <Idle aniId=""/>
-                    </Big>
-                </PowerUps>
-            </Mario>
+            <SmallMario>
+            </SmallMario>
         </Objects>
         <Scenes start="demo">
             <Scene id="demo">
