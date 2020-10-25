@@ -145,6 +145,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BigMario.cpp" />
+    <ClCompile Include="EntityType.cpp" />
     <ClCompile Include="FireMario.cpp" />
     <ClCompile Include="MarioPowerUp.cpp" />
     <ClCompile Include="Animation.cpp" />
@@ -171,12 +172,14 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioGame.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RectF.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Small.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="StopWatch.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TileSet.cpp" />
@@ -217,12 +220,14 @@
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioGame.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RectF.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Small.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
+    <ClInclude Include="StateManager.h" />
     <ClInclude Include="StopWatch.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileSet.h" />

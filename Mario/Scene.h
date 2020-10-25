@@ -18,6 +18,9 @@ public:
 	virtual void Update();
 	virtual void Render();
 
+	virtual void OnKeyDown(int key);
+	virtual void OnKeyUp(int key);
+
 	virtual shared_ptr<Camera> GetCamera();
 	virtual shared_ptr<CGameMap> GetGameMap();
 };

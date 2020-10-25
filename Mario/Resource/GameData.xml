@@ -27,16 +27,66 @@
             <AnimationDB path="Resource/Xml/Textures/Misc/UI/UiAnim.xml"/>
         </Resource>
     </Resources>
-    <GameContent>        
-        <Objects>
-            <SmallMario>
-            </SmallMario>
-        </Objects>
+    <GameContent>       
         <Scenes start="demo">
-            <Scene id="demo">
-                <TmxMap path="Resource/Xml/NewMap/BigMap/world-1-1-map.tmx">
-                    <TileBehaviorDatabase path=""/>
-                </TmxMap>
+            <Scene id="demo" type="PlayScene">
+                <TmxMap path="Resource/Xml/NewMap/BigMap" fileName="world-1-1-map.tmx"/>
+                <Marios>
+                    <SmallMario>
+                        <AnimationSet>
+                            <Run animationId="ani-small-mario-run"/>
+                            <Walk animationId="ani-small-mario-walk"/>
+                            <Jump animationId="ani-small-mario-jump"/>
+                            <HighJump animationId="ani-small-mario-high-jump"/>
+                            <Fly animationId="ani-small-mario-high-jump"/>
+                            <Fall animationId="ani-small-mario-jump"/>
+                            <Idle animationId="ani-small-mario-idle"/>
+                            <Skid animationId="ani-small-mario-skid"/>
+                        </AnimationSet>
+                    </SmallMario>
+                    <BigMario>
+                        <AnimationSet>
+                            <Run animationId="ani-big-mario-run"/>
+                            <Walk animationId="ani-big-mario-walk"/>
+                            <Jump animationId="ani-big-mario-jump"/>
+                            <HighJump animationId="ani-big-mario-high-jump"/>
+                            <Fly animationId="ani-big-mario-high-jump"/>
+                            <Fall animationId="ani-big-mario-fall"/>
+                            <Idle animationId="ani-big-mario-idle"/>
+                            <Skid animationId="ani-big-mario-skid"/>
+                            <Crouch animationId="ani-big-mario-crouch"/>
+                        </AnimationSet>
+                    </BigMario>
+                    <FireMario>
+                        <AnimationSet>
+                            <Run animationId="ani-fire-mario-run"/>
+                            <Walk animationId="ani-fire-mario-walk"/>
+                            <Jump animationId="ani-fire-mario-jump"/>
+                            <HighJump animationId="ani-fire-mario-high-jump"/>
+                            <Fly animationId="ani-fire-mario-high-jump"/>
+                            <Fall animationId="ani-fire-mario-fall"/>
+                            <Idle animationId="ani-fire-mario-idle"/>
+                            <Skid animationId="ani-fire-mario-skid"/>
+                            <Crouch animationId="ani-fire-mario-crouch"/>
+                            <Kick animationId="ani-fire-mario-kick"/>
+                        </AnimationSet>
+                    </FireMario>
+                    <RaccoonMario>
+                        <AnimationSet>
+                            <Run animationId="ani-raccoon-mario-speed-up"/>
+                            <Walk animationId="ani-raccoon-mario-walk"/>
+                            <Jump animationId="ani-raccoon-mario-jump"/>
+                            <HighJump animationId="ani-raccoon-mario-jump"/>
+                            <Fly animationId="ani-raccoon-mario-fly"/>
+                            <Fall animationId="ani-raccoon-mario-fall"/>
+                            <Idle animationId="ani-raccoon-mario-idle"/>
+                            <Skid animationId="ani-raccoon-mario-skid"/>
+                            <Crouch animationId="ani-raccoon-mario-crouch"/>
+                            <Spin animationId="ani-raccoon-mario-spin"/>
+                            <Kick animationId="ani-raccoon-mario-kick"/>
+                        </AnimationSet>
+                    </RaccoonMario>
+                </Marios>
             </Scene>
         </Scenes>
     </GameContent>

@@ -34,8 +34,9 @@ protected:
 
 	void Init(GameProperties properties);
 
-private:
 	static CGame* __instance;
+
+private:
 
 	static GameTime gameTime;
 

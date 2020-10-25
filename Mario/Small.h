@@ -5,6 +5,8 @@ class Small :
 {
 public:
 	Small(shared_ptr<Mario> mario);
+
+	virtual RectF GetBoundingBox() override;
 protected:
 	
 };

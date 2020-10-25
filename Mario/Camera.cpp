@@ -4,18 +4,6 @@
 #include "GameObject.h"
 #include "SceneManager.h"
 
-void Camera::HookEvent()
-{
-	__hook(&Events::KeyDownEvent, Events::GetInstance(), &Camera::OnKeyDown);
-	__hook(&Events::KeyUpEvent, Events::GetInstance(), &Camera::OnKeyUp);
-}
-
-void Camera::UnHookEvent()
-{
-	__unhook(&Events::KeyDownEvent, Events::GetInstance(), &Camera::OnKeyDown);
-	__unhook(&Events::KeyUpEvent, Events::GetInstance(), &Camera::OnKeyUp);
-}
-
 Camera::Camera()
 {
 	this->Position = VECTOR_0;
@@ -40,11 +28,16 @@ void Camera::SetTracking(weak_ptr<CGameObject> target)
 void Camera::Update()
 {
 	if (shared_ptr<CGameObject> obj = target.lock()) {
-		Position = obj->GetPosition() - size / 2;
-		Position.y = obj->GetPosition().y - size.y + 27*3 + 16*3;
+		Position.x = obj->GetPosition().x - size.x / 2;
 		
-		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
-		mapBound -= size;
+		if (obj->GetPosition().y - Position.y < size.y / 2) {
+			Position.y = obj->GetPosition().y - size.y / 2;
+		}
+		else if (obj->GetHitBox().bottom - Position.y >= size.y - 48) {
+			Position.y = obj->GetHitBox().bottom - size.y + 48;
+		}
+		
+		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound() - size;
 
 		if (Position.x < 0) Position.x = 0;
 		if (Position.y < 0) Position.y = 0;
@@ -53,16 +46,6 @@ void Camera::Update()
 	}
 }
 
-void Camera::OnKeyUp(int key)
-{
-}
-
-void Camera::OnKeyDown(int key)
-{
-	
-}
-
 Camera::~Camera()
 {
-	UnHookEvent();
 }

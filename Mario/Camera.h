@@ -22,14 +22,6 @@ public:
 
 	virtual void Update();
 
-	virtual void OnKeyUp(int key);
-
-	virtual void OnKeyDown(int key);
-
-	virtual void HookEvent();
-
-	virtual void UnHookEvent();
-
 	~Camera();
 };
 

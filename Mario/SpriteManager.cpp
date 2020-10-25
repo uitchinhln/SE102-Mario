@@ -5,9 +5,9 @@
 
 SpriteManager* SpriteManager::__instance = nullptr;
 
-Sprite SpriteManager::Add(string id, int left, int top, int width, int height, LPDIRECT3DTEXTURE9 tex)
+Sprite SpriteManager::Add(string id, int left, int top, int width, int height, int xpivot, int ypivot, LPDIRECT3DTEXTURE9 tex)
 {
-	Sprite sprite = new CSprite(id, left, top, width, height, tex);
+	Sprite sprite = new CSprite(id, left, top, width, height, xpivot, ypivot, tex);
 	sprites[id] = sprite;
 	return sprite;
 }
@@ -33,13 +33,16 @@ void SpriteManager::ImportFromXml(string textureId, const char* filePath)
 			for (TiXmlElement* pNode = pSprites->FirstChildElement(); pNode != nullptr; pNode = pNode->NextSiblingElement()) {
 				string id = pNode->Attribute("id");
 
-				int left = 0; pNode->QueryIntAttribute("left", &left);
-				int top = 0; pNode->QueryIntAttribute("top", &top);
-				int width = 0; pNode->QueryIntAttribute("width", &width);
-				int height = 0; pNode->QueryIntAttribute("height", &height);
+				int left = 0, top = 0, width = 0, height = 0, xPivot = 0, yPivot = 0;
+				pNode->QueryIntAttribute("left", &left);
+				pNode->QueryIntAttribute("top", &top);
+				pNode->QueryIntAttribute("width", &width);
+				pNode->QueryIntAttribute("height", &height);
+				if (pNode->Attribute("xPivot") != NULL) pNode->QueryIntAttribute("xPivot", &xPivot);
+				if (pNode->Attribute("yPivot") != NULL) pNode->QueryIntAttribute("yPivot", &yPivot);
 
 				//SpriteManager::GetInstance()->Add(id, left, top, width, height, texture);
-				SpriteManager::GetInstance()->Add(id, left * 3, top * 3, width * 3, height * 3, texture);
+				SpriteManager::GetInstance()->Add(id, left * 3, top * 3, width * 3, height * 3, xPivot * 3, yPivot * 3, texture);
 
 				DebugOut(L"Load sprite: %s\n", ToLPCWSTR(id));
 			}

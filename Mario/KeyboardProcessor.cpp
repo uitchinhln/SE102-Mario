@@ -1,5 +1,6 @@
 ﻿#include "KeyboardProcessor.h"
 #include "Events.h"
+#include "SceneManager.h"
 
 void KeyboardProcessor::InitKeyboard(HWND hWnd)
 {
@@ -94,12 +95,6 @@ void KeyboardProcessor::ProcessKeyboard()
 		}
 	}
 
-	/*if (keyEventHandler == nullptr) return;
-
-	keyEventHandler->KeyState((BYTE*)&keyStates);*/
-
-
-
 	// Collect all buffered events
 	DWORD dwElements = KEYBOARD_BUFFER_SIZE;
 	hr = didv->GetDeviceData(sizeof(DIDEVICEOBJECTDATA), keyEvents, &dwElements, 0);
@@ -115,20 +110,22 @@ void KeyboardProcessor::ProcessKeyboard()
 		int KeyCode = keyEvents[i].dwOfs;
 		int KeyState = keyEvents[i].dwData;
 		if ((KeyState & 0x80) > 0)
-			__raise (*Events::GetInstance()).KeyDownEvent(KeyCode);
+			//__raise (*Events::GetInstance()).KeyDownEvent(KeyCode);
+			SceneManager::GetInstance()->OnKeyDown(KeyCode);
 		else
-			__raise (*Events::GetInstance()).KeyUpEvent(KeyCode);
+			//__raise (*Events::GetInstance()).KeyUpEvent(KeyCode);
+			SceneManager::GetInstance()->OnkeyUp(KeyCode);
 	}
 }
 
 bool KeyboardProcessor::IsKeyDown(int keyCode)
 {
-	return (keyStates[keyCode] & 0x80);
+	return (keyStates[keyCode] & 0x80) > 0;
 }
 
 bool KeyboardProcessor::IsKeyUp(int keyCode)
 {
-	return !(keyStates[keyCode] & 0x80);
+	return (keyStates[keyCode] & 0x80) == 0;
 }
 
 KeyboardProcessor::KeyboardProcessor()

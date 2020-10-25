@@ -1,6 +1,9 @@
 #pragma once
 #include "Utils.h"
 #include "CollisionResult.h"
+#include "Animation.h"
+#include "TinyXML/tinyxml.h"
+
 
 class Mario;
 
@@ -23,18 +26,24 @@ public:
 
 	virtual void OnKeyUp(int key);
 
+	virtual void Init(TiXmlElement* data);
+
+	virtual shared_ptr<Mario> GetMario();
+
+	//virtual int GetEntityType() = 0;
+
 protected:
 	weak_ptr<Mario> mario;
 
-	unordered_map<string, shared_ptr<CAnimation>> animations;
+	unordered_map<string, CAnimation*> animations;
 
 	int	  PMETER_MAX = 7;
 	float PMETER_STEP = 0.1f;
-	float MARIO_GRAVITY = 0.00093f;
+	float MARIO_GRAVITY = 0.00193f;
 	float MARIO_WALK_SPEED = 0.12f;
 	float MARIO_RUN_SPEED = 0.40f;
 	float MARIO_JUMP_FORCE = 0.25f;
-	float MARIO_HIGH_JUMP_FORCE = 0.53f;
+	float MARIO_HIGH_JUMP_FORCE = 0.56f;
 	float MARIO_SUPER_JUMP_FORCE = 0.63f;
 	float MARIO_PUSH_FORCE = 0.00093f;
 	float MARIO_WALK_ACCELERATION = 0.000376f;

@@ -38,10 +38,26 @@ void GameGraphic::Clear(D3DCOLOR color)
 	d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, color, 1.0f, 0);
 }
 
-void GameGraphic::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, RECT r, Transform& transform, D3DCOLOR overlay)
+void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 texture, RECT r, Transform& transform, D3DCOLOR overlay)
 {
 	D3DXVECTOR3 p(x, y, 0);
-	spriteHandler->Draw(texture, &r, NULL, &p, overlay);
+
+	if (transform.Rotation == 0 && transform.Scale == Vec2(1.0f, 1.0f)) {
+		spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
+	}
+	else {
+		D3DXMATRIX oldMatrix, newMatrix;
+		spriteHandler->GetTransform(&oldMatrix);
+
+		Vec2 transformCenter = Vec2(x + (r.right - r.left) / 2, y + (r.bottom - r.top) / 2);
+
+		D3DXMatrixTransformation2D(&newMatrix, &transformCenter, 0, &transform.Scale,
+			&transformCenter, transform.Rotation, &VECTOR_0);
+
+		spriteHandler->SetTransform(&newMatrix);
+		spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
+		spriteHandler->SetTransform(&oldMatrix);
+	}
 }
 
 GameGraphic::~GameGraphic()

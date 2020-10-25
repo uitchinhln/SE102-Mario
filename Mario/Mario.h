@@ -45,12 +45,10 @@ protected:
 	virtual void HookEvent();
 
 	virtual void UnHookEvent();
-
-	virtual void OnKeyUp(int key);
-
-	virtual void OnKeyDown(int key);
 public:
 	Mario();
+
+	virtual void SetPowerUp(shared_ptr<MarioPowerUp> powerUp);
 
 	virtual void InitResource() override;
 
@@ -93,6 +91,10 @@ public:
 	virtual void SetJumpingState(JumpingStates state);
 
 	virtual int GetObjectType();
+
+	virtual void OnKeyUp(int key);
+
+	virtual void OnKeyDown(int key);
 
 	bool IsGetThrough(IColliable& object, Direction direction) override;
 };

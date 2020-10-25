@@ -73,7 +73,7 @@ void CTileSet::Draw(int gid, float x, float y, Transform& transform, D3DCOLOR ov
 	r.bottom = r.top + tileSize.y;
 	r.right = r.left + tileSize.x;
 
-	CGame::GetInstance()->GetGraphic().Draw(x, y, texture, r, transform, overlay);
+	CGame::GetInstance()->GetGraphic().Draw(x, y, D3DXVECTOR3(0, 0, 0), texture, r, transform, overlay);
 }
 
 CTileSet::~CTileSet()

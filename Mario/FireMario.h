@@ -3,5 +3,8 @@
 class FireMario :
     public MarioPowerUp
 {
+public:
+	FireMario(shared_ptr<Mario> mario);
+
 };
 

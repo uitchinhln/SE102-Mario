@@ -85,6 +85,9 @@
     <Filter Include="MarioGame\Entity\Mario\MarioPowerUps">
       <UniqueIdentifier>{8fdccc8c-35ba-4469-92e5-f2dbe1a8bcf2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\World\GameObject\EntityType">
+      <UniqueIdentifier>{ef461f08-1b0c-4bb4-9a86-69ef45b6aad3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -216,6 +219,15 @@
     <ClCompile Include="FireMario.cpp">
       <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClCompile>
+    <ClCompile Include="StateManager.cpp">
+      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
+    </ClCompile>
+    <ClCompile Include="RaccoonMario.cpp">
+      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityType.cpp">
+      <Filter>Framework\World\GameObject\EntityType</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -335,14 +347,20 @@
     <ClInclude Include="MarioPowerUp.h">
       <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClInclude>
-    <ClInclude Include="EntityType.h">
-      <Filter>MarioGame\Entity</Filter>
-    </ClInclude>
     <ClInclude Include="BigMario.h">
       <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClInclude>
     <ClInclude Include="FireMario.h">
       <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="RaccoonMario.h">
+      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityType.h">
+      <Filter>Framework\World\GameObject\EntityType</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

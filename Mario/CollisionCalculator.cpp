@@ -87,7 +87,7 @@ Vec2 CollisionCalculator::GetNewDistance()
 			}
 		}
 		jet = Vec2(nx, ny);
-		return Vec2(min_tx * d.x + nx * 0.4f, min_ty * d.y + ny * 0.4f);
+		return Vec2(min_tx * d.x + nx * 0.002f, min_ty * d.y + ny * 0.002f);
 		/*float min_t = min_tx < min_ty ? min_tx : min_ty;
 		return Vec2(min_t * d.x + nx * 0.4f, min_t * d.y + ny * 0.4f);*/
 	}

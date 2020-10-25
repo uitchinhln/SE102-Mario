@@ -30,6 +30,10 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 		if (coResult.size() == 0)
 		{
 			m->GetPosition() += m->GetDistance();
+			m->SetOnGround(false);
+			if (m->GetVelocity().y > 0) {
+				m->SetJumpingState(JumpingStates::FALLING);
+			}
 		}
 		else {
 			m->GetDistance() = collisionCal->GetNewDistance();
@@ -54,6 +58,7 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 		{
 			if (coll->SAABBResult.Direction == Direction::Top && !m->IsGetThrough(*coll->GameColliableObject, coll->SAABBResult.Direction)) {
 				m->SetOnGround(true);
+				m->SetJumpingState(JumpingStates::IDLE);
 				break;
 			}
 			else {
@@ -104,7 +109,7 @@ void MarioPowerUp::MovementUpdate()
 			}
 		}
 		else {
-			if (abs(m->GetVelocity().x) > m->GetDrag() *dt) {
+			if (abs(m->GetVelocity().x) > m->GetDrag() * dt) {
 				int sign = m->GetVelocity().x < 0 ? -1 : 1;
 				m->GetVelocity().x -= m->GetDrag() * dt * sign;
 			}
@@ -123,23 +128,21 @@ void MarioPowerUp::MovementUpdate()
 
 		//Vertical process
 		float jumpForce = MARIO_JUMP_FORCE;
+
 		switch (m->GetJumpingState())
 		{
 		case JumpingStates::JUMP:
-			m->SetCanHighJump(false);
-
-			if (keyboard.IsKeyDown(DIK_S) && m->CanHighJump() && m->GetVelocity().y <= -0.5f * MARIO_JUMP_FORCE &&
-				-(maxRun && m->GetPowerMeter() >= PMETER_MAX ? MARIO_SUPER_JUMP_FORCE : MARIO_HIGH_JUMP_FORCE) <= m->GetVelocity().y) 
+			if (keyboard.IsKeyDown(DIK_S) && m->CanHighJump() &&  
+				-(maxRun && m->GetPowerMeter() >= PMETER_MAX ? MARIO_SUPER_JUMP_FORCE : MARIO_HIGH_JUMP_FORCE) <= m->GetVelocity().y &&
+				m->GetVelocity().y  <= -0.5f * MARIO_JUMP_FORCE)
 			{
 				jumpForce = maxRun && m->GetPowerMeter() >= PMETER_MAX ? MARIO_SUPER_JUMP_FORCE : MARIO_HIGH_JUMP_FORCE;
-				m->SetCanHighJump(true);
 			}
 
 			if (m->GetVelocity().y > -jumpForce && m->GetVelocity().y < 0 && m->CanHighJump())
 			{
 				m->GetGravity() = 0;
 				m->GetVelocity().y -= MARIO_PUSH_FORCE * dt;
-				DebugOut(L"Distance: %f\t%f\n", m->GetDistance().x, m->GetDistance().y);
 			}
 			else
 			{
@@ -155,11 +158,6 @@ void MarioPowerUp::MovementUpdate()
 				m->SetJumpingState(JumpingStates::FALLING);
 			}
 			break;
-		case JumpingStates::FALLING:
-			if (m->IsOnGround()) {
-				m->SetJumpingState(JumpingStates::IDLE);
-			}
-			break;
 		}
 
 		m->GetVelocity().y += m->GetGravity() * dt;
@@ -169,18 +167,59 @@ void MarioPowerUp::MovementUpdate()
 
 void MarioPowerUp::Update(vector<shared_ptr<IColliable>>* coObj)
 {
-	CollisionUpdate(coObj);
 	MovementUpdate();
+	CollisionUpdate(coObj);
 }
 
 void MarioPowerUp::Render()
 {
-	if (shared_ptr<Mario> m = mario.lock()) {
+	if (shared_ptr<Mario> m = mario.lock()) {		
+		Animation ani = animations["Idle"];
+
+		if (m->GetJumpingState() != JumpingStates::IDLE) {
+			if (m->GetPowerMeter() >= 1) {
+				ani = animations["Fly"];
+			}
+			else {
+				switch (m->GetJumpingState())
+				{
+				case JumpingStates::JUMP:
+					ani = animations["Jump"];
+					break;
+				case JumpingStates::HIGH_JUMP:
+					ani = animations["Jump"];
+					break;
+				case JumpingStates::FALLING:
+					ani = animations["Fall"];
+					break;
+				}
+			}
+		}
+		else {
+			if (m->GetSkid()) {
+				ani = animations["Skid"];
+			}
+			else if (abs(m->GetVelocity().x) <= m->GetDrag()*7) {
+				ani = animations["Idle"];
+			}
+			else {
+				switch (m->GetMovingState())
+				{
+				case MovingStates::RUN:
+					ani = animations["Run"];
+					break;
+				case MovingStates::WALK:
+					ani = animations["Walk"];
+					break;
+				}
+			}
+		}
+
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
-		string testid = "ani-big-mario-walk";
-		AnimationManager::GetInstance()->Get(testid)->GetTransform()->Position = m->GetPosition() - cam;
-		AnimationManager::GetInstance()->Get(testid)->Render();
+		ani->GetTransform()->Scale = Vec2(m->GetFacing(), 1);
+		ani->GetTransform()->Position = m->GetPosition() - cam;
+		ani->Render();
 	}
 }
 
@@ -188,7 +227,7 @@ void MarioPowerUp::OnKeyDown(int key)
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (key == DIK_S && m->IsOnGround() && m->GetJumpingState() == JumpingStates::IDLE) {
-			m->GetVelocity().y = -MARIO_JUMP_FORCE*2;
+			m->GetVelocity().y = -MARIO_JUMP_FORCE;
 			m->SetJumpingState(JumpingStates::JUMP);
 			m->SetOnGround(false);
 			m->SetCanHighJump(true);
@@ -200,7 +239,23 @@ void MarioPowerUp::OnKeyUp(int key)
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (key == DIK_S){
-			m->CanHighJump() = false;
+			m->SetCanHighJump(false);
 		}
 	}
+}
+
+void MarioPowerUp::Init(TiXmlElement* data)
+{
+	TiXmlElement* anis = data->FirstChildElement("AnimationSet");
+	for (TiXmlElement* node = anis->FirstChildElement(); node != NULL; node = node->NextSiblingElement()) {
+		this->animations[node->Value()] = AnimationManager::GetInstance()->Get(node->Attribute("animationId"))->Clone();
+	}
+}
+
+shared_ptr<Mario> MarioPowerUp::GetMario()
+{
+	if (shared_ptr<Mario> m = mario.lock()) {
+		return m;
+	}
+	return nullptr;
 }

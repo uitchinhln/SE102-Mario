@@ -26,6 +26,14 @@ void CScene::Render()
 	}
 }
 
+void CScene::OnKeyDown(int key)
+{
+}
+
+void CScene::OnKeyUp(int key)
+{
+}
+
 shared_ptr<Camera> CScene::GetCamera()
 {
 	return camera;

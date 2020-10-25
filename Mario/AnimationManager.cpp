@@ -38,17 +38,11 @@ void AnimationManager::ImportFromXml(string textureId, const char* filePath)
 
 				for (TiXmlElement* spriteNode = aniNode->FirstChildElement(); spriteNode != nullptr; spriteNode = spriteNode->NextSiblingElement()) {
 					string id = spriteNode->Attribute("id");
-					int frameTime = 0; spriteNode->QueryIntAttribute("frameTime", &frameTime);
+					
+					int frameTime = 0; 
+					spriteNode->QueryIntAttribute("frameTime", &frameTime);
+
 					Sprite sprite = SpriteManager::GetInstance()->Get(id);
-
-					if (sprite == nullptr) {
-						int left = 0; spriteNode->QueryIntAttribute("left", &left);
-						int top = 0; spriteNode->QueryIntAttribute("top", &top);
-						int width = 0; spriteNode->QueryIntAttribute("width", &width);
-						int height = 0; spriteNode->QueryIntAttribute("height", &height);
-
-						sprite = SpriteManager::GetInstance()->Add(id, left, top, width, height, texture);
-					}
 
 					ani->AddFrame(sprite, frameTime);
 				}

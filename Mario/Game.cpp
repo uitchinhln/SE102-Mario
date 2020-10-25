@@ -46,8 +46,8 @@ int CGame::Run()
 		DWORD now = gameTimer.Elapsed();
 		DWORD accumulatedTime = now - gameTime.GetPreviousTicks();
 		gameTime.SetPreviousTicks(now);
-		gameTime.ElapsedGameTime = accumulatedTime;
-		gameTime.TotalGameTime += accumulatedTime;
+		gameTime.ElapsedGameTime = accumulatedTime * 1.2;
+		gameTime.TotalGameTime += accumulatedTime * 1.2;
 
 		if (gameTime.ElapsedGameTime >= tickPerFrame)
 		{
@@ -67,7 +67,6 @@ int CGame::Run()
 CGame::CGame(GameProperties properties) {
 	__instance = this;
 	Init(properties);
-	LoadResources();
 }
 
 GameGraphic& CGame::GetGraphic()
@@ -109,10 +108,10 @@ bool CGame::ProcessMessage(MSG& msg)
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 
-		if (gameTimer.Elapsed() - now >= 3) {
+		int tps = 1000 / properties->TickRate;
+		if (gameTimer.Elapsed() - now >= tps) {
 			//DebugOut(L"Waste detected!!!\n");
-			int tps = 1000 / properties->TickRate;
-			//gameTime.SetPreviousTicks(gameTimer.Elapsed() - tps);
+			gameTime.SetPreviousTicks(gameTimer.Elapsed() - tps);
 		}
 	}
 	return true;

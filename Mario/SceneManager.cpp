@@ -23,6 +23,11 @@ shared_ptr<CScene> SceneManager::GetActiveScene()
 	return scenes.at(activeSceneID);
 }
 
+void SceneManager::SetPlayer(shared_ptr<CGameObject> player)
+{
+	this->player = player;
+}
+
 void SceneManager::Update()
 {
 	GetActiveScene()->Update();
@@ -31,6 +36,22 @@ void SceneManager::Update()
 void SceneManager::Render()
 {
 	GetActiveScene()->Render();
+}
+
+void SceneManager::OnKeyDown(int key)
+{
+	shared_ptr<CScene> s = GetActiveScene();
+	if (s != NULL) {
+		s->OnKeyDown(key);
+	}
+}
+
+void SceneManager::OnkeyUp(int key)
+{
+	shared_ptr<CScene> s = GetActiveScene();
+	if (s != NULL) {
+		s->OnKeyUp(key);
+	}
 }
 
 SceneManager* SceneManager::GetInstance()

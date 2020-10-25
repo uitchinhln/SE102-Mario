@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "Events.h"
 #include "Small.h"
+#include "StateManager.h"
 
 void Mario::OnKeyUp(int key)
 {
@@ -13,6 +14,26 @@ void Mario::OnKeyUp(int key)
 void Mario::OnKeyDown(int key)
 {
 	powerUp->OnKeyDown(key);
+	switch (key)
+	{
+	case DIK_1:
+		SetPowerUp(StateManager::GetInstance()->Get("SmallMario"));
+		break;
+	case DIK_2:
+		SetPowerUp(StateManager::GetInstance()->Get("BigMario"));
+		this->Position.y -= 50;
+		break;
+	case DIK_3:
+		SetPowerUp(StateManager::GetInstance()->Get("FireMario"));
+		this->Position.y -= 50;
+		break;
+	case DIK_4:
+		SetPowerUp(StateManager::GetInstance()->Get("RaccoonMario"));
+		this->Position.y -= 50;
+		break;
+	default:
+		break;
+	}
 }
 
 Mario::Mario() : CGameObject()
@@ -21,14 +42,18 @@ Mario::Mario() : CGameObject()
 	this->Position = Vec2(100, 300);
 	this->Velocity = Vec2(0, 0);
 	this->accelerate = Vec2(0, 0);
+	this->Gravity = 0.00093f;
 	HookEvent();
+}
+
+void Mario::SetPowerUp(shared_ptr<MarioPowerUp> powerUp)
+{
+	this->powerUp = powerUp;
 }
 
 void Mario::InitResource()
 {
-	this->SetCollisionCalculator(make_shared<CollisionCalculator>(shared_from_this()));
-	this->powerUp = make_shared<Small>(shared_from_this());
-	this->Gravity = 0.00093f;
+	//this->SetCollisionCalculator(make_shared<CollisionCalculator>(shared_from_this()));
 }
 
 void Mario::Update(vector<shared_ptr<IColliable>>* coObj)
@@ -103,7 +128,7 @@ Vec2& Mario::GetAccelerate()
 
 RectF Mario::GetHitBox()
 {
-	return RectF(Position.x, Position.y, Position.x + 15 * 3, Position.y + 27 * 3);
+	return powerUp->GetBoundingBox();
 }
 
 MovingStates& Mario::GetMovingState()
