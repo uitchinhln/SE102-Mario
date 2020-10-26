@@ -27,7 +27,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 
 		for each (shared_ptr<CollisionResult> coll in temp) {
 			for each (shared_ptr<CollisionResult> result in results) {
-				if (result->GameColliableObject->IsGetThrough(*sp, result->SAABBResult.Direction)) continue;
+				if (sp->IsGetThrough(*result->GameColliableObject, result->SAABBResult.Direction)) continue;
 				Vec2 dis = (sp->GetDistance() - coll->GameColliableObject->GetDistance());
 				if (ToVector(coll->SAABBResult.Direction).x != 0) {
 					dis.y *= result->SAABBResult.TimeToCollide;
@@ -71,7 +71,7 @@ Vec2 CollisionCalculator::GetNewDistance()
 
 		for each (shared_ptr<CollisionResult> c in results)
 		{
-			if (c->GameColliableObject->IsGetThrough(*sp, c->SAABBResult.Direction)) continue;
+			if (sp->IsGetThrough(*c->GameColliableObject, c->SAABBResult.Direction)) continue;
 			Vec2 cn = ToVector(c->SAABBResult.Direction);
 
 			if (c->SAABBResult.TimeToCollide < min_tx && cn.x != 0) {

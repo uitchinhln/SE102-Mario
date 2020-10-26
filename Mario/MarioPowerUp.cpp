@@ -20,7 +20,12 @@ RectF MarioPowerUp::GetBoundingBox()
 
 void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 {
+	DWORD dt = CGame::Time().ElapsedGameTime;
+
 	if (shared_ptr<Mario> m = mario.lock()) {
+
+		m->GetVelocity().y += m->GetGravity() * dt;
+		m->GetDistance() = m->GetVelocity() * dt;
 
 		shared_ptr<CollisionCalculator> collisionCal = m->GetCollisionCalc();
 
@@ -56,7 +61,7 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
-			if (coll->SAABBResult.Direction == Direction::Top && !m->IsGetThrough(*coll->GameColliableObject, coll->SAABBResult.Direction)) {
+			if (coll->SAABBResult.Direction == Direction::Top && !coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction)) {
 				m->SetOnGround(true);
 				m->SetJumpingState(JumpingStates::IDLE);
 				break;
@@ -68,17 +73,15 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 	}
 }
 
-void MarioPowerUp::MovementUpdate()
+void MarioPowerUp::MoveUpdate()
 {
+	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+	DWORD dt = CGame::Time().ElapsedGameTime;
+
 	if (shared_ptr<Mario> m = mario.lock()) {
-
-		KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
-		DWORD dt = CGame::GetInstance()->Time().ElapsedGameTime;
-
-		//Horizontal process
 		if (keyboard.IsKeyDown(DIK_LEFT) || keyboard.IsKeyDown(DIK_RIGHT)) {
 			int keySign = keyboard.IsKeyDown(DIK_LEFT) ? -1 : 1;
-			
+
 			//skid start detect
 			if (m->IsOnGround() && m->GetVelocity().x * keySign < 0) {
 				m->GetSkid() = m->GetVelocity().x / abs(m->GetVelocity().x);
@@ -102,7 +105,7 @@ void MarioPowerUp::MovementUpdate()
 				m->GetVelocity().x = maxSpeed * keySign;
 			}
 			m->SetFacing(m->GetVelocity().x < 0 ? -1 : 1);
-			
+
 			//skid end detect
 			if (m->GetSkid() * m->GetVelocity().x <= 0) {
 				m->GetSkid() = 0;
@@ -119,7 +122,15 @@ void MarioPowerUp::MovementUpdate()
 			}
 			m->GetSkid() = 0;
 		}
+	}
+}
 
+void MarioPowerUp::JumpUpdate()
+{
+	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+	DWORD dt = CGame::Time().ElapsedGameTime;
+
+	if (shared_ptr<Mario> m = mario.lock()) {
 		float maxRun = abs(m->GetVelocity().x) > MARIO_RUN_SPEED * 0.85f;
 		if (maxRun && m->GetPowerMeter() < PMETER_MAX + 1)
 			m->GetPowerMeter() = max(0.0f, min(m->GetPowerMeter() + PMETER_STEP * dt, PMETER_MAX + 1));
@@ -132,9 +143,9 @@ void MarioPowerUp::MovementUpdate()
 		switch (m->GetJumpingState())
 		{
 		case JumpingStates::JUMP:
-			if (keyboard.IsKeyDown(DIK_S) && m->CanHighJump() &&  
+			if (keyboard.IsKeyDown(DIK_S) && m->CanHighJump() &&
 				-(maxRun && m->GetPowerMeter() >= PMETER_MAX ? MARIO_SUPER_JUMP_FORCE : MARIO_HIGH_JUMP_FORCE) <= m->GetVelocity().y &&
-				m->GetVelocity().y  <= -0.5f * MARIO_JUMP_FORCE)
+				m->GetVelocity().y <= -0.5f * MARIO_JUMP_FORCE)
 			{
 				jumpForce = maxRun && m->GetPowerMeter() >= PMETER_MAX ? MARIO_SUPER_JUMP_FORCE : MARIO_HIGH_JUMP_FORCE;
 			}
@@ -159,15 +170,13 @@ void MarioPowerUp::MovementUpdate()
 			}
 			break;
 		}
-
-		m->GetVelocity().y += m->GetGravity() * dt;
-		m->GetDistance() = m->GetVelocity() * dt;
 	}
 }
 
 void MarioPowerUp::Update(vector<shared_ptr<IColliable>>* coObj)
 {
-	MovementUpdate();
+	MoveUpdate();
+	JumpUpdate();
 	CollisionUpdate(coObj);
 }
 

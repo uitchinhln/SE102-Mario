@@ -110,11 +110,11 @@ void KeyboardProcessor::ProcessKeyboard()
 		int KeyCode = keyEvents[i].dwOfs;
 		int KeyState = keyEvents[i].dwData;
 		if ((KeyState & 0x80) > 0)
-			//__raise (*Events::GetInstance()).KeyDownEvent(KeyCode);
-			SceneManager::GetInstance()->OnKeyDown(KeyCode);
+			__raise (*Events::GetInstance()).KeyDownEvent(KeyCode);
+			//SceneManager::GetInstance()->OnKeyDown(KeyCode);
 		else
-			//__raise (*Events::GetInstance()).KeyUpEvent(KeyCode);
-			SceneManager::GetInstance()->OnkeyUp(KeyCode);
+			__raise (*Events::GetInstance()).KeyUpEvent(KeyCode);
+			//SceneManager::GetInstance()->OnkeyUp(KeyCode);
 	}
 }
 

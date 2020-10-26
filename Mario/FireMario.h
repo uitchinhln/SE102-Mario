@@ -6,5 +6,6 @@ class FireMario :
 public:
 	FireMario(shared_ptr<Mario> mario);
 
+	virtual ObjectType GetMarioType() override;
 };
 

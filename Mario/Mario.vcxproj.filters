@@ -25,9 +25,6 @@
     <Filter Include="Framework\World\Phys">
       <UniqueIdentifier>{44b9eb36-1188-495e-92ae-0ed6e95bd7fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\Scene1">
-      <UniqueIdentifier>{4ac2ba6b-bb58-4ccd-88c0-c7c4a26c1d06}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\Input">
       <UniqueIdentifier>{c8542165-1d6c-4bfc-be38-14b6e58198bb}</UniqueIdentifier>
     </Filter>
@@ -79,14 +76,14 @@
     <Filter Include="Framework\World\Phys\Enviroment">
       <UniqueIdentifier>{9b42d7be-a11e-4e04-97a5-e92646bafb5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\Config">
-      <UniqueIdentifier>{fc5cf9a3-42e1-4660-8b60-480e1d4f296a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MarioGame\Entity\Mario\MarioPowerUps">
       <UniqueIdentifier>{8fdccc8c-35ba-4469-92e5-f2dbe1a8bcf2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\World\GameObject\EntityType">
-      <UniqueIdentifier>{ef461f08-1b0c-4bb4-9a86-69ef45b6aad3}</UniqueIdentifier>
+    <Filter Include="MarioGame\Tile">
+      <UniqueIdentifier>{81d7b873-7f17-4962-981e-9abd1f37526b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Scenes">
+      <UniqueIdentifier>{4ac2ba6b-bb58-4ccd-88c0-c7c4a26c1d06}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,11 +201,8 @@
     <ClCompile Include="Small.cpp">
       <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClCompile>
-    <ClCompile Include="Config.cpp">
-      <Filter>MarioGame\Config</Filter>
-    </ClCompile>
     <ClCompile Include="PlayScene.cpp">
-      <Filter>MarioGame\Scene1</Filter>
+      <Filter>MarioGame\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="MarioPowerUp.cpp">
       <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
@@ -225,8 +219,14 @@
     <ClCompile Include="RaccoonMario.cpp">
       <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClCompile>
-    <ClCompile Include="EntityType.cpp">
-      <Filter>Framework\World\GameObject\EntityType</Filter>
+    <ClCompile Include="MEntityType.cpp">
+      <Filter>MarioGame\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostTile.cpp">
+      <Filter>MarioGame\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectType.cpp">
+      <Filter>Framework\World\GameObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -338,11 +338,8 @@
     <ClInclude Include="Small.h">
       <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClInclude>
-    <ClInclude Include="Config.h">
-      <Filter>MarioGame\Config</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene.h">
-      <Filter>MarioGame\Scene1</Filter>
+      <Filter>MarioGame\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MarioPowerUp.h">
       <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
@@ -359,8 +356,14 @@
     <ClInclude Include="RaccoonMario.h">
       <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClInclude>
-    <ClInclude Include="EntityType.h">
-      <Filter>Framework\World\GameObject\EntityType</Filter>
+    <ClInclude Include="MEntityType.h">
+      <Filter>MarioGame\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostTile.h">
+      <Filter>MarioGame\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectType.h">
+      <Filter>Framework\World\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

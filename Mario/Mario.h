@@ -90,7 +90,7 @@ public:
 
 	virtual void SetJumpingState(JumpingStates state);
 
-	virtual int GetObjectType();
+	virtual ObjectType GetObjectType();
 
 	virtual void OnKeyUp(int key);
 

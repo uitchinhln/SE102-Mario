@@ -151,9 +151,9 @@ void Mario::SetJumpingState(JumpingStates state)
 	this->jumpingState = state;
 }
 
-int Mario::GetObjectType()
+ObjectType Mario::GetObjectType()
 {
-	return 0;
+	return powerUp->GetMarioType();
 }
 
 bool Mario::IsGetThrough(IColliable& object, Direction direction)

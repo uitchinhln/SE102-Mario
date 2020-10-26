@@ -6,6 +6,7 @@
 #include "CollisionResult.h"
 #include "CollisionCalculator.h"
 #include "DataTag.h"
+#include "ObjectType.h"
 
 class CGameObject : public IColliable
 {
@@ -63,7 +64,7 @@ public:
 	//Override from ICollidable
 	virtual Vec2& GetDistance() override;
 
-	virtual int GetObjectType() = 0;
+	virtual ObjectType GetObjectType() = 0;
 
 	~CGameObject();
 };

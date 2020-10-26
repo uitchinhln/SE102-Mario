@@ -1,10 +1,11 @@
 #include "BigMario.h"
+#include "MEntityType.h"
 
 BigMario::BigMario(shared_ptr<Mario> mario) : MarioPowerUp(mario)
 {
 }
 
-int BigMario::GetEntityType()
+ObjectType BigMario::GetMarioType()
 {
-	return 0;
+	return MEntityType::BigMario;
 }

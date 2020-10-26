@@ -3,6 +3,7 @@
 #include "CollisionResult.h"
 #include "Animation.h"
 #include "TinyXML/tinyxml.h"
+#include "MEntityType.h"
 
 
 class Mario;
@@ -16,7 +17,9 @@ public:
 
 	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);
 
-	virtual void MovementUpdate();
+	virtual void MoveUpdate();
+
+	virtual void JumpUpdate();
 
 	virtual void Update(vector<shared_ptr<IColliable>>* coObj);
 
@@ -30,7 +33,7 @@ public:
 
 	virtual shared_ptr<Mario> GetMario();
 
-	//virtual int GetEntityType() = 0;
+	virtual ObjectType GetMarioType() = 0;
 
 protected:
 	weak_ptr<Mario> mario;

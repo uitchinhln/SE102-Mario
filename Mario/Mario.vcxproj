@@ -145,7 +145,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BigMario.cpp" />
-    <ClCompile Include="EntityType.cpp" />
+    <ClCompile Include="GhostTile.cpp" />
+    <ClCompile Include="ObjectType.cpp" />
     <ClCompile Include="FireMario.cpp" />
     <ClCompile Include="MarioPowerUp.cpp" />
     <ClCompile Include="Animation.cpp" />
@@ -156,7 +157,6 @@
     <ClCompile Include="ColliableTileAdapter.cpp" />
     <ClCompile Include="CollisionCalculator.cpp" />
     <ClCompile Include="CollisionResult.cpp" />
-    <ClCompile Include="Config.cpp" />
     <ClCompile Include="DataTag.cpp" />
     <ClCompile Include="Direction.cpp" />
     <ClCompile Include="Events.cpp" />
@@ -171,6 +171,7 @@
     <ClCompile Include="GameMap.cpp" />
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioGame.cpp" />
+    <ClCompile Include="MEntityType.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RectF.cpp" />
@@ -193,7 +194,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigMario.h" />
-    <ClInclude Include="EntityType.h" />
+    <ClInclude Include="GhostTile.h" />
+    <ClInclude Include="ObjectType.h" />
     <ClInclude Include="FireMario.h" />
     <ClInclude Include="MarioPowerUp.h" />
     <ClInclude Include="Animation.h" />
@@ -204,7 +206,6 @@
     <ClInclude Include="ColliableTileAdapter.h" />
     <ClInclude Include="CollisionCalculator.h" />
     <ClInclude Include="CollisionResult.h" />
-    <ClInclude Include="Config.h" />
     <ClInclude Include="DataTag.h" />
     <ClInclude Include="Direction.h" />
     <ClInclude Include="Events.h" />
@@ -219,6 +220,7 @@
     <ClInclude Include="GameMap.h" />
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioGame.h" />
+    <ClInclude Include="MEntityType.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RectF.h" />

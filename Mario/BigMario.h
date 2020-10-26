@@ -7,6 +7,6 @@ class BigMario :
 public:
 	BigMario(shared_ptr<Mario> mario);
 
-	virtual int GetEntityType();
+	virtual ObjectType GetMarioType() override;
 };
 

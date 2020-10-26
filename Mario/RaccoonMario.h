@@ -8,5 +8,6 @@ class RaccoonMario :
 public:
 	RaccoonMario(shared_ptr<Mario> mario);
 
+	virtual ObjectType GetMarioType() override;
 };
 

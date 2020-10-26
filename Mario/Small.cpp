@@ -14,3 +14,8 @@ RectF Small::GetBoundingBox()
 	}
 	return RectF(0, 0, 0, 0);
 }
+
+ObjectType Small::GetMarioType()
+{
+	return MEntityType::SmallMario;
+}
