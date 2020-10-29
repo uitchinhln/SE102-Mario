@@ -8,7 +8,7 @@
 #include "DataTag.h"
 #include "ObjectType.h"
 
-class CGameObject : public IColliable
+class GameObject : public IColliable
 {
 protected:
 	float Gravity = 0;
@@ -21,7 +21,7 @@ protected:
 
 	int state;
 
-	vector<shared_ptr<CAnimation>> animations;
+	unordered_map<string, shared_ptr<CAnimation>> animations;
 
 	shared_ptr<CollisionCalculator> collisionCal;
 
@@ -29,7 +29,7 @@ protected:
 
 public:
 
-	CGameObject();
+	GameObject();
 
 	virtual float& GetGravity();
 
@@ -66,6 +66,6 @@ public:
 
 	virtual ObjectType GetObjectType() = 0;
 
-	~CGameObject();
+	~GameObject();
 };
 

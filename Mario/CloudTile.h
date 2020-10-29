@@ -1,11 +1,11 @@
 #pragma once
 #include "ColliableTile.h"
 
-class GhostTile : 
+class CloudTile :
 	public ColliableTile
 {
 public:
-	GhostTile(int id);
+	CloudTile(int id);
 
 	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
 };

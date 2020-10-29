@@ -1,76 +1,76 @@
 #include "GameObject.h"
 
-CGameObject::CGameObject()
+GameObject::GameObject()
 {
 	InitResource();
 }
 
-float& CGameObject::GetGravity()
+float& GameObject::GetGravity()
 {
 	return this->Gravity;
 	// TODO: insert return statement here
 }
 
-Vec2& CGameObject::GetPosition()
+Vec2& GameObject::GetPosition()
 {
 	return Position;
 }
 
-void CGameObject::SetPosition(Vec2 pos)
+void GameObject::SetPosition(Vec2 pos)
 {
 	this->Position = pos;
 }
 
-Vec2& CGameObject::GetVelocity()
+Vec2& GameObject::GetVelocity()
 {
 	return Velocity;
 }
 
-void CGameObject::SetVelocity(Vec2 velocity)
+void GameObject::SetVelocity(Vec2 velocity)
 {
 	this->Velocity = velocity;
 }
 
-int CGameObject::GetFacing()
+int GameObject::GetFacing()
 {
 	return this->facing;
 }
 
-void CGameObject::SetFacing(int direction)
+void GameObject::SetFacing(int direction)
 {
 	this->facing = -1;
 	if (direction >= 0) this->facing = 1;
 }
 
-void CGameObject::InitResource()
+void GameObject::InitResource()
 {
 }
 
-void CGameObject::Update(vector<shared_ptr<IColliable>>* coObj)
+void GameObject::Update(vector<shared_ptr<IColliable>>* coObj)
 {
 
 }
 
-void CGameObject::SetCollisionCalculator(shared_ptr<CollisionCalculator> calc)
+void GameObject::SetCollisionCalculator(shared_ptr<CollisionCalculator> calc)
 {
 	this->collisionCal = calc;
 }
 
-shared_ptr<CollisionCalculator> CGameObject::GetCollisionCalc()
+shared_ptr<CollisionCalculator> GameObject::GetCollisionCalc()
 {
 	return this->collisionCal;
 }
 
-shared_ptr<DataTag> CGameObject::getDataTag()
+shared_ptr<DataTag> GameObject::getDataTag()
 {
 	return tags;
 }
 
-Vec2& CGameObject::GetDistance()
+Vec2& GameObject::GetDistance()
 {
 	return Distance;
 }
 
-CGameObject::~CGameObject()
+GameObject::~GameObject()
 {
 }

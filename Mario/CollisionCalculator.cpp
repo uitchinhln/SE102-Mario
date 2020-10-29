@@ -27,7 +27,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 
 		for each (shared_ptr<CollisionResult> coll in temp) {
 			for each (shared_ptr<CollisionResult> result in results) {
-				if (sp->IsGetThrough(*result->GameColliableObject, result->SAABBResult.Direction)) continue;
+				if (result->GameColliableObject->IsGetThrough(*sp, result->SAABBResult.Direction)) continue;
 				Vec2 dis = (sp->GetDistance() - coll->GameColliableObject->GetDistance());
 				if (ToVector(coll->SAABBResult.Direction).x != 0) {
 					dis.y *= result->SAABBResult.TimeToCollide;
@@ -71,7 +71,7 @@ Vec2 CollisionCalculator::GetNewDistance()
 
 		for each (shared_ptr<CollisionResult> c in results)
 		{
-			if (sp->IsGetThrough(*c->GameColliableObject, c->SAABBResult.Direction)) continue;
+			if (c->GameColliableObject->IsGetThrough(*sp, c->SAABBResult.Direction)) continue;
 			Vec2 cn = ToVector(c->SAABBResult.Direction);
 
 			if (c->SAABBResult.TimeToCollide < min_tx && cn.x != 0) {
@@ -210,4 +210,9 @@ SweptAABBResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, 
 			direction = Direction::Bottom;
 	}
 	return SweptAABBResult{ t_entry, direction, distance };
+}
+
+bool CollisionCalculator::AABB(RectF b1, RectF b2)
+{
+	return !(b1.right < b2.left || b1.left > b2.right || b1.top > b2.bottom || b1.bottom < b2.top);
 }

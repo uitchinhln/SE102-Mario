@@ -15,5 +15,7 @@ public:
 	virtual RectF GetHitBox() override;
 
 	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
+
+	virtual float GetDamageFor(IColliable& object, Direction direction) override;
 };
 

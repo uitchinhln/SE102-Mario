@@ -70,20 +70,32 @@
     <Filter Include="Framework\DataTag">
       <UniqueIdentifier>{985a2b1e-4593-4c48-86ad-8062a5e558ff}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\Entity\Mario">
-      <UniqueIdentifier>{22ada859-0c44-45a9-a58a-83eae5589ffb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\World\Phys\Enviroment">
       <UniqueIdentifier>{9b42d7be-a11e-4e04-97a5-e92646bafb5e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MarioGame\Entity\Mario\MarioPowerUps">
-      <UniqueIdentifier>{8fdccc8c-35ba-4469-92e5-f2dbe1a8bcf2}</UniqueIdentifier>
     </Filter>
     <Filter Include="MarioGame\Tile">
       <UniqueIdentifier>{81d7b873-7f17-4962-981e-9abd1f37526b}</UniqueIdentifier>
     </Filter>
     <Filter Include="MarioGame\Scenes">
       <UniqueIdentifier>{4ac2ba6b-bb58-4ccd-88c0-c7c4a26c1d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity">
+      <UniqueIdentifier>{a92a4d64-e353-4420-86b5-b5124f15b533}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Mario">
+      <UniqueIdentifier>{22ada859-0c44-45a9-a58a-83eae5589ffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Mario\ProjectTile">
+      <UniqueIdentifier>{a36759b9-3f46-45bb-b446-e8a657dec827}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Mario\PowerUp">
+      <UniqueIdentifier>{8fdccc8c-35ba-4469-92e5-f2dbe1a8bcf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons">
+      <UniqueIdentifier>{fe600c92-34af-4ec1-8c42-94c7cad9c2b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Goomba">
+      <UniqueIdentifier>{24ad6102-646f-40d4-81f7-da8f69d4d463}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -195,29 +207,8 @@
     <ClCompile Include="DataTag.cpp">
       <Filter>Framework\DataTag</Filter>
     </ClCompile>
-    <ClCompile Include="Mario.cpp">
-      <Filter>MarioGame\Entity\Mario</Filter>
-    </ClCompile>
-    <ClCompile Include="Small.cpp">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
-    </ClCompile>
     <ClCompile Include="PlayScene.cpp">
       <Filter>MarioGame\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="MarioPowerUp.cpp">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
-    </ClCompile>
-    <ClCompile Include="BigMario.cpp">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
-    </ClCompile>
-    <ClCompile Include="FireMario.cpp">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
-    </ClCompile>
-    <ClCompile Include="StateManager.cpp">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
-    </ClCompile>
-    <ClCompile Include="RaccoonMario.cpp">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClCompile>
     <ClCompile Include="MEntityType.cpp">
       <Filter>MarioGame\Entity</Filter>
@@ -227,6 +218,33 @@
     </ClCompile>
     <ClCompile Include="ObjectType.cpp">
       <Filter>Framework\World\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="BigMario.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="FireMario.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="RaccoonMario.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="Small.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp</Filter>
+    </ClCompile>
+    <ClCompile Include="Mario.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioFireBall.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\ProjectTile</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioPowerUp.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="AttackablePower.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="CloudTile.cpp">
+      <Filter>MarioGame\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -332,29 +350,8 @@
     <ClInclude Include="DataTag.h">
       <Filter>Framework\DataTag</Filter>
     </ClInclude>
-    <ClInclude Include="Mario.h">
-      <Filter>MarioGame\Entity\Mario</Filter>
-    </ClInclude>
-    <ClInclude Include="Small.h">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene.h">
       <Filter>MarioGame\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="MarioPowerUp.h">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
-    </ClInclude>
-    <ClInclude Include="BigMario.h">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
-    </ClInclude>
-    <ClInclude Include="FireMario.h">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
-    </ClInclude>
-    <ClInclude Include="StateManager.h">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
-    </ClInclude>
-    <ClInclude Include="RaccoonMario.h">
-      <Filter>MarioGame\Entity\Mario\MarioPowerUps</Filter>
     </ClInclude>
     <ClInclude Include="MEntityType.h">
       <Filter>MarioGame\Entity</Filter>
@@ -364,6 +361,33 @@
     </ClInclude>
     <ClInclude Include="ObjectType.h">
       <Filter>Framework\World\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="BigMario.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="FireMario.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="RaccoonMario.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="Small.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp</Filter>
+    </ClInclude>
+    <ClInclude Include="Mario.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioFireBall.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\ProjectTile</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioPowerUp.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="AttackablePower.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="CloudTile.h">
+      <Filter>MarioGame\Tile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

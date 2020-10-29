@@ -34,7 +34,7 @@ void AnimationManager::ImportFromXml(string textureId, const char* filePath)
 				int animationDefaultFrameTime = 100;
 				aniNode->QueryIntAttribute("frameTime", &animationDefaultFrameTime);
 
-				Animation ani = new CAnimation(animationDefaultFrameTime);
+				Animation ani = make_shared<CAnimation>(animationDefaultFrameTime);
 
 				for (TiXmlElement* spriteNode = aniNode->FirstChildElement(); spriteNode != nullptr; spriteNode = spriteNode->NextSiblingElement()) {
 					string id = spriteNode->Attribute("id");

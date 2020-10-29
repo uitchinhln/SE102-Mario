@@ -10,7 +10,7 @@ void CScene::Update()
 	gameMap->Update();
 	camera->Update();
 	
-	for (shared_ptr<CGameObject> obj : objects) {
+	for (shared_ptr<GameObject> obj : objects) {
 		vector<shared_ptr<IColliable>> objs;
 		obj->Update(&gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance()));
 	}
@@ -20,7 +20,7 @@ void CScene::Render()
 {
 	gameMap->Render();
 
-	for each (shared_ptr<CGameObject> obj in objects)
+	for each (shared_ptr<GameObject> obj in objects)
 	{
 		obj->Render();
 	}

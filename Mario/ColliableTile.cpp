@@ -30,3 +30,8 @@ bool ColliableTile::IsGetThrough(IColliable& object, Direction direction)
 {
     return false;
 }
+
+float ColliableTile::GetDamageFor(IColliable& object, Direction direction)
+{
+    return 0;
+}

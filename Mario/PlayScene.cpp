@@ -4,8 +4,10 @@
 #include "BigMario.h"
 #include "FireMario.h"
 #include "SceneManager.h"
-#include "StateManager.h"
 #include "RaccoonMario.h"
+#include "GhostTile.h"
+#include "CloudTile.h"
+#include "Events.h"
 
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
@@ -21,29 +23,18 @@ void PlayScene::LoadFromXml(TiXmlElement* data)
 	this->gameMap = CGameMap::FromTMX(mapPath, mapName);
 	this->gameMap->SetCamera(camera);
 
-	TiXmlElement* marios = data->FirstChildElement("Marios");
-	for (TiXmlElement* node = marios->FirstChildElement(); node != NULL; node = node->NextSiblingElement()) {
-		shared_ptr<MarioPowerUp> marioPower;
-
-		if (strcmp(node->Value(), "SmallMario") == 0)
-			marioPower = make_shared<Small>(mario);
-		if (strcmp(node->Value(), "BigMario") == 0)
-			marioPower = make_shared<BigMario>(mario);
-		if (strcmp(node->Value(), "FireMario") == 0)
-			marioPower = make_shared<FireMario>(mario);
-		if (strcmp(node->Value(), "RaccoonMario") == 0)
-			marioPower = make_shared<RaccoonMario>(mario);
-		
-		marioPower->Init(node);
-
-		StateManager::GetInstance()->Add(node->Value(), marioPower);
-	}
-
-	mario->SetPowerUp(StateManager::GetInstance()->Get("SmallMario"));
+	mario->SetPowerUp(make_shared<Small>(mario));
 }
 
 void PlayScene::Load()
 {
+	HookEvent();
+}
+
+void PlayScene::Unload()
+{
+	CScene::Unload();
+	UnhookEvent();
 }
 
 void PlayScene::Update()
@@ -69,4 +60,25 @@ void PlayScene::OnKeyUp(int key)
 {
 	if (!mario) return;
 	mario->OnKeyUp(key);
+}
+
+void PlayScene::ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<ColliableTile>& tile)
+{
+	if (strcmp(type, "GhostTile") == 0) {
+		tile = make_shared<GhostTile>(id);
+	}
+
+	if (strcmp(type, "CloudTile") == 0) {
+		tile = make_shared<CloudTile>(id);
+	}
+}
+
+void PlayScene::HookEvent()
+{
+	__hook(&Events::ColliableTilePreLoadEvent, Events::GetInstance(), &PlayScene::ColliableTilePreLoadEvent);
+}
+
+void PlayScene::UnhookEvent()
+{
+	__unhook(&Events::ColliableTilePreLoadEvent, Events::GetInstance(), &PlayScene::ColliableTilePreLoadEvent);
 }

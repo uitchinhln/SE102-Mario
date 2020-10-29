@@ -11,7 +11,7 @@ class Events
 public:
 	__event void KeyUpEvent(int keyCode);
 	__event void KeyDownEvent(int keyCode);
-	__event void ColliableTilePreLoadEvent(int id, shared_ptr<ColliableTile>& tile);
+	__event void ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<ColliableTile>& tile);
 
 	static Events* GetInstance();
 	~Events();

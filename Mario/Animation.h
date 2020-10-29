@@ -3,7 +3,8 @@
 #include "Transform.h"
 #include "AnimationFrame.h"
 
-class CAnimation
+class CAnimation :
+	public enable_shared_from_this<CAnimation>
 {
 	DWORD lastFrameTime;
 	int currentFrame;
@@ -17,7 +18,7 @@ class CAnimation
 
 public:
 	CAnimation(int defaultFrameTime = 100);
-	CAnimation(CAnimation* origin);
+	CAnimation(shared_ptr<CAnimation> origin);
 
 	virtual Transform* GetTransform() { return this->transform; }
 
@@ -25,13 +26,15 @@ public:
 
 	virtual void Render(D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
 
+	virtual void Render(int runTime, int totalTime, D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
+
 	virtual float GetPlayScale() { return this->playScale; }
 
 	virtual void SetPlayScale(float scale) { this->playScale = scale; }
 
-	virtual CAnimation* Clone();
+	virtual shared_ptr<CAnimation> Clone();
 
 	~CAnimation();
 };
 
-typedef CAnimation* Animation;
+typedef shared_ptr<CAnimation> Animation;

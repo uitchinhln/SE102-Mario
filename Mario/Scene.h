@@ -10,7 +10,7 @@ protected:
 	shared_ptr<Camera> camera;
 	shared_ptr<CGameMap> gameMap;
 
-	vector<shared_ptr<CGameObject>> objects;
+	vector<shared_ptr<GameObject>> objects;
 
 public:
 	virtual void Load() = 0;

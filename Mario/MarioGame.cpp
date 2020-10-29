@@ -41,6 +41,7 @@ void MarioGame::LoadResources()
 
 			if (type == "PlayScene") {
 				shared_ptr<PlayScene> scene = make_shared<PlayScene>();
+				scene->Load();
 				scene->LoadFromXml(node);
 
 				SceneManager::GetInstance()->AddScene(id, scene);

@@ -1,4 +1,6 @@
 #include "Game.h"
+#include <chrono>
+#include <thread>
 
 CGame* CGame::__instance = nullptr;
 GameTime CGame::gameTime = GameTime();
@@ -45,18 +47,20 @@ int CGame::Run()
 		//tick
 		DWORD now = gameTimer.Elapsed();
 		DWORD accumulatedTime = now - gameTime.GetPreviousTicks();
-		gameTime.SetPreviousTicks(now);
-		gameTime.ElapsedGameTime = accumulatedTime * 1.2;
-		gameTime.TotalGameTime += accumulatedTime * 1.2;
 
-		if (gameTime.ElapsedGameTime >= tickPerFrame)
+		if (accumulatedTime >= tickPerFrame)
 		{
+			gameTime.ElapsedGameTime = accumulatedTime;
+			gameTime.TotalGameTime += accumulatedTime;
+			gameTime.SetPreviousTicks(now);
+
 			keyboard->ProcessKeyboard();
 			Update();
 			Render();
 		}
-		else
-			Sleep(tickPerFrame - gameTime.ElapsedGameTime);
+		else {
+			Sleep(tickPerFrame - accumulatedTime);
+		}			
 	}
 
 	isRunning = false;

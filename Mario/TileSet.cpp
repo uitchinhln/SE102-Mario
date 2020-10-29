@@ -29,10 +29,25 @@ CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
 		int id = 0; node->QueryIntAttribute("id", &id);
 		TiXmlElement* objects = node->FirstChildElement("objectgroup");
 		for (TiXmlElement* object = objects->FirstChildElement("object"); object != nullptr; object = object->NextSiblingElement("object")) {
-			if (object->Attribute("height") != NULL && object->NoChildren()) {
+			if (object->Attribute("height") != NULL) {
 				shared_ptr<ColliableTile> tile;
 
-				__raise (*Events::GetInstance()).ColliableTilePreLoadEvent(id, tile);
+				if (!object->NoChildren()) {
+					const char* objectType = "";
+
+					TiXmlElement* props = object->FirstChildElement("properties");
+					if (props) {
+						for (TiXmlElement* prop = props->FirstChildElement("property"); prop != nullptr; prop = prop->NextSiblingElement("property")) {							
+							if (prop->Attribute("name") && prop->Attribute("value") && strcmp(prop->Attribute("name"), "object") == 0) {
+								objectType = prop->Attribute("value");
+								break;
+							}
+						}
+
+						__raise (*Events::GetInstance()).ColliableTilePreLoadEvent(objectType, id, tile);
+					}
+				}
+
 				if (!tile) tile = make_shared<ColliableTile>(id);
 
 				RectF rect;

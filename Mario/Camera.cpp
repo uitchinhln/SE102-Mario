@@ -20,18 +20,18 @@ Vec2 Camera::GetCamSize()
 	return this->size;
 }
 
-void Camera::SetTracking(weak_ptr<CGameObject> target)
+void Camera::SetTracking(weak_ptr<GameObject> target)
 {
 	this->target = target;
 }
 
 void Camera::Update()
 {
-	if (shared_ptr<CGameObject> obj = target.lock()) {
+	if (shared_ptr<GameObject> obj = target.lock()) {
 		Position.x = obj->GetPosition().x - size.x / 2;
 		
-		if (obj->GetPosition().y - Position.y < size.y / 2) {
-			Position.y = obj->GetPosition().y - size.y / 2;
+		if (obj->GetPosition().y - Position.y < size.y / 4) {
+			Position.y = obj->GetPosition().y - size.y / 4;
 		}
 		else if (obj->GetHitBox().bottom - Position.y >= size.y - 48) {
 			Position.y = obj->GetHitBox().bottom - size.y + 48;
@@ -44,6 +44,10 @@ void Camera::Update()
 		if (Position.x > mapBound.x) Position.x = mapBound.x;
 		if (Position.y > mapBound.y) Position.y = mapBound.y;
 	}
+}
+
+void Camera::LockPosition(Vec2 pos)
+{
 }
 
 Camera::~Camera()

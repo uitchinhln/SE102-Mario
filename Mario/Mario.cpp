@@ -4,7 +4,9 @@
 #include "SceneManager.h"
 #include "Events.h"
 #include "Small.h"
-#include "StateManager.h"
+#include "BigMario.h"
+#include "FireMario.h"
+#include "RaccoonMario.h"
 
 void Mario::OnKeyUp(int key)
 {
@@ -14,29 +16,31 @@ void Mario::OnKeyUp(int key)
 void Mario::OnKeyDown(int key)
 {
 	powerUp->OnKeyDown(key);
+	
+	// Change mario power
+	Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
+
 	switch (key)
 	{
 	case DIK_1:
-		SetPowerUp(StateManager::GetInstance()->Get("SmallMario"));
+		SetPowerUp(make_shared<Small>(shared_from_this()));
 		break;
 	case DIK_2:
-		SetPowerUp(StateManager::GetInstance()->Get("BigMario"));
-		this->Position.y -= 50;
+		SetPowerUp(make_shared<BigMario>(shared_from_this()));
 		break;
 	case DIK_3:
-		SetPowerUp(StateManager::GetInstance()->Get("FireMario"));
-		this->Position.y -= 50;
+		SetPowerUp(make_shared<FireMario>(shared_from_this()));
 		break;
 	case DIK_4:
-		SetPowerUp(StateManager::GetInstance()->Get("RaccoonMario"));
-		this->Position.y -= 50;
-		break;
-	default:
+		SetPowerUp(make_shared<RaccoonMario>(shared_from_this()));
 		break;
 	}
+
+	Position.x = fixPos.x;
+	Position.y = fixPos.y - (GetHitBox().bottom - GetHitBox().top);
 }
 
-Mario::Mario() : CGameObject()
+Mario::Mario() : GameObject()
 {
 	this->Distance = Vec2(0, 0);
 	this->Position = Vec2(100, 300);
@@ -128,7 +132,7 @@ Vec2& Mario::GetAccelerate()
 
 RectF Mario::GetHitBox()
 {
-	return powerUp->GetBoundingBox();
+	return powerUp->GetHitBox();
 }
 
 MovingStates& Mario::GetMovingState()
@@ -159,6 +163,11 @@ ObjectType Mario::GetObjectType()
 bool Mario::IsGetThrough(IColliable& object, Direction direction)
 {
 	return false;
+}
+
+float Mario::GetDamageFor(IColliable& object, Direction direction)
+{
+	return 0.0f;
 }
 
 void Mario::HookEvent()

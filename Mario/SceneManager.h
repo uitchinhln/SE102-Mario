@@ -12,7 +12,7 @@ class SceneManager
 
 	string activeSceneID;
 
-	shared_ptr<CGameObject> player;
+	shared_ptr<GameObject> player;
 
 public:
 	void AddScene(string id, shared_ptr<CScene> scene);
@@ -24,7 +24,7 @@ public:
 	template<class T>
 	shared_ptr<T> GetPlayer();
 
-	void SetPlayer(shared_ptr<CGameObject> player);
+	void SetPlayer(shared_ptr<GameObject> player);
 
 	void Update();
 	

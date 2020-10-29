@@ -6,7 +6,7 @@ class Small :
 public:
 	Small(shared_ptr<Mario> mario);
 
-	virtual RectF GetBoundingBox() override;
+	virtual void CrouchUpdate() override;
 
 	virtual ObjectType GetMarioType() override;
 protected:

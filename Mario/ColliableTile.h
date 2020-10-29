@@ -20,10 +20,13 @@ public:
 	virtual Vec2& GetDistance() override;
 
 	virtual RectF GetHitBox() override;
+
 	virtual void SetHitBox(RectF r);
 
 	virtual shared_ptr<DataTag> getDataTag();
 
 	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
+
+	virtual float GetDamageFor(IColliable& object, Direction direction) override;
 };
 

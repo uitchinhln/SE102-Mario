@@ -24,3 +24,8 @@ bool ColliableTileAdapter::IsGetThrough(IColliable& object, Direction direction)
 {
 	return source->IsGetThrough(object, direction);
 }
+
+float ColliableTileAdapter::GetDamageFor(IColliable& object, Direction direction)
+{
+	return 0;
+}

@@ -14,5 +14,7 @@ public:
 	Vec2 GetJet();
 protected:	
 	SweptAABBResult SweptAABB(RectF movingBounding, Vec2 distance, RectF staticBounding, bool debug = false);
+
+	bool AABB(RectF movingBounding, RectF staticBounding);
 };
 

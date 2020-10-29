@@ -2,14 +2,13 @@
 #include "Utils.h"
 #include "Transform.h"
 
-class CGameObject;
+class GameObject;
 
-[event_receiver(native)]
 class Camera
 {
 protected:
 	Vec2 size;
-	weak_ptr<CGameObject> target;
+	weak_ptr<GameObject> target;
 public:
 	Camera();
 	Camera(Vec2 pos, Vec2 size);
@@ -18,9 +17,11 @@ public:
 
 	virtual Vec2 GetCamSize();
 
-	virtual void SetTracking(weak_ptr<CGameObject> target);
+	virtual void SetTracking(weak_ptr<GameObject> target);
 
 	virtual void Update();
+
+	virtual void LockPosition(Vec2 pos);
 
 	~Camera();
 };

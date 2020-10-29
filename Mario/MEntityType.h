@@ -7,5 +7,7 @@ public:
 	static const ObjectType BigMario;
 	static const ObjectType FireMario;
 	static const ObjectType RaccoonMario;
+
+	static const ObjectType MarioFireBall;
 };
 

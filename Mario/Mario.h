@@ -14,12 +14,15 @@ enum class JumpingStates {
 	IDLE,
 	JUMP,
 	HIGH_JUMP,
-	FALLING
+	SUPER_JUMP,
+	FALLING,
+	FLOATING
 };
 
+[event_receiver(native)]
 class Mario : 
-	public CGameObject,
-	public std::enable_shared_from_this<Mario>
+	public GameObject,
+	public enable_shared_from_this<Mario>
 {
 private:
 
@@ -97,5 +100,7 @@ public:
 	virtual void OnKeyDown(int key);
 
 	bool IsGetThrough(IColliable& object, Direction direction) override;
+
+	virtual float GetDamageFor(IColliable& object, Direction direction) override;
 };
 

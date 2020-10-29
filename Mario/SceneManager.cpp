@@ -23,7 +23,7 @@ shared_ptr<CScene> SceneManager::GetActiveScene()
 	return scenes.at(activeSceneID);
 }
 
-void SceneManager::SetPlayer(shared_ptr<CGameObject> player)
+void SceneManager::SetPlayer(shared_ptr<GameObject> player)
 {
 	this->player = player;
 }
