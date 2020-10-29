@@ -122,7 +122,7 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 		//Load tileset
 		for (TiXmlElement* node = root->FirstChildElement("tileset"); node != nullptr; node = node->NextSiblingElement("tileset")) {
 			shared_ptr<CTileSet> tileSet = make_shared<CTileSet>(node, filePath);
-			gameMap->tilesets[tileSet->GetFirstGID()] = shared_ptr<CTileSet>(tileSet);
+			gameMap->tilesets[tileSet->GetFirstGID()] = tileSet;
 		}
 
 		//Load layer
