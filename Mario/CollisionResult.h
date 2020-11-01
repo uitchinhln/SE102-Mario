@@ -2,14 +2,14 @@
 #include "Utils.h"
 #include "IColliable.h"
 
-struct SweptAABBResult {
+struct SweptCollisionResult {
 	float TimeToCollide;
 	Direction Direction;
 	Vec2 Distance;
 
-	static SweptAABBResult Empty()
+	static SweptCollisionResult Empty()
 	{
-		return SweptAABBResult{ -1, Direction::None };
+		return SweptCollisionResult{ -1, Direction::None };
 	}
 };
 
@@ -17,9 +17,9 @@ class CollisionResult
 {
 public:
 	shared_ptr<IColliable> GameColliableObject;
-	SweptAABBResult SAABBResult;
+	SweptCollisionResult SAABBResult;
 
-	CollisionResult(SweptAABBResult result, shared_ptr<IColliable> object) {
+	CollisionResult(SweptCollisionResult result, shared_ptr<IColliable> object) {
 		SAABBResult = result;
 		GameColliableObject = object;
 	}

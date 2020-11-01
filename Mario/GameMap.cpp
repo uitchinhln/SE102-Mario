@@ -41,6 +41,8 @@ void CGameMap::Update()
 
 void CGameMap::Render()
 {
+	CGame::GetInstance()->GetGraphic().Clear(backgroundColor);
+
 	int col = this->camera->Position.x / tileWidth;
 	int row = this->camera->Position.y / tileHeight;
 
@@ -118,6 +120,14 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 		root->QueryIntAttribute("height", &gameMap->height);
 		root->QueryIntAttribute("tilewidth", &gameMap->tileWidth);
 		root->QueryIntAttribute("tileheight", &gameMap->tileHeight);
+
+		if (root->Attribute("backgroundcolor")) {
+			string hexColor = root->Attribute("backgroundcolor");
+			hexColor.replace(0, 1, "");
+			unsigned int hex = stoul(hexColor, nullptr, 16);
+			int a = (hex >> 24) & 255 | 255 & (hexColor.length() <= 6 ? 0xff : 0x00);
+			gameMap->backgroundColor = D3DCOLOR_ARGB(a, (hex >> 16) & 255, (hex >> 8) & 255, hex & 255);
+		}
 
 		//Load tileset
 		for (TiXmlElement* node = root->FirstChildElement("tileset"); node != nullptr; node = node->NextSiblingElement("tileset")) {

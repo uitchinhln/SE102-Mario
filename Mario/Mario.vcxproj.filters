@@ -97,6 +97,15 @@
     <Filter Include="MarioGame\Entity\LivingEntity\Goomba">
       <UniqueIdentifier>{24ad6102-646f-40d4-81f7-da8f69d4d463}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Scene\Map\MapProperties">
+      <UniqueIdentifier>{bd9e1cca-94aa-4607-9692-90d2aefb05e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Phys\Collision\SAT">
+      <UniqueIdentifier>{c066d2ff-b005-454b-8671-a721bfb9c2c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Mario\ProjectTile\Commons">
+      <UniqueIdentifier>{7ded88fc-d3ff-40da-98a3-651f996938cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -246,6 +255,22 @@
     <ClCompile Include="CloudTile.cpp">
       <Filter>MarioGame\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
+    </ClCompile>
+    <ClCompile Include="MapProperties.cpp">
+      <Filter>Framework\Scene\Map\MapProperties</Filter>
+    </ClCompile>
+    <ClCompile Include="IEnviroment.cpp" />
+    <ClCompile Include="Polygon.cpp">
+      <Filter>Framework\World\Phys\Collision\SAT</Filter>
+    </ClCompile>
+    <ClCompile Include="Vec2Utils.cpp">
+      <Filter>Framework\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioTailed.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\ProjectTile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -388,6 +413,22 @@
     </ClInclude>
     <ClInclude Include="CloudTile.h">
       <Filter>MarioGame\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Goomba.h">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
+    </ClInclude>
+    <ClInclude Include="MapProperties.h">
+      <Filter>Framework\Scene\Map\MapProperties</Filter>
+    </ClInclude>
+    <ClInclude Include="IEnviroment.h" />
+    <ClInclude Include="Polygon.h">
+      <Filter>Framework\World\Phys\Collision\SAT</Filter>
+    </ClInclude>
+    <ClInclude Include="Vec2Utils.h">
+      <Filter>Framework\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioTailed.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\ProjectTile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

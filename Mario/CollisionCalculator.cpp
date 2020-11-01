@@ -14,7 +14,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 	if (shared_ptr<IColliable> sp = object.lock()) {
 		for each (shared_ptr<IColliable> coO in (*objects))
 		{
-			SweptAABBResult aabbResult = SweptAABB(sp->GetHitBox(), sp->GetDistance() - coO->GetDistance(), coO->GetHitBox(), debug);
+			SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), sp->GetDistance() - coO->GetDistance(), coO->GetHitBox(), debug);
 			shared_ptr<CollisionResult> result = make_shared<CollisionResult>(aabbResult, coO);
 
 			if (debug)
@@ -37,7 +37,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 					dis.x *= result->SAABBResult.TimeToCollide;
 					dis.x -= 0.1;
 				}
-				SweptAABBResult aabbResult = SweptAABB(sp->GetHitBox(), dis, coll->GameColliableObject->GetHitBox());
+				SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), dis, coll->GameColliableObject->GetHitBox());
 				if (aabbResult.TimeToCollide <= 0 || aabbResult.TimeToCollide > 1.0f) {
 					coll->SAABBResult.TimeToCollide = 9999.0f;
 					break;
@@ -88,8 +88,7 @@ Vec2 CollisionCalculator::GetNewDistance()
 		}
 		jet = Vec2(nx, ny);
 		return Vec2(min_tx * d.x + nx * 0.002f, min_ty * d.y + ny * 0.002f);
-		/*float min_t = min_tx < min_ty ? min_tx : min_ty;
-		return Vec2(min_t * d.x + nx * 0.4f, min_t * d.y + ny * 0.4f);*/
+		//return Vec2(min_tx * d.x, min_ty * d.y);
 	}
 	return VECTOR_0;
 }
@@ -99,7 +98,7 @@ Vec2 CollisionCalculator::GetJet()
 	return jet;
 }
 
-SweptAABBResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, bool debug)
+SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, bool debug)
 {
 	float dx_entry = 0, dx_exit, tx_entry, tx_exit;
 	float dy_entry = 0, dy_exit, ty_entry, ty_exit;
@@ -123,11 +122,18 @@ SweptAABBResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, 
 	float bb = distance.y > 0 ? m.bottom + distance.y : m.bottom;
 
 	if (br < s.left || bl > s.right || bb < s.top || bt > s.bottom)
-		return SweptAABBResult::Empty();
+		return SweptCollisionResult::Empty();
 
+	if (debug) {
+		DebugOut(L"1Not Exit\n");
+	}
 
 	if (distance.x == 0 && distance.y == 0)
-		return SweptAABBResult::Empty();		// moving object is not moving > obvious no collision
+		return SweptCollisionResult::Empty();
+
+	if (debug) {
+		DebugOut(L"2Not Exit\n");
+	}
 
 	if (distance.x > 0)
 	{
@@ -180,7 +186,7 @@ SweptAABBResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, 
 	}
 
 	if ((tx_entry < 0.0f && ty_entry < 0.0f) || tx_entry > 1.0f || ty_entry > 1.0f)
-		return SweptAABBResult::Empty();
+		return SweptCollisionResult::Empty();
 
 	t_entry = max(tx_entry, ty_entry);
 	t_exit = min(tx_exit, ty_exit);
@@ -191,7 +197,11 @@ SweptAABBResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, 
 	}
 
 	if (t_entry > t_exit)
-		return SweptAABBResult::Empty();
+		return SweptCollisionResult::Empty();
+
+	if (debug) {
+		DebugOut(L"3Not Exit\n");
+	}
 
 	Direction direction = Direction::None;
 
@@ -209,10 +219,89 @@ SweptAABBResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, 
 		else
 			direction = Direction::Bottom;
 	}
-	return SweptAABBResult{ t_entry, direction, distance };
+	return SweptCollisionResult{ t_entry, direction, distance };
 }
 
 bool CollisionCalculator::AABB(RectF b1, RectF b2)
 {
 	return !(b1.right < b2.left || b1.left > b2.right || b1.top > b2.bottom || b1.bottom < b2.top);
+}
+
+SweptCollisionResult CollisionCalculator::SweptSAT(CPolygon m, Vec2 distance, CPolygon s, bool debug)
+{
+	SweptCollisionResult result;
+
+	//m.BuildEdge();
+	//s.BuildEdge();
+
+	////Project 2 object to velocity vector
+	//Vec2 perpVel = Vec2(-distance.y, distance.x);
+	//perpVel = Vec2Utils::Normalize(perpVel);
+
+	//float minA = 0, minB = 0, maxA = 0, maxB = 0;
+
+	//m.Project(perpVel, minA, maxA);
+	//s.Project(perpVel, minB, maxB);
+
+	//if ((minA < minB ? minB - maxA : minA - maxB) > 0) {
+	//	//100% sure no intersect
+	//	return;
+	//}
+
+	//int totalEdgeM = m.edges.size();
+	//int totalEdgeS = s.edges.size();
+	//
+	//float minIntervalDistance = -9999;
+	//Vec2 translationAxis;
+
+	//Vec2 edge;
+
+	//for (int i = 0; i < totalEdgeM + totalEdgeS; i++) {
+	//	if (i < totalEdgeM) {
+	//		edge = m.edges[i];
+	//	}
+	//	else {
+	//		edge = s.edges[i - totalEdgeM];
+	//	}
+
+	//	Vec2 perpendicularAxis = Vec2(-edge.y, edge.x);
+	//	perpendicularAxis = Vec2Utils::Normalize(perpendicularAxis);
+
+	//	minA = minB = maxA = maxB = 0;
+	//	m.Project(perpendicularAxis, minA, maxA);
+	//	s.Project(perpendicularAxis, minB, maxB);
+
+	//	if ((minA < minB ? minB - maxA : minA - maxB) > 0) {
+	//		//100% sure not currently intersect
+	//	}
+
+	//	float disProjection = Vec2Utils::DotProduct(perpendicularAxis, distance);
+
+	//	if (disProjection < 0) {
+	//		minA += disProjection;
+	//	}
+	//	else {
+	//		maxA += disProjection;
+	//	}
+
+	//	float intervalDistance = minA < minB ? minB - maxA : minA - maxB;
+
+	//	if (intervalDistance > 0) {
+	//		//100% sure them will not intersect
+	//	}
+
+	//	intervalDistance = abs(intervalDistance);
+
+	//	if (intervalDistance < minIntervalDistance) {
+	//		minIntervalDistance = intervalDistance;
+	//		translationAxis = perpendicularAxis;
+
+	//		Vec2 d = m.Center() - s.Center();
+	//		if (Vec2Utils::DotProduct(d, translationAxis) < 0) {
+	//			translationAxis = -translationAxis;
+	//		}
+	//	}
+	//}
+
+	return result;
 }

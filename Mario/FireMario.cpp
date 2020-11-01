@@ -19,6 +19,10 @@ FireMario::FireMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 	this->MARIO_ATTACK_TIME = 100;
 }
 
+void FireMario::OnAttackStart()
+{
+}
+
 void FireMario::OnAttackFinish()
 {
 }

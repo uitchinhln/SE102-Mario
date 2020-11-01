@@ -40,8 +40,30 @@ void PlayScene::Unload()
 void PlayScene::Update()
 {
 	gameMap->Update();
-	mario->Update(&gameMap->GetColliableTileAround(mario->GetPosition(), mario->GetHitBox(), mario->GetDistance()));
+
+	vector<shared_ptr<IColliable>> objs;
+	objs.clear();
+	objs.insert(objs.end(), objects.begin(), objects.end());
+
+	vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(mario->GetPosition(), mario->GetHitBox(), mario->GetDistance());
+	objs.insert(objs.end(), tiles.begin(), tiles.end());
+	mario->Update(&objs);
+	
 	camera->Update();
+
+	for (shared_ptr<GameObject> obj : objects) {
+		objs.clear();
+
+		objs.push_back(this->mario);
+		objs.insert(objs.end(), objects.begin(), objects.end());
+
+		vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
+		objs.insert(objs.end(), tiles.begin(), tiles.end());
+
+		obj->Update(&objs);
+	}
+
+	RemoveDespawnedObjects();
 }
 
 void PlayScene::Render()

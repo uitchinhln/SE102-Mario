@@ -18,11 +18,18 @@ public:
 	virtual void Update();
 	virtual void Render();
 
+	virtual void SpawnEntity(shared_ptr<GameObject> entity);
+
+	virtual void DespawnEntity(shared_ptr<GameObject> entity);
+
 	virtual void OnKeyDown(int key);
 	virtual void OnKeyUp(int key);
 
 	virtual shared_ptr<Camera> GetCamera();
 	virtual shared_ptr<CGameMap> GetGameMap();
+
+protected:
+	virtual void RemoveDespawnedObjects();
 };
 
 typedef CScene* Scene;

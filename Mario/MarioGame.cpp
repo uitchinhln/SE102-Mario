@@ -28,7 +28,16 @@ void MarioGame::LoadResources()
 			string spritesPath = node->FirstChildElement("SpriteDB")->Attribute("path");
 			string animationsPath = node->FirstChildElement("AnimationDB")->Attribute("path");
 
-			TextureManager::GetInstance()->Add(textureId, ToLPCWSTR(texturesPath), D3DCOLOR_ARGB(0, 255, 255, 255));
+			string transColor;
+			if (!node->FirstChildElement("Texture")->Attribute("transparent")) {
+				transColor = "0,255,255,255";
+			}
+			else {
+				transColor = node->FirstChildElement("Texture")->Attribute("transparent");
+			}
+			vector<string> argb = split(transColor, ",");
+
+			TextureManager::GetInstance()->Add(textureId, ToLPCWSTR(texturesPath), D3DCOLOR_ARGB(stoi(argb[0]), stoi(argb[1]), stoi(argb[2]), stoi(argb[3])));
 			SpriteManager::GetInstance()->ImportFromXml(textureId, spritesPath.c_str());
 			AnimationManager::GetInstance()->ImportFromXml(textureId, animationsPath.c_str());
 		}
@@ -61,7 +70,6 @@ void MarioGame::Update()
 
 void MarioGame::Draw()
 {
-	graphic->Clear(D3DCOLOR_XRGB(181, 235, 242));
 	SceneManager::GetInstance()->Render();
 }
 

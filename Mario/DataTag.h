@@ -9,29 +9,31 @@ class DataTag
 public:
 	DataTag(string tagName);
 
-	bool hasNoTag();
+	bool HasNoTag();
 
-	bool hasKey(string tagName);
+	bool HasKey(string tagName);
 
-	bool getBool(string tagName, bool default = false);
-	void setBool(string tagName, bool value);
+	void RemoveTag(string name);
 
-	int getInt(string tagName, int default = 0);
-	void setInt(string tagName, int value);
+	bool GetBool(string tagName, bool default = false);
+	void SetBool(string tagName, bool value);
 
-	long getLong(string tagName, long default = 0);
-	void setLong(string tagName, long value);
+	int GetInt(string tagName, int default = 0);
+	void SetInt(string tagName, int value);
 
-	double getDouble(string tagName, double default = 0);
-	void setDouble(string tagName, double value);
+	long GetLong(string tagName, long default = 0);
+	void SetLong(string tagName, long value);
 
-	float getFloat(string tagName, float default = 0);
-	void setFloat(string tagName, float value);
+	double GetDouble(string tagName, double default = 0);
+	void SetDouble(string tagName, double value);
 
-	string getString(string tagName, string default = "");
-	void setString(string tagName, string value);
+	float GetFloat(string tagName, float default = 0);
+	void SetFloat(string tagName, float value);
 
-	shared_ptr<DataTag> getDataTag(string tagName, shared_ptr<DataTag> default = nullptr);
-	void setDataTag(shared_ptr<DataTag> value);
+	string GetString(string tagName, string default = "");
+	void SetString(string tagName, string value);
+
+	shared_ptr<DataTag> GetDataTag(string tagName, shared_ptr<DataTag> default = nullptr);
+	void SetDataTag(shared_ptr<DataTag> value);
 };
 

@@ -7,6 +7,8 @@ class FireMario :
 public:
 	FireMario(shared_ptr<Mario> mario);
 
+	virtual void OnAttackStart() override;
+
 	virtual void OnAttackFinish() override;
 
 	virtual void InAttackProgress() override;

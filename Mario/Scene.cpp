@@ -9,10 +9,17 @@ void CScene::Update()
 {
 	gameMap->Update();
 	camera->Update();
-	
+
+	vector<shared_ptr<IColliable>> objs;
+
 	for (shared_ptr<GameObject> obj : objects) {
-		vector<shared_ptr<IColliable>> objs;
-		obj->Update(&gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance()));
+		objs.clear();
+		objs.insert(objs.end(), objects.begin(), objects.end());
+
+		vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
+		objs.insert(objs.end(), tiles.begin(), tiles.end());
+		
+		obj->Update(&objs);
 	}
 }
 
@@ -24,6 +31,17 @@ void CScene::Render()
 	{
 		obj->Render();
 	}
+}
+
+void CScene::SpawnEntity(shared_ptr<GameObject> entity)
+{
+	objects.push_back(entity);
+	entity->GetDataTag()->RemoveTag("despawned");
+}
+
+void CScene::DespawnEntity(shared_ptr<GameObject> entity)
+{
+	entity->GetDataTag()->SetBool("despawned", true);
 }
 
 void CScene::OnKeyDown(int key)
@@ -42,4 +60,11 @@ shared_ptr<Camera> CScene::GetCamera()
 shared_ptr<CGameMap> CScene::GetGameMap()
 {
 	return gameMap;
+}
+
+void CScene::RemoveDespawnedObjects()
+{
+	objects.erase(remove_if(objects.begin(), objects.end(), [](const shared_ptr<GameObject>& obj) {
+		return obj->GetDataTag()->HasKey("despawned");
+		}), objects.end());
 }

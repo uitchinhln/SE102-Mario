@@ -5,95 +5,100 @@ DataTag::DataTag(string tagName)
 	this->tagName = tagName;
 }
 
-bool DataTag::hasNoTag()
+bool DataTag::HasNoTag()
 {
 	return contents.size() == 0;
 }
 
-bool DataTag::hasKey(string tagName)
+bool DataTag::HasKey(string tagName)
 {
 	return contents.size() > 0 && contents.find(tagName) != contents.end();
 }
 
-bool DataTag::getBool(string tagName, bool default)
+void DataTag::RemoveTag(string name)
 {
-	if (!hasKey(tagName)) return default;
+	contents.erase(name);
+}
+
+bool DataTag::GetBool(string tagName, bool default)
+{
+	if (!HasKey(tagName)) return default;
 	return any_cast<bool>(contents.at(tagName));
 }
 
-void DataTag::setBool(string tagName, bool value)
+void DataTag::SetBool(string tagName, bool value)
 {
 	contents[tagName] = value;
 }
 
-int DataTag::getInt(string tagName, int default)
+int DataTag::GetInt(string tagName, int default)
 {
-	if (!hasKey(tagName)) return default;
+	if (!HasKey(tagName)) return default;
 	return any_cast<int>(contents.at(tagName));
 }
 
-void DataTag::setInt(string tagName, int value)
+void DataTag::SetInt(string tagName, int value)
 {
 	contents[tagName] = value;
 }
 
-long DataTag::getLong(string tagName, long default)
+long DataTag::GetLong(string tagName, long default)
 {
-	if (!hasKey(tagName)) return default;
+	if (!HasKey(tagName)) return default;
 	return any_cast<long>(contents.at(tagName));
 }
 
-void DataTag::setLong(string tagName, long value)
+void DataTag::SetLong(string tagName, long value)
 {
 	contents[tagName] = value;
 }
 
-double DataTag::getDouble(string tagName, double default)
+double DataTag::GetDouble(string tagName, double default)
 {
-	if (!hasKey(tagName)) return default;
+	if (!HasKey(tagName)) return default;
 	return any_cast<double>(contents.at(tagName));
 }
 
-void DataTag::setDouble(string tagName, double value)
+void DataTag::SetDouble(string tagName, double value)
 {
 	contents[tagName] = value;
 }
 
-float DataTag::getFloat(string tagName, float default)
+float DataTag::GetFloat(string tagName, float default)
 {
-	if (!hasKey(tagName)) return default;
+	if (!HasKey(tagName)) return default;
 	return any_cast<float>(contents.at(tagName));
 }
 
-void DataTag::setFloat(string tagName, float value)
+void DataTag::SetFloat(string tagName, float value)
 {
 	contents[tagName] = value;
 }
 
-string DataTag::getString(string tagName, string default)
+string DataTag::GetString(string tagName, string default)
 {
-	if (!hasKey(tagName)) return default;
+	if (!HasKey(tagName)) return default;
 	return any_cast<string>(contents.at(tagName));
 }
 
-void DataTag::setString(string tagName, string value)
+void DataTag::SetString(string tagName, string value)
 {
 	contents[tagName] = value;
 }
 
-shared_ptr<DataTag> DataTag::getDataTag(string tagName, shared_ptr<DataTag> default)
+shared_ptr<DataTag> DataTag::GetDataTag(string tagName, shared_ptr<DataTag> default)
 {
-	if (!hasKey(tagName)) return default;
+	if (!HasKey(tagName)) return default;
 	return any_cast<shared_ptr<DataTag>>(contents.at(tagName));
 }
 
-void DataTag::setDataTag(shared_ptr<DataTag> value)
+void DataTag::SetDataTag(shared_ptr<DataTag> value)
 {
 	if (value == nullptr)
 		throw "Value cannot be null!!!";
 	if (&(*value) == this)
 		throw "Loop detected!!!";
-	if (&(*value->getDataTag(tagName)) == this)
+	if (&(*value->GetDataTag(tagName)) == this)
 		throw "Loop detected!!!";
 
 	contents[value->tagName] = value;

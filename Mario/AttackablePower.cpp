@@ -18,12 +18,11 @@ void AttackablePower::AttackUpdate()
 			OnAttackDetroyed();
 			return;
 		}
-		
-		if (!CanAttack()) {
-			return;
-		}
 
 		if (IsAttacking()) {
+			if (attackTimer.Elapsed() < 1) {
+				OnAttackStart();
+			}
 			if (attackTimer.Elapsed() >= MARIO_ATTACK_TIME) {
 				attackTimer.Stop();
 				OnAttackFinish();
@@ -33,11 +32,28 @@ void AttackablePower::AttackUpdate()
 			}
 		}
 		else {
-			if (keyboard.IsKeyDown(DIK_Z) && !IsAttacking()) {
+			if (keyboard.IsKeyDown(DIK_Z) && !IsAttacking() && CanAttack()) {
 				attackTimer.Restart();
+				OnAttackStart();
 			}
 		}
 		
+	}
+}
+
+void AttackablePower::MoveUpdate()
+{
+	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+
+	if (shared_ptr<Mario> m = mario.lock()) {
+		if (keyboard.IsKeyDown(DIK_LEFT) || keyboard.IsKeyDown(DIK_RIGHT)) {
+			int keySign = keyboard.IsKeyDown(DIK_LEFT) ? -1 : 1;
+			if (keySign * m->GetFacing() < 0 && IsAttacking()) {
+				DebugOut(L"Returned\n");
+				return;
+			}			
+		}
+		MarioPowerUp::MoveUpdate();
 	}
 }
 

@@ -6,3 +6,6 @@ const ObjectType MEntityType::FireMario = ObjectType::CreateObjectType("FireMari
 const ObjectType MEntityType::RaccoonMario = ObjectType::CreateObjectType("RaccoonMario");
 
 const ObjectType MEntityType::MarioFireBall = ObjectType::CreateObjectType("MarioFireBall");
+const ObjectType MEntityType::MarioTailed = ObjectType::CreateObjectType("MarioTailed");
+
+const ObjectType MEntityType::Goomba = ObjectType::CreateObjectType("Goomba");

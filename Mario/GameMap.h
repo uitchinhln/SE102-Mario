@@ -14,6 +14,8 @@ class CGameMap
 	int tileWidth;
 	int tileHeight;
 
+	D3DCOLOR backgroundColor = D3DCOLOR_XRGB(181, 235, 242);
+
 	shared_ptr<Camera> camera;
 
 	map<int, shared_ptr<CTileSet>> tilesets;

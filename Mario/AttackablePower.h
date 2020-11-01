@@ -9,9 +9,13 @@ public:
 
     virtual void AttackUpdate();
 
+    virtual void OnAttackStart() = 0;
+
     virtual void OnAttackFinish() = 0;
 
     virtual void InAttackProgress() = 0;
+
+    virtual void MoveUpdate() override;
 
     virtual void OnAttackDetroyed();
 

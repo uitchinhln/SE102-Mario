@@ -2,6 +2,7 @@
 
 GameObject::GameObject()
 {
+	tags = make_shared<DataTag>("root");
 	InitResource();
 }
 
@@ -61,7 +62,7 @@ shared_ptr<CollisionCalculator> GameObject::GetCollisionCalc()
 	return this->collisionCal;
 }
 
-shared_ptr<DataTag> GameObject::getDataTag()
+shared_ptr<DataTag> GameObject::GetDataTag()
 {
 	return tags;
 }

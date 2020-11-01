@@ -2,6 +2,8 @@
 #include "AnimationManager.h"
 #include "Mario.h"
 #include "BigMario.h"
+#include "MarioTailed.h"
+#include "SceneManager.h"
 
 RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {
@@ -18,6 +20,16 @@ RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 	this->animations["Crouch"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-crouch")->Clone();
 	this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-kick")->Clone();
 	this->animations["Attack"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-spin")->Clone();
+
+	this->MARIO_ATTACK_TIME = 250;
+}
+
+void RaccoonMario::OnAttackStart()
+{
+	if (shared_ptr<Mario> m = mario.lock()) {
+		shared_ptr<MarioTailed> tail = make_shared<MarioTailed>(m, MARIO_ATTACK_TIME / 2);
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(tail);
+	}
 }
 
 void RaccoonMario::OnAttackFinish()
@@ -174,7 +186,7 @@ void RaccoonMario::OnKeyDown(int key)
 	AttackablePower::OnKeyDown(key);
 
 	// Attack
-	if (key == DIK_A && !IsAttacking()) {
+	if (key == DIK_A && CanAttack() && !IsAttacking()) {
 		attackTimer.Restart();
 	}
 }

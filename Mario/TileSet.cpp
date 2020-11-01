@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "TextureManager.h"
 #include "Events.h"
+#include "MapProperties.h"
 
 CTileSet::CTileSet(int firstgid, Vec2 tileSize, int tileCount, int columns, string imgPath)
 {
@@ -32,19 +33,11 @@ CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
 			if (object->Attribute("height") != NULL) {
 				shared_ptr<ColliableTile> tile;
 
-				if (!object->NoChildren()) {
-					const char* objectType = "";
-
-					TiXmlElement* props = object->FirstChildElement("properties");
-					if (props) {
-						for (TiXmlElement* prop = props->FirstChildElement("property"); prop != nullptr; prop = prop->NextSiblingElement("property")) {							
-							if (prop->Attribute("name") && prop->Attribute("value") && strcmp(prop->Attribute("name"), "object") == 0) {
-								objectType = prop->Attribute("value");
-								break;
-							}
-						}
-
-						__raise (*Events::GetInstance()).ColliableTilePreLoadEvent(objectType, id, tile);
+				TiXmlElement* propsEle = object->FirstChildElement("properties");
+				if (propsEle) {
+					MapProperties props = MapProperties(propsEle);
+					if (props.HasProperty("object")) {
+						__raise (*Events::GetInstance()).ColliableTilePreLoadEvent(props.GetText("object").c_str(), id, tile);
 					}
 				}
 

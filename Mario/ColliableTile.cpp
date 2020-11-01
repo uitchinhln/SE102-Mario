@@ -21,7 +21,7 @@ void ColliableTile::SetHitBox(RectF r)
     this->boundingBox = r;
 }
 
-shared_ptr<DataTag> ColliableTile::getDataTag()
+shared_ptr<DataTag> ColliableTile::GetDataTag()
 {
     return tags;
 }

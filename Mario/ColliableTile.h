@@ -23,7 +23,7 @@ public:
 
 	virtual void SetHitBox(RectF r);
 
-	virtual shared_ptr<DataTag> getDataTag();
+	virtual shared_ptr<DataTag> GetDataTag();
 
 	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
 

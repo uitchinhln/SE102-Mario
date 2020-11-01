@@ -13,6 +13,7 @@ void MarioFireBall::Update(vector<shared_ptr<IColliable>>* coObj)
 
 void MarioFireBall::Render()
 {
+	this->animations["Default"]->Render();
 }
 
 ObjectType MarioFireBall::GetObjectType()

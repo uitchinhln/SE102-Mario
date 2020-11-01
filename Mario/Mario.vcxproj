@@ -148,7 +148,11 @@
     <ClCompile Include="BigMario.cpp" />
     <ClCompile Include="CloudTile.cpp" />
     <ClCompile Include="GhostTile.cpp" />
+    <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="IEnviroment.cpp" />
+    <ClCompile Include="MapProperties.cpp" />
     <ClCompile Include="MarioFireBall.cpp" />
+    <ClCompile Include="MarioTailed.cpp" />
     <ClCompile Include="ObjectType.cpp" />
     <ClCompile Include="FireMario.cpp" />
     <ClCompile Include="MarioPowerUp.cpp" />
@@ -176,6 +180,7 @@
     <ClCompile Include="MarioGame.cpp" />
     <ClCompile Include="MEntityType.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RectF.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -193,13 +198,18 @@
     <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Utils.cpp" />
+    <ClCompile Include="Vec2Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttackablePower.h" />
     <ClInclude Include="BigMario.h" />
     <ClInclude Include="CloudTile.h" />
     <ClInclude Include="GhostTile.h" />
+    <ClInclude Include="Goomba.h" />
+    <ClInclude Include="IEnviroment.h" />
+    <ClInclude Include="MapProperties.h" />
     <ClInclude Include="MarioFireBall.h" />
+    <ClInclude Include="MarioTailed.h" />
     <ClInclude Include="ObjectType.h" />
     <ClInclude Include="FireMario.h" />
     <ClInclude Include="MarioPowerUp.h" />
@@ -227,6 +237,7 @@
     <ClInclude Include="MarioGame.h" />
     <ClInclude Include="MEntityType.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="Polygon.h" />
     <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RectF.h" />
     <ClInclude Include="Scene.h" />
@@ -242,6 +253,7 @@
     <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Utils.h" />
+    <ClInclude Include="Vec2Utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,5 +9,8 @@ public:
 	static const ObjectType RaccoonMario;
 
 	static const ObjectType MarioFireBall;
+	static const ObjectType MarioTailed;
+
+	static const ObjectType Goomba;
 };
 

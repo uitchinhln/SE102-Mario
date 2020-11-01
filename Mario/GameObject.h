@@ -19,8 +19,6 @@ protected:
 
 	int facing = 1;
 
-	int state;
-
 	unordered_map<string, shared_ptr<CAnimation>> animations;
 
 	shared_ptr<CollisionCalculator> collisionCal;
@@ -51,15 +49,11 @@ public:
 
 	virtual void Render() = 0;
 
-	virtual int GetState() { return this->state; }
-
-	virtual void SetState(int state) { this->state = state; }
-
 	virtual void SetCollisionCalculator(shared_ptr<CollisionCalculator>);
 
 	virtual shared_ptr<CollisionCalculator> GetCollisionCalc();
 
-	virtual shared_ptr<DataTag> getDataTag();
+	virtual shared_ptr<DataTag> GetDataTag();
 
 	//Override from ICollidable
 	virtual Vec2& GetDistance() override;

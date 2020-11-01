@@ -24,20 +24,33 @@ void Mario::OnKeyDown(int key)
 	{
 	case DIK_1:
 		SetPowerUp(make_shared<Small>(shared_from_this()));
+		Position.x = fixPos.x;
+		Position.y = fixPos.y - (GetHitBox().bottom - GetHitBox().top);
 		break;
 	case DIK_2:
 		SetPowerUp(make_shared<BigMario>(shared_from_this()));
+		Position.x = fixPos.x;
+		Position.y = fixPos.y - (GetHitBox().bottom - GetHitBox().top);
 		break;
 	case DIK_3:
 		SetPowerUp(make_shared<FireMario>(shared_from_this()));
+		Position.x = fixPos.x;
+		Position.y = fixPos.y - (GetHitBox().bottom - GetHitBox().top);
 		break;
 	case DIK_4:
 		SetPowerUp(make_shared<RaccoonMario>(shared_from_this()));
+		Position.x = fixPos.x;
+		Position.y = fixPos.y - (GetHitBox().bottom - GetHitBox().top);
+		break;
+	case DIK_P:
+		DebugOut(L"Position: x = %f\ty = %f\n", Position.x, Position.y);
+		break;
+	case DIK_W:
+		Position.x = 7955.459961;
+		Position.y = 940.997986;
 		break;
 	}
 
-	Position.x = fixPos.x;
-	Position.y = fixPos.y - (GetHitBox().bottom - GetHitBox().top);
 }
 
 Mario::Mario() : GameObject()
