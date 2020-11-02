@@ -49,7 +49,6 @@ void AttackablePower::MoveUpdate()
 		if (keyboard.IsKeyDown(DIK_LEFT) || keyboard.IsKeyDown(DIK_RIGHT)) {
 			int keySign = keyboard.IsKeyDown(DIK_LEFT) ? -1 : 1;
 			if (keySign * m->GetFacing() < 0 && IsAttacking()) {
-				DebugOut(L"Returned\n");
 				return;
 			}			
 		}

@@ -28,6 +28,7 @@ void RaccoonMario::OnAttackStart()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		shared_ptr<MarioTailed> tail = make_shared<MarioTailed>(m, MARIO_ATTACK_TIME / 2);
+		tail->SetCollisionCalculator(make_shared<CollisionCalculator>(tail));
 		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(tail);
 	}
 }
@@ -57,16 +58,16 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 		// No collision occured, proceed normally
 		if (coResult.size() == 0)
 		{
-			m->GetPosition() += m->GetDistance();
+			//m->GetPosition() += m->GetDistance();
 			m->SetOnGround(false);
 			if (m->GetDistance().y > 0 && m->GetJumpingState() != JumpingStates::SUPER_JUMP && !(keyboard.IsKeyDown(DIK_S) || keyboard.IsKeyDown(DIK_X))) {
 				m->SetJumpingState(JumpingStates::FALLING);
 			}
 		}
 		else {
-			m->GetDistance() = collisionCal->GetNewDistance();
+			//m->GetDistance() = collisionCal->GetNewDistance();
 			Vec2 jet = collisionCal->GetJet();
-			m->GetPosition() += m->GetDistance();
+			//m->GetPosition() += m->GetDistance();
 
 			if (jet.x != 0) m->GetVelocity().x = 0;
 			if (jet.y != 0) m->GetVelocity().y = 0;
@@ -78,6 +79,7 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 			m->GetVelocity().x = 0;
 		}
 
+		m->SetOnGround(false);
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
 			if (coll->SAABBResult.Direction == Direction::Top && !coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction)) {
@@ -85,10 +87,17 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 				if (m->GetJumpingState() != JumpingStates::SUPER_JUMP)
 					m->SetJumpingState(JumpingStates::IDLE);
 				m->GetGravity() = MARIO_GRAVITY;
-				break;
 			}
-			else {
-				m->SetOnGround(false);
+			if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
+				float damage = coll->GameColliableObject->GetDamageFor(*m, coll->SAABBResult.Direction);
+				if (damage > 0) {
+					
+				}
+				else {
+					m->SetOnGround(true);
+					m->SetJumpingState(JumpingStates::IDLE);
+					MiniJumpDetect(true);
+				}
 			}
 		}
 	}

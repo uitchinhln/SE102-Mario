@@ -9,6 +9,8 @@
 #include "CloudTile.h"
 #include "Events.h"
 
+#include "Goomba.h"
+
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
 	string mapPath = data->FirstChildElement("TmxMap")->Attribute("path");
@@ -64,6 +66,11 @@ void PlayScene::Update()
 	}
 
 	RemoveDespawnedObjects();
+
+	mario->FinalUpdate();
+	for (shared_ptr<GameObject> obj : objects) {
+		obj->FinalUpdate();
+	}
 }
 
 void PlayScene::Render()
@@ -95,12 +102,26 @@ void PlayScene::ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<C
 	}
 }
 
+void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos)
+{
+	DebugOut(L"Object: %s\n", ToLPCWSTR(type));
+	if (strcmp(type, MEntityType::Goomba.ToString().c_str()) == 0) {
+		shared_ptr<Goomba> goomba = make_shared<Goomba>();
+		goomba->SetCollisionCalculator(make_shared<CollisionCalculator>(goomba));
+		float height = abs((goomba->GetHitBox().bottom - goomba->GetHitBox().top));
+		goomba->SetPosition(Vec2(fixedPos.x, fixedPos.y - height));
+		SpawnEntity(goomba);
+	}
+}
+
 void PlayScene::HookEvent()
 {
 	__hook(&Events::ColliableTilePreLoadEvent, Events::GetInstance(), &PlayScene::ColliableTilePreLoadEvent);
+	__hook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
 }
 
 void PlayScene::UnhookEvent()
 {
 	__unhook(&Events::ColliableTilePreLoadEvent, Events::GetInstance(), &PlayScene::ColliableTilePreLoadEvent);
+	__unhook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
 }

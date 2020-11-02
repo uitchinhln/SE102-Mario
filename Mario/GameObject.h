@@ -47,6 +47,8 @@ public:
 
 	virtual void Update(vector<shared_ptr<IColliable>>* coObj);
 
+	virtual void FinalUpdate();
+
 	virtual void Render() = 0;
 
 	virtual void SetCollisionCalculator(shared_ptr<CollisionCalculator>);
@@ -57,8 +59,6 @@ public:
 
 	//Override from ICollidable
 	virtual Vec2& GetDistance() override;
-
-	virtual ObjectType GetObjectType() = 0;
 
 	~GameObject();
 };

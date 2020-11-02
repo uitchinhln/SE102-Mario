@@ -52,6 +52,15 @@ void GameObject::Update(vector<shared_ptr<IColliable>>* coObj)
 
 }
 
+void GameObject::FinalUpdate()
+{
+	if (collisionCal) {
+		Distance = collisionCal->GetNewDistance();
+	}
+	Position += Distance;
+	Distance = Velocity * CGame::Time().ElapsedGameTime;
+}
+
 void GameObject::SetCollisionCalculator(shared_ptr<CollisionCalculator> calc)
 {
 	this->collisionCal = calc;

@@ -23,6 +23,8 @@ public:
 
 	virtual void ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<ColliableTile>& tile);
 
+	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos);
+
 protected:
 
 	virtual void HookEvent();

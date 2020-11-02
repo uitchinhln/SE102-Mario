@@ -17,6 +17,8 @@ public:
 
 	virtual Vec2 GetCamSize();
 
+	virtual RectF GetBoundingBox();
+
 	virtual void SetTracking(weak_ptr<GameObject> target);
 
 	virtual void Update();

@@ -9,3 +9,32 @@ const ObjectType MEntityType::MarioFireBall = ObjectType::CreateObjectType("Mari
 const ObjectType MEntityType::MarioTailed = ObjectType::CreateObjectType("MarioTailed");
 
 const ObjectType MEntityType::Goomba = ObjectType::CreateObjectType("Goomba");
+
+bool MEntityType::IsTile(ObjectType type)
+{
+    bool normalTile = type == "Tile";
+    return normalTile;
+}
+
+bool MEntityType::IsMario(ObjectType obj)
+{
+    bool isSmall = obj == SmallMario;
+    bool isBig = obj == BigMario;
+    bool isFire = obj == FireMario;
+    bool isRaccoon = obj == RaccoonMario;
+
+    return isSmall || isBig || isFire || isRaccoon;
+}
+
+bool MEntityType::IsMarioWeapon(ObjectType obj)
+{
+    bool isBullet = obj == MarioFireBall;
+    bool isTail = obj == MarioTailed;
+    return isBullet || isTail;
+}
+
+bool MEntityType::IsEnemy(ObjectType obj)
+{
+    bool goomba = obj == Goomba;
+    return goomba;
+}

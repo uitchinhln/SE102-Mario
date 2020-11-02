@@ -15,6 +15,8 @@ public:
 	bool operator!=(const string& name);
 
 	string ToString();
+
+	string ToString() const;
 private:
 	ObjectType(string name);
 

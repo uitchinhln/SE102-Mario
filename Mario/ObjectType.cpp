@@ -7,25 +7,30 @@ ObjectType ObjectType::CreateObjectType(string name)
 
 bool ObjectType::operator==(const ObjectType& target)
 {
-	return this->name == target.name;
+	return this->name.compare(target.name) == 0;
 }
 
 bool ObjectType::operator!=(const ObjectType& target)
 {
-	return !(this->name == target.name);
+	return this->name.compare(target.name) != 0;
 }
 
 bool ObjectType::operator==(const string& name)
 {
-	return this->name == name;
+	return this->name.compare(name) == 0;
 }
 
 bool ObjectType::operator!=(const string& name)
 {
-	return !(this->name == name);
+	return this->name.compare(name) != 0;
 }
 
 string ObjectType::ToString()
+{
+	return name;
+}
+
+string ObjectType::ToString() const
 {
 	return name;
 }

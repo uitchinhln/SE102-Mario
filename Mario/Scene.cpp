@@ -36,12 +36,12 @@ void CScene::Render()
 void CScene::SpawnEntity(shared_ptr<GameObject> entity)
 {
 	objects.push_back(entity);
-	entity->GetDataTag()->RemoveTag("despawned");
+	entity->SetActive(true);
 }
 
 void CScene::DespawnEntity(shared_ptr<GameObject> entity)
 {
-	entity->GetDataTag()->SetBool("despawned", true);
+	entity->SetActive(false);
 }
 
 void CScene::OnKeyDown(int key)
@@ -65,6 +65,6 @@ shared_ptr<CGameMap> CScene::GetGameMap()
 void CScene::RemoveDespawnedObjects()
 {
 	objects.erase(remove_if(objects.begin(), objects.end(), [](const shared_ptr<GameObject>& obj) {
-		return obj->GetDataTag()->HasKey("despawned");
+		return !obj->IsActive();
 		}), objects.end());
 }

@@ -13,6 +13,8 @@ public:
 
 	virtual void Update(vector<shared_ptr<IColliable>>* coObj) override;
 
+	virtual void FinalUpdate() override;
+
 	virtual void Render() override;
 
 	virtual ObjectType GetObjectType() override;
@@ -25,7 +27,7 @@ public:
 
 protected:
 	weak_ptr<Mario> holder;
-	DWORD attackTime = 0;
+	long attackTime = 0;
 	int attackState = 1;
 	Stopwatch attackTimer;
 };

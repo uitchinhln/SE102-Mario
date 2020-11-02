@@ -12,6 +12,7 @@ public:
 	__event void KeyUpEvent(int keyCode);
 	__event void KeyDownEvent(int keyCode);
 	__event void ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<ColliableTile>& tile);
+	__event void ObjectLoadEvent(const char* type, Vec2 fixedPos);
 
 	static Events* GetInstance();
 	~Events();

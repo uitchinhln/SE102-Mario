@@ -5,7 +5,7 @@ void CPolygon::BuildEdge()
 	edges.clear();
 	int n = vertices.size();
 	for (int i = 0; i < n; i++) {
-		edges[i] = vertices[i] - vertices[(i + 1) % n];
+		edges.push_back(vertices[i] - vertices[(i + 1) % n]);
 	}
 }
 

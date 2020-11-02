@@ -1,5 +1,9 @@
 #include "FireMario.h"
 #include "AnimationManager.h"
+#include "SceneManager.h"
+#include "MarioFireBall.h"
+#include "Mario.h"
+#include "MarioTailed.h"
 
 FireMario::FireMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {
@@ -25,6 +29,11 @@ void FireMario::OnAttackStart()
 
 void FireMario::OnAttackFinish()
 {
+	if (shared_ptr<Mario> m = mario.lock()) {
+		shared_ptr<MarioFireBall> fireball = make_shared<MarioFireBall>(m);
+		fireball->SetCollisionCalculator(make_shared<CollisionCalculator>(fireball));
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(fireball);
+	}
 }
 
 void FireMario::InAttackProgress()

@@ -261,7 +261,6 @@
     <ClCompile Include="MapProperties.cpp">
       <Filter>Framework\Scene\Map\MapProperties</Filter>
     </ClCompile>
-    <ClCompile Include="IEnviroment.cpp" />
     <ClCompile Include="Polygon.cpp">
       <Filter>Framework\World\Phys\Collision\SAT</Filter>
     </ClCompile>
@@ -270,6 +269,12 @@
     </ClCompile>
     <ClCompile Include="MarioTailed.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Mario\ProjectTile</Filter>
+    </ClCompile>
+    <ClCompile Include="IEnviroment.cpp">
+      <Filter>Framework\World\Phys\Enviroment</Filter>
+    </ClCompile>
+    <ClCompile Include="Koopas.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -420,7 +425,6 @@
     <ClInclude Include="MapProperties.h">
       <Filter>Framework\Scene\Map\MapProperties</Filter>
     </ClInclude>
-    <ClInclude Include="IEnviroment.h" />
     <ClInclude Include="Polygon.h">
       <Filter>Framework\World\Phys\Collision\SAT</Filter>
     </ClInclude>
@@ -429,6 +433,12 @@
     </ClInclude>
     <ClInclude Include="MarioTailed.h">
       <Filter>MarioGame\Entity\LivingEntity\Mario\ProjectTile</Filter>
+    </ClInclude>
+    <ClInclude Include="IEnviroment.h">
+      <Filter>Framework\World\Phys\Enviroment</Filter>
+    </ClInclude>
+    <ClInclude Include="Koopas.h">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

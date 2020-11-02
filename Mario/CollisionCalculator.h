@@ -17,7 +17,5 @@ protected:
 	SweptCollisionResult SweptAABB(RectF movingBounding, Vec2 distance, RectF staticBounding, bool debug = false);
 
 	bool AABB(RectF movingBounding, RectF staticBounding);
-
-	SweptCollisionResult SweptSAT(CPolygon movingBounding, Vec2 distance, CPolygon staticBounding, bool debug = false);
 };
 

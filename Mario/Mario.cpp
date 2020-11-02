@@ -175,7 +175,10 @@ ObjectType Mario::GetObjectType()
 
 bool Mario::IsGetThrough(IColliable& object, Direction direction)
 {
-	return false;
+	bool fireballAllow = object.GetObjectType() == MEntityType::MarioFireBall;
+	bool tailAllow = object.GetObjectType() == MEntityType::MarioTailed;
+
+	return fireballAllow || tailAllow;
 }
 
 float Mario::GetDamageFor(IColliable& object, Direction direction)

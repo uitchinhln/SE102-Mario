@@ -29,3 +29,8 @@ float ColliableTileAdapter::GetDamageFor(IColliable& object, Direction direction
 {
 	return 0;
 }
+
+ObjectType ColliableTileAdapter::GetObjectType()
+{
+	return source->GetObjectType();
+}

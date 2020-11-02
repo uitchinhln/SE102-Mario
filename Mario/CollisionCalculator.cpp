@@ -14,6 +14,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 	if (shared_ptr<IColliable> sp = object.lock()) {
 		for each (shared_ptr<IColliable> coO in (*objects))
 		{
+			if (!coO->IsActive()) continue;
 			SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), sp->GetDistance() - coO->GetDistance(), coO->GetHitBox(), debug);
 			shared_ptr<CollisionResult> result = make_shared<CollisionResult>(aabbResult, coO);
 
@@ -112,6 +113,36 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 		DebugOut(L"Distance: x=%f\ty=%f\n", distance.x, distance.y);
 	}
 
+	// SAT test
+	//CPolygon c1;
+	//c1.vertices.push_back(Vec2(m.left, m.top));
+	//c1.vertices.push_back(Vec2(m.right, m.top));
+	//c1.vertices.push_back(Vec2(m.right, m.bottom));
+	//c1.vertices.push_back(Vec2(m.left, m.bottom));
+	//CPolygon c2;
+	//c2.vertices.push_back(Vec2(s.left, s.top));
+	//c2.vertices.push_back(Vec2(s.right, s.top));
+	//c2.vertices.push_back(Vec2(s.right, s.bottom));
+	//c2.vertices.push_back(Vec2(s.left, s.bottom));
+
+	//c1.BuildEdge();
+	//c2.BuildEdge();
+
+	//Vec2 perpVel = Vec2Utils::Normalize(Vec2(abs(distance.y), abs(distance.x)));
+
+	//float minA = 99999, minB = 99999, maxA = 0, maxB = 0;
+
+	//c1.Project(perpVel, minA, maxA);
+	//c2.Project(perpVel, minB, maxB);
+
+	//if (debug) {
+	//	DebugOut(L"perpVel: %f\t%f\t\n", perpVel.x, perpVel.y);
+	//	DebugOut(L"Project: %f\t%f\t%f\t%f\t\n", minA, maxA, minB, maxB);
+	//	DebugOut(L"Project: %f\n", (minA <= minB ? minB - maxA : minA - maxB));
+	//}
+	//if ((minA <= minB ? minB - maxA : minA - maxB) >= 0) {
+	//	return SweptCollisionResult::Empty();
+	//}
 	//
 	// Broad-phase test 
 	//
@@ -225,83 +256,4 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 bool CollisionCalculator::AABB(RectF b1, RectF b2)
 {
 	return !(b1.right < b2.left || b1.left > b2.right || b1.top > b2.bottom || b1.bottom < b2.top);
-}
-
-SweptCollisionResult CollisionCalculator::SweptSAT(CPolygon m, Vec2 distance, CPolygon s, bool debug)
-{
-	SweptCollisionResult result;
-
-	//m.BuildEdge();
-	//s.BuildEdge();
-
-	////Project 2 object to velocity vector
-	//Vec2 perpVel = Vec2(-distance.y, distance.x);
-	//perpVel = Vec2Utils::Normalize(perpVel);
-
-	//float minA = 0, minB = 0, maxA = 0, maxB = 0;
-
-	//m.Project(perpVel, minA, maxA);
-	//s.Project(perpVel, minB, maxB);
-
-	//if ((minA < minB ? minB - maxA : minA - maxB) > 0) {
-	//	//100% sure no intersect
-	//	return;
-	//}
-
-	//int totalEdgeM = m.edges.size();
-	//int totalEdgeS = s.edges.size();
-	//
-	//float minIntervalDistance = -9999;
-	//Vec2 translationAxis;
-
-	//Vec2 edge;
-
-	//for (int i = 0; i < totalEdgeM + totalEdgeS; i++) {
-	//	if (i < totalEdgeM) {
-	//		edge = m.edges[i];
-	//	}
-	//	else {
-	//		edge = s.edges[i - totalEdgeM];
-	//	}
-
-	//	Vec2 perpendicularAxis = Vec2(-edge.y, edge.x);
-	//	perpendicularAxis = Vec2Utils::Normalize(perpendicularAxis);
-
-	//	minA = minB = maxA = maxB = 0;
-	//	m.Project(perpendicularAxis, minA, maxA);
-	//	s.Project(perpendicularAxis, minB, maxB);
-
-	//	if ((minA < minB ? minB - maxA : minA - maxB) > 0) {
-	//		//100% sure not currently intersect
-	//	}
-
-	//	float disProjection = Vec2Utils::DotProduct(perpendicularAxis, distance);
-
-	//	if (disProjection < 0) {
-	//		minA += disProjection;
-	//	}
-	//	else {
-	//		maxA += disProjection;
-	//	}
-
-	//	float intervalDistance = minA < minB ? minB - maxA : minA - maxB;
-
-	//	if (intervalDistance > 0) {
-	//		//100% sure them will not intersect
-	//	}
-
-	//	intervalDistance = abs(intervalDistance);
-
-	//	if (intervalDistance < minIntervalDistance) {
-	//		minIntervalDistance = intervalDistance;
-	//		translationAxis = perpendicularAxis;
-
-	//		Vec2 d = m.Center() - s.Center();
-	//		if (Vec2Utils::DotProduct(d, translationAxis) < 0) {
-	//			translationAxis = -translationAxis;
-	//		}
-	//	}
-	//}
-
-	return result;
 }

@@ -12,5 +12,13 @@ public:
 	static const ObjectType MarioTailed;
 
 	static const ObjectType Goomba;
+
+	static bool IsTile(ObjectType);
+
+	static bool IsMario(ObjectType);
+
+	static bool IsMarioWeapon(ObjectType);
+
+	static bool IsEnemy(ObjectType);
 };
 

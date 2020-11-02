@@ -34,16 +34,16 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 		// No collision occured, proceed normally
 		if (coResult.size() == 0)
 		{
-			m->GetPosition() += m->GetDistance();
+			//m->GetPosition() += m->GetDistance();
 			m->SetOnGround(false);
 			if (m->GetDistance().y > 0 && m->GetJumpingState() != JumpingStates::SUPER_JUMP) {
 				m->SetJumpingState(JumpingStates::FALLING);
 			}
 		}
 		else {
-			m->GetDistance() = collisionCal->GetNewDistance();
+			//m->GetDistance() = collisionCal->GetNewDistance();
 			Vec2 jet = collisionCal->GetJet();
-			m->GetPosition() += m->GetDistance();
+			//m->GetPosition() += m->GetDistance();
 
 			if (jet.x != 0) m->GetVelocity().x = 0;
 			if (jet.y != 0) m->GetVelocity().y = 0;
@@ -55,15 +55,27 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 			m->GetVelocity().x = 0;
 		}
 
+		m->SetOnGround(false);
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
 			if (coll->SAABBResult.Direction == Direction::Top && !coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction)) {
 				m->SetOnGround(true);
 				m->SetJumpingState(JumpingStates::IDLE);
-				break;
 			}
-			else {
-				m->SetOnGround(false);
+
+			if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
+				DebugOut(L"Get Through: %s\n", ToLPCWSTR(coll->GameColliableObject->GetObjectType().ToString()));
+				float damage = coll->GameColliableObject->GetDamageFor(*m, coll->SAABBResult.Direction);
+				if (damage > 0) {
+					//Die, down level...
+				}
+				else {
+					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction)) {
+						m->SetOnGround(true);
+						m->SetJumpingState(JumpingStates::IDLE);
+						MiniJumpDetect(true);
+					}
+				}
 			}
 		}
 	}

@@ -1,6 +1,8 @@
 #include "GameMap.h"
 #include "Transform.h"
 #include "ColliableTileAdapter.h"
+#include "MapProperties.h"
+#include "Events.h"
 
 CGameMap::CGameMap()
 {
@@ -139,6 +141,22 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 		for (TiXmlElement* node = root->FirstChildElement("layer"); node != nullptr; node = node->NextSiblingElement("layer")) {
 			shared_ptr<CLayer> layer = make_shared<CLayer>(node);
 			gameMap->AddLayer(layer);
+		}
+
+		for (TiXmlElement* node = root->FirstChildElement("objectgroup"); node != nullptr; node = node->NextSiblingElement("objectgroup")) {
+			for (TiXmlElement* object = node->FirstChildElement("object"); object != nullptr; object = object->NextSiblingElement("object")) {
+				Vec2 fixPos;
+				object->QueryFloatAttribute("x", &fixPos.x);
+				object->QueryFloatAttribute("y", &fixPos.y);
+
+				TiXmlElement* properties = object->FirstChildElement("properties");
+				if (properties) {
+					MapProperties props = MapProperties(properties);
+					if (props.HasProperty("object")) {
+						__raise (*Events::GetInstance()).ObjectLoadEvent(props.GetText("object").c_str(), fixPos);
+					}
+				}
+			}
 		}
 
 		return gameMap;

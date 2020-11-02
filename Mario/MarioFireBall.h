@@ -9,6 +9,8 @@ class MarioFireBall :
 public:
 	MarioFireBall(shared_ptr<Mario> holder);
 
+	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);
+
 	virtual void Update(vector<shared_ptr<IColliable>>* coObj) override;
 
 	virtual void Render() override;
@@ -21,10 +23,11 @@ public:
 
 	virtual float GetDamageFor(IColliable& object, Direction direction) override;
 
-private:
+protected:
 	weak_ptr<Mario> holder;
 
 	float FIREBALL_GRAVITY = 0.00193f;
-	float FIREBALL_SPEED = 0.00193f;
+	float FIREBALL_JUMP_FORCE = 0.4f;
+	float FIREBALL_SPEED = 0.48f;
 };
 

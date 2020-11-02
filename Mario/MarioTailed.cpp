@@ -5,11 +5,12 @@ MarioTailed::MarioTailed(shared_ptr<Mario> holder, DWORD attackTime)
 {
 	this->holder = holder;
 	this->attackTime = attackTime;
+	MovingUpdate();
 }
 
 void MarioTailed::MovingUpdate()
 {
-	float speed = 3 * 14.0f / attackTime;
+	float speed = 3 * 18.0f / attackTime;
 	if (shared_ptr<Mario> m = holder.lock()) {
 		this->Position = m->GetPosition() + Vec2(-1, 54);
 
@@ -19,7 +20,7 @@ void MarioTailed::MovingUpdate()
 			this->Position.x = m->GetHitBox().right - 11;
 		}
 
-		Distance.x = 1 + speed * (attackState > 0 ? attackTime / 2 - attackTimer.Elapsed() : attackTimer.Elapsed()) * this->GetFacing();
+		Distance.x = 1.0f + speed * (attackState > 0 ? (attackTime / 2 - attackTimer.Elapsed()) : attackTimer.Elapsed()) * this->GetFacing();
 		Distance.y = 0;
 	}
 }
@@ -30,7 +31,7 @@ void MarioTailed::Update(vector<shared_ptr<IColliable>>* coObj)
 		attackTimer.Start();
 	}
 	MovingUpdate();	
-	DebugOut(L"Distance(%f, %f)\n", Distance.x, Distance.y);
+	//DebugOut(L"Distance(%f, %f)\n", Distance.x, Distance.y);
 	if (attackTimer.Elapsed() >= attackTime / 2) {
 		if (attackState > 0) {
 			attackState *= -1;
@@ -41,6 +42,10 @@ void MarioTailed::Update(vector<shared_ptr<IColliable>>* coObj)
 			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 		}
 	}
+}
+
+void MarioTailed::FinalUpdate()
+{
 }
 
 void MarioTailed::Render()
@@ -59,7 +64,7 @@ RectF MarioTailed::GetHitBox()
 
 bool MarioTailed::IsGetThrough(IColliable& object, Direction direction)
 {
-	return true;
+	return false;
 }
 
 float MarioTailed::GetDamageFor(IColliable& object, Direction direction)

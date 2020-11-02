@@ -17,5 +17,7 @@ public:
 	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
 
 	virtual float GetDamageFor(IColliable& object, Direction direction) override;
+
+	virtual ObjectType GetObjectType() override;
 };
 

@@ -20,6 +20,11 @@ Vec2 Camera::GetCamSize()
 	return this->size;
 }
 
+RectF Camera::GetBoundingBox()
+{
+	return RectF(Position.x, Position.y, Position.x + size.x, Position.y + size.y);
+}
+
 void Camera::SetTracking(weak_ptr<GameObject> target)
 {
 	this->target = target;
