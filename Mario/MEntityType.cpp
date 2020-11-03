@@ -9,6 +9,7 @@ const ObjectType MEntityType::MarioFireBall = ObjectType::CreateObjectType("Mari
 const ObjectType MEntityType::MarioTailed = ObjectType::CreateObjectType("MarioTailed");
 
 const ObjectType MEntityType::Goomba = ObjectType::CreateObjectType("Goomba");
+const ObjectType MEntityType::Koopas = ObjectType::CreateObjectType("Koopas");
 
 bool MEntityType::IsTile(ObjectType type)
 {

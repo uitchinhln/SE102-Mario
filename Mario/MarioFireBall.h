@@ -9,9 +9,9 @@ class MarioFireBall :
 public:
 	MarioFireBall(shared_ptr<Mario> holder);
 
-	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);
+	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
 
-	virtual void Update(vector<shared_ptr<IColliable>>* coObj) override;
+	virtual void Update() override;
 
 	virtual void Render() override;
 

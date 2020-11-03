@@ -12,6 +12,7 @@ public:
 	static const ObjectType MarioTailed;
 
 	static const ObjectType Goomba;
+	static const ObjectType Koopas;
 
 	static bool IsTile(ObjectType);
 

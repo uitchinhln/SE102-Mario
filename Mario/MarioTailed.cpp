@@ -20,12 +20,12 @@ void MarioTailed::MovingUpdate()
 			this->Position.x = m->GetHitBox().right - 11;
 		}
 
-		Distance.x = 1.0f + speed * (attackState > 0 ? (attackTime / 2 - attackTimer.Elapsed()) : attackTimer.Elapsed()) * this->GetFacing();
+		Distance.x = 1.0f + speed * (attackTime / 2) * this->GetFacing();
 		Distance.y = 0;
 	}
 }
 
-void MarioTailed::Update(vector<shared_ptr<IColliable>>* coObj)
+void MarioTailed::Update()
 {
 	if (!attackTimer.IsRunning()) {
 		attackTimer.Start();

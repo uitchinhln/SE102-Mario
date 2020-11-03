@@ -11,6 +11,7 @@ class CollisionCalculator
 public:
 	CollisionCalculator(weak_ptr<IColliable> object);
 	vector<shared_ptr<CollisionResult>> CalcPotentialCollisions(vector<shared_ptr<IColliable>>* objects, bool debug = false);
+	vector<shared_ptr<CollisionResult>> GetLastResults();
 	Vec2 GetNewDistance();
 	Vec2 GetJet();
 protected:	

@@ -15,9 +15,11 @@ class Goomba :
 public:
     Goomba();
 
-	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);
+	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
 
-	virtual void Update(vector<shared_ptr<IColliable>>* coObj) override;
+	virtual void StatusUpdate() override;
+
+	virtual void Update() override;
 
 	virtual void FinalUpdate() override;
 

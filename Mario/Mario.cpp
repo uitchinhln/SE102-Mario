@@ -56,7 +56,7 @@ void Mario::OnKeyDown(int key)
 Mario::Mario() : GameObject()
 {
 	this->Distance = Vec2(0, 0);
-	this->Position = Vec2(100, 300);
+	this->Position = Vec2(100, 1200);
 	this->Velocity = Vec2(0, 0);
 	this->accelerate = Vec2(0, 0);
 	this->Gravity = 0.00093f;
@@ -73,9 +73,19 @@ void Mario::InitResource()
 	//this->SetCollisionCalculator(make_shared<CollisionCalculator>(shared_from_this()));
 }
 
-void Mario::Update(vector<shared_ptr<IColliable>>* coObj)
+void Mario::StatusUpdate()
 {
-	powerUp->Update(coObj);
+	powerUp->StatusUpdate();
+}
+
+void Mario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+{
+	powerUp->CollisionUpdate(coObj);
+}
+
+void Mario::Update()
+{
+	powerUp->Update();
 }
 
 void Mario::Render()

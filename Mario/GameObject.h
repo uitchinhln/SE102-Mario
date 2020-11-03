@@ -45,7 +45,11 @@ public:
 
 	virtual void InitResource();
 
-	virtual void Update(vector<shared_ptr<IColliable>>* coObj);
+	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);
+
+	virtual void Update();
+
+	virtual void StatusUpdate();
 
 	virtual void FinalUpdate();
 

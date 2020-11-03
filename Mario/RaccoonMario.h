@@ -13,6 +13,8 @@ public:
 
 	virtual void InAttackProgress() override;
 
+	virtual void StatusUpdate() override;
+
 	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
 
 	virtual void MiniJumpDetect(bool forceX) override;

@@ -23,6 +23,9 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 
 			if (result->SAABBResult.TimeToCollide > 0 && result->SAABBResult.TimeToCollide <= 1.0f)
 				temp.push_back(result);
+
+			if (debug)
+				DebugOut(L"---------------------------------------\n");
 		}
 		sort(temp.begin(), temp.end(), CollisionResult::LPCompare);
 
@@ -55,6 +58,11 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 		sort(results.begin(), results.end(), CollisionResult::LPCompare);
 	}	
 	GetNewDistance();
+	return results;
+}
+
+vector<shared_ptr<CollisionResult>> CollisionCalculator::GetLastResults()
+{
 	return results;
 }
 

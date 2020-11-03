@@ -13,14 +13,28 @@ void CScene::Update()
 	vector<shared_ptr<IColliable>> objs;
 
 	for (shared_ptr<GameObject> obj : objects) {
+		obj->Update();
+	}
+
+	for (shared_ptr<GameObject> obj : objects) {
 		objs.clear();
 		objs.insert(objs.end(), objects.begin(), objects.end());
 
 		vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
 		objs.insert(objs.end(), tiles.begin(), tiles.end());
 		
-		obj->Update(&objs);
+		obj->CollisionUpdate(&objs);
 	}
+
+	for (shared_ptr<GameObject> obj : objects) {
+		obj->StatusUpdate();
+	}
+
+	for (shared_ptr<GameObject> obj : objects) {
+		obj->FinalUpdate();
+	}
+
+	RemoveDespawnedObjects();
 }
 
 void CScene::Render()

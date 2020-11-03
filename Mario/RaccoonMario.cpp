@@ -41,6 +41,10 @@ void RaccoonMario::InAttackProgress()
 {
 }
 
+void RaccoonMario::StatusUpdate()
+{
+}
+
 void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
@@ -48,14 +52,10 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 	if (shared_ptr<Mario> m = mario.lock()) {
 
-		m->GetVelocity().y += m->GetGravity() * dt;
-		m->GetDistance() = m->GetVelocity() * dt;
-
-		shared_ptr<CollisionCalculator> collisionCal = m->GetCollisionCalc();
+		shared_ptr<CollisionCalculator> collisionCal = m->GetCollisionCalc();		
 
 		vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);
 
-		// No collision occured, proceed normally
 		if (coResult.size() == 0)
 		{
 			//m->GetPosition() += m->GetDistance();
@@ -91,12 +91,14 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 			if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
 				float damage = coll->GameColliableObject->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
-					
+					//Die, down level...
 				}
 				else {
-					m->SetOnGround(true);
-					m->SetJumpingState(JumpingStates::IDLE);
-					MiniJumpDetect(true);
+					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction)) {
+						m->SetOnGround(true);
+						m->SetJumpingState(JumpingStates::IDLE);
+						MiniJumpDetect(true);
+					}
 				}
 			}
 		}

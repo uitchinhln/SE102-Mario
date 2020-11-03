@@ -24,14 +24,10 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 	if (shared_ptr<Mario> m = mario.lock()) {
 
-		m->GetVelocity().y += m->GetGravity() * dt;
-		m->GetDistance() = m->GetVelocity() * dt;
-
 		shared_ptr<CollisionCalculator> collisionCal = m->GetCollisionCalc();
 
 		vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);
 
-		// No collision occured, proceed normally
 		if (coResult.size() == 0)
 		{
 			//m->GetPosition() += m->GetDistance();
@@ -64,7 +60,6 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 			}
 
 			if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
-				DebugOut(L"Get Through: %s\n", ToLPCWSTR(coll->GameColliableObject->GetObjectType().ToString()));
 				float damage = coll->GameColliableObject->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
 					//Die, down level...
@@ -78,7 +73,12 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 				}
 			}
 		}
+		// No collision occured, proceed normally		
 	}
+}
+
+void MarioPowerUp::StatusUpdate()
+{
 }
 
 void MarioPowerUp::MoveUpdate()
@@ -256,14 +256,20 @@ void MarioPowerUp::CrouchUpdate()
 	}
 }
 
-void MarioPowerUp::Update(vector<shared_ptr<IColliable>>* coObj)
+void MarioPowerUp::Update()
 {
 	MoveUpdate();
 	PowerMeterUpdate();
 	MiniJumpDetect();
 	JumpUpdate();
 	CrouchUpdate();
-	CollisionUpdate(coObj);
+
+	if (shared_ptr<Mario> m = mario.lock()) {
+		DWORD dt = CGame::Time().ElapsedGameTime;
+
+		m->GetVelocity().y += m->GetGravity() * dt;
+		m->GetDistance() = m->GetVelocity() * dt;
+	}
 }
 
 void MarioPowerUp::JumpAnimation()

@@ -47,9 +47,17 @@ void GameObject::InitResource()
 {
 }
 
-void GameObject::Update(vector<shared_ptr<IColliable>>* coObj)
+void GameObject::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+{
+}
+
+void GameObject::Update()
 {
 
+}
+
+void GameObject::StatusUpdate()
+{
 }
 
 void GameObject::FinalUpdate()

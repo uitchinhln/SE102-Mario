@@ -25,16 +25,15 @@ Goomba::Goomba()
 
 void Goomba::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 {
-	DWORD dt = CGame::Time().ElapsedGameTime;
-
-	GetVelocity().y += GetGravity() * dt;
-	GetDistance() = GetVelocity() * dt;
-
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
 
-	vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj);
+	collisionCal->CalcPotentialCollisions(coObj, false);
+}
 
-	// No collision occured, proceed normally
+void Goomba::StatusUpdate()
+{
+	vector<shared_ptr<CollisionResult>> coResult = GetCollisionCalc()->GetLastResults();
+
 	if (coResult.size() == 0 || state != GoombaState::WALK)
 	{
 		//GetPosition() += GetDistance();
@@ -50,7 +49,6 @@ void Goomba::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
 			if (MEntityType::IsMario(coll->GameColliableObject->GetObjectType())) {
-				DebugOut(L"Get Through: %s\n", ToLPCWSTR(coll->GameColliableObject->GetObjectType().ToString()));
 				if (coll->SAABBResult.Direction == Direction::Bottom) {
 					state = GoombaState::DIE;
 					SetVelocity(VECTOR_0);
@@ -59,6 +57,10 @@ void Goomba::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 					Position.y += hitbox.y;
 					hitbox.y = 27;
 					Position.y -= hitbox.y;
+
+					if (!destroyTimer.IsRunning()) {
+						destroyTimer.Restart();
+					}
 				}
 			}
 
@@ -66,6 +68,10 @@ void Goomba::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 				state = GoombaState::EXPLODE;
 				Velocity = Vec2(jet.x * 0.1f, -0.65f);
 				GB_DESTROY_DELAY = 3000;
+
+				if (!destroyTimer.IsRunning()) {
+					destroyTimer.Restart();
+				}
 			}
 		}
 	}
@@ -73,18 +79,18 @@ void Goomba::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 	Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
 	if (GetPosition().x < 0.3 || GetPosition().y < 0.3 || GetPosition().x > mapBound.x || GetPosition().y > mapBound.y) {
 		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
-	}	
+	}
 }
 
-void Goomba::Update(vector<shared_ptr<IColliable>>* coObj)
+void Goomba::Update()
 {
-	if (state != GoombaState::WALK && !destroyTimer.IsRunning()) {
-		destroyTimer.Restart();
-	}
 	if (destroyTimer.IsRunning() && destroyTimer.Elapsed() >= GB_DESTROY_DELAY) {
 		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 	}
-	CollisionUpdate(coObj);
+	DWORD dt = CGame::Time().ElapsedGameTime;
+
+	GetVelocity().y += GetGravity() * dt;
+	GetDistance() = GetVelocity() * dt;
 }
 
 void Goomba::FinalUpdate()
@@ -130,7 +136,7 @@ RectF Goomba::GetHitBox()
 
 bool Goomba::IsGetThrough(IColliable& object, Direction direction)
 {
-	return destroyTimer.IsRunning();
+	return state != GoombaState::WALK;
 }
 
 float Goomba::GetDamageFor(IColliable& object, Direction direction)

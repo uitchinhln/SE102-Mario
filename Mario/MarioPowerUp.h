@@ -17,6 +17,8 @@ public:
 
 	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);
 
+	virtual void StatusUpdate();
+
 	virtual void MoveUpdate();
 
 	virtual void PowerMeterUpdate();
@@ -27,7 +29,7 @@ public:
 
 	virtual void CrouchUpdate();
 
-	virtual void Update(vector<shared_ptr<IColliable>>* coObj);
+	virtual void Update();
 
 	virtual void JumpAnimation();
 

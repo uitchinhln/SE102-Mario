@@ -70,10 +70,10 @@ bool AttackablePower::IsAttacking()
     return attackTimer.IsRunning();
 }
 
-void AttackablePower::Update(vector<shared_ptr<IColliable>>* coObj)
+void AttackablePower::Update()
 {
 	AttackUpdate();
-	MarioPowerUp::Update(coObj);
+	MarioPowerUp::Update();
 }
 
 void AttackablePower::Render()

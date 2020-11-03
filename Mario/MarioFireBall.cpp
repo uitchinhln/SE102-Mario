@@ -23,11 +23,6 @@ MarioFireBall::MarioFireBall(shared_ptr<Mario> holder)
 
 void MarioFireBall::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 {
-	DWORD dt = CGame::Time().ElapsedGameTime;
-
-	GetVelocity().y += GetGravity() * dt;
-	GetDistance() = GetVelocity() * dt;
-
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
 
 	vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);
@@ -61,9 +56,12 @@ void MarioFireBall::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 	}
 }
 
-void MarioFireBall::Update(vector<shared_ptr<IColliable>>* coObj)
+void MarioFireBall::Update()
 {
-	CollisionUpdate(coObj);
+	DWORD dt = CGame::Time().ElapsedGameTime;
+
+	GetVelocity().y += GetGravity() * dt;
+	GetDistance() = GetVelocity() * dt;
 }
 
 void MarioFireBall::Render()

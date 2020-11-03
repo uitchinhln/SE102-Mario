@@ -43,13 +43,18 @@ void PlayScene::Update()
 {
 	gameMap->Update();
 
+	mario->Update();
+	for (shared_ptr<GameObject> obj : objects) {
+		obj->Update();
+	}
+
 	vector<shared_ptr<IColliable>> objs;
 	objs.clear();
 	objs.insert(objs.end(), objects.begin(), objects.end());
 
 	vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(mario->GetPosition(), mario->GetHitBox(), mario->GetDistance());
 	objs.insert(objs.end(), tiles.begin(), tiles.end());
-	mario->Update(&objs);
+	mario->CollisionUpdate(&objs);
 	
 	camera->Update();
 
@@ -62,10 +67,15 @@ void PlayScene::Update()
 		vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
 		objs.insert(objs.end(), tiles.begin(), tiles.end());
 
-		obj->Update(&objs);
+		obj->CollisionUpdate(&objs);
 	}
 
 	RemoveDespawnedObjects();
+
+	mario->StatusUpdate();
+	for (shared_ptr<GameObject> obj : objects) {
+		obj->StatusUpdate();
+	}
 
 	mario->FinalUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
@@ -104,7 +114,7 @@ void PlayScene::ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<C
 
 void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos)
 {
-	DebugOut(L"Object: %s\n", ToLPCWSTR(type));
+	//DebugOut(L"Object: %s\n", ToLPCWSTR(type));
 	if (strcmp(type, MEntityType::Goomba.ToString().c_str()) == 0) {
 		shared_ptr<Goomba> goomba = make_shared<Goomba>();
 		goomba->SetCollisionCalculator(make_shared<CollisionCalculator>(goomba));

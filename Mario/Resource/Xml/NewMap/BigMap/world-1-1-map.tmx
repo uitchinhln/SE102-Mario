@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="21" nextobjectid="17">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="21" nextobjectid="20">
  <editorsettings>
   <chunksize width="8" height="8"/>
   <export target="world-1-1-map.xml" format="tmx"/>
@@ -800,7 +800,7 @@
 </data>
  </layer>
  <objectgroup id="20" name="Object Layer">
-  <object id="13" x="684" y="1231">
+  <object id="13" x="695" y="1196">
    <properties>
     <property name="object" value="Goomba"/>
    </properties>
@@ -813,6 +813,24 @@
    <point/>
   </object>
   <object id="16" x="2415" y="1178">
+   <properties>
+    <property name="object" value="Goomba"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="17" x="536" y="1221">
+   <properties>
+    <property name="object" value="Goomba"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="18" x="436" y="1218">
+   <properties>
+    <property name="object" value="Goomba"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="19" x="328" y="1173">
    <properties>
     <property name="object" value="Goomba"/>
    </properties>

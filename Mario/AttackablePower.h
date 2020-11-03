@@ -23,7 +23,7 @@ public:
 
     virtual bool IsAttacking();
 
-    virtual void Update(vector<shared_ptr<IColliable>>* coObj) override;
+    virtual void Update() override;
 
     virtual void Render() override;
 
