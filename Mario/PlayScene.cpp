@@ -10,6 +10,7 @@
 #include "Events.h"
 
 #include "Goomba.h"
+#include "Koopas.h"
 
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
@@ -116,11 +117,10 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos)
 {
 	//DebugOut(L"Object: %s\n", ToLPCWSTR(type));
 	if (strcmp(type, MEntityType::Goomba.ToString().c_str()) == 0) {
-		shared_ptr<Goomba> goomba = make_shared<Goomba>();
-		goomba->SetCollisionCalculator(make_shared<CollisionCalculator>(goomba));
-		float height = abs((goomba->GetHitBox().bottom - goomba->GetHitBox().top));
-		goomba->SetPosition(Vec2(fixedPos.x, fixedPos.y - height));
-		SpawnEntity(goomba);
+		SpawnEntity(Goomba::CreateGoomba(fixedPos));
+	}
+	if (strcmp(type, MEntityType::Koopas.ToString().c_str()) == 0) {
+		SpawnEntity(Koopas::CreateKoopas(fixedPos));
 	}
 }
 

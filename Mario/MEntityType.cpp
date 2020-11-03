@@ -37,5 +37,6 @@ bool MEntityType::IsMarioWeapon(ObjectType obj)
 bool MEntityType::IsEnemy(ObjectType obj)
 {
     bool goomba = obj == Goomba;
-    return goomba;
+    bool koopas = obj == Koopas;
+    return goomba || koopas;
 }

@@ -94,7 +94,7 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 					//Die, down level...
 				}
 				else {
-					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction)) {
+					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
 						m->SetOnGround(true);
 						m->SetJumpingState(JumpingStates::IDLE);
 						MiniJumpDetect(true);

@@ -25,6 +25,8 @@ Goomba::Goomba()
 
 void Goomba::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 {
+	if (state != GoombaState::WALK) return;
+
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
 
 	collisionCal->CalcPotentialCollisions(coObj, false);
@@ -32,6 +34,8 @@ void Goomba::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 void Goomba::StatusUpdate()
 {
+	if (state != GoombaState::WALK) return;
+
 	vector<shared_ptr<CollisionResult>> coResult = GetCollisionCalc()->GetLastResults();
 
 	if (coResult.size() == 0 || state != GoombaState::WALK)
@@ -78,7 +82,10 @@ void Goomba::StatusUpdate()
 
 	Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
 	if (GetPosition().x < 0.3 || GetPosition().y < 0.3 || GetPosition().x > mapBound.x || GetPosition().y > mapBound.y) {
-		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+		GB_DESTROY_DELAY = 100;
+		if (!destroyTimer.IsRunning()) {
+			destroyTimer.Restart();
+		}
 	}
 }
 
@@ -145,4 +152,13 @@ float Goomba::GetDamageFor(IColliable& object, Direction direction)
 		return 1.0f;
 	}
 	return 0.0f;
+}
+
+shared_ptr<Goomba> Goomba::CreateGoomba(Vec2 fixedPos)
+{
+	shared_ptr<Goomba> goomba = make_shared<Goomba>();
+	goomba->SetCollisionCalculator(make_shared<CollisionCalculator>(goomba));
+	float height = abs((goomba->GetHitBox().bottom - goomba->GetHitBox().top));
+	goomba->SetPosition(Vec2(fixedPos.x, fixedPos.y - height));
+	return goomba;
 }

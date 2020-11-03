@@ -65,7 +65,7 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 					//Die, down level...
 				}
 				else {
-					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction)) {
+					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
 						m->SetOnGround(true);
 						m->SetJumpingState(JumpingStates::IDLE);
 						MiniJumpDetect(true);
@@ -110,7 +110,14 @@ void MarioPowerUp::MoveUpdate()
 			m->GetVelocity().x += m->GetAccelerate().x * dt;
 
 			if (abs(m->GetVelocity().x) > maxSpeed) {
-				m->GetVelocity().x = maxSpeed * keySign;
+				if (abs(m->GetVelocity().x) - maxSpeed > MARIO_RUN_DRAG_FORCE * dt) {
+					int sign = m->GetVelocity().x < 0 ? -1 : 1;
+					m->GetVelocity().x -= MARIO_RUN_DRAG_FORCE * dt * sign;
+				}
+				else {
+					m->GetVelocity().x = maxSpeed * keySign;
+				}
+				
 			}
 
 			m->SetFacing(m->IsOnGround() ? (m->GetVelocity().x < 0 ? -1 : 1) : keySign);

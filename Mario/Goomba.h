@@ -33,6 +33,8 @@ public:
 
 	virtual float GetDamageFor(IColliable& object, Direction direction) override;
 
+	static shared_ptr<Goomba> CreateGoomba(Vec2 fixedPos = Vec2(100, 100));
+
 protected:
 	GoombaState state;
 
@@ -41,6 +43,6 @@ protected:
 	float GB_GRAVITY = 0.00133f * 1.5;
 	float GB_SPEED = 0.20f;
 	float GB_DESTROY_DELAY = 500;
-	Vec2 hitbox = Vec2(46, 46);
+	Vec2 hitbox = Vec2(45, 45);
 };
 

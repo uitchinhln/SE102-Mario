@@ -147,6 +147,8 @@
     <ClCompile Include="AttackablePower.cpp" />
     <ClCompile Include="BigMario.cpp" />
     <ClCompile Include="CloudTile.cpp" />
+    <ClCompile Include="CrouchKoopas.cpp" />
+    <ClCompile Include="DefaultKoopas.cpp" />
     <ClCompile Include="GhostTile.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
@@ -154,6 +156,7 @@
     <ClCompile Include="MapProperties.cpp" />
     <ClCompile Include="MarioFireBall.cpp" />
     <ClCompile Include="MarioTailed.cpp" />
+    <ClCompile Include="MovingShell.cpp" />
     <ClCompile Include="ObjectType.cpp" />
     <ClCompile Include="FireMario.cpp" />
     <ClCompile Include="MarioPowerUp.cpp" />
@@ -205,6 +208,8 @@
     <ClInclude Include="AttackablePower.h" />
     <ClInclude Include="BigMario.h" />
     <ClInclude Include="CloudTile.h" />
+    <ClInclude Include="CrouchKoopas.h" />
+    <ClInclude Include="DefaultKoopas.h" />
     <ClInclude Include="GhostTile.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="IEnviroment.h" />
@@ -212,6 +217,7 @@
     <ClInclude Include="MapProperties.h" />
     <ClInclude Include="MarioFireBall.h" />
     <ClInclude Include="MarioTailed.h" />
+    <ClInclude Include="MovingShell.h" />
     <ClInclude Include="ObjectType.h" />
     <ClInclude Include="FireMario.h" />
     <ClInclude Include="MarioPowerUp.h" />

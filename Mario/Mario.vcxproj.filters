@@ -106,6 +106,12 @@
     <Filter Include="MarioGame\Entity\LivingEntity\Mario\ProjectTile\Commons">
       <UniqueIdentifier>{7ded88fc-d3ff-40da-98a3-651f996938cb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Goomba\Koopas">
+      <UniqueIdentifier>{5d954810-e00b-417f-957c-c32689f2a3c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Goomba\Koopas\States">
+      <UniqueIdentifier>{7a7cc57f-1fe6-4764-9482-52eda6b4e081}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -274,7 +280,16 @@
       <Filter>Framework\World\Phys\Enviroment</Filter>
     </ClCompile>
     <ClCompile Include="Koopas.cpp">
-      <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
+      <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultKoopas.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
+    </ClCompile>
+    <ClCompile Include="CrouchKoopas.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingShell.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -438,7 +453,16 @@
       <Filter>Framework\World\Phys\Enviroment</Filter>
     </ClInclude>
     <ClInclude Include="Koopas.h">
-      <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
+      <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultKoopas.h">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
+    </ClInclude>
+    <ClInclude Include="CrouchKoopas.h">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingShell.h">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

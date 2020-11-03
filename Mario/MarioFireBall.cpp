@@ -5,20 +5,26 @@
 
 MarioFireBall::MarioFireBall(shared_ptr<Mario> holder)
 {
-	DWORD dt = CGame::Time().ElapsedGameTime;
-
 	this->holder = holder;
 
 	this->animations["Default"] = AnimationManager::GetInstance()->Get("ani-fire-ball")->Clone();
 
-	this->Position.x = (holder->GetFacing() < 0 ? holder->GetHitBox().left - 10 : holder->GetHitBox().right - 10);
-	this->Position.y = holder->GetHitBox().top + 24;
-	this->SetFacing(holder->GetFacing());
+	Reset();
+}
 
-	this->Gravity = FIREBALL_GRAVITY;
-	this->Velocity = Vec2(FIREBALL_SPEED * facing, 0);
+void MarioFireBall::Reset()
+{
+	DWORD dt = CGame::Time().ElapsedGameTime;
+	if (shared_ptr<Mario> m = holder.lock()) {
+		this->Position.x = (m->GetFacing() < 0 ? m->GetHitBox().left - 10 : m->GetHitBox().right - 10);
+		this->Position.y = m->GetHitBox().top + 24;
+		this->SetFacing(m->GetFacing());
 
-	this->Distance = Velocity * dt;
+		this->Gravity = FIREBALL_GRAVITY;
+		this->Velocity = Vec2(FIREBALL_SPEED * facing, 0);
+
+		this->Distance = Velocity * dt;
+	}
 }
 
 void MarioFireBall::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
