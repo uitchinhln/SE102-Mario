@@ -85,7 +85,8 @@ RectF Koopas::GetHitBox()
 
 bool Koopas::IsGetThrough(IColliable& object, Direction direction)
 {
-	return state == KoopasLiveStates::DIE;
+	bool koopasImp = object.GetObjectType() == MEntityType::KoopasImposter;
+	return state == KoopasLiveStates::DIE || koopasImp;
 }
 
 float Koopas::GetDamageFor(IColliable& object, Direction direction)

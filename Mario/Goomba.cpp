@@ -146,7 +146,8 @@ RectF Goomba::GetHitBox()
 
 bool Goomba::IsGetThrough(IColliable& object, Direction direction)
 {
-	return state != GoombaState::WALK;
+	bool koopasImp = object.GetObjectType() == MEntityType::KoopasImposter;
+	return state != GoombaState::WALK || koopasImp;
 }
 
 float Goomba::GetDamageFor(IColliable& object, Direction direction)

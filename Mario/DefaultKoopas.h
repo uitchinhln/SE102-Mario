@@ -36,7 +36,7 @@ protected:
 	unordered_map<string, shared_ptr<CAnimation>> animations;
 
 	float KP_GRAVITY = 0.00133f * 1.5;
-	float KP_SPEED = 0.2f;
+	float KP_SPEED = 0.18;
 	long KP_DESTROY_DELAY = 3000;
 
 	Vec2 hitbox = Vec2(45, 45);

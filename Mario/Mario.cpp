@@ -34,7 +34,7 @@ void Mario::OnKeyUp(int key)
 						GetHitBox().left - hitbox.x - 2,
 						obj->GetHitBox().top));
 				}
-				Distance.x += GetFacing() * 3;
+				Velocity.x += GetFacing() * 5;
 
 				koopas->ClearHolder();
 				this->ClearInhand();

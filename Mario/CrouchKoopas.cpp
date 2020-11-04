@@ -4,6 +4,7 @@
 #include "MEntityType.h"
 #include "SceneManager.h"
 #include "Mario.h"
+#include "MovingShell.h"
 
 CrouchKoopas::CrouchKoopas(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 {
@@ -123,7 +124,11 @@ void CrouchKoopas::StatusUpdate()
 				}
 
 				if (MEntityType::IsMario(coll->GameColliableObject->GetObjectType())) {
-					
+					if (k->GetObjectType() == MEntityType::KoopasCrouch) {
+						shared_ptr<Mario> m = dynamic_pointer_cast<Mario>(coll->GameColliableObject);
+						k->SetFacing(m->GetFacing());
+						k->SetPower(make_shared<MovingShell>(k, flip));
+					}
 					break;
 				}
 
