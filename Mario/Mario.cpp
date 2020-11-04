@@ -7,10 +7,46 @@
 #include "BigMario.h"
 #include "FireMario.h"
 #include "RaccoonMario.h"
+#include "Koopas.h"
 
 void Mario::OnKeyUp(int key)
 {
 	powerUp->OnKeyUp(key);
+	switch (key)
+	{
+	case DIK_A:
+		if (shared_ptr<GameObject> obj = inhand.lock()) {
+			if (obj->GetObjectType() == MEntityType::KoopasCrouch) {
+				shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(obj);
+
+				Vec2 hitbox = Vec2(
+					koopas->GetHitBox().right - koopas->GetHitBox().left,
+					koopas->GetHitBox().bottom - koopas->GetHitBox().top
+				);
+
+				if (GetFacing() > 0) {
+					obj->SetPosition(Vec2(
+						GetHitBox().right + 2,
+						obj->GetHitBox().top));
+				}
+				else {
+					obj->SetPosition(Vec2(
+						GetHitBox().left - hitbox.x - 2,
+						obj->GetHitBox().top));
+				}
+				Distance.x += GetFacing() * 3;
+
+				koopas->ClearHolder();
+				this->ClearInhand();
+			}
+		}
+		else {
+			inhand.reset();
+		}
+		break;
+	default:
+		break;
+	}
 }
 
 void Mario::OnKeyDown(int key)

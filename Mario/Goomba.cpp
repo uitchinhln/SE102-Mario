@@ -69,12 +69,15 @@ void Goomba::StatusUpdate()
 			}
 
 			if (MEntityType::IsMarioWeapon(coll->GameColliableObject->GetObjectType())) {
-				state = GoombaState::EXPLODE;
-				Velocity = Vec2(jet.x * 0.1f, -0.65f);
-				GB_DESTROY_DELAY = 3000;
+				float damage = coll->GameColliableObject->GetDamageFor(*this, coll->SAABBResult.Direction);
+				if (damage > 0) {
+					state = GoombaState::EXPLODE;
+					Velocity = Vec2(jet.x * 0.1f, -0.65f);
+					GB_DESTROY_DELAY = 3000;
 
-				if (!destroyTimer.IsRunning()) {
-					destroyTimer.Restart();
+					if (!destroyTimer.IsRunning()) {
+						destroyTimer.Restart();
+					}
 				}
 			}
 		}
@@ -150,6 +153,9 @@ float Goomba::GetDamageFor(IColliable& object, Direction direction)
 {
 	if (state == GoombaState::WALK && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
 		return 1.0f;
+	}
+	if (state == GoombaState::WALK && MEntityType::IsMarioWeapon(object.GetObjectType())) {
+		//return 1.0f;
 	}
 	return 0.0f;
 }

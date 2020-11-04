@@ -72,13 +72,16 @@ void DefaultKoopas::StatusUpdate()
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.95f));
 						return;
 					}
-					k->GetLiveState() = KoopasLiveStates::DIE;
-					k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
-					KP_DESTROY_DELAY = 3000;
+					float damage = coll->GameColliableObject->GetDamageFor(*k, coll->SAABBResult.Direction);
+					if (damage > 0) {
+						k->GetLiveState() = KoopasLiveStates::DIE;
+						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
+						KP_DESTROY_DELAY = 3000;
 
-					if (!k->GetDestroyTimer().IsRunning()) {
-						k->GetDestroyTimer().Restart();
-					}
+						if (!k->GetDestroyTimer().IsRunning()) {
+							k->GetDestroyTimer().Restart();
+						}
+					}					
 				}
 			}
 		}
@@ -157,6 +160,9 @@ float DefaultKoopas::GetDamageFor(IColliable& object, Direction direction)
 		if (k->GetLiveState() == KoopasLiveStates::ALIVE && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
 			return 1.0f;
 		}
-		return 0.0f;
+		if (k->GetLiveState() == KoopasLiveStates::ALIVE && MEntityType::IsMarioWeapon(object.GetObjectType())) {
+			//return 1.0f;
+		}
 	}
+	return 0.0f;
 }

@@ -68,8 +68,8 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 					shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(coll->GameColliableObject);
 
 					if (keyboard.IsKeyDown(DIK_A) && !m->GetInhand()) {
-						koopas->SetHolder(m);
 						m->SetInhand(koopas);
+						koopas->SetHolder(m);
 					}
 				}
 
@@ -251,7 +251,10 @@ void MarioPowerUp::CrouchUpdate()
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
-		if (keyboard.IsKeyDown(DIK_DOWN) && m->GetJumpingState() == JumpingStates::IDLE && !keyboard.IsKeyDown(DIK_LEFT) && !keyboard.IsKeyDown(DIK_RIGHT)) {
+		if (keyboard.IsKeyDown(DIK_DOWN) && m->GetJumpingState() == JumpingStates::IDLE 
+			&& !keyboard.IsKeyDown(DIK_LEFT) && !keyboard.IsKeyDown(DIK_RIGHT)
+			&& !m->GetInhand()) {
+
 			m->SetMovingState(MovingStates::CROUCH);
 
 			if (abs(m->GetVelocity().x) > MARIO_CROUCH_DRAG_FORCE * dt) {

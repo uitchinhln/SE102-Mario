@@ -102,8 +102,8 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 					shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(coll->GameColliableObject);
 
 					if (keyboard.IsKeyDown(DIK_A) && !m->GetInhand()) {
-						koopas->SetHolder(m);
 						m->SetInhand(koopas);
+						koopas->SetHolder(m);
 					}
 				}
 

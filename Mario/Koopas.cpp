@@ -2,6 +2,7 @@
 #include "MEntityType.h"
 #include "AnimationManager.h"
 #include "CrouchKoopas.h"
+#include "Mario.h"
 
 Koopas::Koopas()
 {
@@ -27,9 +28,13 @@ weak_ptr<Mario> Koopas::GetHolder()
 	return this->koopas;
 }
 
-void Koopas::SetHolder(shared_ptr<Mario> koopas)
+void Koopas::SetHolder(shared_ptr<Mario> holder)
 {
-	this->koopas = koopas;
+	if (state == KoopasLiveStates::DIE) {
+		holder->ClearInhand();
+		return;
+	}
+	this->koopas = holder;
 }
 
 void Koopas::ClearHolder()

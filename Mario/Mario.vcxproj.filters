@@ -291,6 +291,9 @@
     <ClCompile Include="MovingShell.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
     </ClCompile>
+    <ClCompile Include="PassengerKoopas.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -462,6 +465,9 @@
       <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
     </ClInclude>
     <ClInclude Include="MovingShell.h">
+      <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
+    </ClInclude>
+    <ClInclude Include="PassengerKoopas.h">
       <Filter>MarioGame\Entity\LivingEntity\Goomba\Koopas\States</Filter>
     </ClInclude>
   </ItemGroup>
