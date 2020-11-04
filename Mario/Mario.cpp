@@ -93,6 +93,24 @@ void Mario::Render()
 	powerUp->Render();
 }
 
+void Mario::ClearInhand()
+{
+	this->inhand.reset();
+}
+
+void Mario::SetInhand(shared_ptr<GameObject> object)
+{
+	this->inhand = object;
+}
+
+shared_ptr<GameObject> Mario::GetInhand()
+{
+	if (shared_ptr<GameObject> o = inhand.lock()) {
+		return o;
+	}
+	return nullptr;
+}
+
 float& Mario::GetDrag()
 {
 	return this->drag;

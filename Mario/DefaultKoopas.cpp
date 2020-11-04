@@ -3,32 +3,37 @@
 #include "AnimationManager.h"
 #include "Koopas.h"
 #include "SceneManager.h"
+#include "CrouchKoopas.h"
 
-DefaultKoopas::DefaultKoopas(shared_ptr<Koopas> holder)
+DefaultKoopas::DefaultKoopas()
 {
-	this->holder = holder;
+}
+
+DefaultKoopas::DefaultKoopas(shared_ptr<Koopas> koopas)
+{
+	this->koopas = koopas;
 	
 	this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-move")->Clone();
 	this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
 
 	this->animations["Die"]->GetTransform()->Scale.y = -1;
 
-	holder->GetDestroyTimer().Stop();
+	koopas->GetDestroyTimer().Stop();
 
-	holder->GetLiveState() = KoopasLiveStates::ALIVE;
+	koopas->GetLiveState() = KoopasLiveStates::ALIVE;
 
 	DWORD dt = CGame::Time().ElapsedGameTime;
-	holder->SetFacing(-1);
+	koopas->SetFacing(-1);
 
-	holder->GetGravity() = KP_GRAVITY;
-	holder->SetVelocity(Vec2(KP_SPEED * holder->GetFacing(), 0));
+	koopas->GetGravity() = KP_GRAVITY;
+	koopas->SetVelocity(Vec2(KP_SPEED * koopas->GetFacing(), 0));
 
-	holder->GetDistance() = holder->GetVelocity() * dt;
+	koopas->GetDistance() = koopas->GetVelocity() * dt;
 }
 
 void DefaultKoopas::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 {
-	if (shared_ptr<Koopas> k = holder.lock()) {
+	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
 
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
@@ -39,7 +44,7 @@ void DefaultKoopas::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 void DefaultKoopas::StatusUpdate()
 {
-	if (shared_ptr<Koopas> k = holder.lock()) {
+	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
 
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
@@ -56,11 +61,17 @@ void DefaultKoopas::StatusUpdate()
 			{
 				if (MEntityType::IsMario(coll->GameColliableObject->GetObjectType())) {
 					if (coll->SAABBResult.Direction == Direction::Bottom) {
-						
+						k->SetPower(make_shared<CrouchKoopas>(k));
+						return;
 					}
 				}
 
 				if (MEntityType::IsMarioWeapon(coll->GameColliableObject->GetObjectType())) {
+					if (coll->GameColliableObject->GetObjectType() == MEntityType::MarioTailed) {
+						k->SetPower(make_shared<CrouchKoopas>(k, true));
+						k->SetVelocity(Vec2(jet.x * 0.1f, -0.95f));
+						return;
+					}
 					k->GetLiveState() = KoopasLiveStates::DIE;
 					k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
 					KP_DESTROY_DELAY = 3000;
@@ -84,7 +95,7 @@ void DefaultKoopas::StatusUpdate()
 
 void DefaultKoopas::Update()
 {
-	if (shared_ptr<Koopas> k = holder.lock()) {
+	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if (k->GetDestroyTimer().IsRunning() && k->GetDestroyTimer().Elapsed() >= KP_DESTROY_DELAY) {
 			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(k);
 		}
@@ -97,7 +108,7 @@ void DefaultKoopas::Update()
 
 void DefaultKoopas::FinalUpdate()
 {
-	if (shared_ptr<Koopas> k = holder.lock()) {
+	if (shared_ptr<Koopas> k = koopas.lock()) {
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 
 		if (collisionCal && k->GetLiveState() == KoopasLiveStates::ALIVE) {
@@ -112,7 +123,7 @@ void DefaultKoopas::FinalUpdate()
 
 void DefaultKoopas::Render()
 {
-	if (shared_ptr<Koopas> k = holder.lock()) {
+	if (shared_ptr<Koopas> k = koopas.lock()) {
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 		Animation ani = this->animations["Move"];
@@ -134,7 +145,7 @@ ObjectType DefaultKoopas::GetObjectType()
 
 RectF DefaultKoopas::GetHitBox()
 {
-	if (shared_ptr<Koopas> k = holder.lock()) {
+	if (shared_ptr<Koopas> k = koopas.lock()) {
 		return RectF(k->GetPosition().x, k->GetPosition().y, k->GetPosition().x + hitbox.x, k->GetPosition().y + hitbox.y);
 	}
 	return RectF(0, 0, 0, 0);
@@ -142,7 +153,7 @@ RectF DefaultKoopas::GetHitBox()
 
 float DefaultKoopas::GetDamageFor(IColliable& object, Direction direction)
 {
-	if (shared_ptr<Koopas> k = holder.lock()) {
+	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if (k->GetLiveState() == KoopasLiveStates::ALIVE && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
 			return 1.0f;
 		}

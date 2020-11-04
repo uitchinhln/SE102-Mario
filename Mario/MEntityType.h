@@ -13,6 +13,7 @@ public:
 
 	static const ObjectType Goomba;
 	static const ObjectType Koopas;
+	static const ObjectType KoopasCrouch;
 
 	static bool IsTile(ObjectType);
 

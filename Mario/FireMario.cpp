@@ -19,6 +19,10 @@ FireMario::FireMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 	this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-fire-mario-kick")->Clone();
 	this->animations["Attack"] = AnimationManager::GetInstance()->Get("ani-fire-mario-throw")->Clone();
 
+	this->animations["Hold"] = AnimationManager::GetInstance()->Get("ani-fire-mario-hold")->Clone();
+	this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-fire-mario-hold-idle")->Clone();
+	this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-fire-mario-hold-fall")->Clone();
+
 	this->MARIO_ATTACK_TIME = 100;
 
 	for (int i = 0; i < 2; i++) {

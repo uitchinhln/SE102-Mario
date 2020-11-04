@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include "SceneManager.h"
 #include "AnimationManager.h"
+#include "Koopas.h"
 
 MarioPowerUp::MarioPowerUp(shared_ptr<Mario> mario)
 {
@@ -46,8 +47,10 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 		}
 
 		//fixed position
-		if (m->GetPosition().x < 0.3) {
-			m->GetPosition().x = 0.3;
+		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
+		if (m->GetPosition().x < 0.3 || m->GetPosition().x > mapBound.x - collisionBox.x || m->GetPosition().y > mapBound.y - collisionBox.y) {
+			m->GetPosition().x = max(0.3, min(m->GetPosition().x, mapBound.x - collisionBox.x));
+			m->GetPosition().y = min(m->GetPosition().y, mapBound.y - collisionBox.y);
 			m->GetVelocity().x = 0;
 		}
 
@@ -60,6 +63,16 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 			}
 
 			if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
+				if (coll->GameColliableObject->GetObjectType() == MEntityType::KoopasCrouch) {
+					KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+					shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(coll->GameColliableObject);
+
+					if (keyboard.IsKeyDown(DIK_A) && !m->GetInhand()) {
+						koopas->SetHolder(m);
+						m->SetInhand(koopas);
+					}
+				}
+
 				float damage = coll->GameColliableObject->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
 					//Die, down level...
@@ -282,21 +295,30 @@ void MarioPowerUp::Update()
 void MarioPowerUp::JumpAnimation()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
+		bool apply = false;
 		switch (m->GetJumpingState())
 		{
 		case JumpingStates::SUPER_JUMP:
 			selectedAnimation = animations["Fly"];
+			apply = true;
 			break;
 		case JumpingStates::JUMP:
 			selectedAnimation = animations["Jump"];
+			apply = true;
 			break;
 		case JumpingStates::HIGH_JUMP:
 			selectedAnimation = animations["Jump"];
+			apply = true;
 			break;
 		case JumpingStates::FALLING:
 		case JumpingStates::FLOATING:
 			selectedAnimation = animations["Fall"];
+			apply = true;
 			break;
+		}
+
+		if (m->GetInhand() && apply) {
+			selectedAnimation = animations["HoldFall"];
 		}
 	}
 }
@@ -308,9 +330,17 @@ void MarioPowerUp::MoveAnimation()
 
 		if (m->GetSkid()) {
 			selectedAnimation = animations["Skid"];
+
+			if (m->GetInhand()) {
+				selectedAnimation = animations["Hold"];
+			}
 		}
 		else if (abs(m->GetVelocity().x) <= m->GetDrag() * 7) {
 			selectedAnimation = animations["Idle"];
+
+			if (m->GetInhand()) {
+				selectedAnimation = animations["HoldIdle"];
+			}
 		}
 		else {
 			switch (m->GetMovingState())
@@ -324,6 +354,10 @@ void MarioPowerUp::MoveAnimation()
 			case MovingStates::WALK:
 				selectedAnimation = animations["Walk"];
 				break;
+			}
+
+			if (m->GetInhand()) {
+				selectedAnimation = animations["Hold"];
 			}
 		}
 	}

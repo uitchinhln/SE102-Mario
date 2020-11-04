@@ -15,6 +15,10 @@ BigMario::BigMario(shared_ptr<Mario> mario) : MarioPowerUp(mario)
 	this->animations["Skid"] = AnimationManager::GetInstance()->Get("ani-big-mario-skid")->Clone();
 	this->animations["Crouch"] = AnimationManager::GetInstance()->Get("ani-big-mario-crouch")->Clone();
 	this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-big-mario-kick")->Clone();
+
+	this->animations["Hold"] = AnimationManager::GetInstance()->Get("ani-big-mario-hold")->Clone();
+	this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-big-mario-hold-idle")->Clone();
+	this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-big-mario-hold-fall")->Clone();
 }
 
 ObjectType BigMario::GetMarioType()

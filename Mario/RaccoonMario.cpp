@@ -4,6 +4,7 @@
 #include "BigMario.h"
 #include "MarioTailed.h"
 #include "SceneManager.h"
+#include "Koopas.h"
 
 RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {
@@ -20,6 +21,10 @@ RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 	this->animations["Crouch"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-crouch")->Clone();
 	this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-kick")->Clone();
 	this->animations["Attack"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-spin")->Clone();
+
+	this->animations["Hold"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold")->Clone();
+	this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold-idle")->Clone();
+	this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold-fall")->Clone();
 
 	this->MARIO_ATTACK_TIME = 250;
 }
@@ -74,8 +79,11 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 		}
 
 		//fixed position
-		if (m->GetPosition().x < 0.3) {
-			m->GetPosition().x = 0.3;
+		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
+		if (m->GetPosition().x < 0.3 || m->GetPosition().x > mapBound.x - collisionBox.x || m->GetPosition().y > mapBound.y - collisionBox.y) {
+
+			m->GetPosition().x = max(0.3, min(m->GetPosition().x, mapBound.x - collisionBox.x));
+			m->GetPosition().y = min(m->GetPosition().y, mapBound.y - collisionBox.y);
 			m->GetVelocity().x = 0;
 		}
 
@@ -89,6 +97,16 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 				m->GetGravity() = MARIO_GRAVITY;
 			}
 			if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
+				if (coll->GameColliableObject->GetObjectType() == MEntityType::KoopasCrouch) {
+					KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+					shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(coll->GameColliableObject);
+
+					if (keyboard.IsKeyDown(DIK_A) && !m->GetInhand()) {
+						koopas->SetHolder(m);
+						m->SetInhand(koopas);
+					}
+				}
+
 				float damage = coll->GameColliableObject->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
 					//Die, down level...
@@ -171,23 +189,33 @@ void RaccoonMario::PowerMeterUpdate()
 void RaccoonMario::JumpAnimation()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
+		bool apply = false;
 		switch (m->GetJumpingState())
 		{
 		case JumpingStates::SUPER_JUMP:
 			selectedAnimation = animations["Fly"];
+			apply = true;
 			break;
 		case JumpingStates::JUMP:
 			selectedAnimation = animations["Jump"];
+			apply = true;
 			break;
 		case JumpingStates::HIGH_JUMP:
 			selectedAnimation = animations["Jump"];
+			apply = true;
 			break;
 		case JumpingStates::FALLING:
 			selectedAnimation = animations["Fall"];
+			apply = true;
 			break;
 		case JumpingStates::FLOATING:
 			selectedAnimation = animations["Float"];
+			apply = true;
 			break;
+		}
+
+		if (m->GetInhand() && apply) {
+			selectedAnimation = animations["HoldFall"];
 		}
 	}
 }

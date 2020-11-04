@@ -45,6 +45,8 @@ protected:
 
 	shared_ptr<MarioPowerUp> powerUp;
 
+	weak_ptr<GameObject> inhand;
+
 	virtual void HookEvent();
 
 	virtual void UnHookEvent();
@@ -62,6 +64,12 @@ public:
 	virtual void Update() override;
 
 	virtual void Render() override;
+
+	virtual void ClearInhand();
+
+	virtual void SetInhand(shared_ptr<GameObject> object);
+
+	virtual shared_ptr<GameObject> GetInhand();
 
 	virtual float& GetDrag();
 

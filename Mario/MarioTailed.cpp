@@ -10,14 +10,17 @@ MarioTailed::MarioTailed(shared_ptr<Mario> holder, DWORD attackTime)
 
 void MarioTailed::MovingUpdate()
 {
-	float speed = 3 * 18.0f / attackTime;
+	float speed = 138.0f / attackTime;
 	if (shared_ptr<Mario> m = holder.lock()) {
-		this->Position = m->GetPosition() + Vec2(-1, 54);
+		this->Position = m->GetPosition() + Vec2(0, 54);
 
 		this->SetFacing(-1 * m->GetFacing() * attackState);
 
 		if (this->GetFacing() > 0) {
-			this->Position.x = m->GetHitBox().right - 11;
+			this->Position.x = m->GetHitBox().left;
+		}
+		else {
+			this->Position.x = m->GetHitBox().right - 12;
 		}
 
 		Distance.x = 1.0f + speed * (attackTime / 2) * this->GetFacing();

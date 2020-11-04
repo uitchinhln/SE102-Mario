@@ -135,7 +135,13 @@
 		</Animation>
 		<!-- Animation CROUCH-->
 		<Animation aniId="ani-green-koopa-troopa-crouch" frameTime="100">
+	        <Sprite id="spr-green-koopa-troopa-shell-run-0" left="32" top="149"  width="16" height="16"/>
+		</Animation>
+
+		<!-- Animation RESPAWNING-->
+		<Animation aniId="ani-green-koopa-troopa-respawning" frameTime="100">
 			<Sprite id="spr-green-koopa-troopa-crouch-0" left="74" top="127"  width="18" height="16"/>
+	        <Sprite id="spr-green-koopa-troopa-shell-run-0" left="32" top="149"  width="16" height="16"/>
 		</Animation>
 
 		<!--Green Koopa Shell-->

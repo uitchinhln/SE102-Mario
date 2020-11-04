@@ -15,6 +15,10 @@ Small::Small(shared_ptr<Mario> mario) : MarioPowerUp(mario)
 	this->animations["Skid"] = AnimationManager::GetInstance()->Get("ani-small-mario-skid")->Clone();
 	this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-small-mario-kick")->Clone();
 
+	this->animations["Hold"] = AnimationManager::GetInstance()->Get("ani-small-mario-hold")->Clone();
+	this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-small-mario-hold-idle")->Clone();
+	this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-small-mario-hold-fall")->Clone();
+
 	collisionBox = Vec2(36, 45);
 	collisionBoxFixed = Vec2(36, 45);
 }

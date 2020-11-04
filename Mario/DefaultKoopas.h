@@ -10,7 +10,9 @@ class Koopas;
 class DefaultKoopas
 {
 public:
-	DefaultKoopas(shared_ptr<Koopas> holder);
+	DefaultKoopas();
+
+	DefaultKoopas(shared_ptr<Koopas> koopas);
 
 	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);
 
@@ -29,7 +31,7 @@ public:
 	virtual float GetDamageFor(IColliable& object, Direction direction);
 
 protected:
-	weak_ptr<Koopas> holder;
+	weak_ptr<Koopas> koopas;
 
 	unordered_map<string, shared_ptr<CAnimation>> animations;
 

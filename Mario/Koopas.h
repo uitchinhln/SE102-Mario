@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "DefaultKoopas.h"
 
+class Mario;
+
 enum class KoopasLiveStates {
 	ALIVE,
 	DIE
@@ -16,6 +18,12 @@ public:
 	virtual Stopwatch& GetDestroyTimer();
 
 	virtual KoopasLiveStates& GetLiveState();
+
+	virtual weak_ptr<Mario> GetHolder();
+
+	virtual void SetHolder(shared_ptr<Mario> koopas);
+
+	virtual void ClearHolder();
 
 	virtual void SetPower(shared_ptr<DefaultKoopas> power);
 
@@ -40,6 +48,8 @@ public:
 	static shared_ptr<Koopas> CreateKoopas(Vec2 fixedPos = Vec2(100, 100));
 
 protected:
+	weak_ptr<Mario> koopas;
+
 	shared_ptr<DefaultKoopas> power;
 
 	KoopasLiveStates state;

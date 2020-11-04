@@ -1,6 +1,7 @@
 #include "Koopas.h"
 #include "MEntityType.h"
 #include "AnimationManager.h"
+#include "CrouchKoopas.h"
 
 Koopas::Koopas()
 {
@@ -19,6 +20,21 @@ Stopwatch& Koopas::GetDestroyTimer()
 KoopasLiveStates& Koopas::GetLiveState()
 {
 	return state;
+}
+
+weak_ptr<Mario> Koopas::GetHolder()
+{
+	return this->koopas;
+}
+
+void Koopas::SetHolder(shared_ptr<Mario> koopas)
+{
+	this->koopas = koopas;
+}
+
+void Koopas::ClearHolder()
+{
+	this->koopas.reset();
 }
 
 void Koopas::SetPower(shared_ptr<DefaultKoopas> power)

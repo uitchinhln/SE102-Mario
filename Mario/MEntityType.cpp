@@ -10,6 +10,7 @@ const ObjectType MEntityType::MarioTailed = ObjectType::CreateObjectType("MarioT
 
 const ObjectType MEntityType::Goomba = ObjectType::CreateObjectType("Goomba");
 const ObjectType MEntityType::Koopas = ObjectType::CreateObjectType("Koopas");
+const ObjectType MEntityType::KoopasCrouch = ObjectType::CreateObjectType("KoopasCrouch");
 
 bool MEntityType::IsTile(ObjectType type)
 {
@@ -37,6 +38,6 @@ bool MEntityType::IsMarioWeapon(ObjectType obj)
 bool MEntityType::IsEnemy(ObjectType obj)
 {
     bool goomba = obj == Goomba;
-    bool koopas = obj == Koopas;
+    bool koopas = obj == Koopas || obj == KoopasCrouch;
     return goomba || koopas;
 }
