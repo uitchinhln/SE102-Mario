@@ -151,11 +151,11 @@ bool Goomba::IsGetThrough(IColliable& object, Direction direction)
 
 float Goomba::GetDamageFor(IColliable& object, Direction direction)
 {
-	if (state == GoombaState::WALK && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
+	if ((state == GoombaState::WALK || destroyTimer.Elapsed() <= 5) && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
 		return 1.0f;
 	}
-	if (state == GoombaState::WALK && MEntityType::IsMarioWeapon(object.GetObjectType())) {
-		//return 1.0f;
+	if ((state == GoombaState::WALK || destroyTimer.Elapsed() <= 5) && MEntityType::IsMarioWeapon(object.GetObjectType())) {
+		return 1.0f;
 	}
 	return 0.0f;
 }

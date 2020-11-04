@@ -16,7 +16,7 @@ void Mario::OnKeyUp(int key)
 	{
 	case DIK_A:
 		if (shared_ptr<GameObject> obj = inhand.lock()) {
-			if (obj->GetObjectType() == MEntityType::KoopasCrouch) {
+			if (obj->GetObjectType() == MEntityType::KoopasPassenger) {
 				shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(obj);
 
 				Vec2 hitbox = Vec2(

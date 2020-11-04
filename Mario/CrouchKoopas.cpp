@@ -130,7 +130,7 @@ void CrouchKoopas::StatusUpdate()
 				if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
 					if (shared_ptr<Mario> m = k->GetHolder().lock()) {
 						float damage = coll->GameColliableObject->GetDamageFor(*k, coll->SAABBResult.Direction);
-						//if (damage > 0) {
+						if (damage > 0) {
 							k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
 							KP_DESTROY_DELAY = 3000;
 
@@ -139,7 +139,7 @@ void CrouchKoopas::StatusUpdate()
 								respawnTimer.Stop();
 							}
 							break;
-						//}						
+						}						
 					}
 				}
 
@@ -200,19 +200,24 @@ void CrouchKoopas::Render()
 
 ObjectType CrouchKoopas::GetObjectType()
 {
+	if (shared_ptr<Koopas> k = koopas.lock()) {
+		if (k->GetHolder().lock()) {
+			return MEntityType::KoopasPassenger;
+		}
+	}
 	return MEntityType::KoopasCrouch;
 }
 
 float CrouchKoopas::GetDamageFor(IColliable& object, Direction direction)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::DIE) return 0.0f;
+		if (k->GetLiveState() == KoopasLiveStates::DIE && k->GetDestroyTimer().Elapsed() > 5) return 0.0f;
 
 		if (MEntityType::IsEnemy(object.GetObjectType()) && k->GetHolder().lock()) {
 			return 999.0f;
 		}
 		if (MEntityType::IsMarioWeapon(object.GetObjectType())) {
-			//return 1.0f;
+			return 1.0f;
 		}
 	}
 	return 0.0f;

@@ -157,11 +157,13 @@ RectF DefaultKoopas::GetHitBox()
 float DefaultKoopas::GetDamageFor(IColliable& object, Direction direction)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::ALIVE && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
+		if ((k->GetLiveState() == KoopasLiveStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5)
+			&& MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
 			return 1.0f;
 		}
-		if (k->GetLiveState() == KoopasLiveStates::ALIVE && MEntityType::IsMarioWeapon(object.GetObjectType())) {
-			//return 1.0f;
+		if ((k->GetLiveState() == KoopasLiveStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5) 
+			&& MEntityType::IsMarioWeapon(object.GetObjectType())) {
+			return 1.0f;
 		}
 	}
 	return 0.0f;

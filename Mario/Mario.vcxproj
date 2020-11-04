@@ -183,7 +183,6 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioGame.cpp" />
     <ClCompile Include="MEntityType.cpp" />
-    <ClCompile Include="PassengerKoopas.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
@@ -245,7 +244,6 @@
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioGame.h" />
     <ClInclude Include="MEntityType.h" />
-    <ClInclude Include="PassengerKoopas.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="RaccoonMario.h" />

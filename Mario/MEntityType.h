@@ -14,6 +14,7 @@ public:
 	static const ObjectType Goomba;
 	static const ObjectType Koopas;
 	static const ObjectType KoopasCrouch;
+	static const ObjectType KoopasPassenger;
 	static const ObjectType KoopasImposter;
 
 	static bool IsTile(ObjectType);
