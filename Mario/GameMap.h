@@ -33,6 +33,10 @@ public:
 
 	virtual shared_ptr<CTileSet> GetTileSetByTileID(int id);
 
+	virtual shared_ptr<ColliableTile> GetTileByGID(int id);
+
+	virtual Vec2 GetTileSize();
+
 	virtual void AddTileSet(int firstgid, shared_ptr<CTileSet> tileSet);
 
 	virtual void AddLayer(shared_ptr<CLayer> layer);

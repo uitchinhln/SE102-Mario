@@ -27,6 +27,20 @@ shared_ptr<CTileSet> CGameMap::GetTileSetByTileID(int id)
 	return floor_entry(tilesets, id).second;
 }
 
+shared_ptr<ColliableTile> CGameMap::GetTileByGID(int id)
+{
+	shared_ptr<CTileSet> tileset = GetTileSetByTileID(id);
+	if (tileset) {
+		return tileset->GetColliableTile(id);
+	}
+	return nullptr;
+}
+
+Vec2 CGameMap::GetTileSize()
+{
+	return Vec2(tileWidth, tileHeight);
+}
+
 void CGameMap::AddTileSet(int firstgid, shared_ptr<CTileSet> tileSet)
 {
 	this->tilesets[firstgid] = tileSet;
@@ -93,15 +107,11 @@ vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePos
 
 			for (shared_ptr<CLayer> layer : layers) {
 				int id = layer->GetTileID(i, j);
-				shared_ptr<CTileSet> tileset = GetTileSetByTileID(id);
-				if (tileset) {
-					shared_ptr<ColliableTile> tile = tileset->GetColliableTile(id);
-					if (tile) {
-						int x = i * tileWidth;
-						int y = j * tileHeight;
-						shared_ptr<ColliableTileAdapter> adapter = make_shared<ColliableTileAdapter>(tile, Vec2(x, y));
-						result.push_back(adapter);
-					}
+				if (shared_ptr<ColliableTile> tile = GetTileByGID(id)) {
+					int x = i * tileWidth;
+					int y = j * tileHeight;
+					shared_ptr<ColliableTileAdapter> adapter = make_shared<ColliableTileAdapter>(tile, Vec2(x, y));
+					result.push_back(adapter);
 				}
 			}
 		}
@@ -139,7 +149,7 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 
 		//Load layer
 		for (TiXmlElement* node = root->FirstChildElement("layer"); node != nullptr; node = node->NextSiblingElement("layer")) {
-			shared_ptr<CLayer> layer = make_shared<CLayer>(node);
+			shared_ptr<CLayer> layer = make_shared<CLayer>(node, gameMap);
 			gameMap->AddLayer(layer);
 		}
 

@@ -1,4 +1,6 @@
 #include "Layer.h"
+#include "GameMap.h"
+#include "Events.h"
 
 CLayer::CLayer()
 {
@@ -8,7 +10,7 @@ CLayer::CLayer()
 }
 
 //,  = 44
-CLayer::CLayer(TiXmlElement* data)
+CLayer::CLayer(TiXmlElement* data, shared_ptr<CGameMap> map)
 {
 	data->QueryIntAttribute("id", &this->id);
 	data->QueryIntAttribute("width", &this->width);
@@ -22,7 +24,30 @@ CLayer::CLayer(TiXmlElement* data)
 	for (int i = 0; i < this->width; i++) {
 		tiles[i] = new int[height];
 		for (int j = 0; j < this->height; j++) {
-			tiles[i][j] = stoi(splitted[i + j * width]);
+			int tileId = stoi(splitted[i + j * width]);
+
+			if (shared_ptr<ColliableTile> tile = map->GetTileByGID(tileId)) {
+				Vec2 pos = map->GetTileSize();
+				pos.x *= i;
+				pos.y *= j;
+
+				bool cancel = false;
+
+				ObjectType type = tile->GetObjectType();
+
+				__raise (*Events::GetInstance()).MapBlockPreLoadEvent(tileId, type, pos, cancel);
+
+				if (cancel) {
+					tiles[i][j] = 0;
+				}
+				else {
+					tiles[i][j] = tileId;
+				}
+			}
+			else {
+				tiles[i][j] = tileId;
+			}
+
 		}
 	}
 

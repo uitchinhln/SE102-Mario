@@ -3,6 +3,8 @@
 #include "TinyXML/tinyxml.h"
 #include "TinyXML/tinystr.h"
 
+class CGameMap;
+
 class CLayer
 {
 	int id;
@@ -13,7 +15,7 @@ class CLayer
 	int** tiles;
 public:
 	CLayer();
-	CLayer(TiXmlElement* data);
+	CLayer(TiXmlElement* data, shared_ptr<CGameMap> map);
 
 	bool Hidden = false;
 
