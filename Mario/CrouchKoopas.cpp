@@ -25,7 +25,6 @@ CrouchKoopas::CrouchKoopas(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas
 	koopas->GetLiveState() = KoopasLiveStates::ALIVE;
 
 	DWORD dt = CGame::Time().ElapsedGameTime;
-	koopas->SetFacing(1);
 
 	koopas->GetGravity() = KP_GRAVITY;
 	koopas->SetVelocity(Vec2(0, 0));

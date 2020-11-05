@@ -158,14 +158,12 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 				Vec2 fixPos;
 				object->QueryFloatAttribute("x", &fixPos.x);
 				object->QueryFloatAttribute("y", &fixPos.y);
+				const char* type = object->Attribute("name");
 
 				TiXmlElement* properties = object->FirstChildElement("properties");
-				if (properties) {
-					MapProperties props = MapProperties(properties);
-					if (props.HasProperty("object")) {
-						__raise (*Events::GetInstance()).ObjectLoadEvent(props.GetText("object").c_str(), fixPos);
-					}
-				}
+				MapProperties props = MapProperties(properties);
+
+				__raise (*Events::GetInstance()).ObjectLoadEvent(type, fixPos, props);
 			}
 		}
 

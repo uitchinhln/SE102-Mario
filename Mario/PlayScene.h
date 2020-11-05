@@ -1,6 +1,7 @@
 #pragma once
 #include "Scene.h"
 #include "Mario.h"
+#include "MapProperties.h"
 
 [event_receiver(native)]
 class PlayScene :
@@ -21,9 +22,9 @@ public:
 
 	virtual void OnKeyUp(int key) override;
 
-	virtual void ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<ColliableTile>& tile);
+	virtual void ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<ColliableTile>& tile, MapProperties& props);
 
-	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos);
+	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos, MapProperties& props);
 
 protected:
 

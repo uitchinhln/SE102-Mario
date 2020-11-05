@@ -32,16 +32,19 @@ CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
 		for (TiXmlElement* object = objects->FirstChildElement("object"); object != nullptr; object = object->NextSiblingElement("object")) {
 			if (object->Attribute("height") != NULL) {
 				shared_ptr<ColliableTile> tile;
+				const char* type = object->Attribute("name");
 
-				TiXmlElement* propsEle = object->FirstChildElement("properties");
-				if (propsEle) {
+				if (type) {
+					TiXmlElement* propsEle = object->FirstChildElement("properties");
 					MapProperties props = MapProperties(propsEle);
-					if (props.HasProperty("object")) {
-						__raise (*Events::GetInstance()).ColliableTilePreLoadEvent(props.GetText("object").c_str(), id, tile);
-					}
-				}
 
-				if (!tile) tile = make_shared<ColliableTile>(id);
+					__raise (*Events::GetInstance()).ColliableTilePreLoadEvent(type, id, tile, props);
+
+					if (!tile) tile = make_shared<ColliableTile>(id);
+				}
+				else {
+					tile = make_shared<ColliableTile>(id);
+				}		
 
 				RectF rect;
 				object->QueryFloatAttribute("x", &rect.left);

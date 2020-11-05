@@ -102,7 +102,7 @@ void PlayScene::OnKeyUp(int key)
 	mario->OnKeyUp(key);
 }
 
-void PlayScene::ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<ColliableTile>& tile)
+void PlayScene::ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<ColliableTile>& tile, MapProperties& props)
 {
 	if (strcmp(type, "GhostTile") == 0) {
 		tile = make_shared<GhostTile>(id);
@@ -113,7 +113,7 @@ void PlayScene::ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<C
 	}
 }
 
-void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos)
+void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, MapProperties& props)
 {
 	//DebugOut(L"Object: %s\n", ToLPCWSTR(type));
 	if (strcmp(type, MEntityType::Goomba.ToString().c_str()) == 0) {

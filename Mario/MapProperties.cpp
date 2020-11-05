@@ -6,6 +6,7 @@ MapProperties::MapProperties()
 
 MapProperties::MapProperties(TiXmlElement* data)
 {
+	if (data == nullptr) return;
 	for (TiXmlElement* prop = data->FirstChildElement("property"); prop != nullptr; prop = prop->NextSiblingElement("property")) {
 		string type = "text";
 		if (prop->Attribute("type")) {
