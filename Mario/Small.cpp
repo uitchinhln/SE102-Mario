@@ -19,8 +19,8 @@ Small::Small(shared_ptr<Mario> mario) : MarioPowerUp(mario)
 	this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-small-mario-hold-idle")->Clone();
 	this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-small-mario-hold-fall")->Clone();
 
-	collisionBox = Vec2(36, 45);
-	collisionBoxFixed = Vec2(36, 45);
+	size = Vec2(36, 45);
+	sizeFixed = Vec2(36, 45);
 }
 
 void Small::CrouchUpdate()

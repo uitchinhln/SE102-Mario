@@ -54,8 +54,8 @@ protected:
 
 	shared_ptr<CAnimation> selectedAnimation = NULL;
 
-	Vec2 collisionBox = Vec2(45, 81);
-	Vec2 collisionBoxFixed = Vec2(45, 81);
+	Vec2 size = Vec2(45, 81);
+	Vec2 sizeFixed = Vec2(45, 81);
 
 	int	  PMETER_MAX = 7;
 	float PMETER_UP_STEP = 0.008f;

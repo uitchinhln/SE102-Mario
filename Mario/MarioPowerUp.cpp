@@ -14,7 +14,7 @@ RectF MarioPowerUp::GetHitBox()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		Vec2 pos = m->GetPosition();
-		return RectF(pos.x, pos.y, pos.x + collisionBoxFixed.x, pos.y + collisionBoxFixed.y);
+		return RectF(pos.x, pos.y, pos.x + sizeFixed.x, pos.y + sizeFixed.y);
 	}
 	return RectF(0, 0, 0, 0);
 }
@@ -48,9 +48,9 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 		//fixed position
 		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
-		if (m->GetPosition().x < 0.3 || m->GetPosition().x > mapBound.x - collisionBox.x || m->GetPosition().y > mapBound.y - collisionBox.y) {
-			m->GetPosition().x = max(0.3, min(m->GetPosition().x, mapBound.x - collisionBox.x));
-			m->GetPosition().y = min(m->GetPosition().y, mapBound.y - collisionBox.y);
+		if (m->GetPosition().x < 0.3 || m->GetPosition().x > mapBound.x - size.x || m->GetPosition().y > mapBound.y - size.y) {
+			m->GetPosition().x = max(0.3, min(m->GetPosition().x, mapBound.x - size.x));
+			m->GetPosition().y = min(m->GetPosition().y, mapBound.y - size.y);
 			m->GetVelocity().x = 0;
 		}
 
@@ -267,15 +267,15 @@ void MarioPowerUp::CrouchUpdate()
 		}
 
 		Vec2 pos = m->GetPosition();
-		Vec2 fixedPos = Vec2(pos.x, pos.y + collisionBoxFixed.y);
+		Vec2 fixedPos = Vec2(pos.x, pos.y + sizeFixed.y);
 
 		if (m->GetMovingState() == MovingStates::CROUCH) {
-			collisionBoxFixed = Vec2(collisionBox.x, 45);
+			sizeFixed = Vec2(size.x, 45);
 		}
 		else {
-			collisionBoxFixed = collisionBox;
+			sizeFixed = size;
 		}
-		m->SetPosition(Vec2(fixedPos.x, fixedPos.y - collisionBoxFixed.y));
+		m->SetPosition(Vec2(fixedPos.x, fixedPos.y - sizeFixed.y));
 	}
 }
 

@@ -149,7 +149,7 @@ ObjectType DefaultKoopas::GetObjectType()
 RectF DefaultKoopas::GetHitBox()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		return RectF(k->GetPosition().x, k->GetPosition().y, k->GetPosition().x + hitbox.x, k->GetPosition().y + hitbox.y);
+		return RectF(k->GetPosition().x, k->GetPosition().y, k->GetPosition().x + size.x, k->GetPosition().y + size.y);
 	}
 	return RectF(0, 0, 0, 0);
 }

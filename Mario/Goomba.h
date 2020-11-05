@@ -43,6 +43,6 @@ protected:
 	float GB_GRAVITY = 0.00133f * 1.5;
 	float GB_SPEED = 0.20f;
 	float GB_DESTROY_DELAY = 500;
-	Vec2 hitbox = Vec2(45, 45);
+	Vec2 size = Vec2(45, 45);
 };
 

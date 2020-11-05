@@ -58,9 +58,9 @@ void Goomba::StatusUpdate()
 					SetVelocity(VECTOR_0);
 					Gravity = 0;
 
-					Position.y += hitbox.y;
-					hitbox.y = 27;
-					Position.y -= hitbox.y;
+					Position.y += size.y;
+					size.y = 27;
+					Position.y -= size.y;
 
 					if (!destroyTimer.IsRunning()) {
 						destroyTimer.Restart();
@@ -141,7 +141,7 @@ ObjectType Goomba::GetObjectType()
 
 RectF Goomba::GetHitBox()
 {
-	return RectF(Position.x, Position.y, Position.x + hitbox.x, Position.y + hitbox.y);
+	return RectF(Position.x, Position.y, Position.x + size.x, Position.y + size.y);
 }
 
 bool Goomba::IsGetThrough(IColliable& object, Direction direction)

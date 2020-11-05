@@ -26,6 +26,7 @@ public:
 	virtual float GetDamageFor(IColliable& object, Direction direction) override;
 
 protected:
+	Vec2 size = Vec2(12, 12);
 	weak_ptr<Mario> holder;
 	long attackTime = 0;
 	int attackState = 1;

@@ -26,6 +26,7 @@ public:
 	virtual float GetDamageFor(IColliable& object, Direction direction) override;
 
 protected:
+	Vec2 size = Vec2(24, 24);
 	weak_ptr<Mario> holder;
 
 	float FIREBALL_GRAVITY = 0.00193f;

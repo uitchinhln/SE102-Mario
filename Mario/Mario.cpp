@@ -19,7 +19,7 @@ void Mario::OnKeyUp(int key)
 			if (obj->GetObjectType() == MEntityType::KoopasPassenger) {
 				shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(obj);
 
-				Vec2 hitbox = Vec2(
+				Vec2 size = Vec2(
 					koopas->GetHitBox().right - koopas->GetHitBox().left,
 					koopas->GetHitBox().bottom - koopas->GetHitBox().top
 				);
@@ -31,7 +31,7 @@ void Mario::OnKeyUp(int key)
 				}
 				else {
 					obj->SetPosition(Vec2(
-						GetHitBox().left - hitbox.x - 2,
+						GetHitBox().left - size.x - 2,
 						obj->GetHitBox().top));
 				}
 				Velocity.x += GetFacing() * 5;

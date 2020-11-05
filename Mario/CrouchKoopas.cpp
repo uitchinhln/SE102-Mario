@@ -83,12 +83,12 @@ void CrouchKoopas::HeldUpdate()
 			if (m->GetFacing() > 0) {
 				k->SetPosition(Vec2(
 					m->GetHitBox().right - (m->GetObjectType() != MEntityType::SmallMario ? 12 : 4),
-					m->GetHitBox().bottom - hitbox.y - (m->GetObjectType() != MEntityType::SmallMario ? 9 : 2)));
+					m->GetHitBox().bottom - size.y - (m->GetObjectType() != MEntityType::SmallMario ? 9 : 2)));
 			}
 			else {
 				k->SetPosition(Vec2(
-					m->GetHitBox().left - hitbox.x + (m->GetObjectType() != MEntityType::SmallMario ? 12 : 4),
-					m->GetHitBox().bottom - hitbox.y - (m->GetObjectType() != MEntityType::SmallMario ? 9 : 2)));
+					m->GetHitBox().left - size.x + (m->GetObjectType() != MEntityType::SmallMario ? 12 : 4),
+					m->GetHitBox().bottom - size.y - (m->GetObjectType() != MEntityType::SmallMario ? 9 : 2)));
 			}
 		}
 	}

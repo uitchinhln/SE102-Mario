@@ -39,6 +39,6 @@ protected:
 	float KP_SPEED = 0.18;
 	long KP_DESTROY_DELAY = 3000;
 
-	Vec2 hitbox = Vec2(45, 45);
+	Vec2 size = Vec2(45, 45);
 };
 
