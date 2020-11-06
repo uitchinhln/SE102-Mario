@@ -110,6 +110,7 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 				float damage = coll->GameColliableObject->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
 					//Die, down level...
+					DebugOut(L"Damage from enemy: %f\n", damage);
 				}
 				else {
 					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {

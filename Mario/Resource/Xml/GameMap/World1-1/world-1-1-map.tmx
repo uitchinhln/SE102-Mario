@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="22" nextobjectid="24">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="23" nextobjectid="31">
  <editorsettings>
   <chunksize width="8" height="8"/>
   <export target="world-1-1-map.xml" format="tmx"/>
@@ -808,7 +808,7 @@
   <object id="18" name="Goomba" x="1274.67" y="1095">
    <point/>
   </object>
-  <object id="19" name="Goomba" x="1027" y="1238">
+  <object id="19" name="Goomba" x="1009.67" y="1236.67">
    <point/>
   </object>
   <object id="20" name="Koopas" x="938" y="1239">
@@ -821,6 +821,15 @@
    <point/>
   </object>
   <object id="23" name="EndmapReward" x="8038.58" y="984.06">
+   <point/>
+  </object>
+  <object id="28" name="QuestionBlock" x="528" y="1056">
+   <point/>
+  </object>
+  <object id="29" name="QuestionBlock" x="576" y="1056">
+   <point/>
+  </object>
+  <object id="30" name="QuestionBlock" x="1968" y="1152">
    <point/>
   </object>
  </objectgroup>

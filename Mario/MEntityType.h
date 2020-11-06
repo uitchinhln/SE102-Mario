@@ -18,6 +18,7 @@ public:
 	static const ObjectType KoopasImposter;
 
 	static const ObjectType EndmapReward;
+	static const ObjectType QuestionBlock;
 
 	static bool IsTile(ObjectType);
 

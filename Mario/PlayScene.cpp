@@ -13,6 +13,7 @@
 #include "Koopas.h"
 
 #include "EndmapReward.h"
+#include "QuestionBlock.h"
 
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
@@ -126,6 +127,9 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, MapProperties& 
 	}
 	if (strcmp(type, MEntityType::EndmapReward.ToString().c_str()) == 0) {
 		SpawnEntity(EndmapReward::CreateEndmapReward(fixedPos));
+	}
+	if (strcmp(type, MEntityType::QuestionBlock.ToString().c_str()) == 0) {
+		SpawnEntity(QuestionBlock::CreateQuestionBlock(fixedPos));
 	}
 }
 

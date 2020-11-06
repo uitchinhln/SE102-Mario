@@ -38,5 +38,5 @@ float ColliableTile::GetDamageFor(IColliable& object, Direction direction)
 
 ObjectType ColliableTile::GetObjectType()
 {
-    return ObjectType::CreateObjectType("Tile");
+    return type;
 }

@@ -5,6 +5,9 @@
 
 class ColliableTile : public IColliable
 {
+private:
+	ObjectType type = ObjectType::CreateObjectType("Tile");
+
 protected:
 	int id;
 

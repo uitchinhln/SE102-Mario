@@ -148,6 +148,7 @@
     <ClCompile Include="BigMario.cpp" />
     <ClCompile Include="CloudTile.cpp" />
     <ClCompile Include="CrouchKoopas.cpp" />
+    <ClCompile Include="CustomCollisionCalc.cpp" />
     <ClCompile Include="DefaultKoopas.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
     <ClCompile Include="GhostTile.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="MEntityType.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Polygon.cpp" />
+    <ClCompile Include="QuestionBlock.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RectF.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -210,6 +212,7 @@
     <ClInclude Include="BigMario.h" />
     <ClInclude Include="CloudTile.h" />
     <ClInclude Include="CrouchKoopas.h" />
+    <ClInclude Include="CustomCollisionCalc.h" />
     <ClInclude Include="DefaultKoopas.h" />
     <ClInclude Include="EndmapReward.h" />
     <ClInclude Include="GhostTile.h" />
@@ -248,6 +251,7 @@
     <ClInclude Include="MEntityType.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Polygon.h" />
+    <ClInclude Include="QuestionBlock.h" />
     <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RectF.h" />
     <ClInclude Include="Scene.h" />

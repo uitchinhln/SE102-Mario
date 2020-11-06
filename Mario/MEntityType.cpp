@@ -15,6 +15,7 @@ const ObjectType MEntityType::KoopasPassenger = ObjectType::CreateObjectType("Ko
 const ObjectType MEntityType::KoopasImposter = ObjectType::CreateObjectType("KoopasImposter");
 
 const ObjectType MEntityType::EndmapReward = ObjectType::CreateObjectType("EndmapReward");
+const ObjectType MEntityType::QuestionBlock = ObjectType::CreateObjectType("QuestionBlock");
 
 bool MEntityType::IsTile(ObjectType type)
 {

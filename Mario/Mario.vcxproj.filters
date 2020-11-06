@@ -118,6 +118,9 @@
     <Filter Include="MarioGame\Entity\TriggerEntity\EndmapReward">
       <UniqueIdentifier>{1d39842a-7d8e-4f21-8be8-5d8c69672bfe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Entity\TriggerEntity\QuestionBlock">
+      <UniqueIdentifier>{f09bf39e-fc01-444a-96df-43431b455e44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -300,6 +303,12 @@
     <ClCompile Include="EndmapReward.cpp">
       <Filter>MarioGame\Entity\TriggerEntity\EndmapReward</Filter>
     </ClCompile>
+    <ClCompile Include="QuestionBlock.cpp">
+      <Filter>MarioGame\Entity\TriggerEntity\QuestionBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomCollisionCalc.cpp">
+      <Filter>MarioGame\Entity\TriggerEntity\QuestionBlock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -475,6 +484,12 @@
     </ClInclude>
     <ClInclude Include="EndmapReward.h">
       <Filter>MarioGame\Entity\TriggerEntity\EndmapReward</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionBlock.h">
+      <Filter>MarioGame\Entity\TriggerEntity\QuestionBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomCollisionCalc.h">
+      <Filter>MarioGame\Entity\TriggerEntity\QuestionBlock</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
