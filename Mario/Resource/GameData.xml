@@ -30,7 +30,7 @@
     <GameContent>       
         <Scenes start="demo">
             <Scene id="demo" type="PlayScene">
-                <TmxMap path="Resource/Xml/NewMap/BigMap" fileName="world-1-1-map.tmx"/>
+                <TmxMap path="Resource/Xml/GameMap/World1-1" fileName="world-1-1-map.tmx"/>
             </Scene>
         </Scenes>
     </GameContent>
