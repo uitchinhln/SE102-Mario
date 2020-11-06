@@ -27,6 +27,8 @@ class Mario :
 private:
 
 protected:
+	bool controllable = true;
+
 	bool onGround = true;
 
 	float drag = 0;
@@ -64,6 +66,10 @@ public:
 	virtual void Update() override;
 
 	virtual void Render() override;
+
+	virtual bool IsLockController();
+
+	virtual void SetLockController(bool value = true);
 
 	virtual void ClearInhand();
 

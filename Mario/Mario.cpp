@@ -11,6 +11,7 @@
 
 void Mario::OnKeyUp(int key)
 {
+	if (!controllable) return;
 	powerUp->OnKeyUp(key);
 	switch (key)
 	{
@@ -51,6 +52,7 @@ void Mario::OnKeyUp(int key)
 
 void Mario::OnKeyDown(int key)
 {
+	if (!controllable) return;
 	powerUp->OnKeyDown(key);
 	
 	// Change mario power
@@ -121,12 +123,23 @@ void Mario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 void Mario::Update()
 {
+	if (!controllable) return;
 	powerUp->Update();
 }
 
 void Mario::Render()
 {
 	powerUp->Render();
+}
+
+bool Mario::IsLockController()
+{
+	return !controllable;
+}
+
+void Mario::SetLockController(bool value)
+{
+	this->controllable = !value;
 }
 
 void Mario::ClearInhand()

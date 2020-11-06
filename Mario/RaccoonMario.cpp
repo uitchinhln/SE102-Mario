@@ -80,9 +80,9 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 		//fixed position
 		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
-		if (m->GetPosition().x < 0.3 || m->GetPosition().x > mapBound.x - size.x || m->GetPosition().y > mapBound.y - size.y) {
+		if (m->GetPosition().x < 0.3 || m->GetPosition().x > mapBound.x - 2 || m->GetPosition().y > mapBound.y - size.y) {
 
-			m->GetPosition().x = max(0.3, min(m->GetPosition().x, mapBound.x - size.x));
+			m->GetPosition().x = max(0.3, min(m->GetPosition().x, mapBound.x - 2));
 			m->GetPosition().y = min(m->GetPosition().y, mapBound.y - size.y);
 			m->GetVelocity().x = 0;
 		}
@@ -113,9 +113,11 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 				}
 				else {
 					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
-						m->SetOnGround(true);
-						m->SetJumpingState(JumpingStates::IDLE);
-						MiniJumpDetect(true);
+						if (coll->GameColliableObject->GetObjectType() != MEntityType::KoopasCrouch) {
+							m->SetOnGround(true);
+							m->SetJumpingState(JumpingStates::IDLE);
+							MiniJumpDetect(true);
+						}
 					}
 				}
 			}

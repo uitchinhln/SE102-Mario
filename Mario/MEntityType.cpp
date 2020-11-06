@@ -14,6 +14,8 @@ const ObjectType MEntityType::KoopasCrouch = ObjectType::CreateObjectType("Koopa
 const ObjectType MEntityType::KoopasPassenger = ObjectType::CreateObjectType("KoopasPassenger");
 const ObjectType MEntityType::KoopasImposter = ObjectType::CreateObjectType("KoopasImposter");
 
+const ObjectType MEntityType::EndmapReward = ObjectType::CreateObjectType("EndmapReward");
+
 bool MEntityType::IsTile(ObjectType type)
 {
     bool normalTile = type == "Tile";

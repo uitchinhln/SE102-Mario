@@ -15,7 +15,7 @@ protected:
 
 	Vec2 Position;
 
-	Vec2 Velocity;
+	Vec2 Velocity = Vec2(0, 0);
 
 	int facing = 1;
 

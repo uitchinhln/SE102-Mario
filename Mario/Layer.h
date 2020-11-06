@@ -8,6 +8,7 @@ class CGameMap;
 class CLayer
 {
 	int id;
+	int visible;
 
 	int width;
 	int height;

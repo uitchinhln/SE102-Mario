@@ -17,6 +17,8 @@ public:
 	static const ObjectType KoopasPassenger;
 	static const ObjectType KoopasImposter;
 
+	static const ObjectType EndmapReward;
+
 	static bool IsTile(ObjectType);
 
 	static bool IsMario(ObjectType);

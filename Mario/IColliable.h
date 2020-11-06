@@ -9,7 +9,7 @@ class GameObject;
 class IColliable
 {
 protected:
-	Vec2 Distance;
+	Vec2 Distance = Vec2(0, 0);
 
 	bool active = true;
 

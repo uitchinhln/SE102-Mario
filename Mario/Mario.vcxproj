@@ -149,6 +149,7 @@
     <ClCompile Include="CloudTile.cpp" />
     <ClCompile Include="CrouchKoopas.cpp" />
     <ClCompile Include="DefaultKoopas.cpp" />
+    <ClCompile Include="EndmapReward.cpp" />
     <ClCompile Include="GhostTile.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="CloudTile.h" />
     <ClInclude Include="CrouchKoopas.h" />
     <ClInclude Include="DefaultKoopas.h" />
+    <ClInclude Include="EndmapReward.h" />
     <ClInclude Include="GhostTile.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="IEnviroment.h" />

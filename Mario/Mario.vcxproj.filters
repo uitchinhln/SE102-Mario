@@ -112,6 +112,12 @@
     <Filter Include="MarioGame\Entity\LivingEntity\Koopas\States">
       <UniqueIdentifier>{7a7cc57f-1fe6-4764-9482-52eda6b4e081}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Entity\TriggerEntity">
+      <UniqueIdentifier>{3222e56c-be11-4b8b-a6c1-0ce6f0bd886d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\TriggerEntity\EndmapReward">
+      <UniqueIdentifier>{1d39842a-7d8e-4f21-8be8-5d8c69672bfe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -291,6 +297,9 @@
     <ClCompile Include="Koopas.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Koopas</Filter>
     </ClCompile>
+    <ClCompile Include="EndmapReward.cpp">
+      <Filter>MarioGame\Entity\TriggerEntity\EndmapReward</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -463,6 +472,9 @@
     </ClInclude>
     <ClInclude Include="Koopas.h">
       <Filter>MarioGame\Entity\LivingEntity\Koopas</Filter>
+    </ClInclude>
+    <ClInclude Include="EndmapReward.h">
+      <Filter>MarioGame\Entity\TriggerEntity\EndmapReward</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

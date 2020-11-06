@@ -12,6 +12,8 @@
 #include "Goomba.h"
 #include "Koopas.h"
 
+#include "EndmapReward.h"
+
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
 	string mapPath = data->FirstChildElement("TmxMap")->Attribute("path");
@@ -55,9 +57,7 @@ void PlayScene::Update()
 
 	vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(mario->GetPosition(), mario->GetHitBox(), mario->GetDistance());
 	objs.insert(objs.end(), tiles.begin(), tiles.end());
-	mario->CollisionUpdate(&objs);
-	
-	camera->Update();
+	mario->CollisionUpdate(&objs);	
 
 	for (shared_ptr<GameObject> obj : objects) {
 		objs.clear();
@@ -82,6 +82,8 @@ void PlayScene::Update()
 	for (shared_ptr<GameObject> obj : objects) {
 		obj->FinalUpdate();
 	}
+
+	camera->Update();
 }
 
 void PlayScene::Render()
@@ -121,6 +123,9 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, MapProperties& 
 	}
 	if (strcmp(type, MEntityType::Koopas.ToString().c_str()) == 0) {
 		SpawnEntity(Koopas::CreateKoopas(fixedPos));
+	}
+	if (strcmp(type, MEntityType::EndmapReward.ToString().c_str()) == 0) {
+		SpawnEntity(EndmapReward::CreateEndmapReward(fixedPos));
 	}
 }
 
