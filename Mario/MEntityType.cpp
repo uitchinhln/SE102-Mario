@@ -20,7 +20,8 @@ const ObjectType MEntityType::QuestionBlock = ObjectType::CreateObjectType("Ques
 bool MEntityType::IsTile(ObjectType type)
 {
     bool normalTile = type == "Tile";
-    return normalTile;
+    bool questionTile = type == QuestionBlock;
+    return normalTile || questionTile;
 }
 
 bool MEntityType::IsMario(ObjectType obj)
