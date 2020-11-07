@@ -153,7 +153,7 @@ SweptCollisionResult CustomCollisionCalc::SweptAABB(RectF m, Vec2 distance, Rect
 		DebugOut(L"Project: %f\t%f\t%f\t%f\t\n", minA, maxA, minB, maxB);
 		DebugOut(L"Project: %f\n", (minA <= minB ? minB - maxA : minA - maxB));
 	}
-	if (direction == Direction::Top && (minA <= minB ? minB - maxA : minA - maxB) > -min((m.right - m.left), (s.right - s.left)) / 2) {
+	if (direction == Direction::Top && (minA <= minB ? minB - maxA : minA - maxB) > -min((m.right - m.left), (s.right - s.left)) / 1.9) {
 		return SweptCollisionResult::Empty();
 	}
 
