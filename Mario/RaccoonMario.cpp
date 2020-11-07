@@ -78,15 +78,6 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 			if (jet.y != 0) m->GetVelocity().y = 0;
 		}
 
-		//fixed position
-		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
-		if (m->GetPosition().x < 0.3 || m->GetPosition().x > mapBound.x - 10 || m->GetPosition().y > mapBound.y - size.y) {
-
-			m->GetPosition().x = max(0.3, min(m->GetPosition().x, mapBound.x - 20));
-			m->GetPosition().y = min(m->GetPosition().y, mapBound.y - size.y);
-			m->GetVelocity().x = 0;
-		}
-
 		m->SetOnGround(false);
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{

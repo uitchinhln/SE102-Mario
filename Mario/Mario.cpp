@@ -121,6 +121,23 @@ void Mario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 	powerUp->CollisionUpdate(coObj);
 }
 
+void Mario::FinalUpdate()
+{
+	GameObject::FinalUpdate();
+
+	RectF hitbox = GetHitBox();
+
+	Vec2 size(hitbox.right - hitbox.left, hitbox.bottom - hitbox.top);
+
+	//fixed position
+	Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
+	if (GetPosition().x < 0.3 || GetPosition().x > mapBound.x - 1 || GetPosition().y > mapBound.y - size.y) {
+		GetPosition().x = max(0.3, min(GetPosition().x, mapBound.x - 1));
+		GetPosition().y = min(GetPosition().y, mapBound.y - size.y);
+		GetVelocity().x = 0;
+	}
+}
+
 void Mario::Update()
 {
 	if (!controllable) return;
