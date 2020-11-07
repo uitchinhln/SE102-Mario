@@ -126,35 +126,39 @@ SweptCollisionResult CustomCollisionCalc::SweptAABB(RectF m, Vec2 distance, Rect
 			direction = Direction::Bottom;
 	}
 
-	// SAT test
-	CPolygon c1;
-	c1.vertices.push_back(Vec2(m.left, m.top));
-	c1.vertices.push_back(Vec2(m.right, m.top));
-	c1.vertices.push_back(Vec2(m.right, m.bottom));
-	c1.vertices.push_back(Vec2(m.left, m.bottom));
-	CPolygon c2;
-	c2.vertices.push_back(Vec2(s.left, s.top));
-	c2.vertices.push_back(Vec2(s.right, s.top));
-	c2.vertices.push_back(Vec2(s.right, s.bottom));
-	c2.vertices.push_back(Vec2(s.left, s.bottom));
+	if (direction == Direction::Top) {
+		// SAT test
+		CPolygon c1;
+		c1.vertices.push_back(Vec2(m.left, m.top));
+		c1.vertices.push_back(Vec2(m.right, m.top));
+		c1.vertices.push_back(Vec2(m.right, m.bottom));
+		c1.vertices.push_back(Vec2(m.left, m.bottom));
+		CPolygon c2;
+		c2.vertices.push_back(Vec2(s.left, s.top));
+		c2.vertices.push_back(Vec2(s.right, s.top));
+		c2.vertices.push_back(Vec2(s.right, s.bottom));
+		c2.vertices.push_back(Vec2(s.left, s.bottom));
 
-	c1.BuildEdge();
-	c2.BuildEdge();
+		c1.BuildEdge();
+		c2.BuildEdge();
 
-	Vec2 perpVel = Vec2Utils::Normalize(Vec2(abs(distance.y), abs(distance.x)));
+		//Vec2 perpVel = Vec2Utils::Normalize(Vec2(abs(distance.y), abs(distance.x)));
+		Vec2 perpVel = Vec2(1, 0);
 
-	float minA = 99999, minB = 99999, maxA = 0, maxB = 0;
+		float minA = 99999, minB = 99999, maxA = 0, maxB = 0;
 
-	c1.Project(perpVel, minA, maxA);
-	c2.Project(perpVel, minB, maxB);
+		c1.Project(perpVel, minA, maxA);
+		c2.Project(perpVel, minB, maxB);
 
-	if (debug) {
-		DebugOut(L"perpVel: %f\t%f\t\n", perpVel.x, perpVel.y);
-		DebugOut(L"Project: %f\t%f\t%f\t%f\t\n", minA, maxA, minB, maxB);
-		DebugOut(L"Project: %f\n", (minA <= minB ? minB - maxA : minA - maxB));
-	}
-	if (direction == Direction::Top && (minA <= minB ? minB - maxA : minA - maxB) > -min((m.right - m.left), (s.right - s.left)) / 2) {
-		return SweptCollisionResult::Empty();
+		if (debug) {
+			DebugOut(L"perpVel: %f\t%f\t\n", perpVel.x, perpVel.y);
+			DebugOut(L"Project: %f\t%f\t%f\t%f\t\n", minA, maxA, minB, maxB);
+			DebugOut(L"Project: %f\n", (minA <= minB ? minB - maxA : minA - maxB));
+		}
+
+		if ((minA <= minB ? minB - maxA : minA - maxB) > -min((m.right - m.left), (s.right - s.left)) / 2) {
+			return SweptCollisionResult::Empty();
+		}
 	}
 
 	return SweptCollisionResult{ t_entry, direction, distance };
