@@ -126,6 +126,9 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (m->GetJumpingState() == JumpingStates::FALLING || m->GetJumpingState() == JumpingStates::FLOATING) {
 			m->SetJumpingState(JumpingStates::FALLING);
+			if (m->GetVelocity().y <= MARIO_GRAVITY * 20 * dt) {
+				m->SetJumpingState(JumpingStates::FLOATING);
+			}
 		}
 		if (keyboard.IsKeyDown(DIK_X) || forceX) {
 			if (m->GetJumpingState() == JumpingStates::SUPER_JUMP && m->GetPowerMeter() >= PMETER_MAX) {
