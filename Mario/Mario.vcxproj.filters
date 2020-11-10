@@ -121,6 +121,9 @@
     <Filter Include="MarioGame\Entity\TriggerEntity\QuestionBlock">
       <UniqueIdentifier>{f09bf39e-fc01-444a-96df-43431b455e44}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Entity\MapBlock">
+      <UniqueIdentifier>{9fb81cf2-9c3b-4dfb-b4cb-5d459266f672}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -309,6 +312,12 @@
     <ClCompile Include="CustomCollisionCalc.cpp">
       <Filter>MarioGame\Entity\TriggerEntity\QuestionBlock</Filter>
     </ClCompile>
+    <ClCompile Include="SolidBlock.cpp">
+      <Filter>MarioGame\Entity\MapBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="GhostBlock.cpp">
+      <Filter>MarioGame\Entity\MapBlock</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -490,6 +499,12 @@
     </ClInclude>
     <ClInclude Include="CustomCollisionCalc.h">
       <Filter>MarioGame\Entity\TriggerEntity\QuestionBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="SolidBlock.h">
+      <Filter>MarioGame\Entity\MapBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="GhostBlock.h">
+      <Filter>MarioGame\Entity\MapBlock</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

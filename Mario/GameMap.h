@@ -14,6 +14,8 @@ class CGameMap
 	int tileWidth;
 	int tileHeight;
 
+	bool tileObjectSupport = false;
+
 	D3DCOLOR backgroundColor = D3DCOLOR_XRGB(181, 235, 242);
 
 	shared_ptr<Camera> camera;
@@ -44,6 +46,8 @@ public:
 	virtual void Update();
 
 	virtual void Render();
+
+	virtual bool IsTileObjectSupport();
 
 	virtual vector<shared_ptr<IColliable>> GetColliableTileAround(Vec2 absolutePosition, RectF boundingBox, Vec2 radius);
 

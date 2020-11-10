@@ -131,8 +131,8 @@ void Mario::FinalUpdate()
 
 	//fixed position
 	Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
-	if (GetPosition().x < 0.3 || GetPosition().x > mapBound.x - 1 || GetPosition().y > mapBound.y - size.y) {
-		GetPosition().x = max(0.3, min(GetPosition().x, mapBound.x - 1));
+	if (GetPosition().x < 0.3 || GetPosition().x > mapBound.x + 22 || GetPosition().y > mapBound.y - size.y) {
+		GetPosition().x = max(0.3, min(GetPosition().x, mapBound.x + 22));
 		GetPosition().y = min(GetPosition().y, mapBound.y - size.y);
 		GetVelocity().x = 0;
 	}

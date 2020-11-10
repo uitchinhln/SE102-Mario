@@ -151,6 +151,7 @@
     <ClCompile Include="CustomCollisionCalc.cpp" />
     <ClCompile Include="DefaultKoopas.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
+    <ClCompile Include="GhostBlock.cpp" />
     <ClCompile Include="GhostTile.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
@@ -193,6 +194,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Small.cpp" />
+    <ClCompile Include="SolidBlock.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="StopWatch.cpp" />
@@ -215,6 +217,7 @@
     <ClInclude Include="CustomCollisionCalc.h" />
     <ClInclude Include="DefaultKoopas.h" />
     <ClInclude Include="EndmapReward.h" />
+    <ClInclude Include="GhostBlock.h" />
     <ClInclude Include="GhostTile.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="IEnviroment.h" />
@@ -257,6 +260,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Small.h" />
+    <ClInclude Include="SolidBlock.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="StopWatch.h" />

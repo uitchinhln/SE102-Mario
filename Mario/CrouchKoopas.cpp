@@ -157,7 +157,6 @@ void CrouchKoopas::StatusUpdate()
 					if (coll->GameColliableObject->GetObjectType() == MEntityType::MarioTailed) {
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.95f));
 						this->flip = true;
-						this->animations["Move"]->GetTransform()->Scale.y = -1;
 						respawnTimer.Restart();
 						continue;
 					}

@@ -17,11 +17,16 @@ const ObjectType MEntityType::KoopasImposter = ObjectType::CreateObjectType("Koo
 const ObjectType MEntityType::EndmapReward = ObjectType::CreateObjectType("EndmapReward");
 const ObjectType MEntityType::QuestionBlock = ObjectType::CreateObjectType("QuestionBlock");
 
+const ObjectType MEntityType::SolidBlock = ObjectType::CreateObjectType("SolidBlock");
+const ObjectType MEntityType::GhostBlock = ObjectType::CreateObjectType("GhostBlock");
+
 bool MEntityType::IsTile(ObjectType type)
 {
     bool normalTile = type == "Tile";
     bool questionTile = type == QuestionBlock;
-    return normalTile || questionTile;
+	bool solidBlock = type == SolidBlock;
+	bool ghostBlock = type == GhostBlock;
+    return normalTile || questionTile || solidBlock || ghostBlock;
 }
 
 bool MEntityType::IsMario(ObjectType obj)

@@ -82,8 +82,19 @@ void CGameMap::Render()
 	}
 }
 
+bool CGameMap::IsTileObjectSupport()
+{
+	return this->tileObjectSupport;
+}
+
 vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePosition, RectF boundingBox, Vec2 radius)
 {
+	vector<shared_ptr<IColliable>> result;
+
+	if (!tileObjectSupport) {
+		return result;
+	}
+
 	int col = trunc(absolutePosition.x / tileWidth);
 	int row = trunc(absolutePosition.y / tileHeight);
 
@@ -94,7 +105,6 @@ vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePos
 
 	//DebugOut(L"R (%f, %f)\n", r.x, r.y);
 
-	vector<shared_ptr<IColliable>> result;
 	int is = col - r.x < 0 ? 0 : col - r.x;
 	int ie = col_end + r.x > width ? width : col_end + r.x;
 	int js = row - r.y < 0 ? 0 : row - r.y;
@@ -141,6 +151,11 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 			gameMap->backgroundColor = D3DCOLOR_ARGB(a, (hex >> 16) & 255, (hex >> 8) & 255, hex & 255);
 		}
 
+		//Load custom properties
+		TiXmlElement* properties = root->FirstChildElement("properties");
+		MapProperties mapProps = MapProperties(properties);
+		gameMap->tileObjectSupport = mapProps.GetBool("TileObjectSupport", true);
+
 		//Load tileset
 		for (TiXmlElement* node = root->FirstChildElement("tileset"); node != nullptr; node = node->NextSiblingElement("tileset")) {
 			shared_ptr<CTileSet> tileSet = make_shared<CTileSet>(node, filePath);
@@ -156,14 +171,17 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 		for (TiXmlElement* node = root->FirstChildElement("objectgroup"); node != nullptr; node = node->NextSiblingElement("objectgroup")) {
 			for (TiXmlElement* object = node->FirstChildElement("object"); object != nullptr; object = object->NextSiblingElement("object")) {
 				Vec2 fixPos;
+				Vec2 size = VECTOR_0;
 				object->QueryFloatAttribute("x", &fixPos.x);
 				object->QueryFloatAttribute("y", &fixPos.y);
+				object->QueryFloatAttribute("width", &size.x);
+				object->QueryFloatAttribute("height", &size.y);
 				const char* type = object->Attribute("name");
 
 				TiXmlElement* properties = object->FirstChildElement("properties");
 				MapProperties props = MapProperties(properties);
 
-				__raise (*Events::GetInstance()).ObjectLoadEvent(type, fixPos, props);
+				__raise (*Events::GetInstance()).ObjectLoadEvent(type, fixPos, size, props);
 			}
 		}
 

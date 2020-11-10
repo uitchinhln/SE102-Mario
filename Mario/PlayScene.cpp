@@ -15,6 +15,9 @@
 #include "EndmapReward.h"
 #include "QuestionBlock.h"
 
+#include "SolidBlock.h"
+#include "GhostBlock.h"
+
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
 	string mapPath = data->FirstChildElement("TmxMap")->Attribute("path");
@@ -58,6 +61,7 @@ void PlayScene::Update()
 
 	vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(mario->GetPosition(), mario->GetHitBox(), mario->GetDistance());
 	objs.insert(objs.end(), tiles.begin(), tiles.end());
+	objs.insert(objs.end(), mapObjects.begin(), mapObjects.end());
 	mario->CollisionUpdate(&objs);	
 
 	for (shared_ptr<GameObject> obj : objects) {
@@ -68,6 +72,7 @@ void PlayScene::Update()
 
 		vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
 		objs.insert(objs.end(), tiles.begin(), tiles.end());
+		objs.insert(objs.end(), mapObjects.begin(), mapObjects.end());
 
 		obj->CollisionUpdate(&objs);
 	}
@@ -116,9 +121,10 @@ void PlayScene::ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<C
 	}
 }
 
-void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, MapProperties& props)
+void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props)
 {
 	//DebugOut(L"Object: %s\n", ToLPCWSTR(type));
+	//GameObjects
 	if (strcmp(type, MEntityType::Goomba.ToString().c_str()) == 0) {
 		SpawnEntity(Goomba::CreateGoomba(fixedPos));
 	}
@@ -130,6 +136,14 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, MapProperties& 
 	}
 	if (strcmp(type, MEntityType::QuestionBlock.ToString().c_str()) == 0) {
 		SpawnEntity(QuestionBlock::CreateQuestionBlock(fixedPos));
+	}
+
+	//MapObjects
+	if (strcmp(type, MEntityType::SolidBlock.ToString().c_str()) == 0) {
+		mapObjects.push_back(SolidBlock::CreateSolidBlock(fixedPos, size));
+	}
+	if (strcmp(type, MEntityType::GhostBlock.ToString().c_str()) == 0) {
+		mapObjects.push_back(GhostBlock::CreateGhostBlock(fixedPos, size));
 	}
 }
 
