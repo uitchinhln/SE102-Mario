@@ -205,6 +205,9 @@ void CrouchKoopas::Render()
 		}
 		return;
 	}
+	if (this->flip) {
+		this->animations["Move"]->GetTransform()->Scale.y = -1;
+	}
 	DefaultKoopas::Render();
 }
 
