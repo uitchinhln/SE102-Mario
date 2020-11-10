@@ -8,25 +8,30 @@
 
 RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {
-	this->animations["Idle"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-idle")->Clone();
-	this->animations["Walk"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-walk")->Clone();
-	this->animations["Run"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-walk")->Clone();
-	this->animations["HighSpeed"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-speed-up")->Clone();
-	this->animations["Jump"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-jump")->Clone();
-	this->animations["HighJump"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-jump")->Clone();
-	this->animations["Fly"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-fly")->Clone();
-	this->animations["Float"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-float")->Clone();
-	this->animations["Fall"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-fall")->Clone();
-	this->animations["Skid"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-skid")->Clone();
-	this->animations["Crouch"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-crouch")->Clone();
-	this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-kick")->Clone();
-	this->animations["Attack"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-spin")->Clone();
-
-	this->animations["Hold"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold")->Clone();
-	this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold-idle")->Clone();
-	this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold-fall")->Clone();
-
 	this->MARIO_ATTACK_TIME = 250;
+}
+
+void RaccoonMario::InitResource(bool force)
+{
+	if (this->animations.size() < 1 || force) {
+		this->animations["Idle"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-idle")->Clone();
+		this->animations["Walk"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-walk")->Clone();
+		this->animations["Run"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-walk")->Clone();
+		this->animations["HighSpeed"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-speed-up")->Clone();
+		this->animations["Jump"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-jump")->Clone();
+		this->animations["HighJump"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-jump")->Clone();
+		this->animations["Fly"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-fly")->Clone();
+		this->animations["Float"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-float")->Clone();
+		this->animations["Fall"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-fall")->Clone();
+		this->animations["Skid"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-skid")->Clone();
+		this->animations["Crouch"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-crouch")->Clone();
+		this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-kick")->Clone();
+		this->animations["Attack"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-spin")->Clone();
+
+		this->animations["Hold"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold")->Clone();
+		this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold-idle")->Clone();
+		this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold-fall")->Clone();
+	}
 }
 
 void RaccoonMario::OnAttackStart()

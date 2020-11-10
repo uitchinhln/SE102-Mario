@@ -7,6 +7,8 @@ class BigMario :
 public:
 	BigMario(shared_ptr<Mario> mario);
 
+	virtual void InitResource(bool force = false) override;
+
 	virtual ObjectType GetMarioType() override;
 };
 

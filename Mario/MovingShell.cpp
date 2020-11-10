@@ -8,15 +8,7 @@
 MovingShell::MovingShell(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 {
 	this->koopas = koopas;
-
-	this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-shell-run")->Clone();
-	this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
-
-	if (this->flip = flip) {
-		this->animations["Move"]->GetTransform()->Scale.y = -1;
-	}
-
-	this->animations["Die"]->GetTransform()->Scale.y = -1;
+	this->flip = flip;
 
 	KP_SPEED *= 3;
 
@@ -30,6 +22,20 @@ MovingShell::MovingShell(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 	koopas->SetVelocity(Vec2(KP_SPEED * koopas->GetFacing(), 0));
 
 	koopas->GetDistance() = koopas->GetVelocity() * dt;
+}
+
+void MovingShell::InitResource(bool force)
+{
+	if (this->animations.size() < 1 || force) {
+		this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-shell-run")->Clone();
+		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
+
+		if (this->flip) {
+			this->animations["Move"]->GetTransform()->Scale.y = -1;
+		}
+
+		this->animations["Die"]->GetTransform()->Scale.y = -1;
+	}
 }
 
 void MovingShell::FinalUpdate()
@@ -116,6 +122,7 @@ void MovingShell::StatusUpdate()
 
 void MovingShell::Render()
 {
+	InitResource();
 	if (shared_ptr<Koopas> k = koopas.lock()) {
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 

@@ -13,6 +13,8 @@ class MarioPowerUp
 public:
 	MarioPowerUp(shared_ptr<Mario> mario);
 
+	virtual void InitResource(bool force = false);
+
 	virtual RectF GetHitBox();
 
 	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);

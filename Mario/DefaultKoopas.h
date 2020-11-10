@@ -14,6 +14,8 @@ public:
 
 	DefaultKoopas(shared_ptr<Koopas> koopas);
 
+	virtual void InitResource(bool force = false);
+
 	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);
 
 	virtual void StatusUpdate();

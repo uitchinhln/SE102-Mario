@@ -78,6 +78,8 @@ void AttackablePower::Update()
 
 void AttackablePower::Render()
 {
+	this->InitResource();
+
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 	if (shared_ptr<Mario> m = mario.lock()) {

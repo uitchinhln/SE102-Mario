@@ -7,9 +7,14 @@ MarioFireBall::MarioFireBall(shared_ptr<Mario> holder)
 {
 	this->holder = holder;
 
-	this->animations["Default"] = AnimationManager::GetInstance()->Get("ani-fire-ball")->Clone();
-
 	Reset();
+}
+
+void MarioFireBall::InitResource()
+{
+	if (this->animations.size() < 1) {
+		this->animations["Default"] = AnimationManager::GetInstance()->Get("ani-fire-ball")->Clone();
+	}
 }
 
 void MarioFireBall::Reset()
@@ -72,6 +77,8 @@ void MarioFireBall::Update()
 
 void MarioFireBall::Render()
 {
+	InitResource();
+
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 	this->animations["Default"]->GetTransform()->Position = GetPosition() - cam;

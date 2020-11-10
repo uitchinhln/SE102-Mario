@@ -8,6 +8,8 @@ class FireMario :
 public:
 	FireMario(shared_ptr<Mario> mario);
 
+	virtual void InitResource(bool force = false) override;
+
 	virtual bool CanAttack() override;
 
 	virtual void OnAttackStart() override;

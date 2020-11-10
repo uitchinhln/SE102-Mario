@@ -9,16 +9,7 @@
 CrouchKoopas::CrouchKoopas(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 {
 	this->koopas = koopas;
-
-	this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
-	this->animations["Respawn"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-respawning")->Clone();
-	this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
-
-	if (this->flip = flip) {
-		this->animations["Move"]->GetTransform()->Scale.y = -1;
-	}
-
-	this->animations["Die"]->GetTransform()->Scale.y = -1;
+	this->flip = flip;
 
 	koopas->GetDestroyTimer().Stop();
 
@@ -32,6 +23,21 @@ CrouchKoopas::CrouchKoopas(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas
 	koopas->GetDistance() = koopas->GetVelocity() * dt;
 
 	respawnTimer.Start();
+}
+
+void CrouchKoopas::InitResource(bool force)
+{
+	if (this->animations.size() < 1 || force) {
+		this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
+		this->animations["Respawn"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-respawning")->Clone();
+		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
+
+		if (this->flip) {
+			this->animations["Move"]->GetTransform()->Scale.y = -1;
+		}
+
+		this->animations["Die"]->GetTransform()->Scale.y = -1;
+	}
 }
 
 void CrouchKoopas::FinalUpdate()
@@ -185,6 +191,7 @@ void CrouchKoopas::StatusUpdate()
 
 void CrouchKoopas::Render()
 {
+	InitResource();
 	if (respawnTimer.IsRunning() && KP_RESPAWN_TIME - respawnTimer.Elapsed() <= 3000) {
 		if (shared_ptr<Koopas> k = koopas.lock()) {
 			Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;

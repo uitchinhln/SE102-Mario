@@ -15,6 +15,8 @@ class Goomba :
 public:
     Goomba();
 
+	virtual void InitResource() override;
+
 	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
 
 	virtual void StatusUpdate() override;

@@ -10,6 +10,10 @@ MarioPowerUp::MarioPowerUp(shared_ptr<Mario> mario)
 	this->mario = mario;
 }
 
+void MarioPowerUp::InitResource(bool force)
+{
+}
+
 RectF MarioPowerUp::GetHitBox()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
@@ -363,6 +367,8 @@ void MarioPowerUp::MoveAnimation()
 
 void MarioPowerUp::Render()
 {
+	this->InitResource();
+
 	if (shared_ptr<Mario> m = mario.lock()) {	
 		JumpAnimation();
 		MoveAnimation();

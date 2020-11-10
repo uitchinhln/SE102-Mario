@@ -6,13 +6,18 @@
 
 EndmapReward::EndmapReward()
 {
-	this->animations["MUSHROOM"] = AnimationManager::GetInstance()->Get("ani-super-mushroom")->Clone();
-	this->animations["FLOWER"] = AnimationManager::GetInstance()->Get("ani-fire-flower")->Clone();
-	this->animations["STAR"] = AnimationManager::GetInstance()->Get("ani-star-man-white")->Clone();
-
 	this->Gravity = 0;
 	this->state = EndmapRewardStates::MUSHROOM;
 	stateTimer.Start();
+}
+
+void EndmapReward::InitResource()
+{
+	if (this->animations.size() < 1) {
+		this->animations["MUSHROOM"] = AnimationManager::GetInstance()->Get("ani-super-mushroom")->Clone();
+		this->animations["FLOWER"] = AnimationManager::GetInstance()->Get("ani-fire-flower")->Clone();
+		this->animations["STAR"] = AnimationManager::GetInstance()->Get("ani-star-man-white")->Clone();
+	}
 }
 
 void EndmapReward::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
@@ -68,6 +73,8 @@ void EndmapReward::Update()
 
 void EndmapReward::Render()
 {
+	InitResource();
+
 	Animation ani = this->animations["MUSHROOM"];
 	switch (state)
 	{

@@ -7,6 +7,8 @@ class MovingShell :
 public:
 	MovingShell(shared_ptr<Koopas> koopas, bool flip = false);
 
+	virtual void InitResource(bool force = false) override;
+
 	virtual void FinalUpdate() override;
 
 	virtual void Update() override;

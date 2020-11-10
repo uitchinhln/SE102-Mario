@@ -6,11 +6,16 @@
 
 QuestionBlock::QuestionBlock()
 {
-	this->animations["Avail"] = AnimationManager::GetInstance()->Get("ani-question-block")->Clone();
-	this->animations["Unavail"] = AnimationManager::GetInstance()->Get("ani-empty-block")->Clone();
-
 	this->Gravity = 0;
 	this->state = QuestionBlockStates::Available;
+}
+
+void QuestionBlock::InitResource()
+{
+	if (this->animations.size() < 1) {
+		this->animations["Avail"] = AnimationManager::GetInstance()->Get("ani-question-block")->Clone();
+		this->animations["Unavail"] = AnimationManager::GetInstance()->Get("ani-empty-block")->Clone();
+	}
 }
 
 void QuestionBlock::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
@@ -71,6 +76,8 @@ void QuestionBlock::Update()
 
 void QuestionBlock::Render()
 {
+	InitResource();
+
 	Animation ani = animations["Avail"];
 
 	if (state != QuestionBlockStates::Available) {

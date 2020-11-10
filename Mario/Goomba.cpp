@@ -5,12 +5,6 @@
 
 Goomba::Goomba()
 {
-	this->animations["Walk"] = AnimationManager::GetInstance()->Get("ani-goomba-walk")->Clone();
-	this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-goomba-die")->Clone();
-	this->animations["Explode"] = AnimationManager::GetInstance()->Get("ani-goomba-idle")->Clone();
-
-	this->animations["Explode"]->GetTransform()->Scale.y = -1;
-
 	destroyTimer.Stop();
 	state = GoombaState::WALK;
 
@@ -21,6 +15,17 @@ Goomba::Goomba()
 	this->Velocity = Vec2(GB_SPEED * facing, 0);
 
 	this->Distance = Velocity * dt;
+}
+
+void Goomba::InitResource()
+{
+	if (animations.size() < 1) {
+		this->animations["Walk"] = AnimationManager::GetInstance()->Get("ani-goomba-walk")->Clone();
+		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-goomba-die")->Clone();
+		this->animations["Explode"] = AnimationManager::GetInstance()->Get("ani-goomba-idle")->Clone();
+
+		this->animations["Explode"]->GetTransform()->Scale.y = -1;
+	}
 }
 
 void Goomba::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
@@ -114,6 +119,8 @@ void Goomba::FinalUpdate()
 
 void Goomba::Render()
 {
+	InitResource();
+
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 	
 	Animation animation = this->animations["Walk"];

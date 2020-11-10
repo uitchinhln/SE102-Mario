@@ -12,11 +12,6 @@ DefaultKoopas::DefaultKoopas()
 DefaultKoopas::DefaultKoopas(shared_ptr<Koopas> koopas)
 {
 	this->koopas = koopas;
-	
-	this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-move")->Clone();
-	this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
-
-	this->animations["Die"]->GetTransform()->Scale.y = -1;
 
 	koopas->GetDestroyTimer().Stop();
 
@@ -29,6 +24,16 @@ DefaultKoopas::DefaultKoopas(shared_ptr<Koopas> koopas)
 	koopas->SetVelocity(Vec2(KP_SPEED * koopas->GetFacing(), 0));
 
 	koopas->GetDistance() = koopas->GetVelocity() * dt;
+}
+
+void DefaultKoopas::InitResource(bool force)
+{
+	if (this->animations.size() < 1 || force) {
+		this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-move")->Clone();
+		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
+
+		this->animations["Die"]->GetTransform()->Scale.y = -1;
+	}
 }
 
 void DefaultKoopas::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
@@ -126,6 +131,8 @@ void DefaultKoopas::FinalUpdate()
 
 void DefaultKoopas::Render()
 {
+	InitResource();
+
 	if (shared_ptr<Koopas> k = koopas.lock()) {
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 

@@ -17,6 +17,8 @@ class EndmapReward :
 public:
 	EndmapReward();
 
+	virtual void InitResource() override;
+
 	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
 
 	virtual void StatusUpdate() override;
