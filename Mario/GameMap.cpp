@@ -58,6 +58,7 @@ void CGameMap::Update()
 void CGameMap::Render()
 {
 	CGame::GetInstance()->GetGraphic().Clear(backgroundColor);
+	Transform trans = Transform();
 
 	int col = this->camera->Position.x / tileWidth;
 	int row = this->camera->Position.y / tileHeight;
@@ -76,7 +77,7 @@ void CGameMap::Render()
 			for (shared_ptr<CLayer> layer : layers) {
 				if (layer->Hidden) continue;
 				int id = layer->GetTileID(i % width, j % height);
-				this->GetTileSetByTileID(id)->Draw(id, x, y, Transform());
+				this->GetTileSetByTileID(id)->Draw(id, x, y, trans);
 			}
 		}
 	}
