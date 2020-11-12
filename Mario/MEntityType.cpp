@@ -1,28 +1,28 @@
 #include "MEntityType.h"
 
-const ObjectType MEntityType::SmallMario = ObjectType::CreateObjectType("SmallMario");
-const ObjectType MEntityType::BigMario = ObjectType::CreateObjectType("BigMario");
-const ObjectType MEntityType::FireMario = ObjectType::CreateObjectType("FireMario");
-const ObjectType MEntityType::RaccoonMario = ObjectType::CreateObjectType("RaccoonMario");
+const ObjectType MEntityType::SmallMario = ObjectType::CreateObjectType(1, "SmallMario");
+const ObjectType MEntityType::BigMario = ObjectType::CreateObjectType(2, "BigMario");
+const ObjectType MEntityType::FireMario = ObjectType::CreateObjectType(3, "FireMario");
+const ObjectType MEntityType::RaccoonMario = ObjectType::CreateObjectType(4, "RaccoonMario");
 
-const ObjectType MEntityType::MarioFireBall = ObjectType::CreateObjectType("MarioFireBall");
-const ObjectType MEntityType::MarioTailed = ObjectType::CreateObjectType("MarioTailed");
+const ObjectType MEntityType::MarioFireBall = ObjectType::CreateObjectType(11, "MarioFireBall");
+const ObjectType MEntityType::MarioTailed = ObjectType::CreateObjectType(12, "MarioTailed");
 
-const ObjectType MEntityType::Goomba = ObjectType::CreateObjectType("Goomba");
-const ObjectType MEntityType::Koopas = ObjectType::CreateObjectType("Koopas");
-const ObjectType MEntityType::KoopasCrouch = ObjectType::CreateObjectType("KoopasCrouch");
-const ObjectType MEntityType::KoopasPassenger = ObjectType::CreateObjectType("KoopasPassenger");
-const ObjectType MEntityType::KoopasImposter = ObjectType::CreateObjectType("KoopasImposter");
+const ObjectType MEntityType::Goomba = ObjectType::CreateObjectType(101, "Goomba");
+const ObjectType MEntityType::Koopas = ObjectType::CreateObjectType(102, "Koopas");
+const ObjectType MEntityType::KoopasCrouch = ObjectType::CreateObjectType(103, "KoopasCrouch");
+const ObjectType MEntityType::KoopasPassenger = ObjectType::CreateObjectType(104, "KoopasPassenger");
+const ObjectType MEntityType::KoopasImposter = ObjectType::CreateObjectType(105, "KoopasImposter");
 
-const ObjectType MEntityType::EndmapReward = ObjectType::CreateObjectType("EndmapReward");
-const ObjectType MEntityType::QuestionBlock = ObjectType::CreateObjectType("QuestionBlock");
+const ObjectType MEntityType::EndmapReward = ObjectType::CreateObjectType(1001, "EndmapReward");
+const ObjectType MEntityType::QuestionBlock = ObjectType::CreateObjectType(1002, "QuestionBlock");
 
-const ObjectType MEntityType::SolidBlock = ObjectType::CreateObjectType("SolidBlock");
-const ObjectType MEntityType::GhostBlock = ObjectType::CreateObjectType("GhostBlock");
+const ObjectType MEntityType::SolidBlock = ObjectType::CreateObjectType(5001, "SolidBlock");
+const ObjectType MEntityType::GhostBlock = ObjectType::CreateObjectType(5002, "GhostBlock");
 
 bool MEntityType::IsTile(ObjectType type)
 {
-    bool normalTile = type == "Tile";
+    bool normalTile = type == DEFAULT_TILE_ID;
     bool questionTile = type == QuestionBlock;
 	bool solidBlock = type == SolidBlock;
 	bool ghostBlock = type == GhostBlock;
