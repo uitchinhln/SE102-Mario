@@ -41,8 +41,8 @@ void QuestionBlock::StatusUpdate()
 			if (coll->GameColliableObject->GetObjectType() == MEntityType::MarioTailed 
 				|| (coll->GameColliableObject->GetObjectType() == MEntityType::KoopasImposter && ToVector(coll->SAABBResult.Direction).x != 0)
 				|| (MEntityType::IsMario(coll->GameColliableObject->GetObjectType()) && coll->SAABBResult.Direction == Direction::Top)) {
-				Velocity.y = -0.8f;
-				Gravity = 0.006f;
+				Velocity.y = -2.8125f;
+				Gravity = 0;
 				backupPos = Position;
 				this->state = QuestionBlockStates::Bouncing;
 				break;
@@ -54,7 +54,7 @@ void QuestionBlock::StatusUpdate()
 void QuestionBlock::FinalUpdate()
 {
 	if (state != QuestionBlockStates::Bouncing) return;
-	GameObject::FinalUpdate();
+	Position += Distance;
 }
 
 void QuestionBlock::Update()
@@ -63,6 +63,12 @@ void QuestionBlock::Update()
 		DWORD dt = CGame::Time().ElapsedGameTime;
 		Velocity.y += Gravity * dt;
 		Distance = Velocity * dt;
+
+		if (Position.y + Distance.y < backupPos.y - MaxBound) {
+			Distance.y = (backupPos.y - MaxBound) - Position.y;
+			Velocity.y = 0;
+			Gravity = 0.003f;
+		}
 
 		if (Position.y > backupPos.y) {
 			Position = backupPos;
@@ -102,7 +108,7 @@ RectF QuestionBlock::GetHitBox()
 
 bool QuestionBlock::IsGetThrough(IColliable& object, Direction direction)
 {
-	return false;
+	return state == QuestionBlockStates::Bouncing;
 }
 
 float QuestionBlock::GetDamageFor(IColliable& object, Direction direction)
