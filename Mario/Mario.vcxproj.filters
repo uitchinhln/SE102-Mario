@@ -124,6 +124,9 @@
     <Filter Include="MarioGame\Entity\MapBlock">
       <UniqueIdentifier>{9fb81cf2-9c3b-4dfb-b4cb-5d459266f672}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\HUD">
+      <UniqueIdentifier>{3a6a3c5d-4090-46ad-90b5-58499190162d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -318,6 +321,12 @@
     <ClCompile Include="GhostBlock.cpp">
       <Filter>MarioGame\Entity\MapBlock</Filter>
     </ClCompile>
+    <ClCompile Include="MarioHud.cpp">
+      <Filter>MarioGame\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Viewport.cpp">
+      <Filter>Framework\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -505,6 +514,12 @@
     </ClInclude>
     <ClInclude Include="GhostBlock.h">
       <Filter>MarioGame\Entity\MapBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioHud.h">
+      <Filter>MarioGame\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewport.h">
+      <Filter>Framework\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

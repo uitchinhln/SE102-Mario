@@ -57,7 +57,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 		}
 		sort(results.begin(), results.end(), CollisionResult::LPCompare);
 	}	
-	GetNewDistance();
+	GetClampDistance();
 	return results;
 }
 
@@ -66,7 +66,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::GetLastResults()
 	return results;
 }
 
-Vec2 CollisionCalculator::GetNewDistance()
+Vec2 CollisionCalculator::GetClampDistance()
 {
 	if (shared_ptr<IColliable> sp = object.lock()) {
 		Vec2 d = sp->GetDistance();

@@ -13,8 +13,8 @@ public:
 
 	int TickRate = 120;
 
-	int ScreenWidth = 800;
-	int ScreenHeight = 600;
+	int ScreenWidth = 768;
+	int ScreenHeight = 720;
 
 	LPCWSTR MainWindowTitle = L"Mario Game";
 	LPCWSTR WindowClassName = L"Mario Game Class";

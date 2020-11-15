@@ -46,7 +46,7 @@ void CrouchKoopas::FinalUpdate()
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 
 		if (collisionCal && k->GetLiveState() == KoopasLiveStates::ALIVE) {
-			k->GetDistance() = collisionCal->GetNewDistance();
+			k->GetDistance() = collisionCal->GetClampDistance();
 			//k->GetDistance().x = 0;
 		}
 		k->GetPosition() += k->GetDistance();

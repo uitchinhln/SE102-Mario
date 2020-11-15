@@ -15,7 +15,9 @@
 #include <unordered_map>
 #include <algorithm>
 #include <memory>
+#include <limits>
 #include "RectF.h"
+
 
 #ifndef PI
 #define PI 3.1416f

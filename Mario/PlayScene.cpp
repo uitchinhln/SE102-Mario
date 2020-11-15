@@ -26,7 +26,7 @@ void PlayScene::LoadFromXml(TiXmlElement* data)
 	this->mario = SceneManager::GetInstance()->GetPlayer<Mario>();
 	this->mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
 
-	this->camera = shared_ptr<Camera>(new Camera(Vec2(0, 735), CGame::GetInstance()->GetGraphic().GetViewportSize()));
+	this->camera = make_shared<Camera>(camPos, camSize);
 	this->camera->SetTracking(mario);
 
 	this->gameMap = CGameMap::FromTMX(mapPath, mapName);

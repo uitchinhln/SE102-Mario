@@ -33,6 +33,9 @@ protected:
 
 	virtual void UnhookEvent();
 
+	Vec2 camPos = Vec2(0, 735);
+	Vec2 camSize = Vec2(768, 579);
+
 private:
 	shared_ptr<Mario> mario;
 };

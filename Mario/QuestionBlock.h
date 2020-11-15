@@ -41,7 +41,7 @@ protected:
 
 	Vec2 backupPos = Vec2(0, 0);
 
-	float MaxBound = 37;
+	float MaxBounce = 37;
 
 	QuestionBlockStates state = QuestionBlockStates::Available;
 };

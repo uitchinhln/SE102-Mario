@@ -111,7 +111,7 @@ void Goomba::Update()
 void Goomba::FinalUpdate()
 {
 	if (collisionCal && state == GoombaState::WALK) {
-		Distance = collisionCal->GetNewDistance();
+		Distance = collisionCal->GetClampDistance();
 	}
 	Position += Distance;
 	Distance = Velocity * CGame::Time().ElapsedGameTime;

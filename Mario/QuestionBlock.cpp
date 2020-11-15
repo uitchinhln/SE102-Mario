@@ -55,6 +55,20 @@ void QuestionBlock::FinalUpdate()
 {
 	if (state != QuestionBlockStates::Bouncing) return;
 	Position += Distance;
+
+	if (Position.y < backupPos.y - MaxBounce) {
+		Position.y = backupPos.y - MaxBounce;
+		Velocity.y = 0;
+		Gravity = 0.004f;
+	}
+
+	if (Position.y > backupPos.y) {
+		Position = backupPos;
+		Gravity = 0;
+		Velocity = Vec2(0, 0);
+		Distance = Vec2(0, 0);
+		state = QuestionBlockStates::Unavailable;
+	}
 }
 
 void QuestionBlock::Update()
@@ -63,20 +77,6 @@ void QuestionBlock::Update()
 		DWORD dt = CGame::Time().ElapsedGameTime;
 		Velocity.y += Gravity * dt;
 		Distance = Velocity * dt;
-
-		if (Position.y + Distance.y < backupPos.y - MaxBound) {
-			Distance.y = (backupPos.y - MaxBound) - Position.y;
-			Velocity.y = 0;
-			Gravity = 0.003f;
-		}
-
-		if (Position.y > backupPos.y) {
-			Position = backupPos;
-			Gravity = 0;
-			Velocity = Vec2(0, 0);
-			Distance = Vec2(0, 0);
-			state = QuestionBlockStates::Unavailable;
-		}
 	}
 }
 

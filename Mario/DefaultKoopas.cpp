@@ -120,7 +120,7 @@ void DefaultKoopas::FinalUpdate()
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 
 		if (collisionCal && k->GetLiveState() == KoopasLiveStates::ALIVE) {
-			k->GetDistance() = collisionCal->GetNewDistance();
+			k->GetDistance() = collisionCal->GetClampDistance();
 		}
 		k->GetPosition() += k->GetDistance();
 		k->GetDistance() = k->GetVelocity() * CGame::Time().ElapsedGameTime;

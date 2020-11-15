@@ -31,7 +31,19 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 		shared_ptr<CollisionCalculator> collisionCal = m->GetCollisionCalc();
 
-		vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);
+		vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);				
+	}
+}
+
+void MarioPowerUp::StatusUpdate()
+{
+	DWORD dt = CGame::Time().ElapsedGameTime;
+
+	if (shared_ptr<Mario> m = mario.lock()) {
+
+		shared_ptr<CollisionCalculator> collisionCal = m->GetCollisionCalc();
+
+		vector<shared_ptr<CollisionResult>> coResult = collisionCal->GetLastResults();
 
 		if (coResult.size() == 0)
 		{
@@ -75,7 +87,7 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 					DebugOut(L"Damage from enemy: %f\n", damage);
 				}
 				else {
-					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {						
+					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
 						if (coll->GameColliableObject->GetObjectType() != MEntityType::KoopasCrouch) {
 							m->SetOnGround(true);
 							m->SetJumpingState(JumpingStates::IDLE);
@@ -85,12 +97,8 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 				}
 			}
 		}
-		// No collision occured, proceed normally		
+		// No collision occured, proceed normally
 	}
-}
-
-void MarioPowerUp::StatusUpdate()
-{
 }
 
 void MarioPowerUp::MoveUpdate()
