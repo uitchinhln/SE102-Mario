@@ -109,7 +109,7 @@ RectF QuestionBlock::GetHitBox()
 
 bool QuestionBlock::IsGetThrough(IColliable& object, Direction direction)
 {
-	return state == QuestionBlockStates::Bouncing;
+	return false;
 }
 
 float QuestionBlock::GetDamageFor(IColliable& object, Direction direction)

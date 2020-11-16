@@ -50,22 +50,26 @@ void Koopas::SetPower(shared_ptr<DefaultKoopas> power)
 
 void Koopas::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 {
-	power->CollisionUpdate(coObj);
+	shared_ptr<DefaultKoopas> p = power;
+	p->CollisionUpdate(coObj);
 }
 
 void Koopas::StatusUpdate()
 {
-	power->StatusUpdate();
+	shared_ptr<DefaultKoopas> p = power;
+	p->StatusUpdate();
 }
 
 void Koopas::Update()
 {
-	power->Update();
+	shared_ptr<DefaultKoopas> p = power;
+	p->Update();
 }
 
 void Koopas::FinalUpdate()
 {
-	power->FinalUpdate();
+	shared_ptr<DefaultKoopas> p = power;
+	p->FinalUpdate();
 	collisionCal->Clear();
 }
 

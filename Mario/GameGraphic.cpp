@@ -1,4 +1,5 @@
 #include "GameGraphic.h"
+#include "Viewport.h"
 
 void GameGraphic::Init(D3DPRESENT_PARAMETERS d3dpp, HWND hwnd)
 {
@@ -25,43 +26,33 @@ void GameGraphic::Init(D3DPRESENT_PARAMETERS d3dpp, HWND hwnd)
 
 	d3ddv->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
 
-	d3ddv->GetViewport(&pViewport);
-
-	d3ddv->GetScissorRect(&rScissorRect);
-
 	OutputDebugString(L"[INFO] InitGame done;\n");
 }
 
 Vec2 GameGraphic::GetSceneSize()
 {
-	return Vec2(pViewport.Width, pViewport.Height);
+	D3DVIEWPORT9 viewport;
+	d3ddv->GetViewport(&viewport);
+	return Vec2(viewport.Width, viewport.Height);
 }
 
 void GameGraphic::Clear(D3DCOLOR color, bool clearAll)
 {
-	if (clearAll) {
-		D3DVIEWPORT9 old;
-		d3ddv->GetViewport(&old);
-		d3ddv->SetViewport(&pViewport);
-		d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, color, 1.0f, 0);
-		d3ddv->SetViewport(&old);
-	}
-	else {
-		d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, color, 1.0f, 0);
-	}
+	d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, color, 1.0f, 0);
 }
 
 void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 texture, RECT r, Transform& transform, D3DCOLOR overlay)
 {
+	RECT viewport;
+	this->d3ddv->GetScissorRect(&viewport);
+
+	x += viewport.left;
+	y += viewport.top;
+
 	float spriteW = x + r.right - r.left;
 	float spriteH = y + r.bottom - r.top;
-	D3DVIEWPORT9 viewport;
-	this->d3ddv->GetViewport(&viewport);
 
-	if (x > viewport.X + viewport.Width || y > viewport.Y + viewport.Height || spriteW < viewport.X || spriteH < viewport.Y) return;
-
-	x -= viewport.X;
-	y -= viewport.Y;
+	if (x > viewport.right || y > viewport.bottom || spriteW < viewport.left || spriteH < viewport.top) return;
 
 	D3DXVECTOR3 p(x, y, 0);
 
@@ -124,8 +115,7 @@ LPDIRECT3DTEXTURE9 GameGraphic::CreateTextureFromFile(LPCWSTR texturePath, D3DCO
 void GameGraphic::SetViewport(shared_ptr<Viewport> viewport)
 {
 	ClipScene();
-	d3ddv->SetViewport(&(viewport->GetD3DViewport()));
-	d3ddv->SetScissorRect(&(viewport->GetScissorRect()));
+	d3ddv->SetScissorRect(&viewport->GetScissorRect());
 }
 
 void GameGraphic::ClipScene()

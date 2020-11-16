@@ -1,6 +1,8 @@
 #pragma once
 #include "Utils.h"
-#include "Transform.h"#include "Viewport.h"
+#include "Transform.h"
+
+class Viewport;
 
 class GameGraphic
 {
@@ -9,9 +11,6 @@ class GameGraphic
 
 	LPDIRECT3DSURFACE9 backBuffer = NULL;
 	LPD3DXSPRITE spriteHandler = NULL;
-
-	D3DVIEWPORT9 pViewport;
-	RECT rScissorRect;
 
 public:
 	void Init(D3DPRESENT_PARAMETERS d3dpp, HWND hwnd);

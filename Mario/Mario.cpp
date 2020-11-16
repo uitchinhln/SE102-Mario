@@ -53,7 +53,8 @@ void Mario::OnKeyUp(int key)
 void Mario::OnKeyDown(int key)
 {
 	if (!controllable) return;
-	powerUp->OnKeyDown(key);
+	shared_ptr<MarioPowerUp> p = powerUp;
+	p->OnKeyDown(key);
 	
 	// Change mario power
 	Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
@@ -113,12 +114,14 @@ void Mario::InitResource()
 
 void Mario::StatusUpdate()
 {
-	powerUp->StatusUpdate();
+	shared_ptr<MarioPowerUp> p = powerUp;
+	p->StatusUpdate();
 }
 
 void Mario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 {
-	powerUp->CollisionUpdate(coObj);
+	shared_ptr<MarioPowerUp> p = powerUp;
+	p->CollisionUpdate(coObj);
 }
 
 void Mario::FinalUpdate()
@@ -142,7 +145,8 @@ void Mario::FinalUpdate()
 void Mario::Update()
 {
 	if (!controllable) return;
-	powerUp->Update();
+	shared_ptr<MarioPowerUp> p = powerUp;
+	p->Update();
 }
 
 void Mario::Render()

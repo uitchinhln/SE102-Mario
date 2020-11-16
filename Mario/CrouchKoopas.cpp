@@ -182,6 +182,7 @@ void CrouchKoopas::StatusUpdate()
 			KP_DESTROY_DELAY = 100;
 			if (!k->GetDestroyTimer().IsRunning()) {
 				k->GetDestroyTimer().Restart();
+				respawnTimer.Stop();
 			}
 		}
 	}
