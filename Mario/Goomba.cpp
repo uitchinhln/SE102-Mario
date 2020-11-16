@@ -178,3 +178,8 @@ shared_ptr<Goomba> Goomba::CreateGoomba(Vec2 fixedPos)
 	goomba->SetPosition(Vec2(fixedPos.x, fixedPos.y - height));
 	return goomba;
 }
+
+Goomba::~Goomba()
+{
+	//DebugOut(L"Huy goomba\n");
+}

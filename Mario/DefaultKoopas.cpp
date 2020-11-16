@@ -175,3 +175,8 @@ float DefaultKoopas::GetDamageFor(IColliable& object, Direction direction)
 	}
 	return 0.0f;
 }
+
+DefaultKoopas::~DefaultKoopas()
+{
+	//DebugOut(L"Huy koopas power\n");
+}

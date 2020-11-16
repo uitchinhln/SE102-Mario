@@ -47,6 +47,8 @@ public:
 
 	static shared_ptr<Koopas> CreateKoopas(Vec2 fixedPos = Vec2(100, 100));
 
+	~Koopas();
+
 protected:
 	weak_ptr<Mario> koopas;
 

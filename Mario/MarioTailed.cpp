@@ -75,3 +75,8 @@ float MarioTailed::GetDamageFor(IColliable& object, Direction direction)
 {
 	return 2.0f;
 }
+
+MarioTailed::~MarioTailed()
+{
+	//DebugOut(L"Huy mario tail\n");
+}

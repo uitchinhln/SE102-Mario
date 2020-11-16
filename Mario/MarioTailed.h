@@ -25,6 +25,8 @@ public:
 
 	virtual float GetDamageFor(IColliable& object, Direction direction) override;
 
+	~MarioTailed();
+
 protected:
 	Vec2 size = Vec2(12, 12);
 	weak_ptr<Mario> holder;

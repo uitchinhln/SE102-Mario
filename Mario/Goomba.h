@@ -37,6 +37,8 @@ public:
 
 	static shared_ptr<Goomba> CreateGoomba(Vec2 fixedPos = Vec2(100, 100));
 
+	~Goomba();
+
 protected:
 	GoombaState state;
 

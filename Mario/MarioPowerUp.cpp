@@ -441,3 +441,8 @@ shared_ptr<Mario> MarioPowerUp::GetMario()
 	}
 	return nullptr;
 }
+
+MarioPowerUp::~MarioPowerUp()
+{
+	//DebugOut(L"Huy mario power\n");
+}

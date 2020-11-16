@@ -110,3 +110,8 @@ shared_ptr<Koopas> Koopas::CreateKoopas(Vec2 fixedPos)
 	koopas->SetPosition(Vec2(fixedPos.x, fixedPos.y - height));
 	return koopas;
 }
+
+Koopas::~Koopas()
+{
+	//DebugOut(L"Huy koopas\n");
+}

@@ -49,6 +49,8 @@ public:
 
 	virtual ObjectType GetMarioType() = 0;
 
+	~MarioPowerUp();
+
 protected:
 	weak_ptr<Mario> mario;
 

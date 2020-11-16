@@ -32,6 +32,8 @@ public:
 
 	virtual float GetDamageFor(IColliable& object, Direction direction);
 
+	~DefaultKoopas();
+
 protected:
 	weak_ptr<Koopas> koopas;
 
