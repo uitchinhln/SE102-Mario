@@ -104,8 +104,14 @@ void PlayScene::Update()
 
 void PlayScene::Render()
 {
+	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0), true);	
+	CGame::GetInstance()->GetGraphic().SetViewport(camera);
+
 	CScene::Render();
 	mario->Render();
+
+	CGame::GetInstance()->GetGraphic().SetViewport(hud);
+
 	hud->Render();
 }
 
@@ -161,7 +167,7 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 void PlayScene::SpawnEntity(shared_ptr<GameObject> entity)
 {
 	CScene::SpawnEntity(entity);
-	test.push_back(entity);
+	//test.push_back(entity);
 }
 
 void PlayScene::HookEvent()

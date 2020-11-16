@@ -324,6 +324,9 @@
     <ClCompile Include="Hud.cpp">
       <Filter>MarioGame\HUD</Filter>
     </ClCompile>
+    <ClCompile Include="Viewport.cpp">
+      <Filter>Framework\Graphic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -514,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="Hud.h">
       <Filter>MarioGame\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Viewport.h">
+      <Filter>Framework\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

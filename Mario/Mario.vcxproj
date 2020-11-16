@@ -209,6 +209,7 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vec2Utils.cpp" />
+    <ClCompile Include="Viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttackablePower.h" />
@@ -274,6 +275,7 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vec2Utils.h" />
+    <ClInclude Include="Viewport.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

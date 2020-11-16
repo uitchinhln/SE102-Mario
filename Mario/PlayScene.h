@@ -39,7 +39,7 @@ protected:
 
 	virtual void UnhookEvent();
 
-	Vec2 camPos = Vec2(0, 735);
+	Vec2 camPos = Vec2(0, 0);
 	Vec2 camSize = Vec2(768, 579);
 
 	Vec2 hudPos = Vec2(0, 579);

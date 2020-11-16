@@ -21,7 +21,7 @@ void MarioFireBall::Reset()
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
 	if (shared_ptr<Mario> m = holder.lock()) {
-		this->Position.x = (m->GetFacing() < 0 ? m->GetHitBox().left - 10 : m->GetHitBox().right - 10);
+		this->Position.x = m->GetHitBox().left + size.x / 2;
 		this->Position.y = m->GetHitBox().top + 30;
 		this->SetFacing(m->GetFacing());
 

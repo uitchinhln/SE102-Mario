@@ -1,13 +1,14 @@
 #pragma once
 #include "Utils.h"
 #include "Transform.h"
+#include "Viewport.h"
 
 class GameObject;
 
-class Camera
+class Camera : 
+	public Viewport
 {
 protected:
-	Vec2 size;
 	weak_ptr<GameObject> target;
 public:
 	Camera();

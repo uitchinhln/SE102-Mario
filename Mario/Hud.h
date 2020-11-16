@@ -1,7 +1,9 @@
 #pragma once
 #include "Utils.h"
+#include "Viewport.h"
 
-class Hud
+class Hud : 
+	public Viewport
 {
 public:
 	Hud(Vec2 pos, Vec2 size);
@@ -11,9 +13,5 @@ public:
 	virtual void Render();
 
 protected:
-	Vec2 pos;
-	Vec2 size;
-
-	D3DVIEWPORT9 vp, oldVP;
 };
 
