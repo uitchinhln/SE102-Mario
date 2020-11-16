@@ -64,6 +64,8 @@ public:
 	//Override from ICollidable
 	virtual Vec2& GetDistance() override;
 
+	virtual void SetActive(bool) override;
+
 	~GameObject();
 };
 

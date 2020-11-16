@@ -42,6 +42,13 @@ void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 t
 {
 	D3DXVECTOR3 p(x, y, 0);
 
+	float spriteW = x + r.right - r.left;
+	float spriteH = y + r.bottom - r.top;
+	D3DVIEWPORT9 viewport;
+	this->d3ddv->GetViewport(&viewport);
+
+	if (x > viewport.Width || y > viewport.Height || spriteW < viewport.X || spriteH < viewport.Y) return;
+
 	if (transform.Rotation == 0 && transform.Scale == Vec2(1.0f, 1.0f)) {
 		spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
 	}
@@ -58,6 +65,68 @@ void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 t
 		spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
 		spriteHandler->SetTransform(&oldMatrix);
 	}
+}
+
+LPDIRECT3DTEXTURE9 GameGraphic::CreateTextureFromFile(LPCWSTR texturePath, D3DCOLOR transparentColor)
+{
+	D3DXIMAGE_INFO info;
+	LPDIRECT3DTEXTURE9 texture;
+
+	HRESULT result = D3DXGetImageInfoFromFile(texturePath, &info);
+	if (result != D3D_OK)
+	{
+		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", texturePath);
+		return NULL;
+	}
+
+	result = D3DXCreateTextureFromFileEx(
+		d3ddv,								// Pointer to Direct3D device object
+		texturePath,						// Path to the image to load
+		info.Width,							// Texture width
+		info.Height,						// Texture height
+		1,
+		D3DUSAGE_DYNAMIC,
+		D3DFMT_UNKNOWN,
+		D3DPOOL_DEFAULT,
+		D3DX_DEFAULT,
+		D3DX_DEFAULT,
+		transparentColor,			// Transparent color
+		&info,
+		NULL,
+		&texture);								// Created texture pointer
+
+	if (result != D3D_OK)
+	{
+		DebugOut(L"[ERROR] CreateTextureFromFile failed. File: %s\n", texturePath);
+		return NULL;
+	}
+
+	DebugOut(L"[INFO] Texture loaded Ok: %s \n", texturePath);
+	return texture;
+}
+
+LPDIRECT3DTEXTURE9 GameGraphic::CreateColoredTexture(Vec2 size, D3DCOLOR color)
+{
+	LPDIRECT3DTEXTURE9 texture;
+
+	HRESULT result = D3DXCreateTexture(
+		d3ddv,
+		size.x,
+		size.y,
+		1,
+		D3DUSAGE_DYNAMIC,
+		D3DFMT_UNKNOWN,
+		D3DPOOL_DEFAULT,
+		&texture
+	);
+
+	return texture;
+}
+
+void GameGraphic::ClipScene()
+{
+	spriteHandler->End();
+	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 }
 
 GameGraphic::~GameGraphic()

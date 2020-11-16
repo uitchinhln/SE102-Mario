@@ -66,6 +66,7 @@ void Koopas::Update()
 void Koopas::FinalUpdate()
 {
 	power->FinalUpdate();
+	collisionCal->Clear();
 }
 
 void Koopas::Render()

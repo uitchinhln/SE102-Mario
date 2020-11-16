@@ -10,7 +10,7 @@ CTileSet::CTileSet(int firstgid, Vec2 tileSize, int tileCount, int columns, stri
 	this->tileSize = Vec2(tileSize.x, tileSize.y);
 	this->tileCount = tileCount;
 	this->columns = columns;
-	this->texture = TextureManager::Load(ToLPCWSTR(imgPath), D3DCOLOR_ARGB(0, 0, 0, 0));
+	this->texture = CGame::GetInstance()->GetGraphic().CreateTextureFromFile(ToLPCWSTR(imgPath), D3DCOLOR_ARGB(0, 0, 0, 0));
 }
 
 CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
@@ -23,7 +23,7 @@ CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
 
 	TiXmlElement* imgDom = data->FirstChildElement("image");
 	string imgPath = xmlPath + "/" + imgDom->Attribute("source");
-	this->texture = TextureManager::Load(ToLPCWSTR(imgPath), D3DCOLOR_ARGB(0, 0, 0, 0));
+	this->texture = CGame::GetInstance()->GetGraphic().CreateTextureFromFile(ToLPCWSTR(imgPath), D3DCOLOR_ARGB(0, 0, 0, 0));
 
 	for (TiXmlElement* node = data->FirstChildElement("tile"); node != nullptr ; node = node->NextSiblingElement("tile"))
 	{

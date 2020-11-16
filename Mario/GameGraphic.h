@@ -8,7 +8,8 @@ class GameGraphic
 	LPDIRECT3DDEVICE9 d3ddv = NULL;				// Direct3D device object
 
 	LPDIRECT3DSURFACE9 backBuffer = NULL;
-	LPD3DXSPRITE spriteHandler = NULL;			// Sprite helper library to help us draw 2D image on the screen
+	LPDIRECT3DSURFACE9 testBuffer = NULL;
+	LPD3DXSPRITE spriteHandler = NULL;
 
 public:
 	void Init(D3DPRESENT_PARAMETERS d3dpp, HWND hwnd);
@@ -22,6 +23,12 @@ public:
 	void Clear(D3DCOLOR color);
 
 	void Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 texture, RECT r, Transform& transform, D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
+
+	LPDIRECT3DTEXTURE9 CreateTextureFromFile(LPCWSTR texturePath, D3DCOLOR transparentColor);
+
+	LPDIRECT3DTEXTURE9 CreateColoredTexture(Vec2 size, D3DCOLOR color);
+
+	void ClipScene();
 
 	~GameGraphic();
 };

@@ -89,6 +89,14 @@ Vec2& GameObject::GetDistance()
 	return Distance;
 }
 
+void GameObject::SetActive(bool value)
+{
+	IColliable::SetActive(value);
+	if (collisionCal) {
+		collisionCal->Clear();
+	}
+}
+
 GameObject::~GameObject()
 {
 }

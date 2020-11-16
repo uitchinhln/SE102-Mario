@@ -29,6 +29,8 @@ void PlayScene::LoadFromXml(TiXmlElement* data)
 	this->camera = make_shared<Camera>(camPos, camSize);
 	this->camera->SetTracking(mario);
 
+	this->hud = make_shared<Hud>(hudPos, hudSize);
+
 	this->gameMap = CGameMap::FromTMX(mapPath, mapName);
 	this->gameMap->SetCamera(camera);
 
@@ -48,6 +50,13 @@ void PlayScene::Unload()
 
 void PlayScene::Update()
 {
+	//for (weak_ptr<IColliable> obj : test) {
+	//	if (shared_ptr<IColliable> o = obj.lock()) {
+	//		if (o->IsActive()) continue;
+	//		DebugOut(L"%d:\t%s still alive\n", CGame::Time().TotalGameTime, ToLPCWSTR(o->GetObjectType().ToString()));
+	//	}
+	//}
+
 	gameMap->Update();
 
 	mario->Update();
@@ -77,8 +86,6 @@ void PlayScene::Update()
 		obj->CollisionUpdate(&objs);
 	}
 
-	RemoveDespawnedObjects();
-
 	mario->StatusUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
 		obj->StatusUpdate();
@@ -89,13 +96,17 @@ void PlayScene::Update()
 		obj->FinalUpdate();
 	}
 
+	RemoveDespawnedObjects();
+
 	camera->Update();
+	hud->Update();
 }
 
 void PlayScene::Render()
 {
 	CScene::Render();
 	mario->Render();
+	hud->Render();
 }
 
 void PlayScene::OnKeyDown(int key)
@@ -145,6 +156,12 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	if (strcmp(type, MEntityType::GhostBlock.ToString().c_str()) == 0) {
 		mapObjects.push_back(GhostBlock::CreateGhostBlock(fixedPos, size));
 	}
+}
+
+void PlayScene::SpawnEntity(shared_ptr<GameObject> entity)
+{
+	CScene::SpawnEntity(entity);
+	test.push_back(entity);
 }
 
 void PlayScene::HookEvent()

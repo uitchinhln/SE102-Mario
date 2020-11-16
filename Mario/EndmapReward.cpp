@@ -30,6 +30,12 @@ void EndmapReward::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 	collisionCal->CalcPotentialCollisions(coObj, false);
 }
 
+void EndmapReward::FinalUpdate()
+{
+	GameObject::FinalUpdate();
+	collisionCal->Clear();
+}
+
 void EndmapReward::StatusUpdate()
 {
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();

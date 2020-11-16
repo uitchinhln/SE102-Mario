@@ -111,7 +111,7 @@ void MovingShell::StatusUpdate()
 		}
 
 		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
-		if (k->GetPosition().x < 0.3 || k->GetPosition().y < 0.3 || k->GetPosition().x > mapBound.x || k->GetPosition().y > mapBound.y) {
+		if (k->GetPosition().x < 0.3 - size.x || k->GetPosition().y < 0.3 - size.y || k->GetPosition().x > mapBound.x || k->GetPosition().y > mapBound.y) {
 			KP_DESTROY_DELAY = 100;
 			if (!k->GetDestroyTimer().IsRunning()) {
 				k->GetDestroyTimer().Restart();

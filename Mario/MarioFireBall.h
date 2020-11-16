@@ -17,6 +17,8 @@ public:
 
 	virtual void Update() override;
 
+	virtual void FinalUpdate() override;
+
 	virtual void Render() override;
 
 	virtual ObjectType GetObjectType() override;

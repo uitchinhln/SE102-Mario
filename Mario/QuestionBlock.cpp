@@ -69,6 +69,7 @@ void QuestionBlock::FinalUpdate()
 		Distance = Vec2(0, 0);
 		state = QuestionBlockStates::Unavailable;
 	}
+	collisionCal->Clear();
 }
 
 void QuestionBlock::Update()

@@ -107,6 +107,11 @@ Vec2 CollisionCalculator::GetJet()
 	return jet;
 }
 
+void CollisionCalculator::Clear()
+{
+	results.clear();
+}
+
 SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, bool debug)
 {
 	float dx_entry = 0, dx_exit, tx_entry, tx_exit;

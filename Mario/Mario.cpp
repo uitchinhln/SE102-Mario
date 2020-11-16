@@ -136,6 +136,7 @@ void Mario::FinalUpdate()
 		GetPosition().y = min(GetPosition().y, mapBound.y - size.y);
 		GetVelocity().x = 0;
 	}
+	collisionCal->Clear();
 }
 
 void Mario::Update()

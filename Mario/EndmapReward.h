@@ -21,6 +21,8 @@ public:
 
 	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
 
+	virtual void FinalUpdate() override;
+
 	virtual void StatusUpdate() override;
 
 	virtual void Update() override;

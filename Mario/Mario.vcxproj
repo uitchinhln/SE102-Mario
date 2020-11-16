@@ -154,6 +154,7 @@
     <ClCompile Include="GhostBlock.cpp" />
     <ClCompile Include="GhostTile.cpp" />
     <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="Hud.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
     <ClCompile Include="Koopas.cpp" />
     <ClCompile Include="MapProperties.cpp" />
@@ -220,6 +221,7 @@
     <ClInclude Include="GhostBlock.h" />
     <ClInclude Include="GhostTile.h" />
     <ClInclude Include="Goomba.h" />
+    <ClInclude Include="Hud.h" />
     <ClInclude Include="IEnviroment.h" />
     <ClInclude Include="Koopas.h" />
     <ClInclude Include="MapProperties.h" />

@@ -75,6 +75,12 @@ void MarioFireBall::Update()
 	GetDistance() = GetVelocity() * dt;
 }
 
+void MarioFireBall::FinalUpdate()
+{
+	GameObject::FinalUpdate();
+	collisionCal->Clear();
+}
+
 void MarioFireBall::Render()
 {
 	InitResource();

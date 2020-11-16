@@ -321,11 +321,8 @@
     <ClCompile Include="GhostBlock.cpp">
       <Filter>MarioGame\Entity\MapBlock</Filter>
     </ClCompile>
-    <ClCompile Include="MarioHud.cpp">
+    <ClCompile Include="Hud.cpp">
       <Filter>MarioGame\HUD</Filter>
-    </ClCompile>
-    <ClCompile Include="Viewport.cpp">
-      <Filter>Framework\Graphic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -515,11 +512,8 @@
     <ClInclude Include="GhostBlock.h">
       <Filter>MarioGame\Entity\MapBlock</Filter>
     </ClInclude>
-    <ClInclude Include="MarioHud.h">
+    <ClInclude Include="Hud.h">
       <Filter>MarioGame\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="Viewport.h">
-      <Filter>Framework\Graphic</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
