@@ -11,5 +11,5 @@ void Hud::Update()
 
 void Hud::Render()
 {
-	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(255, 255, 255));
+	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));
 }

@@ -36,7 +36,7 @@ Vec2 GameGraphic::GetSceneSize()
 	return Vec2(viewport.Width, viewport.Height);
 }
 
-void GameGraphic::Clear(D3DCOLOR color, bool clearAll)
+void GameGraphic::Clear(D3DCOLOR color)
 {
 	d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, color, 1.0f, 0);
 }

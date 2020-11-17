@@ -21,7 +21,7 @@ public:
 
 	Vec2 GetSceneSize();
 
-	void Clear(D3DCOLOR color, bool clearAll = false);
+	void Clear(D3DCOLOR color);
 
 	void Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 texture, RECT r, Transform& transform, D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
 

@@ -104,7 +104,7 @@ void PlayScene::Update()
 
 void PlayScene::Render()
 {
-	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0), true);	
+	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));	
 	CGame::GetInstance()->GetGraphic().SetViewport(camera);
 
 	CScene::Render();
