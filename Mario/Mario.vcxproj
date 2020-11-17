@@ -151,6 +151,7 @@
     <ClCompile Include="CustomCollisionCalc.cpp" />
     <ClCompile Include="DefaultKoopas.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GhostBlock.cpp" />
     <ClCompile Include="GhostTile.cpp" />
     <ClCompile Include="Goomba.cpp" />
@@ -219,6 +220,7 @@
     <ClInclude Include="CustomCollisionCalc.h" />
     <ClInclude Include="DefaultKoopas.h" />
     <ClInclude Include="EndmapReward.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="GhostBlock.h" />
     <ClInclude Include="GhostTile.h" />
     <ClInclude Include="Goomba.h" />

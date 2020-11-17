@@ -127,6 +127,9 @@
     <Filter Include="MarioGame\HUD">
       <UniqueIdentifier>{3a6a3c5d-4090-46ad-90b5-58499190162d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\Font">
+      <UniqueIdentifier>{4c44460e-8bde-4334-ba59-7a1a7468716a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -327,6 +330,7 @@
     <ClCompile Include="Viewport.cpp">
       <Filter>Framework\Graphic</Filter>
     </ClCompile>
+    <ClCompile Include="FontManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -521,5 +525,6 @@
     <ClInclude Include="Viewport.h">
       <Filter>Framework\Graphic</Filter>
     </ClInclude>
+    <ClInclude Include="FontManager.h" />
   </ItemGroup>
 </Project>
