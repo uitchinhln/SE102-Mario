@@ -59,6 +59,7 @@ void MarioFireBall::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 	for each (shared_ptr<CollisionResult> coll in coResult)
 	{
+		if (MEntityType::IsMario(coll->GameColliableObject->GetObjectType()) || MEntityType::IsMarioWeapon(coll->GameColliableObject->GetObjectType())) continue;
 		if (!coll->GameColliableObject->IsGetThrough(*this, coll->SAABBResult.Direction)) {
 			if (!MEntityType::IsTile(coll->GameColliableObject->GetObjectType()) || coll->SAABBResult.Direction != Direction::Top) {
 				SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());

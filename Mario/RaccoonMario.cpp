@@ -137,11 +137,11 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 		}
 		if (keyboard.IsKeyDown(DIK_X) || forceX) {
 			if (m->GetJumpingState() == JumpingStates::SUPER_JUMP && m->GetPowerMeter() >= PMETER_MAX) {
-				m->GetVelocity().y = -MARIO_JUMP_FORCE;
+				m->GetVelocity().y = -MARIO_FLYING_UP_FORCE;
 			}
 
 			if (m->IsOnGround() && m->GetJumpingState() == JumpingStates::IDLE) {
-				m->GetVelocity().y = -MARIO_JUMP_FORCE;
+				m->GetVelocity().y = -0.1;
 				m->SetJumpingState(JumpingStates::JUMP);
 				m->SetOnGround(false);
 
@@ -154,8 +154,21 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 
 			if (m->GetJumpingState() == JumpingStates::FALLING || m->GetJumpingState() == JumpingStates::FLOATING) {
 				m->SetJumpingState(JumpingStates::FLOATING);
-				m->GetVelocity().y = MARIO_GRAVITY * 6 * dt;
+				m->GetVelocity().y = MARIO_GRAVITY * 4 * dt;
 				m->GetGravity() = MARIO_GRAVITY;
+
+				float maxSpeed = 0.24;
+				int sign = m->GetVelocity().x < 0 ? -1 : 1;
+
+				if (abs(m->GetVelocity().x) > maxSpeed) {
+					if (abs(m->GetVelocity().x) - maxSpeed > MARIO_RUN_DRAG_FORCE * dt) {
+						m->GetVelocity().x -= MARIO_RUN_DRAG_FORCE * dt * sign;
+					}
+					else {
+						m->GetVelocity().x = maxSpeed * sign;
+					}
+
+				}
 			}
 		}
 	}

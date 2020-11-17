@@ -16,7 +16,7 @@ void Hud::Render()
 
 	RECT FontRect = scissorRect;
 	//FontRect.left = 10;         // xPos
-	//FontRect.top = 10;         // yPos
+	FontRect.top += 10;         // yPos
 	//FontRect.right = 500;        // maxX Cutoff
 	//FontRect.bottom = 130;        // maxY Cutoff
 
