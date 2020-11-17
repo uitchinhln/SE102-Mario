@@ -4,12 +4,19 @@
 class FontManager
 {
 public:
-	FontManager* GetInstance();
+	static FontManager* GetInstance();
 
-	void LoatCustomFont();
+	//void LoatCustomFont(string path);
+
+	LPD3DXFONT Get(string id);
+
+	void HardTest();
 
 private:
 	static FontManager* __instance;
+
+	unordered_map<string, LPD3DXFONT> fonts;
+
 	FontManager();
 };
 

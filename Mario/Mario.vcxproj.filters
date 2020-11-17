@@ -330,7 +330,9 @@
     <ClCompile Include="Viewport.cpp">
       <Filter>Framework\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="FontManager.cpp" />
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Framework\Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -525,6 +527,8 @@
     <ClInclude Include="Viewport.h">
       <Filter>Framework\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="FontManager.h" />
+    <ClInclude Include="FontManager.h">
+      <Filter>Framework\Font</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

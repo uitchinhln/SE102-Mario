@@ -25,6 +25,8 @@ public:
 
 	void Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 texture, RECT r, Transform& transform, D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
 
+	//void DrawText(LPD3DXFONT font, );
+
 	LPDIRECT3DTEXTURE9 CreateTextureFromFile(LPCWSTR texturePath, D3DCOLOR transparentColor);
 
 	void SetViewport(shared_ptr<Viewport> viewport);

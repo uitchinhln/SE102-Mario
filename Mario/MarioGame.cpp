@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "PlayScene.h"
 #include "Mario.h"
+#include "FontManager.h"
 
 MarioGame::MarioGame() : CGame(new CGameProperties())
 {
@@ -60,7 +61,7 @@ void MarioGame::LoadResources()
 		string startId = scenes->Attribute("start");
 		SceneManager::GetInstance()->ActiveScene(startId);
 	}
-
+	FontManager::GetInstance()->HardTest();
 }
 
 void MarioGame::Update()

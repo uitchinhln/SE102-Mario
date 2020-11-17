@@ -1,0 +1,11 @@
+/* Webfont: Super-Mario-Bros.-3 */@font-face {
+    font-family: 'SuperMarioBros.3';
+    src: url('HUD.eot'); /* IE9 Compat Modes */
+    src: url('HUD.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('HUD.woff') format('woff'), /* Modern Browsers */
+         url('HUD.ttf') format('truetype'); /* Safari, Android, iOS */
+             font-style: normal;
+    font-weight: normal;
+    text-rendering: optimizeLegibility;
+}
+
