@@ -122,7 +122,6 @@ void MarioPowerUp::MoveUpdate()
 				m->SetMovingState(MovingStates::WALK);
 			}
 			m->GetAccelerate().x = MARIO_WALK_ACCELERATION * keySign;
-			m->GetDrag() = m->IsOnGround() ? MARIO_WALK_DRAG_FORCE : 0;
 			float maxSpeed = MARIO_WALK_SPEED;
 
 			if (keyboard.IsKeyDown(DIK_A)) {
@@ -130,7 +129,6 @@ void MarioPowerUp::MoveUpdate()
 					m->SetMovingState(MovingStates::RUN);
 				}
 				m->GetAccelerate().x = (m->GetSkid() ? MARIO_SKID_ACCELERATION : MARIO_RUN_ACCELERATION) * keySign;
-				m->GetDrag() = m->IsOnGround() ? MARIO_RUN_DRAG_FORCE : 0;
 				maxSpeed = MARIO_RUN_SPEED;
 			}
 
@@ -164,6 +162,13 @@ void MarioPowerUp::MoveUpdate()
 				m->SetMovingState(MovingStates::IDLE);
 			}
 			m->GetSkid() = 0;
+		}
+
+		if (m->IsOnGround()) {
+			m->GetDrag() = m->GetMovingState() == MovingStates::WALK ? MARIO_WALK_DRAG_FORCE : MARIO_RUN_DRAG_FORCE;
+		}
+		else {
+			m->GetDrag() = 0;
 		}
 	}
 }
