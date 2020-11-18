@@ -45,24 +45,20 @@ void MarioPowerUp::StatusUpdate()
 
 		vector<shared_ptr<CollisionResult>> coResult = collisionCal->GetLastResults();
 
+		m->SetOnGround(false);
 		if (coResult.size() == 0)
 		{
-			//m->GetPosition() += m->GetDistance();
-			m->SetOnGround(false);
 			if (m->GetDistance().y > 0 && m->GetJumpingState() != JumpingStates::SUPER_JUMP) {
 				m->SetJumpingState(JumpingStates::FALLING);
 			}
 		}
 		else {
-			//m->GetDistance() = collisionCal->GetNewDistance();
 			Vec2 jet = collisionCal->GetJet();
-			//m->GetPosition() += m->GetDistance();
 
 			if (jet.x != 0) m->GetVelocity().x = 0;
 			if (jet.y != 0) m->GetVelocity().y = 0;
 		}
 
-		m->SetOnGround(false);
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
 			if (coll->SAABBResult.Direction == Direction::Top && !coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction)) {
@@ -114,9 +110,6 @@ void MarioPowerUp::MoveUpdate()
 			if (m->IsOnGround() && m->GetVelocity().x * keySign < 0) {
 				m->GetSkid() = (int) (m->GetVelocity().x / abs(m->GetVelocity().x));
 			}
-			else {
-				m->SetSkid(0);
-			}
 
 			if (m->GetMovingState() != MovingStates::CROUCH || m->IsOnGround()) {
 				m->SetMovingState(MovingStates::WALK);
@@ -135,22 +128,16 @@ void MarioPowerUp::MoveUpdate()
 			m->GetVelocity().x += m->GetAccelerate().x * dt;
 
 			if (abs(m->GetVelocity().x) > maxSpeed) {
+				int sign = m->GetVelocity().x < 0 ? -1 : 1;
 				if (abs(m->GetVelocity().x) - maxSpeed > MARIO_RUN_DRAG_FORCE * dt) {
-					int sign = m->GetVelocity().x < 0 ? -1 : 1;
 					m->GetVelocity().x -= MARIO_RUN_DRAG_FORCE * dt * sign;
 				}
 				else {
-					m->GetVelocity().x = maxSpeed * keySign;
+					m->GetVelocity().x = maxSpeed * sign;
 				}
-
 			}
 
-			m->SetFacing(m->IsOnGround() ? (m->GetVelocity().x < 0 ? -1 : 1) : keySign);
-
-			//skid end detect
-			if (m->GetSkid() * m->GetVelocity().x <= 0) {
-				m->GetSkid() = 0;
-			}
+			m->SetFacing(m->GetVelocity().x < 0 ? -1 : 1);
 		}
 		else if (m->GetMovingState() != MovingStates::CROUCH) {
 			if (abs(m->GetVelocity().x) > m->GetDrag() * dt) {
@@ -161,15 +148,15 @@ void MarioPowerUp::MoveUpdate()
 				m->GetVelocity().x = 0.0f;
 				m->SetMovingState(MovingStates::IDLE);
 			}
+		}
+
+		//skid end detect
+		if (m->GetSkid() * m->GetVelocity().x <= 0) {
 			m->GetSkid() = 0;
 		}
 
-		if (m->IsOnGround()) {
-			m->GetDrag() = m->GetMovingState() == MovingStates::WALK ? MARIO_WALK_DRAG_FORCE : MARIO_RUN_DRAG_FORCE;
-		}
-		else {
-			m->GetDrag() = 0;
-		}
+		m->GetDrag()  = m->GetMovingState() == MovingStates::WALK ? MARIO_WALK_DRAG_FORCE : MARIO_RUN_DRAG_FORCE;
+		m->GetDrag() *= m->IsOnGround();
 	}
 }
 
@@ -195,8 +182,7 @@ void MarioPowerUp::MiniJumpDetect(bool forceX)
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (keyboard.IsKeyDown(DIK_X) || forceX) {
 			if (m->IsOnGround() && m->GetJumpingState() == JumpingStates::IDLE) {
-				//m->GetVelocity().y = -MARIO_JUMP_FORCE;
-				m->GetVelocity().y = -0.1f;
+				m->GetVelocity().y = -0.00001f;
 				m->SetJumpingState(JumpingStates::JUMP);
 				m->SetOnGround(false);
 				m->SetCanHighJump(false);
