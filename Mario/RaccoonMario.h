@@ -32,6 +32,6 @@ public:
 protected:
 	Stopwatch flyTimer;
 
-	float MARIO_FLYING_UP_FORCE = 0.24f;
+	float MARIO_FLYING_UP_FORCE = 0.252f;
 };
 
