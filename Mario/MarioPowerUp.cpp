@@ -107,6 +107,7 @@ void MarioPowerUp::MoveUpdate()
 			int keySign = keyboard.IsKeyDown(DIK_LEFT) ? -1 : 1;
 
 			//skid start detect
+			m->GetSkid() = 0;
 			if (m->IsOnGround() && m->GetVelocity().x * keySign < 0) {
 				m->GetSkid() = (int) (m->GetVelocity().x / abs(m->GetVelocity().x));
 			}
