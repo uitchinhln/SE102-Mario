@@ -94,7 +94,6 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 			}
 			if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
 				if (coll->GameColliableObject->GetObjectType() == MEntityType::KoopasCrouch) {
-					KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 					shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(coll->GameColliableObject);
 
 					if (keyboard.IsKeyDown(DIK_A) && !m->GetInhand()) {
@@ -139,7 +138,7 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 			if (m->GetJumpingState() == JumpingStates::SUPER_JUMP && m->GetPowerMeter() >= PMETER_MAX) {
 				m->GetVelocity().y = -MARIO_FLYING_UP_FORCE;
 
-				float maxSpeed = 0.45;
+				float maxSpeed = 0.45f;
 				int sign = m->GetVelocity().x < 0 ? -1 : 1;
 
 				if (abs(m->GetVelocity().x) > maxSpeed) {
@@ -154,7 +153,7 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 			}
 
 			if (m->IsOnGround() && m->GetJumpingState() == JumpingStates::IDLE) {
-				m->GetVelocity().y = -0.1;
+				m->GetVelocity().y = -0.1f;
 				m->SetJumpingState(JumpingStates::JUMP);
 				m->SetOnGround(false);
 
@@ -170,7 +169,7 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 				m->GetVelocity().y = MARIO_GRAVITY * 4 * dt;
 				m->GetGravity() = MARIO_GRAVITY;
 
-				float maxSpeed = 0.24;
+				float maxSpeed = 0.24f;
 				int sign = m->GetVelocity().x < 0 ? -1 : 1;
 
 				if (abs(m->GetVelocity().x) > maxSpeed) {

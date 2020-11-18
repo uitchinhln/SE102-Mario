@@ -33,7 +33,7 @@ Vec2 GameGraphic::GetSceneSize()
 {
 	D3DVIEWPORT9 viewport;
 	d3ddv->GetViewport(&viewport);
-	return Vec2(viewport.Width, viewport.Height);
+	return Vec2((float)viewport.Width, (float)viewport.Height);
 }
 
 void GameGraphic::Clear(D3DCOLOR color)

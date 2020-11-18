@@ -1,4 +1,5 @@
 #pragma once
+#pragma warning(push, 0)
 #ifndef INPUTHANDLER_H
 #define INPUTHANDLER_H
 
@@ -29,4 +30,5 @@ public:
 
 	~KeyboardProcessor();
 };
+#pragma warning(pop)
 #endif

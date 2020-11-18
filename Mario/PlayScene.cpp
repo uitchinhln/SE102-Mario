@@ -75,11 +75,12 @@ void PlayScene::Update()
 
 	for (shared_ptr<GameObject> obj : objects) {
 		objs.clear();
+		tiles.clear();
 
 		objs.push_back(this->mario);
 		objs.insert(objs.end(), objects.begin(), objects.end());
 
-		vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
+		tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
 		objs.insert(objs.end(), tiles.begin(), tiles.end());
 		objs.insert(objs.end(), mapObjects.begin(), mapObjects.end());
 

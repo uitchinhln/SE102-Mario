@@ -64,7 +64,7 @@ protected:
 	int	  PMETER_MAX = 7;
 	float PMETER_UP_STEP = 0.008f;
 	float PMETER_DOWN_STEP = 0.0016f;
-	float MARIO_GRAVITY = 0.00133f * 1.5;
+	float MARIO_GRAVITY = 0.00133f * 1.5f;
 	float MARIO_WALK_SPEED = 0.27f;
 	float MARIO_RUN_SPEED = 0.48f;
 	float MARIO_JUMP_FORCE = 0.43f;

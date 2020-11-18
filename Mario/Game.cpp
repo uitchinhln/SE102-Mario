@@ -104,7 +104,7 @@ CGame::~CGame()
 
 bool CGame::ProcessMessage(MSG& msg)
 {
-	DWORD now = gameTimer.Elapsed();
+	long now = gameTimer.Elapsed();
 	if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 	{
 		if (msg.message == WM_QUIT) return false;

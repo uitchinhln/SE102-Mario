@@ -6,10 +6,14 @@ GameWindow::GameWindow(GameProperties properties)
 {
 	hInstance = GetModuleHandle(nullptr);
 
-	windowSize = Vec2(properties->ScreenWidth, properties->ScreenHeight);
+	windowSize = Vec2((float)properties->ScreenWidth, (float)properties->ScreenHeight);
 
 	windowClassName = properties->WindowClassName;
 	windowTitle = properties->MainWindowTitle;
+
+	hWnd = nullptr;
+
+	iconPath = nullptr;
 }
 
 void GameWindow::CreateGameWindow()
@@ -37,10 +41,10 @@ void GameWindow::CreateGameWindow()
 			windowClassName,
 			windowTitle,
 			WS_OVERLAPPEDWINDOW, // WS_EX_TOPMOST | WS_VISIBLE | WS_POPUP,
-			(GetSystemMetrics(SM_CXSCREEN) - windowSize.x) / 2,
-			(GetSystemMetrics(SM_CYSCREEN) - windowSize.y) / 2,
-			windowSize.x,
-			windowSize.y,
+			(GetSystemMetrics(SM_CXSCREEN) - (int)windowSize.x) / 2,
+			(GetSystemMetrics(SM_CYSCREEN) - (int)windowSize.y) / 2,
+			(int)windowSize.x,
+			(int)windowSize.y,
 			NULL,
 			NULL,
 			hInstance,

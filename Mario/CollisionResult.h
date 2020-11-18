@@ -4,7 +4,7 @@
 
 struct SweptCollisionResult {
 	float TimeToCollide;
-	Direction Direction;
+	Direction Direction = Direction::None;
 	Vec2 Distance;
 
 	static SweptCollisionResult Empty()

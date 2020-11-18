@@ -84,10 +84,6 @@ void Mario::OnKeyDown(int key)
 	case DIK_P:
 		DebugOut(L"Position: x = %f\ty = %f\n", Position.x, Position.y);
 		break;
-	case DIK_W:
-		Position.x = 7955.459961;
-		Position.y = 940.997986;
-		break;
 	}
 
 }
@@ -135,7 +131,7 @@ void Mario::FinalUpdate()
 	//fixed position
 	Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
 	if (GetPosition().x < 0.3 || GetPosition().x > mapBound.x + 22 || GetPosition().y > mapBound.y - size.y) {
-		GetPosition().x = max(0.3, min(GetPosition().x, mapBound.x + 22));
+		GetPosition().x = max(0.3f, min(GetPosition().x, mapBound.x + 22));
 		GetPosition().y = min(GetPosition().y, mapBound.y - size.y);
 		GetVelocity().x = 0;
 	}

@@ -15,7 +15,7 @@ Camera::Camera(Vec2 pos, Vec2 size) : Viewport(pos, size)
 
 Vec2 Camera::GetCamSize()
 {
-	return Vec2(this->d3dvp.Width, this->d3dvp.Height);
+	return Vec2((float)this->d3dvp.Width, (float)this->d3dvp.Height);
 }
 
 RectF Camera::GetBoundingBox()

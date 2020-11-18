@@ -8,7 +8,7 @@ CSprite::CSprite(string id, int left, int top, int width, int height, int xPivot
 	this->top = top;
 	this->width = width;
 	this->height = height;
-	this->pivot = D3DXVECTOR3(xPivot, yPivot, 0);
+	this->pivot = D3DXVECTOR3((float)xPivot, (float)yPivot, 0);
 	this->texture = texture;
 }
 

@@ -21,7 +21,7 @@ MovingShell::MovingShell(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 	koopas->GetGravity() = KP_GRAVITY;
 	koopas->SetVelocity(Vec2(KP_SPEED * koopas->GetFacing(), 0));
 
-	koopas->GetDistance() = koopas->GetVelocity() * dt;
+	koopas->GetDistance() = koopas->GetVelocity() * (float)dt;
 }
 
 void MovingShell::InitResource(bool force)
@@ -47,9 +47,9 @@ void MovingShell::FinalUpdate()
 			k->GetDistance() = collisionCal->GetClampDistance();
 		}
 		k->GetPosition() += k->GetDistance();
-		k->GetDistance() = k->GetVelocity() * CGame::Time().ElapsedGameTime;
+		k->GetDistance() = k->GetVelocity() * (float)CGame::Time().ElapsedGameTime;
 
-		k->SetFacing(-k->GetVelocity().x / abs(k->GetVelocity().x));
+		k->SetFacing((int)(-k->GetVelocity().x / abs(k->GetVelocity().x)));
 	}
 }
 
@@ -61,8 +61,8 @@ void MovingShell::Update()
 		}
 		DWORD dt = CGame::Time().ElapsedGameTime;
 
-		k->GetVelocity().y += k->GetGravity() * dt;
-		k->GetDistance() = k->GetVelocity() * dt;
+		k->GetVelocity().y += k->GetGravity() * (float)dt;
+		k->GetDistance() = k->GetVelocity() * (float)dt;
 	}
 }
 

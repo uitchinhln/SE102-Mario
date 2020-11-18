@@ -57,7 +57,7 @@ void CAnimation::Render(D3DCOLOR overlay)
 
 void CAnimation::Render(int runTime, int totalTime, D3DCOLOR overlay)
 {
-	int frameIndex = max(0, min(trunc(runTime / (totalTime / frames.size())), frames.size() - 1));
+	int frameIndex = (int)max(0, min(trunc(runTime / (totalTime / frames.size())), frames.size() - 1));
 
 	frames[frameIndex]->GetSprite()->Draw(transform->Position.x, transform->Position.y, *transform, overlay);
 }

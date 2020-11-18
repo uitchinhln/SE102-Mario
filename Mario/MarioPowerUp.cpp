@@ -112,14 +112,17 @@ void MarioPowerUp::MoveUpdate()
 
 			//skid start detect
 			if (m->IsOnGround() && m->GetVelocity().x * keySign < 0) {
-				m->GetSkid() = m->GetVelocity().x / abs(m->GetVelocity().x);
+				m->GetSkid() = (int) (m->GetVelocity().x / abs(m->GetVelocity().x));
+			}
+			else {
+				m->SetSkid(0);
 			}
 
 			if (m->GetMovingState() != MovingStates::CROUCH || m->IsOnGround()) {
 				m->SetMovingState(MovingStates::WALK);
 			}
 			m->GetAccelerate().x = MARIO_WALK_ACCELERATION * keySign;
-			m->GetDrag() = MARIO_WALK_DRAG_FORCE;
+			m->GetDrag() = m->IsOnGround() ? MARIO_WALK_DRAG_FORCE : 0;
 			float maxSpeed = MARIO_WALK_SPEED;
 
 			if (keyboard.IsKeyDown(DIK_A)) {
@@ -127,7 +130,7 @@ void MarioPowerUp::MoveUpdate()
 					m->SetMovingState(MovingStates::RUN);
 				}
 				m->GetAccelerate().x = (m->GetSkid() ? MARIO_SKID_ACCELERATION : MARIO_RUN_ACCELERATION) * keySign;
-				m->GetDrag() = MARIO_RUN_DRAG_FORCE;
+				m->GetDrag() = m->IsOnGround() ? MARIO_RUN_DRAG_FORCE : 0;
 				maxSpeed = MARIO_RUN_SPEED;
 			}
 
@@ -301,8 +304,8 @@ void MarioPowerUp::Update()
 	if (shared_ptr<Mario> m = mario.lock()) {
 		DWORD dt = CGame::Time().ElapsedGameTime;
 
-		m->GetVelocity().y += m->GetGravity() * dt;
-		m->GetDistance() = m->GetVelocity() * dt;
+		m->GetVelocity().y += m->GetGravity() * (float)dt;
+		m->GetDistance() = m->GetVelocity() * (float)dt;
 	}
 }
 
@@ -391,8 +394,8 @@ void MarioPowerUp::Render()
 
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
-		selectedAnimation->SetPlayScale(max(0.4f, min(abs(m->GetVelocity().x) / MARIO_WALK_SPEED, 4)) * 1.5);
-		selectedAnimation->GetTransform()->Scale = Vec2(m->GetFacing(), 1);
+		selectedAnimation->SetPlayScale(max(0.4f, min(abs(m->GetVelocity().x) / MARIO_WALK_SPEED, 4)) * 1.5f);
+		selectedAnimation->GetTransform()->Scale = Vec2((float)m->GetFacing(), 1);
 		selectedAnimation->GetTransform()->Position = m->GetPosition() - cam;
 		selectedAnimation->Render();
 	}

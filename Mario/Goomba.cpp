@@ -14,7 +14,7 @@ Goomba::Goomba()
 	this->GetGravity() = GB_GRAVITY;
 	this->Velocity = Vec2(GB_SPEED * facing, 0);
 
-	this->Distance = Velocity * dt;
+	this->Distance = Velocity * (float)dt;
 }
 
 void Goomba::InitResource()
@@ -104,8 +104,8 @@ void Goomba::Update()
 	}
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
-	GetVelocity().y += GetGravity() * dt;
-	GetDistance() = GetVelocity() * dt;
+	GetVelocity().y += GetGravity() * (float)dt;
+	GetDistance() = GetVelocity() * (float)dt;
 }
 
 void Goomba::FinalUpdate()
@@ -114,7 +114,7 @@ void Goomba::FinalUpdate()
 		Distance = collisionCal->GetClampDistance();
 	}
 	Position += Distance;
-	Distance = Velocity * CGame::Time().ElapsedGameTime;
+	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
 	collisionCal->Clear();
 }
 

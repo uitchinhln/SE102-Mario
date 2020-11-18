@@ -23,7 +23,7 @@ DefaultKoopas::DefaultKoopas(shared_ptr<Koopas> koopas)
 	koopas->GetGravity() = KP_GRAVITY;
 	koopas->SetVelocity(Vec2(KP_SPEED * koopas->GetFacing(), 0));
 
-	koopas->GetDistance() = koopas->GetVelocity() * dt;
+	koopas->GetDistance() = koopas->GetVelocity() * (float) dt;
 }
 
 void DefaultKoopas::InitResource(bool force)
@@ -109,8 +109,8 @@ void DefaultKoopas::Update()
 		}
 		DWORD dt = CGame::Time().ElapsedGameTime;
 
-		k->GetVelocity().y += k->GetGravity() * dt;
-		k->GetDistance() = k->GetVelocity() * dt;
+		k->GetVelocity().y += k->GetGravity() * (float)dt;
+		k->GetDistance() = k->GetVelocity() * (float) dt;
 	}
 }
 
@@ -123,9 +123,9 @@ void DefaultKoopas::FinalUpdate()
 			k->GetDistance() = collisionCal->GetClampDistance();
 		}
 		k->GetPosition() += k->GetDistance();
-		k->GetDistance() = k->GetVelocity() * CGame::Time().ElapsedGameTime;
+		k->GetDistance() = k->GetVelocity() * (float) CGame::Time().ElapsedGameTime;
 
-		k->SetFacing(-k->GetVelocity().x / abs(k->GetVelocity().x));
+		k->SetFacing((int)(-k->GetVelocity().x / abs(k->GetVelocity().x)));
 	}
 }
 
@@ -142,7 +142,7 @@ void DefaultKoopas::Render()
 			ani = this->animations["Die"];
 		}
 
-		ani->GetTransform()->Scale.x = k->GetFacing();
+		ani->GetTransform()->Scale.x = (float) k->GetFacing();
 		ani->GetTransform()->Position = k->GetPosition() - cam;
 		ani->Render();
 	}

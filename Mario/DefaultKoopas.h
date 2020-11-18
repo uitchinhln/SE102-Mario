@@ -39,8 +39,8 @@ protected:
 
 	unordered_map<string, shared_ptr<CAnimation>> animations;
 
-	float KP_GRAVITY = 0.00133f * 1.5;
-	float KP_SPEED = 0.18;
+	float KP_GRAVITY = 0.00133f * 1.5f;
+	float KP_SPEED = 0.18f;
 	long KP_DESTROY_DELAY = 3000;
 
 	Vec2 size = Vec2(45, 45);

@@ -11,7 +11,7 @@ void Stopwatch::Start()
 	if (!isRunning)
 	{
 		isRunning = true;
-		startTimeStamp = GetTickCount();
+		startTimeStamp = (long) GetTickCount64();
 	}
 }
 
@@ -19,8 +19,8 @@ void Stopwatch::Stop()
 {
 	if (isRunning)
 	{
-		DWORD endTimeStamp = GetTickCount();
-		DWORD elapsedPeriod = endTimeStamp - startTimeStamp;
+		long endTimeStamp = (long) GetTickCount64();
+		long elapsedPeriod = endTimeStamp - startTimeStamp;
 		elapsed += elapsedPeriod;
 		isRunning = false;
 	}
@@ -51,12 +51,12 @@ long Stopwatch::Elapsed()
 
 long Stopwatch::GetElapsedTime()
 {
-	DWORD timeElapsed = elapsed;
+	long timeElapsed = elapsed;
 
 	if (isRunning)
 	{
-		DWORD currentTimeStamp = GetTickCount();
-		DWORD elapsedUntilNow = currentTimeStamp - startTimeStamp;
+		long currentTimeStamp = (long) GetTickCount64();
+		long elapsedUntilNow = currentTimeStamp - startTimeStamp;
 		timeElapsed += elapsedUntilNow;
 	}
 	return timeElapsed;

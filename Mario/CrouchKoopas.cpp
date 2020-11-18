@@ -20,7 +20,7 @@ CrouchKoopas::CrouchKoopas(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas
 	koopas->GetGravity() = KP_GRAVITY;
 	koopas->SetVelocity(Vec2(0, 0));
 
-	koopas->GetDistance() = koopas->GetVelocity() * dt;
+	koopas->GetDistance() = koopas->GetVelocity() * (float) dt;
 
 	respawnTimer.Start();
 }
@@ -50,7 +50,7 @@ void CrouchKoopas::FinalUpdate()
 			//k->GetDistance().x = 0;
 		}
 		k->GetPosition() += k->GetDistance();
-		k->GetDistance() = k->GetVelocity() * CGame::Time().ElapsedGameTime;
+		k->GetDistance() = k->GetVelocity() * (float) CGame::Time().ElapsedGameTime;
 
 		if (respawnTimer.Elapsed() >= KP_RESPAWN_TIME) {
 			k->SetPower(make_shared<DefaultKoopas>(k));

@@ -76,8 +76,8 @@ void QuestionBlock::Update()
 {
 	if (state == QuestionBlockStates::Bouncing) {
 		DWORD dt = CGame::Time().ElapsedGameTime;
-		Velocity.y += Gravity * dt;
-		Distance = Velocity * dt;
+		Velocity.y += Gravity * (float)dt;
+		Distance = Velocity * (float)dt;
 	}
 }
 

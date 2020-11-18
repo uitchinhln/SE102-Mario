@@ -66,7 +66,7 @@ void GameObject::FinalUpdate()
 		Distance = collisionCal->GetClampDistance();
 	}
 	Position += Distance;
-	Distance = Velocity * CGame::Time().ElapsedGameTime;
+	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
 }
 
 void GameObject::SetCollisionCalculator(shared_ptr<CollisionCalculator> calc)

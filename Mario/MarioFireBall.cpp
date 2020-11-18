@@ -28,7 +28,7 @@ void MarioFireBall::Reset()
 		this->Gravity = FIREBALL_GRAVITY;
 		this->Velocity = Vec2(FIREBALL_SPEED * facing, 0);
 
-		this->Distance = Velocity * dt;
+		this->Distance = Velocity * (float)dt;
 	}
 }
 
@@ -72,8 +72,8 @@ void MarioFireBall::Update()
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
-	GetVelocity().y += GetGravity() * dt;
-	GetDistance() = GetVelocity() * dt;
+	GetVelocity().y += GetGravity() * (float)dt;
+	GetDistance() = GetVelocity() * (float)dt;
 }
 
 void MarioFireBall::FinalUpdate()
