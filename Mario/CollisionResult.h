@@ -2,15 +2,13 @@
 #include "Utils.h"
 #include "IColliable.h"
 
-struct SweptCollisionResult {
+class SweptCollisionResult {
+public:
 	float TimeToCollide;
 	Direction Direction = Direction::None;
 	Vec2 Distance;
 
-	static SweptCollisionResult Empty()
-	{
-		return SweptCollisionResult{ -1, Direction::None };
-	}
+	static SweptCollisionResult Empty;
 };
 
 class CollisionResult

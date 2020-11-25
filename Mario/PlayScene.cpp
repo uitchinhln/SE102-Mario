@@ -50,13 +50,6 @@ void PlayScene::Unload()
 
 void PlayScene::Update()
 {
-	//for (weak_ptr<IColliable> obj : test) {
-	//	if (shared_ptr<IColliable> o = obj.lock()) {
-	//		if (o->IsActive()) continue;
-	//		DebugOut(L"%d:\t%s still alive\n", CGame::Time().TotalGameTime, ToLPCWSTR(o->GetObjectType().ToString()));
-	//	}
-	//}
-
 	gameMap->Update();
 
 	mario->Update();
@@ -67,24 +60,15 @@ void PlayScene::Update()
 	vector<shared_ptr<IColliable>> objs;
 	objs.clear();
 	objs.insert(objs.end(), objects.begin(), objects.end());
-
-	//vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(mario->GetPosition(), mario->GetHitBox(), mario->GetDistance());
-	//objs.insert(objs.end(), tiles.begin(), tiles.end());
 	objs.insert(objs.end(), mapObjects.begin(), mapObjects.end());
 	mario->CollisionUpdate(&objs);	
 
+	objs.push_back(this->mario);
 	for (shared_ptr<GameObject> obj : objects) {
-		objs.clear();
-		//tiles.clear();
-
-		objs.push_back(this->mario);
-		objs.insert(objs.end(), objects.begin(), objects.end());
-
-		//tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
-		//objs.insert(objs.end(), tiles.begin(), tiles.end());
-		objs.insert(objs.end(), mapObjects.begin(), mapObjects.end());
-
+		//auto start = std::chrono::high_resolution_clock::now();
 		obj->CollisionUpdate(&objs);
+		//auto finish = std::chrono::high_resolution_clock::now();
+		//DebugOut(L"%s\t%d\n", ToLPCWSTR(obj->GetObjectType().ToString()), std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 	}
 
 	mario->StatusUpdate();
@@ -163,12 +147,6 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	if (strcmp(type, MEntityType::GhostBlock.ToString().c_str()) == 0) {
 		mapObjects.push_back(GhostBlock::CreateGhostBlock(fixedPos, size));
 	}
-}
-
-void PlayScene::SpawnEntity(shared_ptr<GameObject> entity)
-{
-	CScene::SpawnEntity(entity);
-	//test.push_back(entity);
 }
 
 void PlayScene::HookEvent()

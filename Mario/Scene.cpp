@@ -19,9 +19,6 @@ void CScene::Update()
 	for (shared_ptr<GameObject> obj : objects) {
 		objs.clear();
 		objs.insert(objs.end(), objects.begin(), objects.end());
-
-		vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
-		objs.insert(objs.end(), tiles.begin(), tiles.end());
 		
 		obj->CollisionUpdate(&objs);
 	}

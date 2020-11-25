@@ -63,7 +63,11 @@ ObjectType MarioTailed::GetObjectType()
 
 RectF MarioTailed::GetHitBox()
 {
-	return RectF(Position.x, Position.y, Position.x + size.x, Position.y + size.y);
+	hitbox.left = Position.x;
+	hitbox.top = Position.y;
+	hitbox.right = Position.x + size.x;
+	hitbox.bottom = Position.y + size.y;
+	return hitbox;
 }
 
 bool MarioTailed::IsGetThrough(IColliable& object, Direction direction)

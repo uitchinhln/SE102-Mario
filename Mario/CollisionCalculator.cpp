@@ -12,27 +12,24 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 	results.clear();
 
 	if (shared_ptr<IColliable> sp = object.lock()) {
+		//auto start = std::chrono::high_resolution_clock::now();
 		for each (shared_ptr<IColliable> coO in (*objects))
 		{
 			if (!coO->IsActive()) continue;
+
 			SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), sp->GetDistance() - coO->GetDistance(), coO->GetHitBox(), debug);
-			shared_ptr<CollisionResult> result = make_shared<CollisionResult>(aabbResult, coO);
 
-			if (debug)
-				DebugOut(L"direction = %s\t t=%f\n", ToLPCWSTR(GetDirectionName(result->SAABBResult.Direction)), result->SAABBResult.TimeToCollide);
-
-			if (result->SAABBResult.TimeToCollide > 0 && result->SAABBResult.TimeToCollide <= 1.0f)
-				temp.push_back(result);
-
-			if (debug)
-				DebugOut(L"---------------------------------------\n");
+			if (aabbResult.TimeToCollide > 0 && aabbResult.TimeToCollide <= 1.0f)
+				temp.push_back(make_shared<CollisionResult>(aabbResult, coO));
 		}
+		//auto finish = std::chrono::high_resolution_clock::now();
+		//DebugOut(L"%s\t%d\n", ToLPCWSTR(sp->GetObjectType().ToString()), std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 		sort(temp.begin(), temp.end(), CollisionResult::LPCompare);
 
 		for each (shared_ptr<CollisionResult> coll in temp) {
 			for each (shared_ptr<CollisionResult> result in results) {
 				if (result->GameColliableObject->IsGetThrough(*sp, result->SAABBResult.Direction)) continue;
-				Vec2 dis = (sp->GetDistance() - coll->GameColliableObject->GetDistance());
+				Vec2 dis = sp->GetDistance() - coll->GameColliableObject->GetDistance();
 				if (ToVector(coll->SAABBResult.Direction).x != 0) {
 					dis.y *= result->SAABBResult.TimeToCollide;
 					dis.y -= 0.1f;
@@ -50,12 +47,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 			if (coll->SAABBResult.TimeToCollide > 0 && coll->SAABBResult.TimeToCollide <= 1.0f) {
 				results.push_back(coll);
 			}
-			else {
-				if (debug)
-					DebugOut(L"Da loai va cham %s khong hop le\n", ToLPCWSTR(GetDirectionName(coll->SAABBResult.Direction)));
-			}
 		}
-		//sort(results.begin(), results.end(), CollisionResult::LPCompare);
 	}	
 	GetClampDistance();
 	return results;
@@ -73,10 +65,8 @@ Vec2 CollisionCalculator::GetClampDistance()
 		float min_tx = 1.0f;
 		float min_ty = 1.0f;
 
-		float nx = 0.0f;
-		float ny = 0.0f;
-		float rdx = 0.0f;
-		float rdy = 0.0f;
+		jet.x = 0.0f;
+		jet.y = 0.0f;
 
 		for each (shared_ptr<CollisionResult> c in results)
 		{
@@ -85,19 +75,15 @@ Vec2 CollisionCalculator::GetClampDistance()
 
 			if (c->SAABBResult.TimeToCollide < min_tx && cn.x != 0) {
 				min_tx = c->SAABBResult.TimeToCollide;
-				nx = cn.x;
-				rdx = c->SAABBResult.Distance.x;
+				jet.x = cn.x;
 			}
 
 			if (c->SAABBResult.TimeToCollide < min_ty && cn.y != 0) {
 				min_ty = c->SAABBResult.TimeToCollide;
-				ny = cn.y;
-				rdy = c->SAABBResult.Distance.y;
+				jet.y = cn.y;
 			}
 		}
-		jet = Vec2(nx, ny);
-		return Vec2(min_tx * d.x + nx * 0.002f, min_ty * d.y + ny * 0.002f);
-		//return Vec2(min_tx * d.x, min_ty * d.y);
+		return Vec2(min_tx * d.x + jet.x * 0.002f, min_ty * d.y + jet.y * 0.002f);
 	}
 	return VECTOR_0;
 }
@@ -119,65 +105,18 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 
 	float t_entry;
 	float t_exit;
-
-	if (debug) {
-		DebugOut(L"Moving bounding: top=%f\tleft=%f\tbottom=%f\tright=%f\t\n", m.top, m.left, m.bottom, m.right);
-		DebugOut(L"Static bounding: top=%f\tleft=%f\tbottom=%f\tright=%f\t\n", s.top, s.left, s.bottom, s.right);
-		DebugOut(L"Distance: x=%f\ty=%f\n", distance.x, distance.y);
-	}
-
-	// SAT test
-	//CPolygon c1;
-	//c1.vertices.push_back(Vec2(m.left, m.top));
-	//c1.vertices.push_back(Vec2(m.right, m.top));
-	//c1.vertices.push_back(Vec2(m.right, m.bottom));
-	//c1.vertices.push_back(Vec2(m.left, m.bottom));
-	//CPolygon c2;
-	//c2.vertices.push_back(Vec2(s.left, s.top));
-	//c2.vertices.push_back(Vec2(s.right, s.top));
-	//c2.vertices.push_back(Vec2(s.right, s.bottom));
-	//c2.vertices.push_back(Vec2(s.left, s.bottom));
-
-	//c1.BuildEdge();
-	//c2.BuildEdge();
-
-	//Vec2 perpVel = Vec2Utils::Normalize(Vec2(abs(distance.y), abs(distance.x)));
-
-	//float minA = 99999, minB = 99999, maxA = 0, maxB = 0;
-
-	//c1.Project(perpVel, minA, maxA);
-	//c2.Project(perpVel, minB, maxB);
-
-	//if (debug) {
-	//	DebugOut(L"perpVel: %f\t%f\t\n", perpVel.x, perpVel.y);
-	//	DebugOut(L"Project: %f\t%f\t%f\t%f\t\n", minA, maxA, minB, maxB);
-	//	DebugOut(L"Project: %f\n", (minA <= minB ? minB - maxA : minA - maxB));
-	//}
-	//if ((minA <= minB ? minB - maxA : minA - maxB) >= 0) {
-	//	return SweptCollisionResult::Empty();
-	//}
-	//
+	
 	// Broad-phase test 
-	//
-
 	float bl = distance.x > 0 ? m.left : m.left + distance.x;
 	float bt = distance.y > 0 ? m.top : m.top + distance.y;
 	float br = distance.x > 0 ? m.right + distance.x : m.right;
 	float bb = distance.y > 0 ? m.bottom + distance.y : m.bottom;
 
 	if (br < s.left || bl > s.right || bb < s.top || bt > s.bottom)
-		return SweptCollisionResult::Empty();
-
-	if (debug) {
-		DebugOut(L"1Not Exit\n");
-	}
+		return SweptCollisionResult::Empty;
 
 	if (distance.x == 0 && distance.y == 0)
-		return SweptCollisionResult::Empty();
-
-	if (debug) {
-		DebugOut(L"2Not Exit\n");
-	}
+		return SweptCollisionResult::Empty;
 
 	if (distance.x > 0)
 	{
@@ -224,28 +163,14 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 		ty_exit = dy_exit / distance.y;
 	}
 
-	if (debug) {
-		DebugOut(L"dx_entry=%f\tdy_entry=%f\n", dx_entry, dy_entry);
-		DebugOut(L"tx_entry=%f\tty_entry=%f\n", tx_entry, ty_entry);
-	}
-
 	if ((tx_entry < 0.0f && ty_entry < 0.0f) || tx_entry > 1.0f || ty_entry > 1.0f)
-		return SweptCollisionResult::Empty();
+		return SweptCollisionResult::Empty;
 
 	t_entry = max(tx_entry, ty_entry);
 	t_exit = min(tx_exit, ty_exit);
 
-	if (debug) {
-		DebugOut(L"tx_exit=%f\ty_exit=%f\n", tx_exit, ty_exit);
-		DebugOut(L"t_entry=%f\t_exit=%f\n", t_entry, t_exit);
-	}
-
 	if (t_entry > t_exit)
-		return SweptCollisionResult::Empty();
-
-	if (debug) {
-		DebugOut(L"3Not Exit\n");
-	}
+		return SweptCollisionResult::Empty;
 
 	Direction direction = Direction::None;
 

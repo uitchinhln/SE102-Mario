@@ -22,12 +22,12 @@ void EndmapReward::InitResource()
 
 void EndmapReward::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 {
-	coObj->clear();
-	coObj->push_back(SceneManager::GetInstance()->GetPlayer<Mario>());
+	vector<shared_ptr<IColliable>> mro;
+	mro.push_back(SceneManager::GetInstance()->GetPlayer<Mario>());
 
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
 
-	collisionCal->CalcPotentialCollisions(coObj, false);
+	collisionCal->CalcPotentialCollisions(&mro, false);
 }
 
 void EndmapReward::FinalUpdate()

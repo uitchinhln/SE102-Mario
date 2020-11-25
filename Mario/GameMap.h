@@ -49,8 +49,6 @@ public:
 
 	virtual bool IsTileObjectSupport();
 
-	virtual vector<shared_ptr<IColliable>> GetColliableTileAround(Vec2 absolutePosition, RectF boundingBox, Vec2 radius);
-
 	static shared_ptr<CGameMap> FromTMX(string filePath, string fileName);
 	~CGameMap();
 };

@@ -44,5 +44,6 @@ protected:
 	long KP_DESTROY_DELAY = 3000;
 
 	Vec2 size = Vec2(45, 45);
+	RectF hitbox;
 };
 

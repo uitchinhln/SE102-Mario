@@ -12,12 +12,6 @@ SweptCollisionResult CustomCollisionCalc::SweptAABB(RectF m, Vec2 distance, Rect
 	float t_entry;
 	float t_exit;
 
-	if (debug) {
-		DebugOut(L"Moving bounding: top=%f\tleft=%f\tbottom=%f\tright=%f\t\n", m.top, m.left, m.bottom, m.right);
-		DebugOut(L"Static bounding: top=%f\tleft=%f\tbottom=%f\tright=%f\t\n", s.top, s.left, s.bottom, s.right);
-		DebugOut(L"Distance: x=%f\ty=%f\n", distance.x, distance.y);
-	}
-
 	//
 	// Broad-phase test 
 	//
@@ -28,18 +22,10 @@ SweptCollisionResult CustomCollisionCalc::SweptAABB(RectF m, Vec2 distance, Rect
 	float bb = distance.y > 0 ? m.bottom + distance.y : m.bottom;
 
 	if (br < s.left || bl > s.right || bb < s.top || bt > s.bottom)
-		return SweptCollisionResult::Empty();
-
-	if (debug) {
-		DebugOut(L"1Not Exit\n");
-	}
+		return SweptCollisionResult::Empty;
 
 	if (distance.x == 0 && distance.y == 0)
-		return SweptCollisionResult::Empty();
-
-	if (debug) {
-		DebugOut(L"2Not Exit\n");
-	}
+		return SweptCollisionResult::Empty;
 
 	if (distance.x > 0)
 	{
@@ -86,28 +72,14 @@ SweptCollisionResult CustomCollisionCalc::SweptAABB(RectF m, Vec2 distance, Rect
 		ty_exit = dy_exit / distance.y;
 	}
 
-	if (debug) {
-		DebugOut(L"dx_entry=%f\tdy_entry=%f\n", dx_entry, dy_entry);
-		DebugOut(L"tx_entry=%f\tty_entry=%f\n", tx_entry, ty_entry);
-	}
-
 	if ((tx_entry < 0.0f && ty_entry < 0.0f) || tx_entry > 1.0f || ty_entry > 1.0f)
-		return SweptCollisionResult::Empty();
+		return SweptCollisionResult::Empty;
 
 	t_entry = max(tx_entry, ty_entry);
 	t_exit = min(tx_exit, ty_exit);
 
-	if (debug) {
-		DebugOut(L"tx_exit=%f\ty_exit=%f\n", tx_exit, ty_exit);
-		DebugOut(L"t_entry=%f\t_exit=%f\n", t_entry, t_exit);
-	}
-
 	if (t_entry > t_exit)
-		return SweptCollisionResult::Empty();
-
-	if (debug) {
-		DebugOut(L"3Not Exit\n");
-	}
+		return SweptCollisionResult::Empty;
 
 	Direction direction = Direction::None;
 
@@ -157,7 +129,7 @@ SweptCollisionResult CustomCollisionCalc::SweptAABB(RectF m, Vec2 distance, Rect
 		}
 
 		if ((minA <= minB ? minB - maxA : minA - maxB) > -min((m.right - m.left), (s.right - s.left)) / 2) {
-			return SweptCollisionResult::Empty();
+			return SweptCollisionResult::Empty;
 		}
 	}
 

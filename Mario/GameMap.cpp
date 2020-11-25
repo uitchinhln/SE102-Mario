@@ -60,74 +60,36 @@ void CGameMap::Render()
 	CGame::GetInstance()->GetGraphic().Clear(backgroundColor);
 	Transform trans = Transform();
 
-	/*int col = (int) (this->camera->Position.x / tileWidth);
+	int col = (int) (this->camera->Position.x / tileWidth);
 	int row = (int) (this->camera->Position.y / tileHeight);
 
 	if (col > 0) col--;
 	if (row > 0) row--;
 
 	Vec2 camSize = Vec2(this->camera->GetCamSize().x / tileWidth, this->camera->GetCamSize().y / tileHeight);
+	Vec2 camPos = camera->Position;
 
+	auto start = std::chrono::high_resolution_clock::now();
 	for (int i = col; i < camSize.x + col + 2; i++) {
 		for (int j = row; j < camSize.y + row + 2; j++) {
 
-			int x = (int) (i * tileWidth - this->camera->Position.x);
-			int y = (int) (j * tileHeight - this->camera->Position.y);
+			int x = i * tileWidth - camPos.x;
+			int y = j * tileHeight - camPos.y;
 
-			for (shared_ptr<CLayer> layer : layers) {
+			/*for (shared_ptr<CLayer> layer : layers) {
 				if (layer->Hidden) continue;
 				int id = layer->GetTileID(i, j);
-				this->GetTileSetByTileID(id)->Draw(id, (float)x, (float)y, trans);
-			}
+				this->GetTileSetByTileID(id)->Draw(id, x, y, trans);
+			}*/
 		}
-	}*/
+	}
+	auto finish = std::chrono::high_resolution_clock::now();
+	DebugOut(L"Render: \t%d\n", std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 }
 
 bool CGameMap::IsTileObjectSupport()
 {
 	return this->tileObjectSupport;
-}
-
-vector<shared_ptr<IColliable>> CGameMap::GetColliableTileAround(Vec2 absolutePosition, RectF boundingBox, Vec2 radius)
-{
-	vector<shared_ptr<IColliable>> result;
-
-	if (!tileObjectSupport) {
-		return result;
-	}
-
-	int col = (int)trunc(absolutePosition.x / tileWidth);
-	int row = (int)trunc(absolutePosition.y / tileHeight);
-
-	int col_end = (int)trunc(col + (boundingBox.right - boundingBox.left) / tileWidth);
-	int row_end = (int)trunc(row + (boundingBox.bottom - boundingBox.top) / tileHeight);
-
-	Vec2 r = Vec2((abs(radius.x) + tileWidth * 2) / tileWidth, (abs(radius.y) + tileHeight * 2) / tileHeight);
-
-	//DebugOut(L"R (%f, %f)\n", r.x, r.y);
-
-	int is = (int) (col - r.x < 0 ? 0 : col - r.x);
-	int ie = (int) (col_end + r.x > width ? width : col_end + r.x);
-	int js = (int) (row - r.y < 0 ? 0 : row - r.y);
-	int je = (int) (row_end + r.y > height ? height : row_end + r.y);
-
-	for (int i = is; i <= ie; i++) {
-		for (int j = js; j <= je; j++) {
-
-			if (i >= col && i <= col_end && j >= row && j <= row_end) continue;
-
-			for (shared_ptr<CLayer> layer : layers) {
-				int id = layer->GetTileID(i, j);
-				if (shared_ptr<ColliableTile> tile = GetTileByGID(id)) {
-					int x = i * tileWidth;
-					int y = j * tileHeight;
-					shared_ptr<ColliableTileAdapter> adapter = make_shared<ColliableTileAdapter>(tile, Vec2((float)x, (float)y));
-					result.push_back(adapter);
-				}
-			}
-		}
-	}
-	return result;
 }
 
 shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
@@ -158,12 +120,14 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 		gameMap->tileObjectSupport = mapProps.GetBool("TileObjectSupport", true);
 
 		//Load tileset
+		gameMap->tilesets.clear();
 		for (TiXmlElement* node = root->FirstChildElement("tileset"); node != nullptr; node = node->NextSiblingElement("tileset")) {
 			shared_ptr<CTileSet> tileSet = make_shared<CTileSet>(node, filePath);
 			gameMap->tilesets[tileSet->GetFirstGID()] = tileSet;
 		}
 
 		//Load layer
+		gameMap->layers.clear();
 		for (TiXmlElement* node = root->FirstChildElement("layer"); node != nullptr; node = node->NextSiblingElement("layer")) {
 			shared_ptr<CLayer> layer = make_shared<CLayer>(node, gameMap);
 			gameMap->AddLayer(layer);

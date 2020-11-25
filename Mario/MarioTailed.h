@@ -29,6 +29,7 @@ public:
 
 protected:
 	Vec2 size = Vec2(12, 12);
+	RectF hitbox;
 	weak_ptr<Mario> holder;
 	long attackTime = 0;
 	int attackState = 1;

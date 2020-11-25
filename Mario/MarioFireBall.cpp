@@ -92,7 +92,11 @@ ObjectType MarioFireBall::GetObjectType()
 
 RectF MarioFireBall::GetHitBox()
 {
-	return RectF(this->Position.x, this->Position.y, this->Position.x + size.x, this->Position.y + size.y);
+	hitbox.left = Position.x;
+	hitbox.top = Position.y;
+	hitbox.right = Position.x + size.x;
+	hitbox.bottom = Position.y + size.y;
+	return hitbox;
 }
 
 bool MarioFireBall::IsGetThrough(IColliable& object, Direction direction)

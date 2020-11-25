@@ -126,7 +126,7 @@ void MarioPowerUp::MoveProcess()
 				m->GetSkid() = m->GetVelocity().x > 0 ? 1 : -1;
 
 				if (!m->IsOnGround()) {
-					m->GetAccelerate().x = MARIO_SKID_ACCELERATION * (keySign >> 1);
+					m->GetAccelerate().x = MARIO_SKID_ACCELERATION * (keySign << 1);
 				}
 			}
 

@@ -18,5 +18,7 @@ public:
 
 protected:
 	Vec2 size;
+
+	RectF hitbox;
 };
 

@@ -27,8 +27,6 @@ public:
 
 	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
 
-	virtual void SpawnEntity(shared_ptr<GameObject> entity);
-
 protected:
 	vector<shared_ptr<IColliable>> mapObjects;
 	vector<weak_ptr<IColliable>> test;

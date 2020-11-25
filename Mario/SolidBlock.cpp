@@ -8,7 +8,11 @@ ObjectType SolidBlock::GetObjectType()
 
 RectF SolidBlock::GetHitBox()
 {
-	return RectF(Position.x, Position.y, Position.x + size.x, Position.y + size.y);
+	hitbox.left = Position.x;
+	hitbox.top = Position.y;
+	hitbox.right = Position.x + size.x;
+	hitbox.bottom = Position.y + size.y;
+	return hitbox;
 }
 
 bool SolidBlock::IsGetThrough(IColliable& object, Direction direction)

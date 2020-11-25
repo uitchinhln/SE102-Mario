@@ -31,6 +31,8 @@ public:
 
 protected:
 	Vec2 size = Vec2(24, 24);
+	RectF hitbox;
+
 	weak_ptr<Mario> holder;
 
 	float FIREBALL_GRAVITY = 0.00193f;
