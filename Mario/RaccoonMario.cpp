@@ -148,12 +148,11 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 					else {
 						m->GetVelocity().x = maxSpeed * sign;
 					}
-					DebugOut(L"Max speed: %f\n", m->GetVelocity().x);
 				}
 			}
 
 			if (m->IsOnGround() && m->GetJumpingState() == JumpingStates::IDLE) {
-				m->GetVelocity().y = -0.1f;
+				m->GetVelocity().y = -MARIO_JUMP_FORCE;
 				m->SetJumpingState(JumpingStates::JUMP);
 				m->SetOnGround(false);
 

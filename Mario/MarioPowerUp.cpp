@@ -183,7 +183,7 @@ void MarioPowerUp::MiniJumpDetect(bool forceX)
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (keyboard.IsKeyDown(DIK_X) || forceX) {
 			if (m->IsOnGround() && m->GetJumpingState() == JumpingStates::IDLE) {
-				m->GetVelocity().y = -0.00001f;
+				m->GetVelocity().y = -MARIO_JUMP_FORCE;
 				m->SetJumpingState(JumpingStates::JUMP);
 				m->SetOnGround(false);
 				m->SetCanHighJump(false);
@@ -233,6 +233,7 @@ void MarioPowerUp::JumpUpdate()
 			}
 			else
 			{
+				m->GetVelocity().y -= jumpForce;
 				m->SetJumpingState(JumpingStates::HIGH_JUMP);
 				m->GetGravity() = MARIO_GRAVITY;
 			}
