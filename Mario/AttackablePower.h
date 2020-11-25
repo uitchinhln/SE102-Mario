@@ -15,7 +15,7 @@ public:
 
     virtual void InAttackProgress() = 0;
 
-    virtual void MoveUpdate() override;
+    virtual void MoveProcess() override;
 
     virtual void OnAttackDetroyed();
 

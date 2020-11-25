@@ -97,7 +97,7 @@ void MarioPowerUp::StatusUpdate()
 	}
 }
 
-void MarioPowerUp::MoveUpdate()
+void MarioPowerUp::MoveProcess()
 {
 	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 	DWORD dt = CGame::Time().ElapsedGameTime;
@@ -105,12 +105,6 @@ void MarioPowerUp::MoveUpdate()
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (keyboard.IsKeyDown(DIK_LEFT) || keyboard.IsKeyDown(DIK_RIGHT)) {
 			int keySign = keyboard.IsKeyDown(DIK_LEFT) ? -1 : 1;
-
-			//skid start detect
-			m->GetSkid() = 0;
-			if (m->IsOnGround() && m->GetVelocity().x * keySign < 0) {
-				m->GetSkid() = (int) (m->GetVelocity().x / abs(m->GetVelocity().x));
-			}
 
 			if (m->GetMovingState() != MovingStates::CROUCH || m->IsOnGround()) {
 				m->SetMovingState(MovingStates::WALK);
@@ -124,6 +118,16 @@ void MarioPowerUp::MoveUpdate()
 				}
 				m->GetAccelerate().x = (m->GetSkid() ? MARIO_SKID_ACCELERATION : MARIO_RUN_ACCELERATION) * keySign;
 				maxSpeed = MARIO_RUN_SPEED;
+			}
+
+			//skid start detect
+			m->GetSkid() = 0;
+			if (m->GetVelocity().x * keySign < 0) {
+				m->GetSkid() = m->GetVelocity().x > 0 ? 1 : -1;
+
+				if (!m->IsOnGround()) {
+					m->GetAccelerate().x = MARIO_SKID_ACCELERATION * (keySign >> 1);
+				}
 			}
 
 			m->GetVelocity().x += m->GetAccelerate().x * dt;
@@ -161,7 +165,7 @@ void MarioPowerUp::MoveUpdate()
 	}
 }
 
-void MarioPowerUp::PowerMeterUpdate()
+void MarioPowerUp::PowerMeterProcess()
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
@@ -192,7 +196,7 @@ void MarioPowerUp::MiniJumpDetect(bool forceX)
 	}
 }
 
-void MarioPowerUp::JumpUpdate()
+void MarioPowerUp::JumpProcess()
 {
 	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 	DWORD dt = CGame::Time().ElapsedGameTime;
@@ -288,10 +292,10 @@ void MarioPowerUp::CrouchUpdate()
 
 void MarioPowerUp::Update()
 {
-	MoveUpdate();
-	PowerMeterUpdate();
+	MoveProcess();
+	PowerMeterProcess();
 	MiniJumpDetect();
-	JumpUpdate();
+	JumpProcess();
 	CrouchUpdate();
 
 	if (shared_ptr<Mario> m = mario.lock()) {

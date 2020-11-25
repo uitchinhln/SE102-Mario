@@ -79,10 +79,10 @@ void CTileSet::Draw(int gid, float x, float y, Transform& transform, D3DCOLOR ov
 {
 	if (gid < firstgid) return;
 	RECT r;
-	r.top = (long) (((gid - firstgid) / columns) * tileSize.y);
-	r.left = (long) (((gid - firstgid) % columns) * tileSize.x);
-	r.bottom = (long) (r.top + tileSize.y);
-	r.right = (long) (r.left + tileSize.x);
+	r.top = ((gid - firstgid) / columns) * tileSize.y;
+	r.left = ((gid - firstgid) % columns) * tileSize.x;
+	r.bottom = r.top + tileSize.y;
+	r.right = r.left + tileSize.x;
 
 	CGame::GetInstance()->GetGraphic().Draw(x, y, D3DXVECTOR3(0, 0, 0), texture, r, transform, overlay);
 }

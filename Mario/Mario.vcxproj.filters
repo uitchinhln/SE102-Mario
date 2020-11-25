@@ -333,6 +333,12 @@
     <ClCompile Include="FontManager.cpp">
       <Filter>Framework\Font</Filter>
     </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>MarioGame\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldScene.cpp">
+      <Filter>MarioGame\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -529,6 +535,12 @@
     </ClInclude>
     <ClInclude Include="FontManager.h">
       <Filter>Framework\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>MarioGame\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldScene.h">
+      <Filter>MarioGame\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

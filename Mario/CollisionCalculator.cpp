@@ -55,7 +55,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 					DebugOut(L"Da loai va cham %s khong hop le\n", ToLPCWSTR(GetDirectionName(coll->SAABBResult.Direction)));
 			}
 		}
-		sort(results.begin(), results.end(), CollisionResult::LPCompare);
+		//sort(results.begin(), results.end(), CollisionResult::LPCompare);
 	}	
 	GetClampDistance();
 	return results;

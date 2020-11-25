@@ -21,13 +21,13 @@ public:
 
 	virtual void StatusUpdate();
 
-	virtual void MoveUpdate();
+	virtual void MoveProcess();
 
-	virtual void PowerMeterUpdate();
+	virtual void PowerMeterProcess();
 
 	virtual void MiniJumpDetect(bool forceX = false);
 
-	virtual void JumpUpdate();
+	virtual void JumpProcess();
 
 	virtual void CrouchUpdate();
 

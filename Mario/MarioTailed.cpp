@@ -5,12 +5,12 @@ MarioTailed::MarioTailed(shared_ptr<Mario> holder, DWORD attackTime)
 {
 	this->holder = holder;
 	this->attackTime = attackTime;
+	this->speed = 138.0f / attackTime;
 	MovingUpdate();
 }
 
 void MarioTailed::MovingUpdate()
 {
-	float speed = 138.0f / attackTime;
 	if (shared_ptr<Mario> m = holder.lock()) {
 		this->Position = m->GetPosition() + Vec2(0, 54);
 
@@ -23,7 +23,7 @@ void MarioTailed::MovingUpdate()
 			this->Position.x = m->GetHitBox().right - 12;
 		}
 
-		Distance.x = 1.0f + speed * (attackTime / 2) * this->GetFacing();
+		Distance.x = 1.0f + speed * (attackTime >> 1) * this->GetFacing();
 		Distance.y = 0;
 	}
 }
@@ -34,8 +34,8 @@ void MarioTailed::Update()
 		attackTimer.Start();
 	}
 	MovingUpdate();	
-	//DebugOut(L"Distance(%f, %f)\n", Distance.x, Distance.y);
-	if (attackTimer.Elapsed() >= attackTime / 2) {
+
+	if (attackTimer.Elapsed() >= attackTime >> 1) {
 		if (attackState > 0) {
 			attackState *= -1;
 			attackTimer.Restart();

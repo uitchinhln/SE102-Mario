@@ -21,7 +21,7 @@ public:
 
 	virtual void MiniJumpDetect(bool forceX) override;
 
-	virtual void PowerMeterUpdate() override;
+	virtual void PowerMeterProcess() override;
 
 	virtual void JumpAnimation() override;
 

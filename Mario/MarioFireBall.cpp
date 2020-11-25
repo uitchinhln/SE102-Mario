@@ -39,16 +39,9 @@ void MarioFireBall::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 	vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);
 
 	// No collision occured, proceed normally
-	if (coResult.size() == 0)
-	{
-		//GetPosition() += GetDistance();
-	}
-	else {
-		//GetDistance() = collisionCal->GetNewDistance();
+	if (coResult.size() > 0) {
 		Vec2 jet = collisionCal->GetJet();
-		//GetPosition() += GetDistance();
 
-		//if (jet.x != 0) GetVelocity().x = 0;
 		if (jet.y != 0) GetVelocity().y = jet.y * FIREBALL_JUMP_FORCE;
 	}
 

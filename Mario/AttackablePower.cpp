@@ -41,7 +41,7 @@ void AttackablePower::AttackUpdate()
 	}
 }
 
-void AttackablePower::MoveUpdate()
+void AttackablePower::MoveProcess()
 {
 	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 
@@ -52,7 +52,7 @@ void AttackablePower::MoveUpdate()
 				return;
 			}			
 		}
-		MarioPowerUp::MoveUpdate();
+		MarioPowerUp::MoveProcess();
 	}
 }
 

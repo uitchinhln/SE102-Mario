@@ -32,6 +32,7 @@ protected:
 	weak_ptr<Mario> holder;
 	long attackTime = 0;
 	int attackState = 1;
+	float speed = 0;
 	Stopwatch attackTimer;
 };
 

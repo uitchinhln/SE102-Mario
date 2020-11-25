@@ -52,7 +52,7 @@ void Goomba::StatusUpdate()
 		Vec2 jet = collisionCal->GetJet();
 		//GetPosition() += GetDistance();
 
-		if (jet.x != 0) GetVelocity().x *= GetVelocity().x / abs(GetVelocity().x) * jet.x;
+		if (jet.x != 0) GetVelocity().x *= (GetVelocity().x < 0 ? -1 : 1) * jet.x;
 		if (jet.y != 0) GetVelocity().y = 0;
 
 		for each (shared_ptr<CollisionResult> coll in coResult)

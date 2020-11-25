@@ -68,20 +68,20 @@ void PlayScene::Update()
 	objs.clear();
 	objs.insert(objs.end(), objects.begin(), objects.end());
 
-	vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(mario->GetPosition(), mario->GetHitBox(), mario->GetDistance());
-	objs.insert(objs.end(), tiles.begin(), tiles.end());
+	//vector<shared_ptr<IColliable>> tiles = gameMap->GetColliableTileAround(mario->GetPosition(), mario->GetHitBox(), mario->GetDistance());
+	//objs.insert(objs.end(), tiles.begin(), tiles.end());
 	objs.insert(objs.end(), mapObjects.begin(), mapObjects.end());
 	mario->CollisionUpdate(&objs);	
 
 	for (shared_ptr<GameObject> obj : objects) {
 		objs.clear();
-		tiles.clear();
+		//tiles.clear();
 
 		objs.push_back(this->mario);
 		objs.insert(objs.end(), objects.begin(), objects.end());
 
-		tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
-		objs.insert(objs.end(), tiles.begin(), tiles.end());
+		//tiles = gameMap->GetColliableTileAround(obj->GetPosition(), obj->GetHitBox(), obj->GetDistance());
+		//objs.insert(objs.end(), tiles.begin(), tiles.end());
 		objs.insert(objs.end(), mapObjects.begin(), mapObjects.end());
 
 		obj->CollisionUpdate(&objs);

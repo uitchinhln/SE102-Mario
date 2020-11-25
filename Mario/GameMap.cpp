@@ -60,7 +60,7 @@ void CGameMap::Render()
 	CGame::GetInstance()->GetGraphic().Clear(backgroundColor);
 	Transform trans = Transform();
 
-	int col = (int) (this->camera->Position.x / tileWidth);
+	/*int col = (int) (this->camera->Position.x / tileWidth);
 	int row = (int) (this->camera->Position.y / tileHeight);
 
 	if (col > 0) col--;
@@ -76,11 +76,11 @@ void CGameMap::Render()
 
 			for (shared_ptr<CLayer> layer : layers) {
 				if (layer->Hidden) continue;
-				int id = layer->GetTileID(i % width, j % height);
+				int id = layer->GetTileID(i, j);
 				this->GetTileSetByTileID(id)->Draw(id, (float)x, (float)y, trans);
 			}
 		}
-	}
+	}*/
 }
 
 bool CGameMap::IsTileObjectSupport()

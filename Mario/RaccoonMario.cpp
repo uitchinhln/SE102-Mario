@@ -185,7 +185,7 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 	}
 }
 
-void RaccoonMario::PowerMeterUpdate()
+void RaccoonMario::PowerMeterProcess()
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
