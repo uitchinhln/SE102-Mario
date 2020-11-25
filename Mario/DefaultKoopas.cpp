@@ -41,9 +41,7 @@ void DefaultKoopas::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
 
-		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
-
-		collisionCal->CalcPotentialCollisions(coObj, false);
+		k->GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
 	}
 }
 

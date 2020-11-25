@@ -11,7 +11,7 @@ void Stopwatch::Start()
 	if (!isRunning)
 	{
 		isRunning = true;
-		startTimeStamp = (long) GetTickCount64();
+		startTimeStamp = std::chrono::high_resolution_clock::now();
 	}
 }
 
@@ -19,8 +19,8 @@ void Stopwatch::Stop()
 {
 	if (isRunning)
 	{
-		long endTimeStamp = (long) GetTickCount64();
-		long elapsedPeriod = endTimeStamp - startTimeStamp;
+		std::chrono::steady_clock::time_point endTimeStamp = std::chrono::high_resolution_clock::now();
+		long elapsedPeriod = std::chrono::duration_cast<std::chrono::milliseconds>(endTimeStamp - startTimeStamp).count();
 		elapsed += elapsedPeriod;
 		isRunning = false;
 	}
@@ -29,7 +29,7 @@ void Stopwatch::Stop()
 void Stopwatch::Reset()
 {
 	elapsed = 0;
-	startTimeStamp = 0;
+	startTimeStamp = std::chrono::high_resolution_clock::now();
 	isRunning = false;
 }
 
@@ -55,8 +55,8 @@ long Stopwatch::GetElapsedTime()
 
 	if (isRunning)
 	{
-		long currentTimeStamp = (long) GetTickCount64();
-		long elapsedUntilNow = currentTimeStamp - startTimeStamp;
+		std::chrono::steady_clock::time_point currentTimeStamp = std::chrono::high_resolution_clock::now();
+		long elapsedUntilNow = std::chrono::duration_cast<std::chrono::milliseconds>(currentTimeStamp - startTimeStamp).count();
 		timeElapsed += elapsedUntilNow;
 	}
 	return timeElapsed;

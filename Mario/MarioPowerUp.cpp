@@ -28,10 +28,7 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
-
-		shared_ptr<CollisionCalculator> collisionCal = m->GetCollisionCalc();
-
-		vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);
+		m->GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
 	}
 }
 

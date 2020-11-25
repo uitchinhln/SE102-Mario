@@ -1,5 +1,5 @@
 #pragma once
-#include <string>
+#include <chrono>
 
 class Stopwatch
 {
@@ -17,7 +17,7 @@ public:
 
 protected:
 	long elapsed;
-	long startTimeStamp;
+	std::chrono::steady_clock::time_point startTimeStamp;
 	bool isRunning;
 
 	long GetElapsedTime();

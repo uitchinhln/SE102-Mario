@@ -69,22 +69,24 @@ void CGameMap::Render()
 	Vec2 camSize = Vec2(this->camera->GetCamSize().x / tileWidth, this->camera->GetCamSize().y / tileHeight);
 	Vec2 camPos = camera->Position;
 
-	auto start = std::chrono::high_resolution_clock::now();
+	shared_ptr<CTileSet> tileset = this->tilesets[1];
+
+	//auto start = std::chrono::high_resolution_clock::now();
 	for (int i = col; i < camSize.x + col + 2; i++) {
 		for (int j = row; j < camSize.y + row + 2; j++) {
 
 			int x = i * tileWidth - camPos.x;
 			int y = j * tileHeight - camPos.y;
 
-			/*for (shared_ptr<CLayer> layer : layers) {
+			for (shared_ptr<CLayer> layer : layers) {
 				if (layer->Hidden) continue;
 				int id = layer->GetTileID(i, j);
-				this->GetTileSetByTileID(id)->Draw(id, x, y, trans);
-			}*/
+				tileset->Draw(id, x, y, trans);
+			}
 		}
 	}
-	auto finish = std::chrono::high_resolution_clock::now();
-	DebugOut(L"Render: \t%d\n", std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//DebugOut(L"Render: \t%d\n", std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 }
 
 bool CGameMap::IsTileObjectSupport()

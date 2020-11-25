@@ -64,12 +64,12 @@ void PlayScene::Update()
 	mario->CollisionUpdate(&objs);	
 
 	objs.push_back(this->mario);
+	//auto start = std::chrono::high_resolution_clock::now();
 	for (shared_ptr<GameObject> obj : objects) {
-		//auto start = std::chrono::high_resolution_clock::now();
 		obj->CollisionUpdate(&objs);
-		//auto finish = std::chrono::high_resolution_clock::now();
-		//DebugOut(L"%s\t%d\n", ToLPCWSTR(obj->GetObjectType().ToString()), std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 	}
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//DebugOut(L"%s\t%d\n", ToLPCWSTR(""), std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 
 	mario->StatusUpdate();
 	for (shared_ptr<GameObject> obj : objects) {

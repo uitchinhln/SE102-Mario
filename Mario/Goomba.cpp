@@ -32,9 +32,7 @@ void Goomba::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 {
 	if (state != GoombaState::WALK) return;
 
-	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
-
-	collisionCal->CalcPotentialCollisions(coObj, false);
+	GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
 }
 
 void Goomba::StatusUpdate()

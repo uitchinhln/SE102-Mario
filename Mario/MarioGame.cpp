@@ -66,7 +66,10 @@ void MarioGame::LoadResources()
 
 void MarioGame::Update()
 {
+	//auto start = std::chrono::high_resolution_clock::now();
 	SceneManager::GetInstance()->Update();
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//DebugOut(L"Render: \t%d\n", std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 }
 
 void MarioGame::Draw()
