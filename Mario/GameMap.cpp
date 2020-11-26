@@ -57,6 +57,7 @@ void CGameMap::Update()
 
 void CGameMap::Render()
 {
+	//auto start = std::chrono::high_resolution_clock::now();
 	CGame::GetInstance()->GetGraphic().Clear(backgroundColor);
 	Transform trans = Transform();
 
@@ -69,19 +70,16 @@ void CGameMap::Render()
 	Vec2 camSize = Vec2(this->camera->GetCamSize().x / tileWidth, this->camera->GetCamSize().y / tileHeight);
 	Vec2 camPos = camera->Position;
 
-	shared_ptr<CTileSet> tileset = this->tilesets[1];
-
-	//auto start = std::chrono::high_resolution_clock::now();
 	for (int i = col; i < camSize.x + col + 2; i++) {
 		for (int j = row; j < camSize.y + row + 2; j++) {
 
 			int x = i * tileWidth - camPos.x;
 			int y = j * tileHeight - camPos.y;
 
-			for (shared_ptr<CLayer> layer : layers) {
-				if (layer->Hidden) continue;
+			for (CLayer* layer : ptr_layers) {
+				if (!layer->Visible()) continue;
 				int id = layer->GetTileID(i, j);
-				tileset->Draw(id, x, y, trans);
+				tileSet->Draw(id, x, y, trans);
 			}
 		}
 	}
@@ -126,13 +124,15 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 		for (TiXmlElement* node = root->FirstChildElement("tileset"); node != nullptr; node = node->NextSiblingElement("tileset")) {
 			shared_ptr<CTileSet> tileSet = make_shared<CTileSet>(node, filePath);
 			gameMap->tilesets[tileSet->GetFirstGID()] = tileSet;
+			gameMap->tileSet = &*tileSet;
 		}
 
 		//Load layer
-		gameMap->layers.clear();
+		gameMap->ptr_layers.clear();
 		for (TiXmlElement* node = root->FirstChildElement("layer"); node != nullptr; node = node->NextSiblingElement("layer")) {
-			shared_ptr<CLayer> layer = make_shared<CLayer>(node, gameMap);
-			gameMap->AddLayer(layer);
+			//shared_ptr<CLayer> layer = make_shared<CLayer>(node, gameMap);
+			//gameMap->AddLayer(layer);
+			gameMap->ptr_layers.push_back(new CLayer(node, gameMap));
 		}
 
 		for (TiXmlElement* node = root->FirstChildElement("objectgroup"); node != nullptr; node = node->NextSiblingElement("objectgroup")) {
@@ -162,4 +162,8 @@ CGameMap::~CGameMap()
 {
 	layers.clear();
 	tilesets.clear();
+	
+	for (CLayer* layer : ptr_layers) {
+		delete layer;
+	}
 }

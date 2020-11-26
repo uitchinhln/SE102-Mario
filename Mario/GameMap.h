@@ -20,8 +20,11 @@ class CGameMap
 
 	shared_ptr<Camera> camera;
 
-	map<int, shared_ptr<CTileSet>> tilesets;
+	map<int, shared_ptr<CTileSet>> tilesets; 
+	CTileSet* tileSet;
+
 	vector<shared_ptr<CLayer>> layers;
+	vector<CLayer*> ptr_layers;
 	
 public:
 	CGameMap();

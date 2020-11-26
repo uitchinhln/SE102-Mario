@@ -89,6 +89,7 @@ void PlayScene::Update()
 
 void PlayScene::Render()
 {
+	//auto start = std::chrono::high_resolution_clock::now();
 	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));	
 	CGame::GetInstance()->GetGraphic().SetViewport(camera);
 
@@ -98,6 +99,8 @@ void PlayScene::Render()
 	CGame::GetInstance()->GetGraphic().SetViewport(hud);
 
 	hud->Render();
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//DebugOut(L"Loop: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 void PlayScene::OnKeyDown(int key)

@@ -43,6 +43,9 @@ LPCWSTR ToLPCWSTR(string st);
 template<class key_type, class value_type>
 pair<key_type, value_type> floor_entry(const map<key_type, value_type> &input, const key_type& key);
 
+template<class key_type, class value_type>
+value_type floor_value(const map<key_type, value_type> &input, const key_type& key);
+
 template<typename Base, typename T>
 bool instanceof(const T*);
 
@@ -60,6 +63,19 @@ inline pair<key_type, value_type> floor_entry(const map<key_type, value_type>& i
 		--it;
 	}
 	return pair<key_type, value_type>((*it).first, (*it).second);
+}
+
+template<class key_type, class value_type>
+inline value_type floor_value(const map<key_type, value_type>& input, const key_type& key)
+{
+	if (input.size() < 2)
+		return (input.begin())->second;
+
+	auto it = input.lower_bound(key);
+	if (it != input.begin() && (*it).first != key) {
+		--it;
+	}
+	return it->second;
 }
 
 template<typename Base, typename T>

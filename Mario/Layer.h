@@ -18,7 +18,7 @@ public:
 	CLayer();
 	CLayer(TiXmlElement* data, shared_ptr<CGameMap> map);
 
-	bool Hidden = false;
+	bool Visible();
 
 	int GetTileID(int x, int y);
 

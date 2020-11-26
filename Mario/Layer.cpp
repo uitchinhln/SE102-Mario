@@ -11,12 +11,12 @@ CLayer::CLayer()
 }
 
 //,  = 44
-CLayer::CLayer(TiXmlElement* data, shared_ptr<CGameMap> map)
+CLayer::CLayer(TiXmlElement* data, shared_ptr<CGameMap> map) : CLayer()
 {
 	data->QueryIntAttribute("id", &this->id);
 	data->QueryIntAttribute("width", &this->width);
 	data->QueryIntAttribute("height", &this->height);
-	data->QueryIntAttribute("visible", &this->visible);
+	if (data->Attribute("visible") != nullptr) data->QueryIntAttribute("visible", &this->visible);
 	
 	tiles = new int*[this->width];
 
@@ -54,6 +54,11 @@ CLayer::CLayer(TiXmlElement* data, shared_ptr<CGameMap> map)
 	}
 
 	splitted.clear();
+}
+
+bool CLayer::Visible()
+{
+	return visible;
 }
 
 int CLayer::GetTileID(int x, int y)

@@ -24,7 +24,10 @@ void CGame::Render()
 		// Clear back buffer with a color
 		graphic->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
+		//auto start = std::chrono::high_resolution_clock::now();
 		Draw();
+		//auto finish = std::chrono::high_resolution_clock::now();
+		//DebugOut(L"Loop: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 
 		graphic->GetSpriteHandler()->End();
 		graphic->GetDirect3DDevice()->EndScene();
@@ -56,11 +59,14 @@ int CGame::Run()
 
 			keyboard->ProcessKeyboard();
 			Update();
+			//auto start = std::chrono::high_resolution_clock::now();
 			Render();
+			//auto finish = std::chrono::high_resolution_clock::now();
+			//DebugOut(L"Loop: %d\t%d\n", accumulatedTime, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 		}
 		else {
 			Sleep(tickPerFrame - accumulatedTime);
-		}			
+		}
 	}
 
 	isRunning = false;
