@@ -73,9 +73,6 @@
     <Filter Include="Framework\World\Phys\Enviroment">
       <UniqueIdentifier>{9b42d7be-a11e-4e04-97a5-e92646bafb5e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\Tile">
-      <UniqueIdentifier>{81d7b873-7f17-4962-981e-9abd1f37526b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MarioGame\Scenes">
       <UniqueIdentifier>{4ac2ba6b-bb58-4ccd-88c0-c7c4a26c1d06}</UniqueIdentifier>
     </Filter>
@@ -225,13 +222,7 @@
     <ClCompile Include="IColliable.cpp">
       <Filter>Framework\World\Phys\Collision</Filter>
     </ClCompile>
-    <ClCompile Include="ColliableTile.cpp">
-      <Filter>Framework\Scene\Map\Tile</Filter>
-    </ClCompile>
     <ClCompile Include="TileSet.cpp">
-      <Filter>Framework\Scene\Map\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="ColliableTileAdapter.cpp">
       <Filter>Framework\Scene\Map\Tile</Filter>
     </ClCompile>
     <ClCompile Include="CollisionCalculator.cpp">
@@ -245,9 +236,6 @@
     </ClCompile>
     <ClCompile Include="MEntityType.cpp">
       <Filter>MarioGame\Entity</Filter>
-    </ClCompile>
-    <ClCompile Include="GhostTile.cpp">
-      <Filter>MarioGame\Tile</Filter>
     </ClCompile>
     <ClCompile Include="ObjectType.cpp">
       <Filter>Framework\World\GameObject</Filter>
@@ -275,9 +263,6 @@
     </ClCompile>
     <ClCompile Include="AttackablePower.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
-    </ClCompile>
-    <ClCompile Include="CloudTile.cpp">
-      <Filter>MarioGame\Tile</Filter>
     </ClCompile>
     <ClCompile Include="Goomba.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
@@ -428,13 +413,7 @@
     <ClInclude Include="IColliable.h">
       <Filter>Framework\World\Phys\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="ColliableTile.h">
-      <Filter>Framework\Scene\Map\Tile</Filter>
-    </ClInclude>
     <ClInclude Include="TileSet.h">
-      <Filter>Framework\Scene\Map\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="ColliableTileAdapter.h">
       <Filter>Framework\Scene\Map\Tile</Filter>
     </ClInclude>
     <ClInclude Include="CollisionCalculator.h">
@@ -448,9 +427,6 @@
     </ClInclude>
     <ClInclude Include="MEntityType.h">
       <Filter>MarioGame\Entity</Filter>
-    </ClInclude>
-    <ClInclude Include="GhostTile.h">
-      <Filter>MarioGame\Tile</Filter>
     </ClInclude>
     <ClInclude Include="ObjectType.h">
       <Filter>Framework\World\GameObject</Filter>
@@ -478,9 +454,6 @@
     </ClInclude>
     <ClInclude Include="AttackablePower.h">
       <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
-    </ClInclude>
-    <ClInclude Include="CloudTile.h">
-      <Filter>MarioGame\Tile</Filter>
     </ClInclude>
     <ClInclude Include="Goomba.h">
       <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>

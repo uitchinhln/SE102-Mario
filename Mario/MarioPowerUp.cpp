@@ -427,14 +427,6 @@ void MarioPowerUp::OnKeyUp(int key)
 	}
 }
 
-void MarioPowerUp::Init(TiXmlElement* data)
-{
-	TiXmlElement* anis = data->FirstChildElement("AnimationSet");
-	for (TiXmlElement* node = anis->FirstChildElement(); node != NULL; node = node->NextSiblingElement()) {
-		this->animations[node->Value()] = AnimationManager::GetInstance()->Get(node->Attribute("animationId"))->Clone();
-	}
-}
-
 shared_ptr<Mario> MarioPowerUp::GetMario()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {

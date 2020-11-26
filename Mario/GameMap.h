@@ -14,14 +14,11 @@ class CGameMap
 	int tileWidth;
 	int tileHeight;
 
-	bool tileObjectSupport = false;
-
 	D3DCOLOR backgroundColor = D3DCOLOR_XRGB(181, 235, 242);
 
 	shared_ptr<Camera> camera;
 
-	map<int, shared_ptr<CTileSet>> tilesets; 
-	CTileSet* tileSet;
+	shared_ptr<CTileSet> tileSet;
 
 	vector<shared_ptr<CLayer>> layers;
 	vector<CLayer*> ptr_layers;
@@ -36,21 +33,13 @@ public:
 
 	virtual Vec2 GetBound();
 
-	virtual shared_ptr<CTileSet> GetTileSetByTileID(int id);
-
-	virtual shared_ptr<ColliableTile> GetTileByGID(int id);
-
 	virtual Vec2 GetTileSize();
-
-	virtual void AddTileSet(int firstgid, shared_ptr<CTileSet> tileSet);
 
 	virtual void AddLayer(shared_ptr<CLayer> layer);
 
 	virtual void Update();
 
 	virtual void Render();
-
-	virtual bool IsTileObjectSupport();
 
 	static shared_ptr<CGameMap> FromTMX(string filePath, string fileName);
 	~CGameMap();

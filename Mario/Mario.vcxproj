@@ -146,14 +146,12 @@
   <ItemGroup>
     <ClCompile Include="AttackablePower.cpp" />
     <ClCompile Include="BigMario.cpp" />
-    <ClCompile Include="CloudTile.cpp" />
     <ClCompile Include="CrouchKoopas.cpp" />
     <ClCompile Include="CustomCollisionCalc.cpp" />
     <ClCompile Include="DefaultKoopas.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GhostBlock.cpp" />
-    <ClCompile Include="GhostTile.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
@@ -170,8 +168,6 @@
     <ClCompile Include="AnimationFrame.cpp" />
     <ClCompile Include="AnimationManager.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="ColliableTile.cpp" />
-    <ClCompile Include="ColliableTileAdapter.cpp" />
     <ClCompile Include="CollisionCalculator.cpp" />
     <ClCompile Include="CollisionResult.cpp" />
     <ClCompile Include="DataTag.cpp" />
@@ -217,14 +213,12 @@
   <ItemGroup>
     <ClInclude Include="AttackablePower.h" />
     <ClInclude Include="BigMario.h" />
-    <ClInclude Include="CloudTile.h" />
     <ClInclude Include="CrouchKoopas.h" />
     <ClInclude Include="CustomCollisionCalc.h" />
     <ClInclude Include="DefaultKoopas.h" />
     <ClInclude Include="EndmapReward.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GhostBlock.h" />
-    <ClInclude Include="GhostTile.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="IEnviroment.h" />
@@ -241,8 +235,6 @@
     <ClInclude Include="AnimationFrame.h" />
     <ClInclude Include="AnimationManager.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="ColliableTile.h" />
-    <ClInclude Include="ColliableTileAdapter.h" />
     <ClInclude Include="CollisionCalculator.h" />
     <ClInclude Include="CollisionResult.h" />
     <ClInclude Include="DataTag.h" />

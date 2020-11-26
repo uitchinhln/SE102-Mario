@@ -5,8 +5,6 @@
 #include "FireMario.h"
 #include "SceneManager.h"
 #include "RaccoonMario.h"
-#include "GhostTile.h"
-#include "CloudTile.h"
 #include "Events.h"
 
 #include "Goomba.h"
@@ -64,12 +62,9 @@ void PlayScene::Update()
 	mario->CollisionUpdate(&objs);	
 
 	objs.push_back(this->mario);
-	//auto start = std::chrono::high_resolution_clock::now();
 	for (shared_ptr<GameObject> obj : objects) {
 		obj->CollisionUpdate(&objs);
 	}
-	//auto finish = std::chrono::high_resolution_clock::now();
-	//DebugOut(L"%s\t%d\n", ToLPCWSTR(""), std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 
 	mario->StatusUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
@@ -100,7 +95,7 @@ void PlayScene::Render()
 
 	hud->Render();
 	//auto finish = std::chrono::high_resolution_clock::now();
-	//DebugOut(L"Loop: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
+	//DebugOut(L"PlayScene Render: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 void PlayScene::OnKeyDown(int key)
@@ -113,17 +108,6 @@ void PlayScene::OnKeyUp(int key)
 {
 	if (!mario) return;
 	mario->OnKeyUp(key);
-}
-
-void PlayScene::ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<ColliableTile>& tile, MapProperties& props)
-{
-	if (strcmp(type, "GhostTile") == 0) {
-		tile = make_shared<GhostTile>(id);
-	}
-
-	if (strcmp(type, "CloudTile") == 0) {
-		tile = make_shared<CloudTile>(id);
-	}
 }
 
 void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props)
@@ -154,12 +138,10 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 
 void PlayScene::HookEvent()
 {
-	__hook(&Events::ColliableTilePreLoadEvent, Events::GetInstance(), &PlayScene::ColliableTilePreLoadEvent);
 	__hook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
 }
 
 void PlayScene::UnhookEvent()
 {
-	__unhook(&Events::ColliableTilePreLoadEvent, Events::GetInstance(), &PlayScene::ColliableTilePreLoadEvent);
 	__unhook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
 }

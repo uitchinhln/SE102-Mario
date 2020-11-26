@@ -27,29 +27,7 @@ CLayer::CLayer(TiXmlElement* data, shared_ptr<CGameMap> map) : CLayer()
 		tiles[i] = new int[height];
 		for (int j = 0; j < this->height; j++) {
 			int tileId = stoi(splitted[i + j * width]);
-
-			if (shared_ptr<ColliableTile> tile = map->GetTileByGID(tileId)) {
-				Vec2 pos = map->GetTileSize();
-				pos.x *= i;
-				pos.y *= j;
-
-				bool cancel = false;
-
-				ObjectType type = tile->GetObjectType();
-
-				__raise (*Events::GetInstance()).MapBlockPreLoadEvent(tileId, type, pos, cancel);
-
-				if (cancel) {
-					tiles[i][j] = 0;
-				}
-				else {
-					tiles[i][j] = tileId;
-				}
-			}
-			else {
-				tiles[i][j] = tileId;
-			}
-
+			tiles[i][j] = tileId;
 		}
 	}
 
@@ -63,10 +41,14 @@ bool CLayer::Visible()
 
 int CLayer::GetTileID(int x, int y)
 {
-	if (!visible) return 0;
 	if (x < 0 || x >= width) return 0;
 	if (y < 0 || y >= height) return 0;
 	return tiles[x][y];
+}
+
+int** CLayer::GetTiles()
+{
+	return tiles;
 }
 
 CLayer::~CLayer()

@@ -23,8 +23,6 @@ public:
 
 	virtual void OnKeyUp(int key) override;
 
-	virtual void ColliableTilePreLoadEvent(const char* type, int id, shared_ptr<ColliableTile>& tile, MapProperties& props);
-
 	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
 
 protected:

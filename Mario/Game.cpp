@@ -57,9 +57,9 @@ int CGame::Run()
 			gameTime.TotalGameTime += accumulatedTime;
 			gameTime.SetPreviousTicks(now);
 
+			//auto start = std::chrono::high_resolution_clock::now();
 			keyboard->ProcessKeyboard();
 			Update();
-			//auto start = std::chrono::high_resolution_clock::now();
 			Render();
 			//auto finish = std::chrono::high_resolution_clock::now();
 			//DebugOut(L"Loop: %d\t%d\n", accumulatedTime, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());

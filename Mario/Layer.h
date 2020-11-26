@@ -22,6 +22,8 @@ public:
 
 	int GetTileID(int x, int y);
 
+	int** GetTiles();
+
 	~CLayer();
 };
 

@@ -12,7 +12,7 @@ void Hud::Update()
 
 void Hud::Render()
 {
-	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(181, 235, 242));
+	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));
 
 	//RECT FontRect = scissorRect;
 	////FontRect.left = 10;         // xPos

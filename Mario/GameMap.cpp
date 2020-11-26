@@ -1,6 +1,5 @@
 #include "GameMap.h"
 #include "Transform.h"
-#include "ColliableTileAdapter.h"
 #include "MapProperties.h"
 #include "Events.h"
 
@@ -22,28 +21,9 @@ Vec2 CGameMap::GetBound()
 	return Vec2((float)this->width * (float)tileWidth, (float)this->height * (float)tileHeight);
 }
 
-shared_ptr<CTileSet> CGameMap::GetTileSetByTileID(int id)
-{
-	return floor_entry(tilesets, id).second;
-}
-
-shared_ptr<ColliableTile> CGameMap::GetTileByGID(int id)
-{
-	shared_ptr<CTileSet> tileset = GetTileSetByTileID(id);
-	if (tileset) {
-		return tileset->GetColliableTile(id);
-	}
-	return nullptr;
-}
-
 Vec2 CGameMap::GetTileSize()
 {
 	return Vec2((float)tileWidth, (float)tileHeight);
-}
-
-void CGameMap::AddTileSet(int firstgid, shared_ptr<CTileSet> tileSet)
-{
-	this->tilesets[firstgid] = tileSet;
 }
 
 void CGameMap::AddLayer(shared_ptr<CLayer> layer)
@@ -70,26 +50,27 @@ void CGameMap::Render()
 	Vec2 camSize = Vec2(this->camera->GetCamSize().x / tileWidth, this->camera->GetCamSize().y / tileHeight);
 	Vec2 camPos = camera->Position;
 
-	for (int i = col; i < camSize.x + col + 2; i++) {
-		for (int j = row; j < camSize.y + row + 2; j++) {
+	int firstGID = tileSet->GetFirstGID();
 
-			int x = i * tileWidth - camPos.x;
-			int y = j * tileHeight - camPos.y;
+	for (CLayer* layer : ptr_layers) {
+		if (!layer->Visible()) continue;
 
-			for (CLayer* layer : ptr_layers) {
-				if (!layer->Visible()) continue;
+		for (int i = col; i < camSize.x + col + 2; i++) {
+			for (int j = row; j < camSize.y + row + 2; j++) {
+
 				int id = layer->GetTileID(i, j);
-				tileSet->Draw(id, x, y, trans);
+
+				if (id > firstGID) {
+					int x = i * tileWidth - camPos.x;
+					int y = j * tileHeight - camPos.y;
+
+					tileSet->Draw(id, x, y, trans);
+				}
 			}
 		}
 	}
 	//auto finish = std::chrono::high_resolution_clock::now();
 	//DebugOut(L"Render: \t%d\n", std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
-}
-
-bool CGameMap::IsTileObjectSupport()
-{
-	return this->tileObjectSupport;
 }
 
 shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
@@ -117,22 +98,15 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 		//Load custom properties
 		TiXmlElement* properties = root->FirstChildElement("properties");
 		MapProperties mapProps = MapProperties(properties);
-		gameMap->tileObjectSupport = mapProps.GetBool("TileObjectSupport", true);
 
 		//Load tileset
-		gameMap->tilesets.clear();
-		for (TiXmlElement* node = root->FirstChildElement("tileset"); node != nullptr; node = node->NextSiblingElement("tileset")) {
-			shared_ptr<CTileSet> tileSet = make_shared<CTileSet>(node, filePath);
-			gameMap->tilesets[tileSet->GetFirstGID()] = tileSet;
-			gameMap->tileSet = &*tileSet;
-		}
+		gameMap->tileSet = make_shared<CTileSet>(root->FirstChildElement("tileset"), filePath);
 
 		//Load layer
-		gameMap->ptr_layers.clear();
 		for (TiXmlElement* node = root->FirstChildElement("layer"); node != nullptr; node = node->NextSiblingElement("layer")) {
-			//shared_ptr<CLayer> layer = make_shared<CLayer>(node, gameMap);
-			//gameMap->AddLayer(layer);
-			gameMap->ptr_layers.push_back(new CLayer(node, gameMap));
+			shared_ptr<CLayer> layer = make_shared<CLayer>(node, gameMap);
+			gameMap->AddLayer(layer);
+			gameMap->ptr_layers.push_back(&*layer);
 		}
 
 		for (TiXmlElement* node = root->FirstChildElement("objectgroup"); node != nullptr; node = node->NextSiblingElement("objectgroup")) {
@@ -161,9 +135,4 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 CGameMap::~CGameMap()
 {
 	layers.clear();
-	tilesets.clear();
-	
-	for (CLayer* layer : ptr_layers) {
-		delete layer;
-	}
 }

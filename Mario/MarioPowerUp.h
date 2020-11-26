@@ -43,8 +43,6 @@ public:
 
 	virtual void OnKeyUp(int key);
 
-	virtual void Init(TiXmlElement* data);
-
 	virtual shared_ptr<Mario> GetMario();
 
 	virtual ObjectType GetMarioType() = 0;
