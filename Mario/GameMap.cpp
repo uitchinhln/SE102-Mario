@@ -8,14 +8,6 @@ CGameMap::CGameMap()
 	this->width = this->height = this->tileHeight = this->tileWidth = 0;
 }
 
-CGameMap::CGameMap(int width, int height, int tileWidth, int tileHeight)
-{
-	this->width = width;
-	this->height = height;
-	this->tileHeight = tileHeight;
-	this->tileWidth = tileWidth;
-}
-
 Vec2 CGameMap::GetBound()
 {
 	return Vec2((float)this->width * (float)tileWidth, (float)this->height * (float)tileHeight);
@@ -55,17 +47,21 @@ void CGameMap::Render()
 	for (CLayer* layer : ptr_layers) {
 		if (!layer->Visible()) continue;
 
+		int** tiles = layer->GetTiles();
+
 		for (int i = col; i < camSize.x + col + 2; i++) {
+			if (i < 0 || i >= width) continue;
+
 			for (int j = row; j < camSize.y + row + 2; j++) {
+				if (j < 0 || j >= height) continue;
 
-				int id = layer->GetTileID(i, j);
+				int id = tiles[i][j];
+				if (id < firstGID) continue;
 
-				if (id > firstGID) {
-					int x = i * tileWidth - camPos.x;
-					int y = j * tileHeight - camPos.y;
+				int x = i * tileWidth - camPos.x;
+				int y = j * tileHeight - camPos.y;
 
-					tileSet->Draw(id, x, y, trans);
-				}
+				tileSet->Draw(id, x, y, trans);
 			}
 		}
 	}

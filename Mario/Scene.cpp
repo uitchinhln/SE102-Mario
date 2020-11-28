@@ -36,12 +36,15 @@ void CScene::Update()
 
 void CScene::Render()
 {
+	//auto start = std::chrono::high_resolution_clock::now();
 	gameMap->Render();
 
 	for each (shared_ptr<GameObject> obj in objects)
 	{
 		obj->Render();
 	}
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//DebugOut(L"Loop: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 void CScene::SpawnEntity(shared_ptr<GameObject> entity)

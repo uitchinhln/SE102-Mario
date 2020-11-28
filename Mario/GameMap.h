@@ -25,7 +25,6 @@ class CGameMap
 	
 public:
 	CGameMap();
-	CGameMap(int width, int height, int tileWidth, int tileHeight);
 
 	virtual shared_ptr<Camera> GetCamera() { return this->camera; }
 
