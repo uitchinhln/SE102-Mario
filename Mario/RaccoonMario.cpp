@@ -9,6 +9,7 @@
 RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {
 	this->MARIO_ATTACK_TIME = 250;
+	this->MARIO_SUPER_PUSH_FORCE = MARIO_FLYING_UP_FORCE;
 }
 
 void RaccoonMario::InitResource(bool force)
@@ -51,137 +52,34 @@ void RaccoonMario::InAttackProgress()
 {
 }
 
-void RaccoonMario::StatusUpdate()
-{
-}
-
-void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
-{
-	DWORD dt = CGame::Time().ElapsedGameTime;
-	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
-
-	if (shared_ptr<Mario> m = mario.lock()) {
-
-		shared_ptr<CollisionCalculator> collisionCal = m->GetCollisionCalc();		
-
-		vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);
-
-		if (coResult.size() == 0)
-		{
-			//m->GetPosition() += m->GetDistance();
-			m->SetOnGround(false);
-			if (m->GetDistance().y > 0 && m->GetJumpingState() != JumpingStates::SUPER_JUMP && !(keyboard.IsKeyDown(DIK_S) || keyboard.IsKeyDown(DIK_X))) {
-				m->SetJumpingState(JumpingStates::FALLING);
-			}
-		}
-		else {
-			//m->GetDistance() = collisionCal->GetNewDistance();
-			Vec2 jet = collisionCal->GetJet();
-			//m->GetPosition() += m->GetDistance();
-
-			if (jet.x != 0) m->GetVelocity().x = 0;
-			if (jet.y != 0) m->GetVelocity().y = 0;
-		}
-
-		m->SetOnGround(false);
-		for each (shared_ptr<CollisionResult> coll in coResult)
-		{
-			if (coll->SAABBResult.Direction == Direction::Top && !coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction)) {
-				m->SetOnGround(true);
-				if (m->GetJumpingState() != JumpingStates::SUPER_JUMP)
-					m->SetJumpingState(JumpingStates::IDLE);
-				m->GetGravity() = MARIO_GRAVITY;
-			}
-			if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
-				if (coll->GameColliableObject->GetObjectType() == MEntityType::KoopasCrouch) {
-					shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(coll->GameColliableObject);
-
-					if (keyboard.IsKeyDown(DIK_A) && !m->GetInhand()) {
-						m->SetInhand(koopas);
-						koopas->SetHolder(m);
-					}
-				}
-
-				float damage = coll->GameColliableObject->GetDamageFor(*m, coll->SAABBResult.Direction);
-				if (damage > 0) {
-					//Die, down level...
-					DebugOut(L"Damage from enemy: %f\n", damage);
-				}
-				else {
-					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
-						if (coll->GameColliableObject->GetObjectType() != MEntityType::KoopasCrouch) {
-							m->SetOnGround(true);
-							m->SetJumpingState(JumpingStates::IDLE);
-							MiniJumpDetect(true);
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
 bool RaccoonMario::MiniJumpDetect(bool forceX)
 {
 	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
-
 	if (shared_ptr<Mario> m = mario.lock()) {
-		if (m->GetJumpingState() == JumpingStates::FALLING || m->GetJumpingState() == JumpingStates::FLOATING) {
-			m->SetJumpingState(JumpingStates::FALLING);
-			if (m->GetVelocity().y <= MARIO_GRAVITY * 20 * dt) {
-				m->SetJumpingState(JumpingStates::FLOATING);
-			}
-		}
 		if (keyboard.IsKeyDown(DIK_X) || forceX) {
-			if (m->GetJumpingState() == JumpingStates::SUPER_JUMP && m->GetPowerMeter() >= PMETER_MAX) {
-				m->GetVelocity().y = -MARIO_FLYING_UP_FORCE;
+			if (m->GetPowerMeter() >= PMETER_MAX) {
+				m->SetJumpingState(JumpingStates::SUPER_JUMP);
+				m->SetOnGround(false);
+				m->SetJumpBeginPosition(m->GetPosition().y); 
 
-				float maxSpeed = 0.45f;
-				int sign = m->GetVelocity().x < 0 ? -1 : 1;
-
-				if (abs(m->GetVelocity().x) > maxSpeed) {
-					if (abs(m->GetVelocity().x) - maxSpeed > MARIO_RUN_DRAG_FORCE * dt) {
-						m->GetVelocity().x -= MARIO_RUN_DRAG_FORCE * dt * sign;
-					}
-					else {
-						m->GetVelocity().x = maxSpeed * sign;
-					}
+				if (!flyTimer.IsRunning()) {
+					flyTimer.Restart();
 				}
 				return true;
 			}
 
-			if (m->IsOnGround() && m->GetJumpingState() == JumpingStates::IDLE) {
-				m->GetVelocity().y = -MARIO_JUMP_FORCE;
+			if (m->IsOnGround()) {
 				m->SetJumpingState(JumpingStates::JUMP);
 				m->SetOnGround(false);
-
-				if (m->GetPowerMeter() >= PMETER_MAX) {
-					m->SetJumpingState(JumpingStates::SUPER_JUMP);
-					flyTimer.Restart();
-					m->SetCanHighJump(true);
-				}
+				m->SetJumpBeginPosition(m->GetPosition().y);
 				return true;
 			}
 
 			if (m->GetJumpingState() == JumpingStates::FALLING || m->GetJumpingState() == JumpingStates::FLOATING) {
 				m->SetJumpingState(JumpingStates::FLOATING);
-				m->GetVelocity().y = MARIO_GRAVITY * 4 * dt;
-				m->GetGravity() = MARIO_GRAVITY;
-
-				float maxSpeed = 0.24f;
-				int sign = m->GetVelocity().x < 0 ? -1 : 1;
-
-				if (abs(m->GetVelocity().x) > maxSpeed) {
-					if (abs(m->GetVelocity().x) - maxSpeed > MARIO_RUN_DRAG_FORCE * dt) {
-						m->GetVelocity().x -= MARIO_RUN_DRAG_FORCE * dt * sign;
-					}
-					else {
-						m->GetVelocity().x = maxSpeed * sign;
-					}
-
-				}
+				m->GetVelocity().y = MARIO_FLOATING_SPEED * dt;
 			}
 		}
 	}
@@ -196,13 +94,11 @@ void RaccoonMario::PowerMeterProcess()
 		float maxRun = abs(m->GetVelocity().x) > MARIO_RUN_SPEED * 0.85f;
 
 		if (maxRun && m->IsOnGround())
-			m->SetPowerMeter(max(0.0f, min(m->GetPowerMeter() + PMETER_UP_STEP * dt, PMETER_MAX + 1)));
+			m->SetPowerMeter(max(0.0f, min(m->GetPowerMeter() + PMETER_UP_STEP * dt, PMETER_MAX + 0.2)));
 		else {
-			if (m->GetJumpingState() == JumpingStates::SUPER_JUMP) {
+			if (flyTimer.IsRunning()) {
 				if (flyTimer.Elapsed() >= 4000) {
 					m->SetPowerMeter(0);
-					m->SetJumpingState(JumpingStates::FLOATING);
-					m->SetCanHighJump(false);
 					flyTimer.Stop();
 				}
 			}
@@ -210,41 +106,6 @@ void RaccoonMario::PowerMeterProcess()
 				if (m->GetPowerMeter() > 0)
 					m->SetPowerMeter(max(0.0f, min(m->GetPowerMeter() - PMETER_DOWN_STEP * dt, PMETER_MAX)));
 			}
-		}
-		//DebugOut(L"PMeter: %f\n", m->GetPowerMeter());
-	}
-}
-
-void RaccoonMario::JumpAnimation()
-{
-	if (shared_ptr<Mario> m = mario.lock()) {
-		bool apply = false;
-		switch (m->GetJumpingState())
-		{
-		case JumpingStates::SUPER_JUMP:
-			selectedAnimation = animations["Fly"];
-			apply = true;
-			break;
-		case JumpingStates::JUMP:
-			selectedAnimation = animations["Jump"];
-			apply = true;
-			break;
-		case JumpingStates::HIGH_JUMP:
-			selectedAnimation = animations["Jump"];
-			apply = true;
-			break;
-		case JumpingStates::FALLING:
-			selectedAnimation = animations["Fall"];
-			apply = true;
-			break;
-		case JumpingStates::FLOATING:
-			selectedAnimation = animations["Float"];
-			apply = true;
-			break;
-		}
-
-		if (m->GetInhand() && apply) {
-			selectedAnimation = animations["HoldFall"];
 		}
 	}
 }

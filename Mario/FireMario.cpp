@@ -27,6 +27,7 @@ void FireMario::InitResource(bool force)
 		this->animations["HighJump"] = AnimationManager::GetInstance()->Get("ani-fire-mario-high-jump")->Clone();
 		this->animations["Fly"] = AnimationManager::GetInstance()->Get("ani-fire-mario-high-jump")->Clone();
 		this->animations["Fall"] = AnimationManager::GetInstance()->Get("ani-fire-mario-fall")->Clone();
+		this->animations["Float"] = AnimationManager::GetInstance()->Get("ani-fire-mario-high-jump")->Clone();
 		this->animations["Skid"] = AnimationManager::GetInstance()->Get("ani-fire-mario-skid")->Clone();
 		this->animations["Crouch"] = AnimationManager::GetInstance()->Get("ani-fire-mario-crouch")->Clone();
 		this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-fire-mario-kick")->Clone();

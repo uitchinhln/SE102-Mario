@@ -45,7 +45,7 @@ void MarioPowerUp::StatusUpdate()
 		m->SetOnGround(false);
 		if (coResult.size() == 0)
 		{
-			if (m->GetDistance().y >= 0) {
+			if (m->GetDistance().y >= 0 && m->GetJumpingState() != JumpingStates::FLOATING) {
 				m->SetJumpingState(JumpingStates::FALLING);
 			}
 		}
@@ -63,10 +63,15 @@ void MarioPowerUp::StatusUpdate()
 				else {
 					switch (m->GetJumpingState())
 					{
+					case JumpingStates::FALLING:
+					case JumpingStates::FLOATING:
+						break;
 					case JumpingStates::JUMP:
 					case JumpingStates::HIGH_JUMP:
-					case JumpingStates::SUPER_JUMP:
 						m->SetJumpingState(JumpingStates::FALLING);
+						break;
+					case JumpingStates::SUPER_JUMP:
+						m->SetJumpingState(JumpingStates::FLOATING);
 						break;
 					}
 				}
@@ -138,6 +143,7 @@ void MarioPowerUp::MoveProcess()
 
 			m->GetVelocity().x += m->GetAccelerate().x * dt;
 
+			if (m->GetJumpingState() != JumpingStates::IDLE) maxSpeed = min(maxSpeed, 0.405f);
 			if (abs(m->GetVelocity().x) > maxSpeed) {
 				int sign = m->GetVelocity().x < 0 ? -1 : 1;
 				if (abs(m->GetVelocity().x) - maxSpeed > MARIO_RUN_DRAG_FORCE * dt) {
@@ -198,13 +204,10 @@ bool MarioPowerUp::MiniJumpDetect(bool forceX)
 
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (keyboard.IsKeyDown(DIK_X) || forceX) {
-			if (m->IsOnGround() && m->GetJumpingState() == JumpingStates::IDLE) {
-				m->GetVelocity().y = -0.27;
+			if (m->IsOnGround()) {
 				m->SetJumpingState(JumpingStates::JUMP);
 				m->SetOnGround(false);
-				m->SetCanHighJump(false);
-				jumpBegin = m->GetPosition().y;
-				jumpTime = CGame::Time().TotalGameTime;
+				m->SetJumpBeginPosition(m->GetPosition().y);
 				return true;
 			}
 		}
@@ -218,63 +221,37 @@ void MarioPowerUp::JumpProcess()
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
-
-		float maxRun = abs(m->GetVelocity().x) > MARIO_RUN_SPEED * 0.85f;
-
-		float jumpForce = MARIO_JUMP_FORCE;
+		float jumpHeight = MARIO_JUMP_HEIGHT;
+		float height = 0;
 
 		switch (m->GetJumpingState())
 		{
-		//case JumpingStates::SUPER_JUMP:
-			/*if (keyboard.IsKeyDown(DIK_S))
-				jumpForce = MARIO_SUPER_JUMP_FORCE;
+		case JumpingStates::SUPER_JUMP:
+			height = abs(m->GetJumpBeginPosition() - m->GetPosition().y - m->GetVelocity().y * dt);
 
-			if (m->GetVelocity().y > -jumpForce && m->GetVelocity().y < 0 && m->CanHighJump())
-			{
-				m->GetGravity() = 0;
-				m->GetVelocity().y -= MARIO_PUSH_FORCE * dt;
-			}
-			else
-			{
-				m->GetGravity() = MARIO_GRAVITY;
-				m->SetCanHighJump(false);
-			}
-			break;*/
-		case JumpingStates::JUMP:
-			/*if (keyboard.IsKeyDown(DIK_S) && m->CanHighJump() && -MARIO_HIGH_JUMP_FORCE <= m->GetVelocity().y && m->GetVelocity().y <= -0.5f * MARIO_JUMP_FORCE)
-			{
-				jumpForce = MARIO_HIGH_JUMP_FORCE;
-			}
-
-			if (m->GetVelocity().y > -jumpForce && m->GetVelocity().y < 0)
-			{
-				m->GetGravity() = 0;
-				m->GetVelocity().y -= MARIO_PUSH_FORCE * dt;
-			}
-			else
-			{
-				m->GetVelocity().y -= jumpForce;
-				m->SetJumpingState(JumpingStates::HIGH_JUMP);
-				m->GetGravity() = MARIO_GRAVITY;
-			}*/
-			if (abs(jumpBegin - m->GetPosition().y - m->GetVelocity().y*dt) < 180) {
-				m->GetVelocity().y = -0.432 - MARIO_GRAVITY * dt;
-				//DebugOut(L"Veloc: %f\n", m->GetVelocity().y);
-			}
+			if (height < MARIO_MIN_JUMP_HEIGHT || (height < MARIO_SUPER_JUMP_HEIGHT && keyboard.IsKeyDown(DIK_S))) {
+				m->GetVelocity().y = -MARIO_SUPER_PUSH_FORCE - MARIO_GRAVITY * dt;
+			} 
 			else {
-				DebugOut(L"Time: %d\n", CGame::Time().TotalGameTime - jumpTime);
-				m->SetJumpingState(JumpingStates::FALLING);
-				//m->GetVelocity().y = 0.432;
+				m->SetJumpingState(JumpingStates::FLOATING);
+				m->GetVelocity().y = -MARIO_SUPER_PUSH_FORCE / 2;
 			}
-
 			break;
 		case JumpingStates::HIGH_JUMP:
-			/*if (m->GetVelocity().y > 0) {
-				m->SetCanHighJump(false);
+			jumpHeight = MARIO_HIGH_JUMP_HEIGHT;
+		case JumpingStates::JUMP:
+			height = abs(m->GetJumpBeginPosition() - m->GetPosition().y - m->GetVelocity().y * dt);
+
+			if (height < MARIO_MIN_JUMP_HEIGHT || (height < jumpHeight && (keyboard.IsKeyDown(DIK_S) || keyboard.IsKeyDown(DIK_X)))) {
+				m->GetVelocity().y = -MARIO_PUSH_FORCE - MARIO_GRAVITY * dt;
 			}
-			break;*/
+			else {
+				m->SetJumpingState(JumpingStates::FALLING);
+				m->GetVelocity().y = -MARIO_PUSH_FORCE / 2;
+			}
+			break;
+		case JumpingStates::FLOATING:
 		case JumpingStates::FALLING:
-			//DebugOut(L"Veloc: %f\n", m->GetVelocity().y);
 			m->GetGravity() = MARIO_GRAVITY;
 			break;
 		}
@@ -326,29 +303,28 @@ void MarioPowerUp::Update()
 void MarioPowerUp::JumpAnimation()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
-		bool apply = false;
+		if (m->IsOnGround()) return;
+
 		switch (m->GetJumpingState())
 		{
 		case JumpingStates::SUPER_JUMP:
 			selectedAnimation = animations["Fly"];
-			apply = true;
 			break;
 		case JumpingStates::JUMP:
 			selectedAnimation = animations["Jump"];
-			apply = true;
 			break;
 		case JumpingStates::HIGH_JUMP:
 			selectedAnimation = animations["Jump"];
-			apply = true;
 			break;
 		case JumpingStates::FALLING:
-		case JumpingStates::FLOATING:
 			selectedAnimation = animations["Fall"];
-			apply = true;
+			break;
+		case JumpingStates::FLOATING:
+			selectedAnimation = animations["Float"];
 			break;
 		}
 
-		if (m->GetInhand() && apply) {
+		if (m->GetInhand()) {
 			selectedAnimation = animations["HoldFall"];
 		}
 	}
@@ -420,7 +396,9 @@ void MarioPowerUp::OnKeyDown(int key)
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (key == DIK_S) {
-			if (MiniJumpDetect(true) && m->GetPowerMeter() >= PMETER_MAX) {
+			if (MiniJumpDetect(true)) {
+				m->SetJumpingState(JumpingStates::HIGH_JUMP);
+
 				if (m->GetPowerMeter() >= PMETER_MAX) {
 					m->SetJumpingState(JumpingStates::SUPER_JUMP);
 				}
@@ -432,11 +410,6 @@ void MarioPowerUp::OnKeyDown(int key)
 void MarioPowerUp::OnKeyUp(int key)
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
-		if (key == DIK_S || key == DIK_X) {
-			m->SetCanHighJump(false);
-			m->SetJumpingState(JumpingStates::FALLING);
-		}
-
 		if (key == DIK_DOWN) {
 			if (m->GetMovingState() == MovingStates::CROUCH) {
 				m->SetMovingState(MovingStates::IDLE);

@@ -15,15 +15,9 @@ public:
 
 	virtual void InAttackProgress() override;
 
-	virtual void StatusUpdate() override;
-
-	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
-
 	virtual bool MiniJumpDetect(bool forceX) override;
 
 	virtual void PowerMeterProcess() override;
-
-	virtual void JumpAnimation() override;
 
 	virtual void OnKeyDown(int key) override;
 
@@ -33,5 +27,6 @@ protected:
 	Stopwatch flyTimer;
 
 	float MARIO_FLYING_UP_FORCE = 0.252f;
+	float MARIO_FLOATING_SPEED = 0.021f;
 };
 

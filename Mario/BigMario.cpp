@@ -17,6 +17,7 @@ void BigMario::InitResource(bool force)
 		this->animations["HighJump"] = AnimationManager::GetInstance()->Get("ani-big-mario-high-jump")->Clone();
 		this->animations["Fly"] = AnimationManager::GetInstance()->Get("ani-big-mario-high-jump")->Clone();
 		this->animations["Fall"] = AnimationManager::GetInstance()->Get("ani-big-mario-fall")->Clone();
+		this->animations["Float"] = AnimationManager::GetInstance()->Get("ani-big-mario-high-jump")->Clone();
 		this->animations["Skid"] = AnimationManager::GetInstance()->Get("ani-big-mario-skid")->Clone();
 		this->animations["Crouch"] = AnimationManager::GetInstance()->Get("ani-big-mario-crouch")->Clone();
 		this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-big-mario-kick")->Clone();

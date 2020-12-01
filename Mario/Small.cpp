@@ -20,6 +20,7 @@ void Small::InitResource(bool force)
 		this->animations["Jump"] = AnimationManager::GetInstance()->Get("ani-small-mario-jump")->Clone();
 		this->animations["Fly"] = AnimationManager::GetInstance()->Get("ani-small-mario-jump")->Clone();
 		this->animations["Fall"] = AnimationManager::GetInstance()->Get("ani-small-mario-jump")->Clone();
+		this->animations["Float"] = AnimationManager::GetInstance()->Get("ani-small-mario-jump")->Clone();
 		this->animations["Skid"] = AnimationManager::GetInstance()->Get("ani-small-mario-skid")->Clone();
 		this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-small-mario-kick")->Clone();
 

@@ -198,14 +198,14 @@ void Mario::SetSkid(int skid)
 	this->skid = skid;
 }
 
-int& Mario::CanHighJump()
+float& Mario::GetJumpBeginPosition()
 {
-	return this->canHighJump;
+	return this->jumpBeginPos;
 }
 
-void Mario::SetCanHighJump(bool value)
+void Mario::SetJumpBeginPosition(float value)
 {
-	this->canHighJump = value;
+	this->jumpBeginPos = value;
 }
 
 float& Mario::GetPowerMeter()

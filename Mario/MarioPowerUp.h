@@ -59,24 +59,25 @@ protected:
 	Vec2 size = Vec2(45, 81);
 	Vec2 sizeFixed = Vec2(45, 81);
 
-	int jumpBegin = 0;
-	long jumpTime = 0;
-
 	int	  PMETER_MAX = 7;
 	float PMETER_UP_STEP = 0.008f;
 	float PMETER_DOWN_STEP = 0.0016f;
-	float MARIO_GRAVITY = 0.002f;
 	float MARIO_WALK_SPEED = 0.27f;
 	float MARIO_RUN_SPEED = 0.48f;
-	float MARIO_JUMP_FORCE = 0.27f * 1.2;
-	float MARIO_HIGH_JUMP_FORCE = 0.40f * 1.2;
-	float MARIO_SUPER_JUMP_FORCE = 0.65f * 1.3;
-	float MARIO_PUSH_FORCE = 0.0019f;
+
 	float MARIO_WALK_ACCELERATION = 0.000376f;
 	float MARIO_RUN_ACCELERATION = 0.0003613f;
 	float MARIO_WALK_DRAG_FORCE = 0.0014306f;
 	float MARIO_RUN_DRAG_FORCE = 0.0016366f;
 	float MARIO_CROUCH_DRAG_FORCE = 0.0004766f;
 	float MARIO_SKID_ACCELERATION = 0.001104f;
+
+	float MARIO_GRAVITY = 0.002f;
+	float MARIO_MIN_JUMP_HEIGHT = 80;
+	float MARIO_JUMP_HEIGHT = 97;
+	float MARIO_HIGH_JUMP_HEIGHT = 216;
+	float MARIO_SUPER_JUMP_HEIGHT = 300;
+	float MARIO_PUSH_FORCE = 0.432f;
+	float MARIO_SUPER_PUSH_FORCE = 0.432f;
 };
 

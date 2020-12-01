@@ -35,7 +35,7 @@ protected:
 
 	int skid = 0;
 
-	int canHighJump = true;
+	float jumpBeginPos = 0;
 
 	float powerMeter = 0;
 
@@ -87,9 +87,9 @@ public:
 
 	virtual void SetSkid(int skid);
 
-	virtual int& CanHighJump();
+	virtual float& GetJumpBeginPosition();
 
-	virtual void SetCanHighJump(bool value);
+	virtual void SetJumpBeginPosition(float value);
 
 	virtual float& GetPowerMeter();
 
