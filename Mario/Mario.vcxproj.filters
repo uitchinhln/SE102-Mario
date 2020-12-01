@@ -43,17 +43,8 @@
     <Filter Include="Framework\Scene">
       <UniqueIdentifier>{723972ca-fd7d-4360-822c-6d511b6680fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Scene\Camera">
-      <UniqueIdentifier>{18ef8892-4a0b-4944-a0a9-be7b640db725}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Scene\Map">
-      <UniqueIdentifier>{8e3c9221-d0cf-4ac7-817b-629f525185a9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\World\GameObject">
       <UniqueIdentifier>{ce153eed-76eb-46ac-bb3b-32d8d2d3d8c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Scene\Map\Tile">
-      <UniqueIdentifier>{a20bc20e-cd26-4207-aef0-57ade6059f8d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\Model">
       <UniqueIdentifier>{5154eeb2-49ed-4252-aa77-4b5fe150339b}</UniqueIdentifier>
@@ -94,9 +85,6 @@
     <Filter Include="MarioGame\Entity\LivingEntity\Goomba">
       <UniqueIdentifier>{24ad6102-646f-40d4-81f7-da8f69d4d463}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Framework\Scene\Map\MapProperties">
-      <UniqueIdentifier>{bd9e1cca-94aa-4607-9692-90d2aefb05e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\World\Phys\Collision\SAT">
       <UniqueIdentifier>{c066d2ff-b005-454b-8671-a721bfb9c2c3}</UniqueIdentifier>
     </Filter>
@@ -127,10 +115,22 @@
     <Filter Include="Framework\Font">
       <UniqueIdentifier>{4c44460e-8bde-4334-ba59-7a1a7468716a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\World\Map">
+      <UniqueIdentifier>{8e3c9221-d0cf-4ac7-817b-629f525185a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Map\Tile">
+      <UniqueIdentifier>{a20bc20e-cd26-4207-aef0-57ade6059f8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Map\MapProperties">
+      <UniqueIdentifier>{bd9e1cca-94aa-4607-9692-90d2aefb05e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Camera">
+      <UniqueIdentifier>{18ef8892-4a0b-4944-a0a9-be7b640db725}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
-      <Filter>Framework\Scene\Camera</Filter>
+      <Filter>Framework\World\Camera</Filter>
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Framework\Model\Texture</Filter>
@@ -175,10 +175,10 @@
       <Filter>Framework\Scene</Filter>
     </ClCompile>
     <ClCompile Include="Layer.cpp">
-      <Filter>Framework\Scene\Map</Filter>
+      <Filter>Framework\World\Map</Filter>
     </ClCompile>
     <ClCompile Include="GameMap.cpp">
-      <Filter>Framework\Scene\Map</Filter>
+      <Filter>Framework\World\Map</Filter>
     </ClCompile>
     <ClCompile Include="Events.cpp">
       <Filter>Framework\Event</Filter>
@@ -223,7 +223,7 @@
       <Filter>Framework\World\Phys\Collision</Filter>
     </ClCompile>
     <ClCompile Include="TileSet.cpp">
-      <Filter>Framework\Scene\Map\Tile</Filter>
+      <Filter>Framework\World\Map\Tile</Filter>
     </ClCompile>
     <ClCompile Include="CollisionCalculator.cpp">
       <Filter>Framework\World\Phys\Collision</Filter>
@@ -268,7 +268,7 @@
       <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
     </ClCompile>
     <ClCompile Include="MapProperties.cpp">
-      <Filter>Framework\Scene\Map\MapProperties</Filter>
+      <Filter>Framework\World\Map\MapProperties</Filter>
     </ClCompile>
     <ClCompile Include="Polygon.cpp">
       <Filter>Framework\World\Phys\Collision\SAT</Filter>
@@ -327,7 +327,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
-      <Filter>Framework\Scene\Camera</Filter>
+      <Filter>Framework\World\Camera</Filter>
     </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>Framework\Model\Texture</Filter>
@@ -366,10 +366,10 @@
       <Filter>Framework\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Layer.h">
-      <Filter>Framework\Scene\Map</Filter>
+      <Filter>Framework\World\Map</Filter>
     </ClInclude>
     <ClInclude Include="GameMap.h">
-      <Filter>Framework\Scene\Map</Filter>
+      <Filter>Framework\World\Map</Filter>
     </ClInclude>
     <ClInclude Include="Events.h">
       <Filter>Framework\Event</Filter>
@@ -414,7 +414,7 @@
       <Filter>Framework\World\Phys\Collision</Filter>
     </ClInclude>
     <ClInclude Include="TileSet.h">
-      <Filter>Framework\Scene\Map\Tile</Filter>
+      <Filter>Framework\World\Map\Tile</Filter>
     </ClInclude>
     <ClInclude Include="CollisionCalculator.h">
       <Filter>Framework\World\Phys\Collision</Filter>
@@ -459,7 +459,7 @@
       <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
     </ClInclude>
     <ClInclude Include="MapProperties.h">
-      <Filter>Framework\Scene\Map\MapProperties</Filter>
+      <Filter>Framework\World\Map\MapProperties</Filter>
     </ClInclude>
     <ClInclude Include="Polygon.h">
       <Filter>Framework\World\Phys\Collision\SAT</Filter>

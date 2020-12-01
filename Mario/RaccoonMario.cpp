@@ -121,7 +121,7 @@ void RaccoonMario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 	}
 }
 
-void RaccoonMario::MiniJumpDetect(bool forceX)
+bool RaccoonMario::MiniJumpDetect(bool forceX)
 {
 	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 	DWORD dt = CGame::Time().ElapsedGameTime;
@@ -149,6 +149,7 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 						m->GetVelocity().x = maxSpeed * sign;
 					}
 				}
+				return true;
 			}
 
 			if (m->IsOnGround() && m->GetJumpingState() == JumpingStates::IDLE) {
@@ -161,6 +162,7 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 					flyTimer.Restart();
 					m->SetCanHighJump(true);
 				}
+				return true;
 			}
 
 			if (m->GetJumpingState() == JumpingStates::FALLING || m->GetJumpingState() == JumpingStates::FLOATING) {
@@ -183,6 +185,7 @@ void RaccoonMario::MiniJumpDetect(bool forceX)
 			}
 		}
 	}
+	return false;
 }
 
 void RaccoonMario::PowerMeterProcess()

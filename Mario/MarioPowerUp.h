@@ -25,7 +25,7 @@ public:
 
 	virtual void PowerMeterProcess();
 
-	virtual void MiniJumpDetect(bool forceX = false);
+	virtual bool MiniJumpDetect(bool forceX = false);
 
 	virtual void JumpProcess();
 
@@ -59,6 +59,9 @@ protected:
 	Vec2 size = Vec2(45, 81);
 	Vec2 sizeFixed = Vec2(45, 81);
 
+	int jumpBegin = 0;
+	long jumpTime = 0;
+
 	int	  PMETER_MAX = 7;
 	float PMETER_UP_STEP = 0.008f;
 	float PMETER_DOWN_STEP = 0.0016f;
@@ -73,7 +76,7 @@ protected:
 	float MARIO_RUN_ACCELERATION = 0.0003613f;
 	float MARIO_WALK_DRAG_FORCE = 0.0014306f;
 	float MARIO_RUN_DRAG_FORCE = 0.0016366f;
-	float MARIO_CROUCH_DRAG_FORCE = 0.0003266f;
+	float MARIO_CROUCH_DRAG_FORCE = 0.0004766f;
 	float MARIO_SKID_ACCELERATION = 0.001104f;
 };
 

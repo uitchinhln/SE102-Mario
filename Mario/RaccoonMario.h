@@ -19,7 +19,7 @@ public:
 
 	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
 
-	virtual void MiniJumpDetect(bool forceX) override;
+	virtual bool MiniJumpDetect(bool forceX) override;
 
 	virtual void PowerMeterProcess() override;
 

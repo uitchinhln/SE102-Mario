@@ -115,7 +115,7 @@ RectF EndmapReward::GetHitBox()
 
 bool EndmapReward::IsGetThrough(IColliable& object, Direction direction)
 {
-	return false;
+	return true;
 }
 
 float EndmapReward::GetDamageFor(IColliable& object, Direction direction)

@@ -41,14 +41,8 @@ void Goomba::StatusUpdate()
 
 	vector<shared_ptr<CollisionResult>> coResult = GetCollisionCalc()->GetLastResults();
 
-	if (coResult.size() == 0 || state != GoombaState::WALK)
-	{
-		//GetPosition() += GetDistance();
-	}
-	else {
-		//GetDistance() = collisionCal->GetNewDistance();
+	if (coResult.size() > 0) {
 		Vec2 jet = collisionCal->GetJet();
-		//GetPosition() += GetDistance();
 
 		if (jet.x != 0) GetVelocity().x *= (GetVelocity().x < 0 ? -1 : 1) * jet.x;
 		if (jet.y != 0) GetVelocity().y = 0;
