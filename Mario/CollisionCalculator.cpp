@@ -73,12 +73,12 @@ Vec2 CollisionCalculator::GetClampDistance()
 			if (c->GameColliableObject->IsGetThrough(*sp, c->SAABBResult.Direction)) continue;
 			Vec2 cn = ToVector(c->SAABBResult.Direction);
 
-			if (c->SAABBResult.TimeToCollide < min_tx && cn.x != 0) {
+			if (c->SAABBResult.TimeToCollide < min_tx && cn.x != 0 && cn.x * d.x <= 0) {
 				min_tx = c->SAABBResult.TimeToCollide;
 				jet.x = cn.x;
 			}
 
-			if (c->SAABBResult.TimeToCollide < min_ty && cn.y != 0) {
+			if (c->SAABBResult.TimeToCollide < min_ty && cn.y != 0 && cn.y * d.y <= 0) {
 				min_ty = c->SAABBResult.TimeToCollide;
 				jet.y = cn.y;
 			}
@@ -173,6 +173,7 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 		return SweptCollisionResult::Empty;
 
 	Direction direction = Direction::None;
+	float touchingLength = 0;
 
 	if (tx_entry > ty_entry)
 	{
@@ -180,6 +181,9 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 			direction = Direction::Left;
 		else
 			direction = Direction::Right;
+
+		Vec2 mAfter(m.top + distance.y * t_entry, m.bottom + distance.y * t_entry);
+		touchingLength = (min(mAfter.y, s.bottom) - max(mAfter.x, s.top));
 	}
 	else
 	{
@@ -187,8 +191,11 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 			direction = Direction::Top;
 		else
 			direction = Direction::Bottom;
+
+		Vec2 mAfter(m.left + distance.x * t_entry, m.right + distance.x * t_entry);
+		touchingLength = (min(mAfter.y, s.right) - max(mAfter.x, s.left));
 	}
-	return SweptCollisionResult{ t_entry, direction, distance };
+	return SweptCollisionResult{ t_entry, direction, distance, touchingLength };
 }
 
 bool CollisionCalculator::AABB(RectF b1, RectF b2)

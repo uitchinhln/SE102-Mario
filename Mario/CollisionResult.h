@@ -7,6 +7,7 @@ public:
 	float TimeToCollide;
 	Direction Direction = Direction::None;
 	Vec2 Distance;
+	float TouchingLength = 0;
 
 	static SweptCollisionResult Empty;
 };

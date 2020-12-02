@@ -52,6 +52,7 @@ void PlayScene::Update()
 
 	mario->Update();
 	for (shared_ptr<GameObject> obj : objects) {
+		//if (!obj->GetCollisionCalc()->AABB(obj->GetHitBox(), camera->GetBoundingBox())) continue;
 		obj->Update();
 	}
 
@@ -63,16 +64,19 @@ void PlayScene::Update()
 
 	objs.push_back(this->mario);
 	for (shared_ptr<GameObject> obj : objects) {
+		//if (!obj->GetCollisionCalc()->AABB(obj->GetHitBox(), camera->GetBoundingBox())) continue;
 		obj->CollisionUpdate(&objs);
 	}
 
 	mario->StatusUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
+		//if (!obj->GetCollisionCalc()->AABB(obj->GetHitBox(), camera->GetBoundingBox())) continue;
 		obj->StatusUpdate();
 	}
 
 	mario->FinalUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
+		//if (!obj->GetCollisionCalc()->AABB(obj->GetHitBox(), camera->GetBoundingBox())) continue;
 		obj->FinalUpdate();
 	}
 

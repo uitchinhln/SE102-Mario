@@ -120,7 +120,7 @@ float QuestionBlock::GetDamageFor(IColliable& object, Direction direction)
 shared_ptr<QuestionBlock> QuestionBlock::CreateQuestionBlock(Vec2 fixedPos)
 {
 	shared_ptr<QuestionBlock> block = make_shared<QuestionBlock>();
-	block->SetCollisionCalculator(make_shared<CustomCollisionCalc>(block));
+	block->SetCollisionCalculator(make_shared<CollisionCalculator>(block));
 	block->SetPosition(Vec2(fixedPos.x, fixedPos.y));
 	return block;
 }

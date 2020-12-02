@@ -8,6 +8,8 @@
 #include "FireMario.h"
 #include "RaccoonMario.h"
 #include "Koopas.h"
+#include "Goomba.h"
+#include "CrouchKoopas.h"
 
 void Mario::OnKeyUp(int key)
 {
@@ -45,7 +47,10 @@ void Mario::OnKeyUp(int key)
 			inhand.reset();
 		}
 		break;
-	default:
+	case DIK_D:
+		shared_ptr<Koopas> kp = Koopas::CreateKoopas(Position - Vec2(0, 230));
+		kp->SetPower(make_shared<CrouchKoopas>(kp));
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(kp);
 		break;
 	}
 }

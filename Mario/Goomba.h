@@ -45,7 +45,7 @@ protected:
 	Stopwatch destroyTimer;
 
 	float GB_GRAVITY = 0.00133f * 1.5f;
-	float GB_SPEED = 0.20f;
+	float GB_SPEED = 0.15f;
 	float GB_DESTROY_DELAY = 500;
 	Vec2 size = Vec2(45, 45);
 	RectF hitbox;

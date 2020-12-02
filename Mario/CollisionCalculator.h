@@ -12,10 +12,10 @@ public:
 	virtual Vec2 GetClampDistance();
 	virtual Vec2 GetJet();
 	virtual void Clear();
+	virtual bool AABB(RectF movingBounding, RectF staticBounding);
+
 protected:	
 	virtual SweptCollisionResult SweptAABB(RectF movingBounding, Vec2 distance, RectF staticBounding, bool debug = false);
-
-	virtual bool AABB(RectF movingBounding, RectF staticBounding);
 
 	weak_ptr<IColliable> object;
 	vector<shared_ptr<CollisionResult>> results;

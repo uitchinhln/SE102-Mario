@@ -10,6 +10,7 @@ RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {
 	this->MARIO_ATTACK_TIME = 250;
 	this->MARIO_SUPER_PUSH_FORCE = MARIO_FLYING_UP_FORCE;
+	this->MARIO_SUPER_JUMP_HEIGHT = 80;
 }
 
 void RaccoonMario::InitResource(bool force)
@@ -94,7 +95,7 @@ void RaccoonMario::PowerMeterProcess()
 		float maxRun = abs(m->GetVelocity().x) > MARIO_RUN_SPEED * 0.85f;
 
 		if (maxRun && m->IsOnGround())
-			m->SetPowerMeter(max(0.0f, min(m->GetPowerMeter() + PMETER_UP_STEP * dt, PMETER_MAX + 0.2)));
+			m->SetPowerMeter(max(0.0f, min(m->GetPowerMeter() + PMETER_UP_STEP * dt, PMETER_MAX + 0.2f)));
 		else {
 			if (flyTimer.IsRunning()) {
 				if (flyTimer.Elapsed() >= 4000) {

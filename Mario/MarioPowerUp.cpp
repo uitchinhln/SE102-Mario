@@ -45,8 +45,18 @@ void MarioPowerUp::StatusUpdate()
 		m->SetOnGround(false);
 		if (coResult.size() == 0)
 		{
-			if (m->GetDistance().y >= 0 && m->GetJumpingState() != JumpingStates::FLOATING) {
-				m->SetJumpingState(JumpingStates::FALLING);
+			if (m->GetDistance().y >= 0) {
+				switch (m->GetJumpingState())
+				{
+				case JumpingStates::IDLE:
+				case JumpingStates::JUMP:
+				case JumpingStates::HIGH_JUMP:
+					m->SetJumpingState(JumpingStates::FALLING);
+					break;
+				case JumpingStates::SUPER_JUMP:
+					m->SetJumpingState(JumpingStates::FLOATING);
+					break;
+				}
 			}
 		}
 		else {
@@ -63,9 +73,6 @@ void MarioPowerUp::StatusUpdate()
 				else {
 					switch (m->GetJumpingState())
 					{
-					case JumpingStates::FALLING:
-					case JumpingStates::FLOATING:
-						break;
 					case JumpingStates::JUMP:
 					case JumpingStates::HIGH_JUMP:
 						m->SetJumpingState(JumpingStates::FALLING);
@@ -81,7 +88,7 @@ void MarioPowerUp::StatusUpdate()
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
 			if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
-				if (coll->GameColliableObject->GetObjectType() == MEntityType::KoopasCrouch) {
+				if (coll->GameColliableObject->GetObjectType() == MEntityType::KoopasCrouch && coll->SAABBResult.Direction != Direction::Top) {
 					KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 					shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(coll->GameColliableObject);
 

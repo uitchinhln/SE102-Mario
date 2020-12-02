@@ -6,10 +6,6 @@
 
 Koopas::Koopas()
 {
-	//this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-move")->Clone();
-	//this->animations["Crouch"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
-	//this->animations["RunningShell"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-shell-run")->Clone();
-
 	this->SetPosition(Vec2(0, 0));
 }
 
