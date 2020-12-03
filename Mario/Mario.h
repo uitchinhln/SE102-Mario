@@ -61,7 +61,7 @@ public:
 
 	virtual void StatusUpdate() override;
 
-	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
+	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
 
 	virtual void FinalUpdate() override;
 
@@ -119,8 +119,8 @@ public:
 
 	virtual void OnKeyDown(int key);
 
-	bool IsGetThrough(IColliable& object, Direction direction) override;
+	bool IsGetThrough(GameObject& object, Direction direction) override;
 
-	virtual float GetDamageFor(IColliable& object, Direction direction) override;
+	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 };
 

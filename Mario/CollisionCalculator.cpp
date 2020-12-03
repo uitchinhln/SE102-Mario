@@ -1,25 +1,27 @@
 #include "CollisionCalculator.h"
+#include "GameObject.h"
 
-CollisionCalculator::CollisionCalculator(weak_ptr<IColliable> object)
+CollisionCalculator::CollisionCalculator(weak_ptr<GameObject> object)
 {
     this->object = object;
 }
 
-vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions(vector<shared_ptr<IColliable>>* objects, bool debug)
+vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions(vector<shared_ptr<GameObject>>* objects, bool debug)
 {
 	vector<shared_ptr<CollisionResult>> temp;
 	temp.clear();
 	results.clear();
+	key_results.clear();
 
-	if (shared_ptr<IColliable> sp = object.lock()) {
+	if (shared_ptr<GameObject> sp = object.lock()) {
 		//auto start = std::chrono::high_resolution_clock::now();
-		for each (shared_ptr<IColliable> coO in (*objects))
+		for each (shared_ptr<GameObject> coO in (*objects))
 		{
 			if (!coO->IsActive()) continue;
 
 			SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), sp->GetDistance() - coO->GetDistance(), coO->GetHitBox(), debug);
 
-			if (aabbResult.TimeToCollide > 0 && aabbResult.TimeToCollide <= 1.0f)
+			if (aabbResult.TimeToCollide >= 0 && aabbResult.TimeToCollide < 1.0f)
 				temp.push_back(make_shared<CollisionResult>(aabbResult, coO));
 		}
 		//auto finish = std::chrono::high_resolution_clock::now();
@@ -30,22 +32,22 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 			for each (shared_ptr<CollisionResult> result in results) {
 				if (result->GameColliableObject->IsGetThrough(*sp, result->SAABBResult.Direction)) continue;
 				Vec2 dis = sp->GetDistance() - coll->GameColliableObject->GetDistance();
-				if (ToVector(coll->SAABBResult.Direction).x != 0) {
-					dis.y *= result->SAABBResult.TimeToCollide;
-					dis.y -= 0.1f;
+				Vec2 drctn = ToVector(coll->SAABBResult.Direction);
+				if (drctn.x != 0) {
+					dis.y = dis.y * result->SAABBResult.TimeToCollide - 0.0001f * drctn.y;
 				}
 				else {
-					dis.x *= result->SAABBResult.TimeToCollide;
-					dis.x -= 0.1f;
+					dis.x = dis.x * result->SAABBResult.TimeToCollide - 0.0001f * drctn.x;
 				}
 				SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), dis, coll->GameColliableObject->GetHitBox());
-				if (aabbResult.TimeToCollide <= 0 || aabbResult.TimeToCollide > 1.0f) {
+				if (aabbResult.TimeToCollide < 0 || aabbResult.TimeToCollide > 1.0f) {
 					coll->SAABBResult.TimeToCollide = 9999.0f;
 					break;
 				}
 			}
-			if (coll->SAABBResult.TimeToCollide > 0 && coll->SAABBResult.TimeToCollide <= 1.0f) {
+			if (coll->SAABBResult.TimeToCollide >= 0 && coll->SAABBResult.TimeToCollide <= 1.0f) {
 				results.push_back(coll);
+				key_results[coll->GameColliableObject->GetID()] = coll;
 			}
 		}
 	}	
@@ -60,7 +62,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::GetLastResults()
 
 Vec2 CollisionCalculator::GetClampDistance()
 {
-	if (shared_ptr<IColliable> sp = object.lock()) {
+	if (shared_ptr<GameObject> sp = object.lock()) {
 		Vec2 d = sp->GetDistance();
 		float min_tx = 1.0f;
 		float min_ty = 1.0f;
@@ -73,17 +75,17 @@ Vec2 CollisionCalculator::GetClampDistance()
 			if (c->GameColliableObject->IsGetThrough(*sp, c->SAABBResult.Direction)) continue;
 			Vec2 cn = ToVector(c->SAABBResult.Direction);
 
-			if (c->SAABBResult.TimeToCollide < min_tx && cn.x != 0 && cn.x * d.x <= 0) {
+			if (c->SAABBResult.TimeToCollide < min_tx && cn.x != 0 && cn.x * d.x < 0.0f) {
 				min_tx = c->SAABBResult.TimeToCollide;
 				jet.x = cn.x;
 			}
 
-			if (c->SAABBResult.TimeToCollide < min_ty && cn.y != 0 && cn.y * d.y <= 0) {
+			if (c->SAABBResult.TimeToCollide < min_ty && cn.y != 0 && cn.y * d.y < 0.0f) {
 				min_ty = c->SAABBResult.TimeToCollide;
 				jet.y = cn.y;
 			}
 		}
-		return Vec2(min_tx * d.x + jet.x * 0.002f, min_ty * d.y + jet.y * 0.002f);
+		return Vec2(min_tx * d.x, min_ty * d.y);
 	}
 	return VECTOR_0;
 }
@@ -96,6 +98,18 @@ Vec2 CollisionCalculator::GetJet()
 void CollisionCalculator::Clear()
 {
 	results.clear();
+	key_results.clear();
+}
+
+void CollisionCalculator::DropRemovedCollision()
+{
+	results.erase(remove_if(results.begin(), results.end(), [this](const shared_ptr<CollisionResult>& coll) {
+		if (coll->Remove) {
+			key_results.erase(coll->GameColliableObject->GetID());
+		}
+		return coll->Remove;
+		}), results.end());
+
 }
 
 SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, bool debug)
@@ -195,10 +209,18 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 		Vec2 mAfter(m.left + distance.x * t_entry, m.right + distance.x * t_entry);
 		touchingLength = (min(mAfter.y, s.right) - max(mAfter.x, s.left));
 	}
+	if (touchingLength <= 0) 
+		return SweptCollisionResult::Empty;
+
 	return SweptCollisionResult{ t_entry, direction, distance, touchingLength };
 }
 
 bool CollisionCalculator::AABB(RectF b1, RectF b2)
 {
 	return !(b1.right < b2.left || b1.left > b2.right || b1.top > b2.bottom || b1.bottom < b2.top);
+}
+
+bool CollisionCalculator::Has(DWORD64 id)
+{
+	return key_results.size() > 0 && key_results.find(id) != key_results.end();
 }

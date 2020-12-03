@@ -15,12 +15,17 @@ RectF SolidBlock::GetHitBox()
 	return hitbox;
 }
 
-bool SolidBlock::IsGetThrough(IColliable& object, Direction direction)
+bool SolidBlock::HasCollideWith(DWORD64 id)
+{
+	return true;
+}
+
+bool SolidBlock::IsGetThrough(GameObject& object, Direction direction)
 {
 	return false;
 }
 
-float SolidBlock::GetDamageFor(IColliable& object, Direction direction)
+float SolidBlock::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 0.0f;
 }

@@ -20,14 +20,19 @@ void EndmapReward::InitResource()
 	}
 }
 
-void EndmapReward::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+void EndmapReward::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
-	vector<shared_ptr<IColliable>> mro;
+	vector<shared_ptr<GameObject>> mro;
 	mro.push_back(SceneManager::GetInstance()->GetPlayer<Mario>());
 
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
 
 	collisionCal->CalcPotentialCollisions(&mro, false);
+}
+
+bool EndmapReward::HasCollideWith(DWORD64 id)
+{
+	return true;
 }
 
 void EndmapReward::FinalUpdate()
@@ -38,6 +43,7 @@ void EndmapReward::FinalUpdate()
 
 void EndmapReward::StatusUpdate()
 {
+	CollisionDoubleFilter();
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
 	if (collisionCal->GetLastResults().size() > 0) {
 		shared_ptr<Mario> mario = SceneManager::GetInstance()->GetPlayer<Mario>();
@@ -113,12 +119,12 @@ RectF EndmapReward::GetHitBox()
 	return RectF(Position.x, Position.y, Position.x + size.x, Position.y + size.y);
 }
 
-bool EndmapReward::IsGetThrough(IColliable& object, Direction direction)
+bool EndmapReward::IsGetThrough(GameObject& object, Direction direction)
 {
 	return true;
 }
 
-float EndmapReward::GetDamageFor(IColliable& object, Direction direction)
+float EndmapReward::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 0.0f;
 }

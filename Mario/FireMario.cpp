@@ -3,6 +3,8 @@
 #include "SceneManager.h"
 #include "Mario.h"
 #include "MarioTailed.h"
+#include "GameObject.h"
+#include "Game.h"
 
 FireMario::FireMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {

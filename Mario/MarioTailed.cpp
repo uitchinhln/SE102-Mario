@@ -9,6 +9,11 @@ MarioTailed::MarioTailed(shared_ptr<Mario> holder, DWORD attackTime)
 	MovingUpdate();
 }
 
+bool MarioTailed::HasCollideWith(DWORD64 id)
+{
+	return true;
+}
+
 void MarioTailed::MovingUpdate()
 {
 	if (shared_ptr<Mario> m = holder.lock()) {
@@ -70,12 +75,12 @@ RectF MarioTailed::GetHitBox()
 	return hitbox;
 }
 
-bool MarioTailed::IsGetThrough(IColliable& object, Direction direction)
+bool MarioTailed::IsGetThrough(GameObject& object, Direction direction)
 {
 	return false;
 }
 
-float MarioTailed::GetDamageFor(IColliable& object, Direction direction)
+float MarioTailed::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 2.0f;
 }

@@ -1,4 +1,5 @@
 #include "PlayScene.h"
+#include "Game.h"
 #include "MarioPowerUp.h"
 #include "Small.h"
 #include "BigMario.h"
@@ -23,6 +24,7 @@ void PlayScene::LoadFromXml(TiXmlElement* data)
 
 	this->mario = SceneManager::GetInstance()->GetPlayer<Mario>();
 	this->mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
+	this->mario->SetPowerUp(make_shared<Small>(mario));
 
 	this->camera = make_shared<Camera>(camPos, camSize);
 	this->camera->SetTracking(mario);
@@ -31,8 +33,6 @@ void PlayScene::LoadFromXml(TiXmlElement* data)
 
 	this->gameMap = CGameMap::FromTMX(mapPath, mapName);
 	this->gameMap->SetCamera(camera);
-
-	mario->SetPowerUp(make_shared<Small>(mario));
 }
 
 void PlayScene::Load()
@@ -52,11 +52,10 @@ void PlayScene::Update()
 
 	mario->Update();
 	for (shared_ptr<GameObject> obj : objects) {
-		//if (!obj->GetCollisionCalc()->AABB(obj->GetHitBox(), camera->GetBoundingBox())) continue;
 		obj->Update();
 	}
 
-	vector<shared_ptr<IColliable>> objs;
+	vector<shared_ptr<GameObject>> objs;
 	objs.clear();
 	objs.insert(objs.end(), objects.begin(), objects.end());
 	objs.insert(objs.end(), mapObjects.begin(), mapObjects.end());
@@ -64,19 +63,16 @@ void PlayScene::Update()
 
 	objs.push_back(this->mario);
 	for (shared_ptr<GameObject> obj : objects) {
-		//if (!obj->GetCollisionCalc()->AABB(obj->GetHitBox(), camera->GetBoundingBox())) continue;
 		obj->CollisionUpdate(&objs);
 	}
 
 	mario->StatusUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
-		//if (!obj->GetCollisionCalc()->AABB(obj->GetHitBox(), camera->GetBoundingBox())) continue;
 		obj->StatusUpdate();
 	}
 
 	mario->FinalUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
-		//if (!obj->GetCollisionCalc()->AABB(obj->GetHitBox(), camera->GetBoundingBox())) continue;
 		obj->FinalUpdate();
 	}
 
@@ -84,6 +80,7 @@ void PlayScene::Update()
 
 	camera->Update();
 	hud->Update();
+	//DebugOut(L"--------------------------\n");
 }
 
 void PlayScene::Render()
@@ -116,7 +113,6 @@ void PlayScene::OnKeyUp(int key)
 
 void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props)
 {
-	//DebugOut(L"Object: %s\n", ToLPCWSTR(type));
 	//GameObjects
 	if (strcmp(type, MEntityType::Goomba.ToString().c_str()) == 0) {
 		SpawnEntity(Goomba::CreateGoomba(fixedPos));

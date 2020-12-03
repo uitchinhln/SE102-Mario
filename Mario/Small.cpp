@@ -2,6 +2,7 @@
 #include "Mario.h"
 #include "AnimationManager.h"
 #include "SceneManager.h"
+#include "GameObject.h"
 
 Small::Small(shared_ptr<Mario> mario) : MarioPowerUp(mario)
 {

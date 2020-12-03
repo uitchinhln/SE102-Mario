@@ -2,6 +2,7 @@
 #include "AnimationManager.h"
 #include "SceneManager.h"
 #include "MEntityType.h"
+#include "Game.h"
 
 MarioFireBall::MarioFireBall(shared_ptr<Mario> holder)
 {
@@ -32,7 +33,7 @@ void MarioFireBall::Reset()
 	}
 }
 
-void MarioFireBall::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+void MarioFireBall::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
 
@@ -59,6 +60,11 @@ void MarioFireBall::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 			}
 		}		
 	}
+}
+
+bool MarioFireBall::HasCollideWith(DWORD64 id)
+{
+	return true;
 }
 
 void MarioFireBall::Update()
@@ -99,12 +105,12 @@ RectF MarioFireBall::GetHitBox()
 	return hitbox;
 }
 
-bool MarioFireBall::IsGetThrough(IColliable& object, Direction direction)
+bool MarioFireBall::IsGetThrough(GameObject& object, Direction direction)
 {
 	return false;
 }
 
-float MarioFireBall::GetDamageFor(IColliable& object, Direction direction)
+float MarioFireBall::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 3.0f;
 }

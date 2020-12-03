@@ -19,7 +19,9 @@ public:
 
 	virtual void InitResource() override;
 
-	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
+	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
+
+	virtual bool HasCollideWith(DWORD64 id) override;
 
 	virtual void FinalUpdate() override;
 
@@ -33,9 +35,9 @@ public:
 
 	virtual RectF GetHitBox() override;
 
-	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
+	virtual bool IsGetThrough(GameObject& object, Direction direction) override;
 
-	virtual float GetDamageFor(IColliable& object, Direction direction) override;
+	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
 	static shared_ptr<EndmapReward> CreateEndmapReward(Vec2 fixedPos = Vec2(100, 100));
 

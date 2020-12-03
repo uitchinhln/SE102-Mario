@@ -5,12 +5,15 @@
 #include "MarioTailed.h"
 #include "SceneManager.h"
 #include "Koopas.h"
+#include "GameObject.h"
+#include "Game.h"
 
 RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {
 	this->MARIO_ATTACK_TIME = 250;
 	this->MARIO_SUPER_PUSH_FORCE = MARIO_FLYING_UP_FORCE;
 	this->MARIO_SUPER_JUMP_HEIGHT = 80;
+	this->MAX_FLY_SPEED = 0.405f;
 }
 
 void RaccoonMario::InitResource(bool force)

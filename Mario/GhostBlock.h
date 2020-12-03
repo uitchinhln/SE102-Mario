@@ -8,9 +8,11 @@ public:
 
 	virtual RectF GetHitBox() override;
 
-	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
+	virtual bool HasCollideWith(DWORD64 id) override;
 
-	virtual float GetDamageFor(IColliable& object, Direction direction) override;
+	virtual bool IsGetThrough(GameObject& object, Direction direction) override;
+
+	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
 	virtual void Render() override;
 

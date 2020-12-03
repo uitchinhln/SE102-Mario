@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "StopWatch.h"
 
 enum class GoombaState {
 	IDLE,
@@ -17,7 +18,7 @@ public:
 
 	virtual void InitResource() override;
 
-	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
+	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
 
 	virtual void StatusUpdate() override;
 
@@ -31,9 +32,9 @@ public:
 
 	virtual RectF GetHitBox() override;
 
-	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
+	virtual bool IsGetThrough(GameObject& object, Direction direction) override;
 
-	virtual float GetDamageFor(IColliable& object, Direction direction) override;
+	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
 	static shared_ptr<Goomba> CreateGoomba(Vec2 fixedPos = Vec2(100, 100));
 
@@ -45,7 +46,7 @@ protected:
 	Stopwatch destroyTimer;
 
 	float GB_GRAVITY = 0.00133f * 1.5f;
-	float GB_SPEED = 0.15f;
+	float GB_SPEED = 0.10f;
 	float GB_DESTROY_DELAY = 500;
 	Vec2 size = Vec2(45, 45);
 	RectF hitbox;

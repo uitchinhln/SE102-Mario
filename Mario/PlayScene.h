@@ -26,8 +26,7 @@ public:
 	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
 
 protected:
-	vector<shared_ptr<IColliable>> mapObjects;
-	vector<weak_ptr<IColliable>> test;
+	vector<shared_ptr<GameObject>> mapObjects;
 
 	shared_ptr<Hud> hud;
 

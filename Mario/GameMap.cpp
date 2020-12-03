@@ -2,6 +2,7 @@
 #include "Transform.h"
 #include "MapProperties.h"
 #include "Events.h"
+#include "Game.h"
 
 CGameMap::CGameMap()
 {

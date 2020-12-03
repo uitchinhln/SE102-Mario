@@ -1,11 +1,11 @@
 #pragma once
 #include "Utils.h"
 #include "ObjectType.h"
-#include "IColliable.h"
 #include "Direction.h"
 #include "Animation.h"
 
 class Koopas;
+class GameObject;
 
 class DefaultKoopas
 {
@@ -16,7 +16,7 @@ public:
 
 	virtual void InitResource(bool force = false);
 
-	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);
+	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj);
 
 	virtual void StatusUpdate();
 
@@ -30,7 +30,7 @@ public:
 
 	virtual RectF GetHitBox();
 
-	virtual float GetDamageFor(IColliable& object, Direction direction);
+	virtual float GetDamageFor(GameObject& object, Direction direction);
 
 	~DefaultKoopas();
 

@@ -3,6 +3,7 @@
 #include "AnimationManager.h"
 #include "SceneManager.h"
 #include "CustomCollisionCalc.h"
+#include "Game.h"
 
 QuestionBlock::QuestionBlock()
 {
@@ -18,7 +19,7 @@ void QuestionBlock::InitResource()
 	}
 }
 
-void QuestionBlock::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+void QuestionBlock::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	if (state != QuestionBlockStates::Available) return;
 
@@ -27,8 +28,14 @@ void QuestionBlock::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 	collisionCal->CalcPotentialCollisions(coObj, false);
 }
 
+bool QuestionBlock::HasCollideWith(DWORD64 id)
+{
+	return true;
+}
+
 void QuestionBlock::StatusUpdate()
 {
+	CollisionDoubleFilter();
 	if (state != QuestionBlockStates::Available) return;
 
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
@@ -107,12 +114,12 @@ RectF QuestionBlock::GetHitBox()
 	return RectF(Position.x, Position.y, Position.x + size.x, Position.y + size.y);
 }
 
-bool QuestionBlock::IsGetThrough(IColliable& object, Direction direction)
+bool QuestionBlock::IsGetThrough(GameObject& object, Direction direction)
 {
 	return false;
 }
 
-float QuestionBlock::GetDamageFor(IColliable& object, Direction direction)
+float QuestionBlock::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 0.0f;
 }

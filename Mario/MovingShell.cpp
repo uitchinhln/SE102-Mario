@@ -4,6 +4,7 @@
 #include "MEntityType.h"
 #include "SceneManager.h"
 #include "CrouchKoopas.h"
+#include "Game.h"
 
 MovingShell::MovingShell(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 {
@@ -142,7 +143,7 @@ ObjectType MovingShell::GetObjectType()
 	return MEntityType::KoopasImposter;
 }
 
-float MovingShell::GetDamageFor(IColliable& object, Direction direction)
+float MovingShell::GetDamageFor(GameObject& object, Direction direction)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if ((k->GetLiveState() == KoopasLiveStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5)

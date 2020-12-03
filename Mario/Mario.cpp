@@ -115,11 +115,12 @@ void Mario::InitResource()
 
 void Mario::StatusUpdate()
 {
+	CollisionDoubleFilter();
 	shared_ptr<MarioPowerUp> p = powerUp;
 	p->StatusUpdate();
 }
 
-void Mario::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+void Mario::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	shared_ptr<MarioPowerUp> p = powerUp;
 	p->CollisionUpdate(coObj);
@@ -273,7 +274,7 @@ ObjectType Mario::GetObjectType()
 	return powerUp->GetMarioType();
 }
 
-bool Mario::IsGetThrough(IColliable& object, Direction direction)
+bool Mario::IsGetThrough(GameObject& object, Direction direction)
 {
 	bool fireballAllow = object.GetObjectType() == MEntityType::MarioFireBall;
 	bool tailAllow = object.GetObjectType() == MEntityType::MarioTailed;
@@ -282,7 +283,7 @@ bool Mario::IsGetThrough(IColliable& object, Direction direction)
 	return fireballAllow || tailAllow || enemyAllow;
 }
 
-float Mario::GetDamageFor(IColliable& object, Direction direction)
+float Mario::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 0.0f;
 }

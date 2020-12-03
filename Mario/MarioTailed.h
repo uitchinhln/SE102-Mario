@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Mario.h"
+#include "StopWatch.h"
 
 class MarioTailed :
 	public GameObject,
@@ -8,6 +9,8 @@ class MarioTailed :
 {
 public:
 	MarioTailed(shared_ptr<Mario> holder, DWORD attackTime);
+
+	virtual bool HasCollideWith(DWORD64 id) override;
 
 	virtual void MovingUpdate();
 
@@ -21,9 +24,9 @@ public:
 
 	virtual RectF GetHitBox() override;
 
-	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
+	virtual bool IsGetThrough(GameObject& object, Direction direction) override;
 
-	virtual float GetDamageFor(IColliable& object, Direction direction) override;
+	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
 	~MarioTailed();
 

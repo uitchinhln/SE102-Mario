@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "DefaultKoopas.h"
+#include "StopWatch.h"
 
 class Mario;
 
@@ -27,7 +28,7 @@ public:
 
 	virtual void SetPower(shared_ptr<DefaultKoopas> power);
 
-	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
+	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
 
 	virtual void StatusUpdate() override;
 
@@ -41,9 +42,9 @@ public:
 
 	virtual RectF GetHitBox() override;
 
-	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
+	virtual bool IsGetThrough(GameObject& object, Direction direction) override;
 
-	virtual float GetDamageFor(IColliable& object, Direction direction) override;
+	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
 	static shared_ptr<Koopas> CreateKoopas(Vec2 fixedPos = Vec2(100, 100));
 

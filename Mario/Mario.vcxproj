@@ -178,7 +178,6 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameProperty.cpp" />
     <ClCompile Include="GameWindow.cpp" />
-    <ClCompile Include="IColliable.cpp" />
     <ClCompile Include="KeyboardProcessor.cpp" />
     <ClCompile Include="Layer.cpp" />
     <ClCompile Include="GameMap.cpp" />
@@ -245,7 +244,6 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameProperty.h" />
     <ClInclude Include="GameWindow.h" />
-    <ClInclude Include="IColliable.h" />
     <ClInclude Include="KeyboardProcessor.h" />
     <ClInclude Include="Layer.h" />
     <ClInclude Include="GameMap.h" />

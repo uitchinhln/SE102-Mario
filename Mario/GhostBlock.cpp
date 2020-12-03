@@ -15,12 +15,17 @@ RectF GhostBlock::GetHitBox()
 	return hitbox;
 }
 
-bool GhostBlock::IsGetThrough(IColliable& object, Direction direction)
+bool GhostBlock::HasCollideWith(DWORD64 id)
+{
+	return true;
+}
+
+bool GhostBlock::IsGetThrough(GameObject& object, Direction direction)
 {
 	return direction != Direction::Top;
 }
 
-float GhostBlock::GetDamageFor(IColliable& object, Direction direction)
+float GhostBlock::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 0.0f;
 }

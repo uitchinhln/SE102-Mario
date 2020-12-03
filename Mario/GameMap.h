@@ -5,7 +5,6 @@
 #include "TinyXML/tinyxml.h"
 #include "TinyXML/tinystr.h"
 #include "Camera.h"
-#include "IColliable.h"
 
 class CGameMap
 {

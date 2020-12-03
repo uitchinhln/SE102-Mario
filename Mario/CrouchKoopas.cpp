@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "Mario.h"
 #include "MovingShell.h"
+#include "Game.h"
 
 CrouchKoopas::CrouchKoopas(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 {
@@ -221,7 +222,7 @@ ObjectType CrouchKoopas::GetObjectType()
 	return MEntityType::KoopasCrouch;
 }
 
-float CrouchKoopas::GetDamageFor(IColliable& object, Direction direction)
+float CrouchKoopas::GetDamageFor(GameObject& object, Direction direction)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if (k->GetLiveState() == KoopasLiveStates::DIE && k->GetDestroyTimer().Elapsed() > 5) return 0.0f;

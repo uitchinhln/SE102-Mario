@@ -1,15 +1,26 @@
 #include "GameObject.h"
+#include "Game.h"
 
 GameObject::GameObject()
 {
 	tags = make_shared<DataTag>("root");
+	id = __id++;
 	InitResource();
+}
+
+DWORD64 GameObject::GetID()
+{
+	return id;
+}
+
+bool GameObject::IsActive()
+{
+	return active;
 }
 
 float& GameObject::GetGravity()
 {
 	return this->Gravity;
-	// TODO: insert return statement here
 }
 
 Vec2& GameObject::GetPosition()
@@ -47,8 +58,29 @@ void GameObject::InitResource()
 {
 }
 
-void GameObject::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+void GameObject::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
+}
+
+void GameObject::CollisionDoubleFilter()
+{
+	if (!collisionCal) return;
+	vector<shared_ptr<CollisionResult>> results = collisionCal->GetLastResults();
+	for (shared_ptr<CollisionResult> coll : results) {
+		if (!coll->GameColliableObject->HasCollideWith(id)) {
+			coll->Remove = true;
+		}
+	}
+	collisionCal->DropRemovedCollision();
+	collisionCal->GetClampDistance();
+}
+
+bool GameObject::HasCollideWith(DWORD64 id)
+{
+	if (collisionCal) {
+		return collisionCal->Has(id);
+	}
+	return true;
 }
 
 void GameObject::Update()
@@ -91,7 +123,7 @@ Vec2& GameObject::GetDistance()
 
 void GameObject::SetActive(bool value)
 {
-	IColliable::SetActive(value);
+	this->active = value;
 	if (collisionCal) {
 		collisionCal->Clear();
 	}

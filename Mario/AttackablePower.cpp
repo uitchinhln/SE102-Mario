@@ -3,6 +3,8 @@
 #include "TextureManager.h"
 #include "SceneManager.h"
 #include "AnimationManager.h"
+#include "GameObject.h"
+#include "Game.h"
 
 AttackablePower::AttackablePower(shared_ptr<Mario> mario) : MarioPowerUp(mario)
 {

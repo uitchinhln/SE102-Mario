@@ -1,5 +1,6 @@
 #pragma once
 #include "DefaultKoopas.h"
+#include "StopWatch.h"
 
 class CrouchKoopas :
 	public DefaultKoopas
@@ -21,7 +22,7 @@ public:
 
 	virtual ObjectType GetObjectType() override;
 
-	virtual float GetDamageFor(IColliable& object, Direction direction) override;
+	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
 protected:
 	bool flip = false;

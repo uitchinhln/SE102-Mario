@@ -4,6 +4,8 @@
 #include "SceneManager.h"
 #include "AnimationManager.h"
 #include "Koopas.h"
+#include "GameObject.h"
+#include "Game.h"
 
 MarioPowerUp::MarioPowerUp(shared_ptr<Mario> mario)
 {
@@ -23,12 +25,12 @@ RectF MarioPowerUp::GetHitBox()
 	return RectF(0, 0, 0, 0);
 }
 
-void MarioPowerUp::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+void MarioPowerUp::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
-		m->GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
+		m->GetCollisionCalc()->CalcPotentialCollisions(coObj, true);
 	}
 }
 
@@ -150,7 +152,7 @@ void MarioPowerUp::MoveProcess()
 
 			m->GetVelocity().x += m->GetAccelerate().x * dt;
 
-			if (m->GetJumpingState() != JumpingStates::IDLE) maxSpeed = min(maxSpeed, 0.405f);
+			if (m->GetJumpingState() != JumpingStates::IDLE) maxSpeed = min(maxSpeed, MAX_FLY_SPEED);
 			if (abs(m->GetVelocity().x) > maxSpeed) {
 				int sign = m->GetVelocity().x < 0 ? -1 : 1;
 				if (abs(m->GetVelocity().x) - maxSpeed > MARIO_RUN_DRAG_FORCE * dt) {
@@ -229,14 +231,16 @@ void MarioPowerUp::JumpProcess()
 
 	if (shared_ptr<Mario> m = mario.lock()) {
 		float jumpHeight = MARIO_JUMP_HEIGHT;
+		float minJumpHeight = MARIO_MIN_JUMP_HEIGHT;
 		float height = 0;
 
 		switch (m->GetJumpingState())
 		{
 		case JumpingStates::SUPER_JUMP:
 			height = abs(m->GetJumpBeginPosition() - m->GetPosition().y - m->GetVelocity().y * dt);
+			minJumpHeight = MARIO_MIN_HIGH_JUMP_HEIGHT;
 
-			if (height < MARIO_MIN_JUMP_HEIGHT || (height < MARIO_SUPER_JUMP_HEIGHT && keyboard.IsKeyDown(DIK_S))) {
+			if (height < minJumpHeight || (height < MARIO_SUPER_JUMP_HEIGHT && keyboard.IsKeyDown(DIK_S))) {
 				m->GetVelocity().y = -MARIO_SUPER_PUSH_FORCE - MARIO_GRAVITY * dt;
 			} 
 			else {
@@ -246,10 +250,11 @@ void MarioPowerUp::JumpProcess()
 			break;
 		case JumpingStates::HIGH_JUMP:
 			jumpHeight = MARIO_HIGH_JUMP_HEIGHT;
+			minJumpHeight = MARIO_MIN_HIGH_JUMP_HEIGHT;
 		case JumpingStates::JUMP:
 			height = abs(m->GetJumpBeginPosition() - m->GetPosition().y - m->GetVelocity().y * dt);
 
-			if (height < MARIO_MIN_JUMP_HEIGHT || (height < jumpHeight && (keyboard.IsKeyDown(DIK_S) || keyboard.IsKeyDown(DIK_X)))) {
+			if (height < minJumpHeight || (height < jumpHeight && (keyboard.IsKeyDown(DIK_S) || keyboard.IsKeyDown(DIK_X)))) {
 				m->GetVelocity().y = -MARIO_PUSH_FORCE - MARIO_GRAVITY * dt;
 			}
 			else {

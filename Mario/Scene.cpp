@@ -10,7 +10,7 @@ void CScene::Update()
 	gameMap->Update();
 	camera->Update();
 
-	vector<shared_ptr<IColliable>> objs;
+	vector<shared_ptr<GameObject>> objs;
 
 	for (shared_ptr<GameObject> obj : objects) {
 		obj->Update();

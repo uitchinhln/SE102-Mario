@@ -28,6 +28,8 @@
 #define VECTOR_0 Vec2(0, 0)
 #endif // !VEC0
 
+static DWORD64 __id = 0;
+
 typedef D3DXVECTOR2 Vec2;
 
 using namespace std;
@@ -45,12 +47,6 @@ pair<key_type, value_type> floor_entry(const map<key_type, value_type> &input, c
 
 template<class key_type, class value_type>
 value_type floor_value(const map<key_type, value_type> &input, const key_type& key);
-
-template<typename Base, typename T>
-bool instanceof(const T*);
-
-template<typename Base, typename T>
-bool instanceof(shared_ptr<T>*);
 
 template<class key_type, class value_type>
 inline pair<key_type, value_type> floor_entry(const map<key_type, value_type>& input, const key_type& key)
@@ -76,16 +72,4 @@ inline value_type floor_value(const map<key_type, value_type>& input, const key_
 		--it;
 	}
 	return it->second;
-}
-
-template<typename Base, typename T>
-inline bool instanceof(const T*)
-{
-	return is_base_of<Base, T>::value;
-}
-
-template<typename Base, typename T>
-inline bool instanceof(shared_ptr<T>*)
-{
-	return is_base_of<Base, T>::value;
 }

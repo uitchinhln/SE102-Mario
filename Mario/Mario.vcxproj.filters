@@ -219,9 +219,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Framework\World\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="IColliable.cpp">
-      <Filter>Framework\World\Phys\Collision</Filter>
-    </ClCompile>
     <ClCompile Include="TileSet.cpp">
       <Filter>Framework\World\Map\Tile</Filter>
     </ClCompile>
@@ -409,9 +406,6 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Framework\World\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="IColliable.h">
-      <Filter>Framework\World\Phys\Collision</Filter>
     </ClInclude>
     <ClInclude Include="TileSet.h">
       <Filter>Framework\World\Map\Tile</Filter>

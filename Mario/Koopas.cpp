@@ -44,7 +44,7 @@ void Koopas::SetPower(shared_ptr<DefaultKoopas> power)
 	this->power = power;
 }
 
-void Koopas::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+void Koopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	shared_ptr<DefaultKoopas> p = power;
 	p->CollisionUpdate(coObj);
@@ -52,6 +52,7 @@ void Koopas::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
 
 void Koopas::StatusUpdate()
 {
+	CollisionDoubleFilter();
 	shared_ptr<DefaultKoopas> p = power;
 	p->StatusUpdate();
 }
@@ -84,15 +85,15 @@ RectF Koopas::GetHitBox()
 	return power->GetHitBox();
 }
 
-bool Koopas::IsGetThrough(IColliable& object, Direction direction)
+bool Koopas::IsGetThrough(GameObject& object, Direction direction)
 {
 	//bool koopasImp = object.GetObjectType() == MEntityType::KoopasImposter;
 	bool notKoopas = object.GetObjectType() != MEntityType::Koopas;
 	bool notKoopasCrouch = object.GetObjectType() != MEntityType::KoopasCrouch;
-	return state == KoopasLiveStates::DIE || ((notKoopas || notKoopasCrouch) && MEntityType::IsEnemy(object.GetObjectType()));
+	return state == KoopasLiveStates::DIE || ((notKoopas && notKoopasCrouch) && MEntityType::IsEnemy(object.GetObjectType()));
 }
 
-float Koopas::GetDamageFor(IColliable& object, Direction direction)
+float Koopas::GetDamageFor(GameObject& object, Direction direction)
 {
 	return power->GetDamageFor(object, direction);
 }

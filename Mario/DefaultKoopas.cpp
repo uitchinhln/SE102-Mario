@@ -4,6 +4,7 @@
 #include "Koopas.h"
 #include "SceneManager.h"
 #include "CrouchKoopas.h"
+#include "Game.h"
 
 DefaultKoopas::DefaultKoopas()
 {
@@ -36,7 +37,7 @@ void DefaultKoopas::InitResource(bool force)
 	}
 }
 
-void DefaultKoopas::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+void DefaultKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
@@ -163,7 +164,7 @@ RectF DefaultKoopas::GetHitBox()
 	return RectF(0, 0, 0, 0);
 }
 
-float DefaultKoopas::GetDamageFor(IColliable& object, Direction direction)
+float DefaultKoopas::GetDamageFor(GameObject& object, Direction direction)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if ((k->GetLiveState() == KoopasLiveStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5)

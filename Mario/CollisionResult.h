@@ -1,6 +1,8 @@
 #pragma once
 #include "Utils.h"
-#include "IColliable.h"
+#include "Direction.h"
+
+class GameObject;
 
 class SweptCollisionResult {
 public:
@@ -15,22 +17,15 @@ public:
 class CollisionResult
 {
 public:
-	shared_ptr<IColliable> GameColliableObject;
+	shared_ptr<GameObject> GameColliableObject;
 	SweptCollisionResult SAABBResult;
+	bool Remove = false;
 
-	CollisionResult(SweptCollisionResult result, shared_ptr<IColliable> object) {
-		SAABBResult = result;
-		GameColliableObject = object;
-	}
-	static bool LPCompare(const shared_ptr<CollisionResult>& a, shared_ptr<CollisionResult>& b)
-	{
-		return a->SAABBResult.TimeToCollide < b->SAABBResult.TimeToCollide;
-	}
+	CollisionResult(SweptCollisionResult result, shared_ptr<GameObject> object);
 
-	static bool Compare(const CollisionResult& a, CollisionResult& b)
-	{
-		return a.SAABBResult.TimeToCollide < b.SAABBResult.TimeToCollide;
-	}
+	static bool LPCompare(const shared_ptr<CollisionResult>& a, shared_ptr<CollisionResult>& b);
+
+	static bool Compare(const CollisionResult& a, CollisionResult& b);
 };
 
 

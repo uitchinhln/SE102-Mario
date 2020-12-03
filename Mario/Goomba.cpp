@@ -2,6 +2,7 @@
 #include "MEntityType.h"
 #include "AnimationManager.h"
 #include "SceneManager.h"
+#include "Game.h"
 
 Goomba::Goomba()
 {
@@ -28,7 +29,7 @@ void Goomba::InitResource()
 	}
 }
 
-void Goomba::CollisionUpdate(vector<shared_ptr<IColliable>>* coObj)
+void Goomba::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	if (state != GoombaState::WALK) return;
 
@@ -148,14 +149,14 @@ RectF Goomba::GetHitBox()
 	return hitbox;
 }
 
-bool Goomba::IsGetThrough(IColliable& object, Direction direction)
+bool Goomba::IsGetThrough(GameObject& object, Direction direction)
 {
 	//bool koopasImp = object.GetObjectType() == MEntityType::KoopasImposter;
 	bool notGoomba = object.GetObjectType() != MEntityType::Goomba;
 	return state != GoombaState::WALK || ((notGoomba) && MEntityType::IsEnemy(object.GetObjectType()));
 }
 
-float Goomba::GetDamageFor(IColliable& object, Direction direction)
+float Goomba::GetDamageFor(GameObject& object, Direction direction)
 {
 	if ((state == GoombaState::WALK || destroyTimer.Elapsed() <= 5) && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
 		return 1.0f;

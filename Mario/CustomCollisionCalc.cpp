@@ -1,6 +1,6 @@
 #include "CustomCollisionCalc.h"
 
-CustomCollisionCalc::CustomCollisionCalc(weak_ptr<IColliable> object) : CollisionCalculator(object)
+CustomCollisionCalc::CustomCollisionCalc(weak_ptr<GameObject> object) : CollisionCalculator(object)
 {
 }
 

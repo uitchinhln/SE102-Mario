@@ -1,5 +1,6 @@
 #pragma once
 #include "MarioPowerUp.h"
+#include "StopWatch.h"
 
 class AttackablePower :
     public MarioPowerUp

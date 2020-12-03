@@ -13,7 +13,9 @@ public:
 
 	virtual void Reset();
 
-	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj) override;
+	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
+
+	virtual bool HasCollideWith(DWORD64 id) override;
 
 	virtual void Update() override;
 
@@ -25,9 +27,9 @@ public:
 
 	virtual RectF GetHitBox() override;
 
-	virtual bool IsGetThrough(IColliable& object, Direction direction) override;
+	virtual bool IsGetThrough(GameObject& object, Direction direction) override;
 
-	virtual float GetDamageFor(IColliable& object, Direction direction) override;
+	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
 protected:
 	Vec2 size = Vec2(24, 24);

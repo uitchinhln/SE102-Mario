@@ -5,7 +5,7 @@
 #include "TinyXML/tinyxml.h"
 #include "MEntityType.h"
 
-
+class GameObject;
 class Mario;
 
 class MarioPowerUp
@@ -17,7 +17,7 @@ public:
 
 	virtual RectF GetHitBox();
 
-	virtual void CollisionUpdate(vector<shared_ptr<IColliable>>* coObj);
+	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj);
 
 	virtual void StatusUpdate();
 
@@ -73,11 +73,15 @@ protected:
 	float MARIO_SKID_ACCELERATION = 0.001104f;
 
 	float MARIO_GRAVITY = 0.002f;
-	float MARIO_MIN_JUMP_HEIGHT = 80;
+	float MARIO_MIN_JUMP_HEIGHT = 65;
 	float MARIO_JUMP_HEIGHT = 97;
+	float MARIO_PUSH_FORCE = 0.432f;
+
+	float MARIO_MIN_HIGH_JUMP_HEIGHT = 97;
 	float MARIO_HIGH_JUMP_HEIGHT = 216;
 	float MARIO_SUPER_JUMP_HEIGHT = 300;
-	float MARIO_PUSH_FORCE = 0.432f;
-	float MARIO_SUPER_PUSH_FORCE = 0.432f;
+	float MARIO_SUPER_PUSH_FORCE = 0.532f;
+
+	float MAX_FLY_SPEED = 999.0f;
 };
 
