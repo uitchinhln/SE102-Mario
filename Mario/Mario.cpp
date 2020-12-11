@@ -47,6 +47,9 @@ void Mario::OnKeyUp(int key)
 			inhand.reset();
 		}
 		break;
+	case DIK_Q:
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(Goomba::CreateGoomba(Position - Vec2(0, 230)));
+		break;
 	case DIK_D:
 		shared_ptr<Koopas> kp = Koopas::CreateKoopas(Position - Vec2(0, 230));
 		kp->SetPower(make_shared<CrouchKoopas>(kp));
@@ -110,12 +113,10 @@ void Mario::SetPowerUp(shared_ptr<MarioPowerUp> powerUp)
 
 void Mario::InitResource()
 {
-	//this->SetCollisionCalculator(make_shared<CollisionCalculator>(shared_from_this()));
 }
 
 void Mario::StatusUpdate()
 {
-	CollisionDoubleFilter();
 	shared_ptr<MarioPowerUp> p = powerUp;
 	p->StatusUpdate();
 }
@@ -126,9 +127,9 @@ void Mario::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	p->CollisionUpdate(coObj);
 }
 
-void Mario::FinalUpdate()
+void Mario::PositionUpdate()
 {
-	GameObject::FinalUpdate();
+	GameObject::PositionUpdate();
 
 	RectF hitbox = GetHitBox();
 
@@ -141,6 +142,11 @@ void Mario::FinalUpdate()
 		GetPosition().y = min(GetPosition().y, mapBound.y - size.y);
 		GetVelocity().x = 0;
 	}
+}
+
+void Mario::FinalUpdate()
+{
+	GameObject::FinalUpdate();
 	collisionCal->Clear();
 }
 

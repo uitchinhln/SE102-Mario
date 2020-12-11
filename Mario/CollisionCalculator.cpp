@@ -1,5 +1,6 @@
 #include "CollisionCalculator.h"
 #include "GameObject.h"
+#include "MEntityType.h"
 
 CollisionCalculator::CollisionCalculator(weak_ptr<GameObject> object)
 {
@@ -12,44 +13,60 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 	temp.clear();
 	results.clear();
 	key_results.clear();
+	_results.clear();
 
 	if (shared_ptr<GameObject> sp = object.lock()) {
-		//auto start = std::chrono::high_resolution_clock::now();
 		for each (shared_ptr<GameObject> coO in (*objects))
-		{
-			if (!coO->IsActive()) continue;
+		{		
+			if (!coO->IsActive() || sp->GetID() == coO->GetID()) continue;
 
-			SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), sp->GetDistance() - coO->GetDistance(), coO->GetHitBox(), debug);
+			RectF spR = sp->GetHitBox();
+			Vec2 spD = sp->GetDistance();
+			RectF cpR = coO->GetHitBox();
+			Vec2 cpD = coO->GetDistance();
 
-			if (aabbResult.TimeToCollide >= 0 && aabbResult.TimeToCollide < 1.0f)
+			SweptCollisionResult aabbResult = SweptAABB(spR, spD - cpD, cpR, debug);
+
+			switch (aabbResult.Status)
+			{
+			case CollisionStatus::COLLIDE:
 				temp.push_back(make_shared<CollisionResult>(aabbResult, coO));
+				break;
+			case CollisionStatus::OUT_OF_RANGE:
+				if (BroadPhase(spR, spD, cpR) || BroadPhase(cpR, cpD, spR)) {
+					_results.push_back(make_shared<CollisionResult>(aabbResult, coO));
+				}
+				break;
+			default:
+				break;
+			}
 		}
-		//auto finish = std::chrono::high_resolution_clock::now();
-		//DebugOut(L"%s\t%d\n", ToLPCWSTR(sp->GetObjectType().ToString()), std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 		sort(temp.begin(), temp.end(), CollisionResult::LPCompare);
 
+		//auto start = std::chrono::high_resolution_clock::now();
 		for each (shared_ptr<CollisionResult> coll in temp) {
 			for each (shared_ptr<CollisionResult> result in results) {
 				if (result->GameColliableObject->IsGetThrough(*sp, result->SAABBResult.Direction)) continue;
 				Vec2 dis = sp->GetDistance() - coll->GameColliableObject->GetDistance();
-				Vec2 drctn = ToVector(coll->SAABBResult.Direction);
-				if (drctn.x != 0) {
-					dis.y = dis.y * result->SAABBResult.TimeToCollide - 0.0001f * drctn.y;
+				if (ToVector(coll->SAABBResult.Direction).x != 0) {
+					dis.y = dis.y * result->SAABBResult.TimeToCollide;
 				}
 				else {
-					dis.x = dis.x * result->SAABBResult.TimeToCollide - 0.0001f * drctn.x;
+					dis.x = dis.x * result->SAABBResult.TimeToCollide;
 				}
 				SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), dis, coll->GameColliableObject->GetHitBox());
-				if (aabbResult.TimeToCollide < 0 || aabbResult.TimeToCollide > 1.0f) {
+				if (aabbResult.Status != CollisionStatus::COLLIDE) {
 					coll->SAABBResult.TimeToCollide = 9999.0f;
 					break;
 				}
 			}
-			if (coll->SAABBResult.TimeToCollide >= 0 && coll->SAABBResult.TimeToCollide <= 1.0f) {
+			if (coll->SAABBResult.Status == CollisionStatus::COLLIDE) {
 				results.push_back(coll);
 				key_results[coll->GameColliableObject->GetID()] = coll;
 			}
 		}
+		//auto finish = std::chrono::high_resolution_clock::now();
+		//DebugOut(L"%s\t%d\n", ToLPCWSTR(sp->GetObjectType().ToString()), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 	}	
 	GetClampDistance();
 	return results;
@@ -58,6 +75,11 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 vector<shared_ptr<CollisionResult>> CollisionCalculator::GetLastResults()
 {
 	return results;
+}
+
+vector<shared_ptr<CollisionResult>> CollisionCalculator::GetLast_Results()
+{
+	return _results;
 }
 
 Vec2 CollisionCalculator::GetClampDistance()
@@ -99,16 +121,20 @@ void CollisionCalculator::Clear()
 {
 	results.clear();
 	key_results.clear();
+	_results.clear();
 }
 
 void CollisionCalculator::DropRemovedCollision()
 {
-	results.erase(remove_if(results.begin(), results.end(), [this](const shared_ptr<CollisionResult>& coll) {
-		if (coll->Remove) {
-			key_results.erase(coll->GameColliableObject->GetID());
-		}
-		return coll->Remove;
-		}), results.end());
+	if (shared_ptr<GameObject> sp = object.lock()) {
+		results.erase(remove_if(results.begin(), results.end(), [this](const shared_ptr<CollisionResult>& coll) {
+			if (coll->Remove) {
+				key_results.erase(coll->GameColliableObject->GetID());
+				return true;
+			}
+			return false;
+			}), results.end());
+	}
 
 }
 
@@ -121,13 +147,8 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 	float t_exit;
 	
 	// Broad-phase test 
-	float bl = distance.x > 0 ? m.left : m.left + distance.x;
-	float bt = distance.y > 0 ? m.top : m.top + distance.y;
-	float br = distance.x > 0 ? m.right + distance.x : m.right;
-	float bb = distance.y > 0 ? m.bottom + distance.y : m.bottom;
-
-	if (br < s.left || bl > s.right || bb < s.top || bt > s.bottom)
-		return SweptCollisionResult::Empty;
+	if (!BroadPhase(m, distance, s))
+		return SweptCollisionResult::OutOfRange;
 
 	if (distance.x == 0 && distance.y == 0)
 		return SweptCollisionResult::Empty;
@@ -177,8 +198,11 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 		ty_exit = dy_exit / distance.y;
 	}
 
-	if ((tx_entry < 0.0f && ty_entry < 0.0f) || tx_entry > 1.0f || ty_entry > 1.0f)
-		return SweptCollisionResult::Empty;
+	if (tx_entry < 0.0f && ty_entry < 0.0f)
+		return SweptCollisionResult::Overlap;
+
+	if (tx_entry > 1.0f || ty_entry > 1.0f)
+		return SweptCollisionResult::OutOfRange;
 
 	t_entry = max(tx_entry, ty_entry);
 	t_exit = min(tx_exit, ty_exit);
@@ -196,8 +220,9 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 		else
 			direction = Direction::Right;
 
-		Vec2 mAfter(m.top + distance.y * t_entry, m.bottom + distance.y * t_entry);
-		touchingLength = (min(mAfter.y, s.bottom) - max(mAfter.x, s.top));
+		float mst = m.top + distance.y * t_entry;
+		float msb = m.bottom + distance.y * t_entry;
+		touchingLength = min(msb, s.bottom) - max(mst, s.top);
 	}
 	else
 	{
@@ -206,9 +231,11 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 		else
 			direction = Direction::Bottom;
 
-		Vec2 mAfter(m.left + distance.x * t_entry, m.right + distance.x * t_entry);
-		touchingLength = (min(mAfter.y, s.right) - max(mAfter.x, s.left));
+		float msl = m.left + distance.x * t_entry;
+		float msr = m.right + distance.x * t_entry;
+		touchingLength = (min(msr, s.right) - max(msl, s.left));
 	}
+
 	if (touchingLength <= 0) 
 		return SweptCollisionResult::Empty;
 
@@ -220,7 +247,17 @@ bool CollisionCalculator::AABB(RectF b1, RectF b2)
 	return !(b1.right < b2.left || b1.left > b2.right || b1.top > b2.bottom || b1.bottom < b2.top);
 }
 
-bool CollisionCalculator::Has(DWORD64 id)
+bool CollisionCalculator::BroadPhase(RectF movingBounding, Vec2 distance, RectF staticBounding)
+{
+	float bl = distance.x > 0 ? movingBounding.left : movingBounding.left + distance.x;
+	float bt = distance.y > 0 ? movingBounding.top : movingBounding.top + distance.y;
+	float br = distance.x > 0 ? movingBounding.right + distance.x : movingBounding.right;
+	float bb = distance.y > 0 ? movingBounding.bottom + distance.y : movingBounding.bottom;
+
+	return !(br < staticBounding.left || bl > staticBounding.right || bb < staticBounding.top || bt > staticBounding.bottom);
+}
+
+bool CollisionCalculator::Has(DWORD id)
 {
 	return key_results.size() > 0 && key_results.find(id) != key_results.end();
 }

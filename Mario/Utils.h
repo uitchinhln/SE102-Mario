@@ -28,7 +28,7 @@
 #define VECTOR_0 Vec2(0, 0)
 #endif // !VEC0
 
-static DWORD64 __id = 0;
+static DWORD __id = 0;
 
 typedef D3DXVECTOR2 Vec2;
 

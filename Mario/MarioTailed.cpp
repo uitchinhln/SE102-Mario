@@ -9,7 +9,11 @@ MarioTailed::MarioTailed(shared_ptr<Mario> holder, DWORD attackTime)
 	MovingUpdate();
 }
 
-bool MarioTailed::HasCollideWith(DWORD64 id)
+void MarioTailed::CollisionDoubleFilter()
+{
+}
+
+bool MarioTailed::HasCollideWith(DWORD id)
 {
 	return true;
 }
@@ -19,7 +23,7 @@ void MarioTailed::MovingUpdate()
 	if (shared_ptr<Mario> m = holder.lock()) {
 		this->Position = m->GetPosition() + Vec2(0, 54);
 
-		this->SetFacing(-1 * m->GetFacing() * attackState);
+		this->SetFacing(m->GetFacing() * attackState);
 
 		if (this->GetFacing() > 0) {
 			this->Position.x = m->GetHitBox().left;
@@ -41,7 +45,7 @@ void MarioTailed::Update()
 	MovingUpdate();	
 
 	if (attackTimer.Elapsed() >= attackTime >> 1) {
-		if (attackState > 0) {
+		if (attackState < 0) {
 			attackState *= -1;
 			attackTimer.Restart();
 		}
@@ -52,9 +56,13 @@ void MarioTailed::Update()
 	}
 }
 
+void MarioTailed::PositionUpdate()
+{
+}
+
 void MarioTailed::FinalUpdate()
 {
-	collisionCal->Clear();
+	//collisionCal->Clear();
 }
 
 void MarioTailed::Render()

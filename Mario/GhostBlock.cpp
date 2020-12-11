@@ -15,7 +15,11 @@ RectF GhostBlock::GetHitBox()
 	return hitbox;
 }
 
-bool GhostBlock::HasCollideWith(DWORD64 id)
+void GhostBlock::CollisionDoubleFilter()
+{
+}
+
+bool GhostBlock::HasCollideWith(DWORD id)
 {
 	return true;
 }

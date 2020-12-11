@@ -44,13 +44,6 @@ void CrouchKoopas::InitResource(bool force)
 void CrouchKoopas::FinalUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
-
-		if (collisionCal && k->GetLiveState() == KoopasLiveStates::ALIVE) {
-			k->GetDistance() = collisionCal->GetClampDistance();
-			//k->GetDistance().x = 0;
-		}
-		k->GetPosition() += k->GetDistance();
 		k->GetDistance() = k->GetVelocity() * (float) CGame::Time().ElapsedGameTime;
 
 		if (respawnTimer.Elapsed() >= KP_RESPAWN_TIME) {

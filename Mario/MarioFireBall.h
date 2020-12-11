@@ -15,7 +15,9 @@ public:
 
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
 
-	virtual bool HasCollideWith(DWORD64 id) override;
+	virtual void CollisionDoubleFilter() override;
+
+	virtual bool HasCollideWith(DWORD id) override;
 
 	virtual void Update() override;
 
@@ -37,7 +39,7 @@ protected:
 
 	weak_ptr<Mario> holder;
 
-	float FIREBALL_GRAVITY = 0.00193f;
+	float FIREBALL_GRAVITY = 0.002f;
 	float FIREBALL_JUMP_FORCE = 0.4f;
 	float FIREBALL_SPEED = 0.48f;
 };

@@ -21,7 +21,9 @@ public:
 
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
 
-	virtual bool HasCollideWith(DWORD64 id) override;
+	virtual void CollisionDoubleFilter() override;
+
+	virtual bool HasCollideWith(DWORD id) override;
 
 	virtual void FinalUpdate() override;
 

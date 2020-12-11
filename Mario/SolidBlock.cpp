@@ -15,7 +15,11 @@ RectF SolidBlock::GetHitBox()
 	return hitbox;
 }
 
-bool SolidBlock::HasCollideWith(DWORD64 id)
+void SolidBlock::CollisionDoubleFilter()
+{
+}
+
+bool SolidBlock::HasCollideWith(DWORD id)
 {
 	return true;
 }

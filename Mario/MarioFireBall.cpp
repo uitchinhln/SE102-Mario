@@ -62,7 +62,11 @@ void MarioFireBall::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	}
 }
 
-bool MarioFireBall::HasCollideWith(DWORD64 id)
+void MarioFireBall::CollisionDoubleFilter()
+{
+}
+
+bool MarioFireBall::HasCollideWith(DWORD id)
 {
 	return true;
 }
@@ -78,7 +82,7 @@ void MarioFireBall::Update()
 void MarioFireBall::FinalUpdate()
 {
 	GameObject::FinalUpdate();
-	collisionCal->Clear();
+	//collisionCal->Clear();
 }
 
 void MarioFireBall::Render()

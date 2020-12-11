@@ -28,14 +28,33 @@ void QuestionBlock::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	collisionCal->CalcPotentialCollisions(coObj, false);
 }
 
-bool QuestionBlock::HasCollideWith(DWORD64 id)
+void QuestionBlock::PositionUpdate()
+{
+	if (state != QuestionBlockStates::Bouncing) return;
+	Position += Distance;
+
+	if (Position.y < backupPos.y - MaxBounce) {
+		Position.y = backupPos.y - MaxBounce;
+		Velocity.y = 0;
+		Gravity = 0.004f;
+	}
+
+	if (Position.y > backupPos.y) {
+		Position = backupPos;
+		Gravity = 0;
+		Velocity = Vec2(0, 0);
+		Distance = Vec2(0, 0);
+		state = QuestionBlockStates::Unavailable;
+	}
+}
+
+bool QuestionBlock::HasCollideWith(DWORD id)
 {
 	return true;
 }
 
 void QuestionBlock::StatusUpdate()
 {
-	CollisionDoubleFilter();
 	if (state != QuestionBlockStates::Available) return;
 
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
@@ -60,22 +79,6 @@ void QuestionBlock::StatusUpdate()
 
 void QuestionBlock::FinalUpdate()
 {
-	if (state != QuestionBlockStates::Bouncing) return;
-	Position += Distance;
-
-	if (Position.y < backupPos.y - MaxBounce) {
-		Position.y = backupPos.y - MaxBounce;
-		Velocity.y = 0;
-		Gravity = 0.004f;
-	}
-
-	if (Position.y > backupPos.y) {
-		Position = backupPos;
-		Gravity = 0;
-		Velocity = Vec2(0, 0);
-		Distance = Vec2(0, 0);
-		state = QuestionBlockStates::Unavailable;
-	}
 	collisionCal->Clear();
 }
 

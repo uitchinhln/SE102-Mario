@@ -5,10 +5,11 @@ GameObject::GameObject()
 {
 	tags = make_shared<DataTag>("root");
 	id = __id++;
+	DebugOut(L"Create new game object with id = %d\n", id);
 	InitResource();
 }
 
-DWORD64 GameObject::GetID()
+DWORD GameObject::GetID()
 {
 	return id;
 }
@@ -72,10 +73,23 @@ void GameObject::CollisionDoubleFilter()
 		}
 	}
 	collisionCal->DropRemovedCollision();
-	collisionCal->GetClampDistance();
+	//collisionCal->GetClampDistance();
 }
 
-bool GameObject::HasCollideWith(DWORD64 id)
+void GameObject::OverlapPushBack()
+{
+	if (collisionCal == nullptr) return;
+	vector<shared_ptr<CollisionResult>> _result = collisionCal->GetLast_Results();
+
+	for each (shared_ptr<CollisionResult> var in _result)
+	{
+		if (collisionCal->AABB(GetHitBox(), var->GameColliableObject->GetHitBox())) {
+			DebugOut(L"%d phuc hoi va cham\n", id);
+		}
+	}
+}
+
+bool GameObject::HasCollideWith(DWORD id)
 {
 	if (collisionCal) {
 		return collisionCal->Has(id);
@@ -92,13 +106,20 @@ void GameObject::StatusUpdate()
 {
 }
 
+void GameObject::PositionUpdate()
+{
+	if (!collisionCal) {
+		Position += Distance;
+		return;
+	}
+
+	Position += collisionCal->GetClampDistance();
+}
+
 void GameObject::FinalUpdate()
 {
-	if (collisionCal) {
-		Distance = collisionCal->GetClampDistance();
-	}
-	Position += Distance;
 	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
+	//DebugOut(L"New distance of %s: %f\t%f\n", ToLPCWSTR(GetObjectType().ToString()), Distance.x, Distance.y);
 }
 
 void GameObject::SetCollisionCalculator(shared_ptr<CollisionCalculator> calc)

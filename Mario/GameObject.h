@@ -9,9 +9,10 @@
 
 class GameObject
 {
-protected:
-	DWORD64 id;
+private:
+	DWORD id;
 
+protected:
 	bool active = true;
 
 	int facing = 1;
@@ -33,7 +34,7 @@ protected:
 public:
 	GameObject();
 
-	DWORD64 GetID();
+	DWORD GetID();
 
 	virtual bool IsActive();
 
@@ -59,11 +60,15 @@ public:
 
 	virtual void CollisionDoubleFilter();
 
-	virtual bool HasCollideWith(DWORD64 id);
+	virtual void OverlapPushBack();
+
+	virtual bool HasCollideWith(DWORD id);
 
 	virtual void Update();
 
 	virtual void StatusUpdate();
+
+	virtual void PositionUpdate();
 
 	virtual void FinalUpdate();
 

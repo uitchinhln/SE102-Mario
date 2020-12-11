@@ -18,6 +18,8 @@ public:
 
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj);
 
+	virtual void PositionUpdate();
+
 	virtual void StatusUpdate();
 
 	virtual void Update();
@@ -39,7 +41,7 @@ protected:
 
 	unordered_map<string, shared_ptr<CAnimation>> animations;
 
-	float KP_GRAVITY = 0.00133f * 1.5f;
+	float KP_GRAVITY = 0.002f;
 	float KP_SPEED = 0.18f;
 	long KP_DESTROY_DELAY = 3000;
 

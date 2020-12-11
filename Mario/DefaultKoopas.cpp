@@ -46,6 +46,19 @@ void DefaultKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	}
 }
 
+void DefaultKoopas::PositionUpdate()
+{
+	if (shared_ptr<Koopas> k = koopas.lock()) {
+		if (k->GetLiveState() == KoopasLiveStates::ALIVE) {
+			shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
+			k->GetPosition() += collisionCal->GetClampDistance();
+
+			return;
+		}
+		k->GetPosition() += k->GetDistance();
+	}
+}
+
 void DefaultKoopas::StatusUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
@@ -58,7 +71,7 @@ void DefaultKoopas::StatusUpdate()
 		{
 			Vec2 jet = collisionCal->GetJet();
 
-			if (jet.x != 0) k->GetVelocity().x *= k->GetVelocity().x / abs(k->GetVelocity().x) * jet.x;
+			if (jet.x != 0) k->GetVelocity().x = -k->GetVelocity().x;
 			if (jet.y != 0) k->GetVelocity().y = 0;
 
 			for each (shared_ptr<CollisionResult> coll in coResult)
@@ -116,15 +129,8 @@ void DefaultKoopas::Update()
 void DefaultKoopas::FinalUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
-
-		if (collisionCal && k->GetLiveState() == KoopasLiveStates::ALIVE) {
-			k->GetDistance() = collisionCal->GetClampDistance();
-		}
-		k->GetPosition() += k->GetDistance();
 		k->GetDistance() = k->GetVelocity() * (float) CGame::Time().ElapsedGameTime;
-
-		k->SetFacing((int)(-k->GetVelocity().x / abs(k->GetVelocity().x)));
+		k->SetFacing(k->GetVelocity().x > 0 ? -1 : 1);
 	}
 }
 

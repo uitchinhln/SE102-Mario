@@ -30,7 +30,7 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
-		m->GetCollisionCalc()->CalcPotentialCollisions(coObj, true);
+		m->GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
 	}
 }
 
@@ -103,9 +103,10 @@ void MarioPowerUp::StatusUpdate()
 				float damage = coll->GameColliableObject->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
 					//Die, down level...
-					DebugOut(L"Damage from enemy: %f\n", damage);
+					DebugOut(L"Damage from %s[%d]: %f\n", ToLPCWSTR(coll->GameColliableObject->GetObjectType().ToString()), coll->GameColliableObject->GetID(),  damage);
 				}
 				else {
+					//DebugOut(L"Check: %d\n", !coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top);
 					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
 						if (coll->GameColliableObject->GetObjectType() != MEntityType::KoopasCrouch) {
 							MiniJumpDetect(true);

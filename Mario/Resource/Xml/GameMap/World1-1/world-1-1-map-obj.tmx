@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="24" nextobjectid="83">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="24" nextobjectid="209">
  <editorsettings>
   <chunksize width="8" height="8"/>
   <export target="world-1-1-map.xml" format="tmx"/>
@@ -616,40 +616,16 @@
 </data>
  </layer>
  <objectgroup id="20" name="Object Layer">
-  <object id="13" name="Goomba" x="934" y="997">
-   <point/>
-  </object>
-  <object id="15" name="Goomba" x="1353" y="1229">
-   <point/>
-  </object>
-  <object id="16" name="Goomba" x="2415" y="1178">
-   <point/>
-  </object>
-  <object id="17" name="Goomba" x="840" y="1092">
-   <point/>
-  </object>
-  <object id="18" name="Goomba" x="1274.67" y="1095">
-   <point/>
-  </object>
-  <object id="19" name="Goomba" x="1009.67" y="1236.67">
-   <point/>
-  </object>
-  <object id="20" name="Koopas" x="938" y="1239">
+  <object id="19" name="Goomba" x="599.67" y="1231.67">
    <point/>
   </object>
   <object id="21" name="Koopas" x="1643" y="888">
-   <point/>
-  </object>
-  <object id="22" name="Koopas" x="645" y="1238">
    <point/>
   </object>
   <object id="23" name="EndmapReward" x="8038.58" y="984.06">
    <point/>
   </object>
   <object id="28" name="QuestionBlock" x="528" y="1056">
-   <point/>
-  </object>
-  <object id="29" name="QuestionBlock" x="576" y="1056">
    <point/>
   </object>
   <object id="30" name="QuestionBlock" x="1968" y="1152">
@@ -659,30 +635,6 @@
    <point/>
   </object>
   <object id="74" name="QuestionBlock" x="480" y="1056">
-   <point/>
-  </object>
-  <object id="75" name="QuestionBlock" x="432" y="1056">
-   <point/>
-  </object>
-  <object id="76" name="QuestionBlock" x="384" y="1056">
-   <point/>
-  </object>
-  <object id="77" name="QuestionBlock" x="624" y="1056">
-   <point/>
-  </object>
-  <object id="78" name="QuestionBlock" x="672" y="1056">
-   <point/>
-  </object>
-  <object id="79" name="QuestionBlock" x="720" y="1056">
-   <point/>
-  </object>
-  <object id="80" name="QuestionBlock" x="384" y="1104">
-   <point/>
-  </object>
-  <object id="81" name="QuestionBlock" x="384" y="1152">
-   <point/>
-  </object>
-  <object id="82" name="QuestionBlock" x="384" y="1200">
    <point/>
   </object>
  </objectgroup>

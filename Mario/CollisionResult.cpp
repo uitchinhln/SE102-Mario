@@ -1,7 +1,9 @@
 #include "CollisionResult.h"
 #include "GameObject.h"
 
-SweptCollisionResult SweptCollisionResult::Empty = SweptCollisionResult{ -1, Direction::None };
+SweptCollisionResult SweptCollisionResult::OutOfRange = SweptCollisionResult{ -1, Direction::None, VECTOR_0, 0.0f,  CollisionStatus::OUT_OF_RANGE };
+SweptCollisionResult SweptCollisionResult::Overlap = SweptCollisionResult{ -1, Direction::None, VECTOR_0, 0.0f,  CollisionStatus::OVERLAP };
+SweptCollisionResult SweptCollisionResult::Empty = SweptCollisionResult{ -1, Direction::None, VECTOR_0, 0.0f,  CollisionStatus::EMPTY };
 
 CollisionResult::CollisionResult(SweptCollisionResult result, shared_ptr<GameObject> object)
 {

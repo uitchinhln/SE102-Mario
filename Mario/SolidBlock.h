@@ -8,7 +8,9 @@ public:
 
 	virtual RectF GetHitBox() override;
 
-	virtual bool HasCollideWith(DWORD64 id) override;
+	virtual void CollisionDoubleFilter() override;
+
+	virtual bool HasCollideWith(DWORD id) override;
 
 	virtual bool IsGetThrough(GameObject& object, Direction direction) override;
 

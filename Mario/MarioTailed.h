@@ -10,11 +10,15 @@ class MarioTailed :
 public:
 	MarioTailed(shared_ptr<Mario> holder, DWORD attackTime);
 
-	virtual bool HasCollideWith(DWORD64 id) override;
+	virtual void CollisionDoubleFilter() override;
+
+	virtual bool HasCollideWith(DWORD id) override;
 
 	virtual void MovingUpdate();
 
 	virtual void Update() override;
+
+	virtual void PositionUpdate() override;
 
 	virtual void FinalUpdate() override;
 
@@ -35,7 +39,7 @@ protected:
 	RectF hitbox;
 	weak_ptr<Mario> holder;
 	long attackTime = 0;
-	int attackState = 1;
+	int attackState = -1;
 	float speed = 0;
 	Stopwatch attackTimer;
 };

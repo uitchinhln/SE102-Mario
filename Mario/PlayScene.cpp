@@ -51,6 +51,7 @@ void PlayScene::Update()
 	gameMap->Update();
 
 	mario->Update();
+
 	for (shared_ptr<GameObject> obj : objects) {
 		obj->Update();
 	}
@@ -64,6 +65,21 @@ void PlayScene::Update()
 	objs.push_back(this->mario);
 	for (shared_ptr<GameObject> obj : objects) {
 		obj->CollisionUpdate(&objs);
+	}
+
+	mario->CollisionDoubleFilter();
+	for (shared_ptr<GameObject> obj : objects) {
+		obj->CollisionDoubleFilter();
+	}
+
+	mario->PositionUpdate();
+	for (shared_ptr<GameObject> obj : objects) {
+		obj->PositionUpdate();
+	}
+
+	mario->OverlapPushBack();
+	for (shared_ptr<GameObject> obj : objects) {
+		obj->OverlapPushBack();
 	}
 
 	mario->StatusUpdate();
@@ -80,7 +96,6 @@ void PlayScene::Update()
 
 	camera->Update();
 	hud->Update();
-	//DebugOut(L"--------------------------\n");
 }
 
 void PlayScene::Render()
@@ -95,8 +110,6 @@ void PlayScene::Render()
 	CGame::GetInstance()->GetGraphic().SetViewport(hud);
 
 	hud->Render();
-	//auto finish = std::chrono::high_resolution_clock::now();
-	//DebugOut(L"PlayScene Render: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 void PlayScene::OnKeyDown(int key)

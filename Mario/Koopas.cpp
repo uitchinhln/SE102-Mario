@@ -50,9 +50,14 @@ void Koopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	p->CollisionUpdate(coObj);
 }
 
+void Koopas::PositionUpdate()
+{
+	shared_ptr<DefaultKoopas> p = power;
+	p->PositionUpdate();
+}
+
 void Koopas::StatusUpdate()
 {
-	CollisionDoubleFilter();
 	shared_ptr<DefaultKoopas> p = power;
 	p->StatusUpdate();
 }

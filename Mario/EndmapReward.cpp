@@ -30,7 +30,11 @@ void EndmapReward::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	collisionCal->CalcPotentialCollisions(&mro, false);
 }
 
-bool EndmapReward::HasCollideWith(DWORD64 id)
+void EndmapReward::CollisionDoubleFilter()
+{
+}
+
+bool EndmapReward::HasCollideWith(DWORD id)
 {
 	return true;
 }
@@ -43,7 +47,6 @@ void EndmapReward::FinalUpdate()
 
 void EndmapReward::StatusUpdate()
 {
-	CollisionDoubleFilter();
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
 	if (collisionCal->GetLastResults().size() > 0) {
 		shared_ptr<Mario> mario = SceneManager::GetInstance()->GetPlayer<Mario>();

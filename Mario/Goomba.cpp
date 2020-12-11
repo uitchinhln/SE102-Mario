@@ -36,6 +36,15 @@ void Goomba::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
 }
 
+void Goomba::PositionUpdate()
+{
+	if (state == GoombaState::WALK) {
+		Position += collisionCal->GetClampDistance();
+		return;
+	}
+	Position += Distance;
+}
+
 void Goomba::StatusUpdate()
 {
 	if (state != GoombaState::WALK) return;
@@ -45,15 +54,15 @@ void Goomba::StatusUpdate()
 	if (coResult.size() > 0) {
 		Vec2 jet = collisionCal->GetJet();
 
-		if (jet.x != 0) GetVelocity().x *= (GetVelocity().x < 0 ? -1 : 1) * jet.x;
-		if (jet.y != 0) GetVelocity().y = 0;
+		if (jet.x != 0) Velocity.x = -Velocity.x;
+		if (jet.y != 0) Velocity.y = 0;
 
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
 			if (MEntityType::IsMario(coll->GameColliableObject->GetObjectType())) {
 				if (coll->SAABBResult.Direction == Direction::Bottom) {
 					state = GoombaState::DIE;
-					SetVelocity(VECTOR_0);
+					Velocity = VECTOR_0;
 					Gravity = 0;
 
 					Position.y += size.y;
@@ -103,10 +112,6 @@ void Goomba::Update()
 
 void Goomba::FinalUpdate()
 {
-	if (collisionCal && state == GoombaState::WALK) {
-		Distance = collisionCal->GetClampDistance();
-	}
-	Position += Distance;
 	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
 	collisionCal->Clear();
 }

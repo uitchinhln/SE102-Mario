@@ -20,6 +20,8 @@ public:
 
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
 
+	virtual void PositionUpdate() override;
+
 	virtual void StatusUpdate() override;
 
 	virtual void Update() override;
@@ -45,7 +47,8 @@ protected:
 
 	Stopwatch destroyTimer;
 
-	float GB_GRAVITY = 0.00133f * 1.5f;
+	float GB_GRAVITY = 0.502f;
+	//float GB_GRAVITY = 0.002f;
 	float GB_SPEED = 0.10f;
 	float GB_DESTROY_DELAY = 500;
 	Vec2 size = Vec2(45, 45);
