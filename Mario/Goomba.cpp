@@ -39,10 +39,12 @@ void Goomba::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 void Goomba::PositionUpdate()
 {
 	if (state == GoombaState::WALK) {
-		Position += collisionCal->GetClampDistance();
-		return;
+		UpdatedDistance = collisionCal->GetClampDistance();
 	}
-	Position += Distance;
+	else {
+		UpdatedDistance = Distance;
+	}
+	Position += UpdatedDistance;
 }
 
 void Goomba::StatusUpdate()
@@ -59,7 +61,7 @@ void Goomba::StatusUpdate()
 
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
-			if (MEntityType::IsMario(coll->GameColliableObject->GetObjectType())) {
+			if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 				if (coll->SAABBResult.Direction == Direction::Bottom) {
 					state = GoombaState::DIE;
 					Velocity = VECTOR_0;
@@ -75,8 +77,8 @@ void Goomba::StatusUpdate()
 				}
 			}
 
-			if (MEntityType::IsMarioWeapon(coll->GameColliableObject->GetObjectType())) {
-				float damage = coll->GameColliableObject->GetDamageFor(*this, coll->SAABBResult.Direction);
+			if (MEntityType::IsMarioWeapon(coll->Object->GetObjectType())) {
+				float damage = coll->Object->GetDamageFor(*this, coll->SAABBResult.Direction);
 				if (damage > 0) {
 					state = GoombaState::EXPLODE;
 					Velocity = Vec2(jet.x * 0.1f, -0.65f);

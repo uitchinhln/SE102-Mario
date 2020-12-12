@@ -51,11 +51,12 @@ void DefaultKoopas::PositionUpdate()
 	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if (k->GetLiveState() == KoopasLiveStates::ALIVE) {
 			shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
-			k->GetPosition() += collisionCal->GetClampDistance();
-
-			return;
+			k->GetUpdatedDistance() = collisionCal->GetClampDistance();
 		}
-		k->GetPosition() += k->GetDistance();
+		else {
+			k->GetUpdatedDistance() = k->GetDistance();
+		}
+		k->GetPosition() += k->GetUpdatedDistance();
 	}
 }
 
@@ -76,20 +77,20 @@ void DefaultKoopas::StatusUpdate()
 
 			for each (shared_ptr<CollisionResult> coll in coResult)
 			{
-				if (MEntityType::IsMario(coll->GameColliableObject->GetObjectType())) {
+				if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 					if (coll->SAABBResult.Direction == Direction::Bottom) {
 						k->SetPower(make_shared<CrouchKoopas>(k));
 						return;
 					}
 				}
 
-				if (MEntityType::IsMarioWeapon(coll->GameColliableObject->GetObjectType())) {
-					if (coll->GameColliableObject->GetObjectType() == MEntityType::MarioTailed) {
+				if (MEntityType::IsMarioWeapon(coll->Object->GetObjectType())) {
+					if (coll->Object->GetObjectType() == MEntityType::MarioTailed) {
 						k->SetPower(make_shared<CrouchKoopas>(k, true));
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.95f));
 						return;
 					}
-					float damage = coll->GameColliableObject->GetDamageFor(*k, coll->SAABBResult.Direction);
+					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
 						k->GetLiveState() = KoopasLiveStates::DIE;
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));

@@ -89,10 +89,10 @@ void MarioPowerUp::StatusUpdate()
 
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
-			if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
-				if (coll->GameColliableObject->GetObjectType() == MEntityType::KoopasCrouch && coll->SAABBResult.Direction != Direction::Top) {
+			if (MEntityType::IsEnemy(coll->Object->GetObjectType())) {
+				if (coll->Object->GetObjectType() == MEntityType::KoopasCrouch && coll->SAABBResult.Direction != Direction::Top) {
 					KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
-					shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(coll->GameColliableObject);
+					shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(coll->Object);
 
 					if (keyboard.IsKeyDown(DIK_A) && !m->GetInhand()) {
 						m->SetInhand(koopas);
@@ -100,15 +100,15 @@ void MarioPowerUp::StatusUpdate()
 					}
 				}
 
-				float damage = coll->GameColliableObject->GetDamageFor(*m, coll->SAABBResult.Direction);
+				float damage = coll->Object->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
 					//Die, down level...
-					DebugOut(L"Damage from %s[%d]: %f\n", ToLPCWSTR(coll->GameColliableObject->GetObjectType().ToString()), coll->GameColliableObject->GetID(),  damage);
+					DebugOut(L"Damage from %s[%d]: %f\n", ToLPCWSTR(coll->Object->GetObjectType().ToString()), coll->Object->GetID(),  damage);
 				}
 				else {
-					//DebugOut(L"Check: %d\n", !coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top);
-					if (!coll->GameColliableObject->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
-						if (coll->GameColliableObject->GetObjectType() != MEntityType::KoopasCrouch) {
+					//DebugOut(L"Check: %d\n", !coll->Object->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top);
+					if (!coll->Object->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
+						if (coll->Object->GetObjectType() != MEntityType::KoopasCrouch) {
 							MiniJumpDetect(true);
 						}
 					}

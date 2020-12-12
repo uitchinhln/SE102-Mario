@@ -117,23 +117,23 @@ void CrouchKoopas::StatusUpdate()
 
 			for each (shared_ptr<CollisionResult> coll in coResult)
 			{
-				if (MEntityType::IsTile(coll->GameColliableObject->GetObjectType())) {
+				if (MEntityType::IsTile(coll->Object->GetObjectType())) {
 					k->GetVelocity().x = 0;
 					continue;
 				}
 
-				if (MEntityType::IsMario(coll->GameColliableObject->GetObjectType())) {
+				if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 					if (k->GetObjectType() == MEntityType::KoopasCrouch) {
-						shared_ptr<Mario> m = dynamic_pointer_cast<Mario>(coll->GameColliableObject);
+						shared_ptr<Mario> m = dynamic_pointer_cast<Mario>(coll->Object);
 						k->SetFacing(m->GetFacing());
 						k->SetPower(make_shared<MovingShell>(k, flip));
 					}
 					break;
 				}
 
-				if (MEntityType::IsEnemy(coll->GameColliableObject->GetObjectType())) {
+				if (MEntityType::IsEnemy(coll->Object->GetObjectType())) {
 					if (shared_ptr<Mario> m = k->GetHolder().lock()) {
-						float damage = coll->GameColliableObject->GetDamageFor(*k, coll->SAABBResult.Direction);
+						float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 						if (damage > 0) {
 							k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
 							KP_DESTROY_DELAY = 3000;
@@ -147,14 +147,14 @@ void CrouchKoopas::StatusUpdate()
 					}
 				}
 
-				if (MEntityType::IsMarioWeapon(coll->GameColliableObject->GetObjectType())) {
-					if (coll->GameColliableObject->GetObjectType() == MEntityType::MarioTailed) {
+				if (MEntityType::IsMarioWeapon(coll->Object->GetObjectType())) {
+					if (coll->Object->GetObjectType() == MEntityType::MarioTailed) {
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.95f));
 						this->flip = true;
 						respawnTimer.Restart();
 						continue;
 					}
-					float damage = coll->GameColliableObject->GetDamageFor(*k, coll->SAABBResult.Direction);
+					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
 						k->GetLiveState() = KoopasLiveStates::DIE;
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));

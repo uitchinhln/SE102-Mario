@@ -20,6 +20,8 @@ public:
 
 	virtual void PositionUpdate() override;
 
+	virtual void PositionLateUpdate() override;
+
 	virtual bool HasCollideWith(DWORD id) override;
 
 	virtual void StatusUpdate() override;

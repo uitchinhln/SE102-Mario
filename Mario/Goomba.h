@@ -47,8 +47,8 @@ protected:
 
 	Stopwatch destroyTimer;
 
-	float GB_GRAVITY = 0.502f;
-	//float GB_GRAVITY = 0.002f;
+	//float GB_GRAVITY = 1000.502f;
+	float GB_GRAVITY = 0.002f;
 	float GB_SPEED = 0.10f;
 	float GB_DESTROY_DELAY = 500;
 	Vec2 size = Vec2(45, 45);

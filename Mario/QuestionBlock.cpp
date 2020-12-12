@@ -46,6 +46,11 @@ void QuestionBlock::PositionUpdate()
 		Distance = Vec2(0, 0);
 		state = QuestionBlockStates::Unavailable;
 	}
+	UpdatedDistance = Distance;
+}
+
+void QuestionBlock::PositionLateUpdate()
+{
 }
 
 bool QuestionBlock::HasCollideWith(DWORD id)
@@ -64,9 +69,9 @@ void QuestionBlock::StatusUpdate()
 	if (coResult.size() > 0) {
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
-			if (coll->GameColliableObject->GetObjectType() == MEntityType::MarioTailed 
-				|| (coll->GameColliableObject->GetObjectType() == MEntityType::KoopasImposter && ToVector(coll->SAABBResult.Direction).x != 0)
-				|| (MEntityType::IsMario(coll->GameColliableObject->GetObjectType()) && coll->SAABBResult.Direction == Direction::Top)) {
+			if (coll->Object->GetObjectType() == MEntityType::MarioTailed 
+				|| (coll->Object->GetObjectType() == MEntityType::KoopasImposter && ToVector(coll->SAABBResult.Direction).x != 0)
+				|| (MEntityType::IsMario(coll->Object->GetObjectType()) && coll->SAABBResult.Direction == Direction::Top)) {
 				Velocity.y = -2.8125f;
 				Gravity = 0;
 				backupPos = Position;

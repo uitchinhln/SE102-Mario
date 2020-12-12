@@ -23,6 +23,8 @@ public:
 
 	virtual void CollisionDoubleFilter() override;
 
+	virtual void PositionLateUpdate() override;
+
 	virtual bool HasCollideWith(DWORD id) override;
 
 	virtual void FinalUpdate() override;

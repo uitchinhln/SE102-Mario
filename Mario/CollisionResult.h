@@ -27,7 +27,7 @@ public:
 class CollisionResult
 {
 public:
-	shared_ptr<GameObject> GameColliableObject;
+	shared_ptr<GameObject> Object;
 	SweptCollisionResult SAABBResult;
 	bool Remove = false;
 

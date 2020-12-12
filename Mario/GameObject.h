@@ -24,6 +24,7 @@ protected:
 	Vec2 Velocity = Vec2(0, 0);
 
 	Vec2 Distance = Vec2(0, 0);
+	Vec2 UpdatedDistance = Vec2(0, 0);
 
 	unordered_map<string, shared_ptr<CAnimation>> animations;
 
@@ -60,7 +61,7 @@ public:
 
 	virtual void CollisionDoubleFilter();
 
-	virtual void OverlapPushBack();
+	virtual void RestoreCollision();
 
 	virtual bool HasCollideWith(DWORD id);
 
@@ -69,6 +70,8 @@ public:
 	virtual void StatusUpdate();
 
 	virtual void PositionUpdate();
+
+	virtual void PositionLateUpdate();
 
 	virtual void FinalUpdate();
 
@@ -82,7 +85,9 @@ public:
 
 	virtual Vec2& GetDistance();
 
-	virtual RectF GetHitBox() = 0;
+	virtual Vec2& GetUpdatedDistance();
+
+	virtual RectF GetHitBox();
 
 	virtual bool IsGetThrough(GameObject& object, Direction direction) = 0;
 

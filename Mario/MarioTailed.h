@@ -20,6 +20,8 @@ public:
 
 	virtual void PositionUpdate() override;
 
+	virtual void PositionLateUpdate() override;
+
 	virtual void FinalUpdate() override;
 
 	virtual void Render() override;

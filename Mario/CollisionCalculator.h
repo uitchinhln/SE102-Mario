@@ -10,6 +10,7 @@ class CollisionCalculator
 public:
 	CollisionCalculator(weak_ptr<GameObject> object);
 	virtual vector<shared_ptr<CollisionResult>> CalcPotentialCollisions(vector<shared_ptr<GameObject>>* objects, bool debug = false);
+	virtual void RestoreCollision();
 	virtual vector<shared_ptr<CollisionResult>> GetLastResults();
 	virtual vector<shared_ptr<CollisionResult>> GetLast_Results();
 	virtual Vec2 GetClampDistance();
@@ -18,11 +19,10 @@ public:
 	virtual void DropRemovedCollision();
 	virtual bool AABB(RectF movingBounding, RectF staticBounding);
 	virtual bool BroadPhase(RectF movingBounding, Vec2 distance, RectF staticBounding);
+	virtual SweptCollisionResult SweptAABB(RectF movingBounding, Vec2 distance, RectF staticBounding, bool debug = false);
 	virtual bool Has(DWORD id);
 
 protected:	
-	virtual SweptCollisionResult SweptAABB(RectF movingBounding, Vec2 distance, RectF staticBounding, bool debug = false);
-
 	weak_ptr<GameObject> object;
 	vector<shared_ptr<CollisionResult>> results;
 	unordered_map<DWORD, shared_ptr<CollisionResult>> key_results;

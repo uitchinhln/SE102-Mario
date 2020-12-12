@@ -34,6 +34,10 @@ void EndmapReward::CollisionDoubleFilter()
 {
 }
 
+void EndmapReward::PositionLateUpdate()
+{
+}
+
 bool EndmapReward::HasCollideWith(DWORD id)
 {
 	return true;

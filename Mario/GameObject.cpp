@@ -68,7 +68,7 @@ void GameObject::CollisionDoubleFilter()
 	if (!collisionCal) return;
 	vector<shared_ptr<CollisionResult>> results = collisionCal->GetLastResults();
 	for (shared_ptr<CollisionResult> coll : results) {
-		if (!coll->GameColliableObject->HasCollideWith(id)) {
+		if (!coll->Object->HasCollideWith(id)) {
 			coll->Remove = true;
 		}
 	}
@@ -76,17 +76,11 @@ void GameObject::CollisionDoubleFilter()
 	//collisionCal->GetClampDistance();
 }
 
-void GameObject::OverlapPushBack()
+void GameObject::RestoreCollision()
 {
 	if (collisionCal == nullptr) return;
-	vector<shared_ptr<CollisionResult>> _result = collisionCal->GetLast_Results();
 
-	for each (shared_ptr<CollisionResult> var in _result)
-	{
-		if (collisionCal->AABB(GetHitBox(), var->GameColliableObject->GetHitBox())) {
-			DebugOut(L"%d phuc hoi va cham\n", id);
-		}
-	}
+	collisionCal->RestoreCollision();
 }
 
 bool GameObject::HasCollideWith(DWORD id)
@@ -108,18 +102,20 @@ void GameObject::StatusUpdate()
 
 void GameObject::PositionUpdate()
 {
-	if (!collisionCal) {
-		Position += Distance;
-		return;
-	}
+	UpdatedDistance = collisionCal ? collisionCal->GetClampDistance() : Distance;
+	Position += UpdatedDistance;
+}
 
-	Position += collisionCal->GetClampDistance();
+void GameObject::PositionLateUpdate()
+{
+	if (!collisionCal) return;
+	Position -= UpdatedDistance;
+	PositionUpdate();
 }
 
 void GameObject::FinalUpdate()
 {
 	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
-	//DebugOut(L"New distance of %s: %f\t%f\n", ToLPCWSTR(GetObjectType().ToString()), Distance.x, Distance.y);
 }
 
 void GameObject::SetCollisionCalculator(shared_ptr<CollisionCalculator> calc)
@@ -140,6 +136,16 @@ shared_ptr<DataTag> GameObject::GetDataTag()
 Vec2& GameObject::GetDistance()
 {
 	return Distance;
+}
+
+Vec2& GameObject::GetUpdatedDistance()
+{
+	return UpdatedDistance;
+}
+
+RectF GameObject::GetHitBox()
+{
+	return RectF(0, 0, 0, 0);
 }
 
 void GameObject::SetActive(bool value)

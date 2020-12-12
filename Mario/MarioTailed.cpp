@@ -34,6 +34,7 @@ void MarioTailed::MovingUpdate()
 
 		Distance.x = 1.0f + speed * (attackTime >> 1) * this->GetFacing();
 		Distance.y = 0;
+		UpdatedDistance = Distance;
 	}
 }
 
@@ -57,6 +58,10 @@ void MarioTailed::Update()
 }
 
 void MarioTailed::PositionUpdate()
+{
+}
+
+void MarioTailed::PositionLateUpdate()
 {
 }
 

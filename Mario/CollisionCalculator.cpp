@@ -16,12 +16,13 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 	_results.clear();
 
 	if (shared_ptr<GameObject> sp = object.lock()) {
+		RectF spR = sp->GetHitBox();
+		Vec2 spD = sp->GetDistance();
+
 		for each (shared_ptr<GameObject> coO in (*objects))
 		{		
 			if (!coO->IsActive() || sp->GetID() == coO->GetID()) continue;
 
-			RectF spR = sp->GetHitBox();
-			Vec2 spD = sp->GetDistance();
 			RectF cpR = coO->GetHitBox();
 			Vec2 cpD = coO->GetDistance();
 
@@ -46,23 +47,20 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 		//auto start = std::chrono::high_resolution_clock::now();
 		for each (shared_ptr<CollisionResult> coll in temp) {
 			for each (shared_ptr<CollisionResult> result in results) {
-				if (result->GameColliableObject->IsGetThrough(*sp, result->SAABBResult.Direction)) continue;
-				Vec2 dis = sp->GetDistance() - coll->GameColliableObject->GetDistance();
+				if (result->Object->IsGetThrough(*sp, result->SAABBResult.Direction)) continue;
+				Vec2 dis = spD - coll->Object->GetDistance();
 				if (ToVector(coll->SAABBResult.Direction).x != 0) {
 					dis.y = dis.y * result->SAABBResult.TimeToCollide;
 				}
 				else {
 					dis.x = dis.x * result->SAABBResult.TimeToCollide;
 				}
-				SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), dis, coll->GameColliableObject->GetHitBox());
-				if (aabbResult.Status != CollisionStatus::COLLIDE) {
-					coll->SAABBResult.TimeToCollide = 9999.0f;
-					break;
-				}
+				SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), dis, coll->Object->GetHitBox());
+				coll->SAABBResult.Status = aabbResult.Status;
 			}
 			if (coll->SAABBResult.Status == CollisionStatus::COLLIDE) {
 				results.push_back(coll);
-				key_results[coll->GameColliableObject->GetID()] = coll;
+				key_results[coll->Object->GetID()] = coll;
 			}
 		}
 		//auto finish = std::chrono::high_resolution_clock::now();
@@ -70,6 +68,45 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 	}	
 	GetClampDistance();
 	return results;
+}
+
+void CollisionCalculator::RestoreCollision()
+{
+	if (_results.size() <= 0) return;
+
+	if (shared_ptr<GameObject> sp = object.lock()) {
+		RectF spR = sp->GetHitBox();
+		RectF _spR = spR;
+
+		Vec2 spD = sp->GetUpdatedDistance();
+		spR.left -= spD.x;
+		spR.right -= spD.x;
+		spR.top -= spD.y;
+		spR.bottom -= spD.y;
+
+		for each (shared_ptr<CollisionResult> var in _results)
+		{
+			RectF cpR = var->Object->GetHitBox();
+
+			if (AABB(_spR, cpR)) {
+				Vec2 cpD = var->Object->GetUpdatedDistance();
+				cpR.left -= cpD.x;
+				cpR.right -= cpD.x;
+				cpR.top -= cpD.y;
+				cpR.bottom -= cpD.y;
+
+				SweptCollisionResult aabbResult = SweptAABB(spR, spD - cpD, cpR);
+
+				if (aabbResult.Status == CollisionStatus::COLLIDE) {
+					var->SAABBResult = aabbResult;
+					results.push_back(var);
+					key_results[var->Object->GetID()] = var;
+				}
+			}
+		}
+		sort(results.begin(), results.end(), CollisionResult::LPCompare);
+	}	
+	GetClampDistance();
 }
 
 vector<shared_ptr<CollisionResult>> CollisionCalculator::GetLastResults()
@@ -94,7 +131,7 @@ Vec2 CollisionCalculator::GetClampDistance()
 
 		for each (shared_ptr<CollisionResult> c in results)
 		{
-			if (c->GameColliableObject->IsGetThrough(*sp, c->SAABBResult.Direction)) continue;
+			if (c->Object->IsGetThrough(*sp, c->SAABBResult.Direction)) continue;
 			Vec2 cn = ToVector(c->SAABBResult.Direction);
 
 			if (c->SAABBResult.TimeToCollide < min_tx && cn.x != 0 && cn.x * d.x < 0.0f) {
@@ -129,7 +166,7 @@ void CollisionCalculator::DropRemovedCollision()
 	if (shared_ptr<GameObject> sp = object.lock()) {
 		results.erase(remove_if(results.begin(), results.end(), [this](const shared_ptr<CollisionResult>& coll) {
 			if (coll->Remove) {
-				key_results.erase(coll->GameColliableObject->GetID());
+				key_results.erase(coll->Object->GetID());
 				return true;
 			}
 			return false;
@@ -148,7 +185,8 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 	
 	// Broad-phase test 
 	if (!BroadPhase(m, distance, s))
-		return SweptCollisionResult::OutOfRange;
+		return SweptCollisionResult{ -1, Direction::None, distance, 0.0f,  CollisionStatus::OUT_OF_RANGE };
+		//return SweptCollisionResult::OutOfRange;
 
 	if (distance.x == 0 && distance.y == 0)
 		return SweptCollisionResult::Empty;
@@ -202,13 +240,13 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 		return SweptCollisionResult::Overlap;
 
 	if (tx_entry > 1.0f || ty_entry > 1.0f)
-		return SweptCollisionResult::OutOfRange;
+		return SweptCollisionResult{ -1, Direction::None, distance, 0.0f,  CollisionStatus::OUT_OF_RANGE };
 
 	t_entry = max(tx_entry, ty_entry);
 	t_exit = min(tx_exit, ty_exit);
 
 	if (t_entry > t_exit)
-		return SweptCollisionResult::Empty;
+		return SweptCollisionResult{ -1, Direction::None, distance, 0.0f,  CollisionStatus::OUT_OF_RANGE };
 
 	Direction direction = Direction::None;
 	float touchingLength = 0;
@@ -244,7 +282,7 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 
 bool CollisionCalculator::AABB(RectF b1, RectF b2)
 {
-	return !(b1.right < b2.left || b1.left > b2.right || b1.top > b2.bottom || b1.bottom < b2.top);
+	return !(b1.right <= b2.left || b1.left >= b2.right || b1.top >= b2.bottom || b1.bottom <= b2.top);
 }
 
 bool CollisionCalculator::BroadPhase(RectF movingBounding, Vec2 distance, RectF staticBounding)
@@ -254,7 +292,7 @@ bool CollisionCalculator::BroadPhase(RectF movingBounding, Vec2 distance, RectF 
 	float br = distance.x > 0 ? movingBounding.right + distance.x : movingBounding.right;
 	float bb = distance.y > 0 ? movingBounding.bottom + distance.y : movingBounding.bottom;
 
-	return !(br < staticBounding.left || bl > staticBounding.right || bb < staticBounding.top || bt > staticBounding.bottom);
+	return !(br <= staticBounding.left || bl >= staticBounding.right || bb <= staticBounding.top || bt >= staticBounding.bottom);
 }
 
 bool CollisionCalculator::Has(DWORD id)

@@ -8,7 +8,7 @@ SweptCollisionResult SweptCollisionResult::Empty = SweptCollisionResult{ -1, Dir
 CollisionResult::CollisionResult(SweptCollisionResult result, shared_ptr<GameObject> object)
 {
 	SAABBResult = result;
-	GameColliableObject = object;
+	Object = object;
 }
 
 bool CollisionResult::LPCompare(const shared_ptr<CollisionResult>& a, shared_ptr<CollisionResult>& b)

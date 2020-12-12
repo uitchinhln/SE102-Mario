@@ -67,6 +67,7 @@ void PlayScene::Update()
 		obj->CollisionUpdate(&objs);
 	}
 
+	//auto start = std::chrono::high_resolution_clock::now();
 	mario->CollisionDoubleFilter();
 	for (shared_ptr<GameObject> obj : objects) {
 		obj->CollisionDoubleFilter();
@@ -77,10 +78,17 @@ void PlayScene::Update()
 		obj->PositionUpdate();
 	}
 
-	mario->OverlapPushBack();
+	mario->RestoreCollision();
 	for (shared_ptr<GameObject> obj : objects) {
-		obj->OverlapPushBack();
+		obj->RestoreCollision();
 	}
+
+	mario->PositionLateUpdate();
+	for (shared_ptr<GameObject> obj : objects) {
+		obj->PositionLateUpdate();
+	}
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//DebugOut(L"%d\n", std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 
 	mario->StatusUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
