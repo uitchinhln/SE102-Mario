@@ -109,8 +109,43 @@ void GameObject::PositionUpdate()
 void GameObject::PositionLateUpdate()
 {
 	if (!collisionCal) return;
+
 	Position -= UpdatedDistance;
 	PositionUpdate();
+
+	return;
+
+	vector<shared_ptr<CollisionResult>> results = collisionCal->GetLastResults();
+
+	RectF spR = GetHitBox();
+
+	for each (shared_ptr<CollisionResult> var in results)
+	{
+		if (var->Object->IsGetThrough(*this, var->SAABBResult.Direction)) continue;
+		if (this->IsGetThrough(*var->Object, var->SAABBResult.Direction)) continue;
+
+		RectF cpR = var->Object->GetHitBox();
+		Vec2 direction = ToVector(var->SAABBResult.Direction);
+		
+		if (collisionCal->AABB(spR, cpR)) {
+			if (UpdatedDistance.x * direction.x < 0) {
+				if (direction.x < 0) {
+					Position.x = cpR.left - (spR.right - spR.left);
+				}
+				else {
+					Position.x = cpR.right;
+				}
+			}
+			else if (UpdatedDistance.y * direction.y < 0) {
+				if (direction.y < 0) {
+					Position.y = cpR.top - (spR.bottom - spR.top);
+				}
+				else {
+					Position.y = cpR.bottom;
+				}
+			}
+		}
+	}
 }
 
 void GameObject::FinalUpdate()

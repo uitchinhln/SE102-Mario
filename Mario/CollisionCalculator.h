@@ -12,7 +12,6 @@ public:
 	virtual vector<shared_ptr<CollisionResult>> CalcPotentialCollisions(vector<shared_ptr<GameObject>>* objects, bool debug = false);
 	virtual void RestoreCollision();
 	virtual vector<shared_ptr<CollisionResult>> GetLastResults();
-	virtual vector<shared_ptr<CollisionResult>> GetLast_Results();
 	virtual Vec2 GetClampDistance();
 	virtual Vec2 GetJet();
 	virtual void Clear();

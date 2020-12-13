@@ -114,11 +114,6 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::GetLastResults()
 	return results;
 }
 
-vector<shared_ptr<CollisionResult>> CollisionCalculator::GetLast_Results()
-{
-	return _results;
-}
-
 Vec2 CollisionCalculator::GetClampDistance()
 {
 	if (shared_ptr<GameObject> sp = object.lock()) {

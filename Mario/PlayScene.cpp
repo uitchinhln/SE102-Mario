@@ -67,7 +67,6 @@ void PlayScene::Update()
 		obj->CollisionUpdate(&objs);
 	}
 
-	//auto start = std::chrono::high_resolution_clock::now();
 	mario->CollisionDoubleFilter();
 	for (shared_ptr<GameObject> obj : objects) {
 		obj->CollisionDoubleFilter();
@@ -83,6 +82,7 @@ void PlayScene::Update()
 		obj->RestoreCollision();
 	}
 
+	//auto start = std::chrono::high_resolution_clock::now();
 	mario->PositionLateUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
 		obj->PositionLateUpdate();
