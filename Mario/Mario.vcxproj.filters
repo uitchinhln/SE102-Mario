@@ -127,6 +127,9 @@
     <Filter Include="Framework\World\Camera">
       <UniqueIdentifier>{18ef8892-4a0b-4944-a0a9-be7b640db725}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\World\Phys\Raycast">
+      <UniqueIdentifier>{8f69219c-558d-42be-a62d-000e8f0ee36a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">

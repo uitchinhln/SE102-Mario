@@ -63,6 +63,18 @@ void MovingShell::StatusUpdate()
 		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
 
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
+
+		if (collisionCal->HasOverlapped()) {
+			k->GetLiveState() = KoopasLiveStates::DIE;
+			k->SetVelocity(Vec2(0 * 0.1f, -0.6f));
+			KP_DESTROY_DELAY = 3000;
+
+			if (!k->GetDestroyTimer().IsRunning()) {
+				k->GetDestroyTimer().Restart();
+			}
+			return;
+		}
+
 		vector<shared_ptr<CollisionResult>> coResult = collisionCal->GetLastResults();
 
 		if (coResult.size() != 0)

@@ -194,6 +194,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Small.cpp" />
     <ClCompile Include="SolidBlock.cpp" />
+    <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="StopWatch.cpp" />
@@ -260,6 +261,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Small.h" />
     <ClInclude Include="SolidBlock.h" />
+    <ClInclude Include="Spawner.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
     <ClInclude Include="StopWatch.h" />

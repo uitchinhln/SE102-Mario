@@ -19,9 +19,11 @@ public:
 
 	static const ObjectType EndmapReward;
 	static const ObjectType QuestionBlock;
+	static const ObjectType Spawner;
 
 	static const ObjectType SolidBlock;
 	static const ObjectType GhostBlock;
+
 
 	static bool IsTile(ObjectType);
 

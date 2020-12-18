@@ -12,13 +12,15 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 	vector<shared_ptr<CollisionResult>> temp;
 	temp.clear();
 	results.clear();
-	key_results.clear();
+	overlaps.clear();
 	_results.clear();
+	key_results.clear();
 
 	if (shared_ptr<GameObject> sp = object.lock()) {
 		RectF spR = sp->GetHitBox();
 		Vec2 spD = sp->GetDistance();
 
+		//auto start = std::chrono::high_resolution_clock::now();
 		for each (shared_ptr<GameObject> coO in (*objects))
 		{		
 			if (!coO->IsActive() || sp->GetID() == coO->GetID()) continue;
@@ -34,17 +36,21 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 				temp.push_back(make_shared<CollisionResult>(aabbResult, coO));
 				break;
 			case CollisionStatus::OUT_OF_RANGE:
-				if (BroadPhase(spR, spD, cpR) || BroadPhase(cpR, cpD, spR)) {
-					_results.push_back(make_shared<CollisionResult>(aabbResult, coO));
-				}
+				if (!BroadPhase(spR, spD, cpR) && !BroadPhase(cpR, cpD, spR)) continue;
+				_results.push_back(make_shared<CollisionResult>(aabbResult, coO));
+				break;
+			case CollisionStatus::OVERLAP:
+				if (coO->IsGetThrough(*sp, aabbResult.Direction)) break;
+				overlaps.push_back(make_shared<CollisionResult>(aabbResult, coO));
 				break;
 			default:
 				break;
 			}
 		}
 		sort(temp.begin(), temp.end(), CollisionResult::LPCompare);
+		//auto finish = std::chrono::high_resolution_clock::now();
+		//DebugOut(L"%s\t%d\n", ToLPCWSTR(sp->GetObjectType().ToString()), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 
-		//auto start = std::chrono::high_resolution_clock::now();
 		for each (shared_ptr<CollisionResult> coll in temp) {
 			for each (shared_ptr<CollisionResult> result in results) {
 				if (result->Object->IsGetThrough(*sp, result->SAABBResult.Direction)) continue;
@@ -63,8 +69,6 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 				key_results[coll->Object->GetID()] = coll;
 			}
 		}
-		//auto finish = std::chrono::high_resolution_clock::now();
-		//DebugOut(L"%s\t%d\n", ToLPCWSTR(sp->GetObjectType().ToString()), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 	}	
 	GetClampDistance();
 	return results;
@@ -112,6 +116,16 @@ void CollisionCalculator::RestoreCollision()
 vector<shared_ptr<CollisionResult>> CollisionCalculator::GetLastResults()
 {
 	return results;
+}
+
+vector<shared_ptr<CollisionResult>> CollisionCalculator::GetOverlaps()
+{
+	return overlaps;
+}
+
+int CollisionCalculator::HasOverlapped()
+{
+	return overlaps.size();
 }
 
 Vec2 CollisionCalculator::GetClampDistance()
@@ -167,7 +181,6 @@ void CollisionCalculator::DropRemovedCollision()
 			return false;
 			}), results.end());
 	}
-
 }
 
 SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, RectF s, bool debug)
@@ -177,11 +190,9 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 
 	float t_entry;
 	float t_exit;
-	
-	// Broad-phase test 
+
 	if (!BroadPhase(m, distance, s))
 		return SweptCollisionResult{ -1, Direction::None, distance, 0.0f,  CollisionStatus::OUT_OF_RANGE };
-		//return SweptCollisionResult::OutOfRange;
 
 	if (distance.x == 0 && distance.y == 0)
 		return SweptCollisionResult::Empty;
@@ -196,7 +207,6 @@ SweptCollisionResult CollisionCalculator::SweptAABB(RectF m, Vec2 distance, Rect
 		dx_entry = s.right - m.left;
 		dx_exit = s.left - m.right;
 	}
-
 
 	if (distance.y > 0)
 	{

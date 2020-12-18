@@ -158,6 +158,7 @@ RectF Goomba::GetHitBox()
 
 bool Goomba::IsGetThrough(GameObject& object, Direction direction)
 {
+	if (direction == Direction::None) return true;
 	//bool koopasImp = object.GetObjectType() == MEntityType::KoopasImposter;
 	bool notGoomba = object.GetObjectType() != MEntityType::Goomba;
 	return state != GoombaState::WALK || ((notGoomba) && MEntityType::IsEnemy(object.GetObjectType()));

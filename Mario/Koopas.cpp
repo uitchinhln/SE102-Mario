@@ -92,6 +92,7 @@ RectF Koopas::GetHitBox()
 
 bool Koopas::IsGetThrough(GameObject& object, Direction direction)
 {
+	if (direction == Direction::None) return true;
 	//bool koopasImp = object.GetObjectType() == MEntityType::KoopasImposter;
 	bool notKoopas = object.GetObjectType() != MEntityType::Koopas;
 	bool notKoopasCrouch = object.GetObjectType() != MEntityType::KoopasCrouch;

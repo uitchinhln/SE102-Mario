@@ -16,6 +16,7 @@ const ObjectType MEntityType::KoopasImposter = ObjectType::CreateObjectType(105,
 
 const ObjectType MEntityType::EndmapReward = ObjectType::CreateObjectType(1001, "EndmapReward");
 const ObjectType MEntityType::QuestionBlock = ObjectType::CreateObjectType(1002, "QuestionBlock");
+const ObjectType MEntityType::Spawner = ObjectType::CreateObjectType(1003, "Spawner");
 
 const ObjectType MEntityType::SolidBlock = ObjectType::CreateObjectType(5001, "SolidBlock");
 const ObjectType MEntityType::GhostBlock = ObjectType::CreateObjectType(5002, "GhostBlock");

@@ -282,6 +282,7 @@ ObjectType Mario::GetObjectType()
 
 bool Mario::IsGetThrough(GameObject& object, Direction direction)
 {
+	if (direction == Direction::None) return true;
 	bool fireballAllow = object.GetObjectType() == MEntityType::MarioFireBall;
 	bool tailAllow = object.GetObjectType() == MEntityType::MarioTailed;
 	bool enemyAllow = MEntityType::IsEnemy(object.GetObjectType());

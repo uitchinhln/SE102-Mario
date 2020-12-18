@@ -12,6 +12,8 @@ public:
 	virtual vector<shared_ptr<CollisionResult>> CalcPotentialCollisions(vector<shared_ptr<GameObject>>* objects, bool debug = false);
 	virtual void RestoreCollision();
 	virtual vector<shared_ptr<CollisionResult>> GetLastResults();
+	virtual vector<shared_ptr<CollisionResult>> GetOverlaps();
+	virtual int HasOverlapped();
 	virtual Vec2 GetClampDistance();
 	virtual Vec2 GetJet();
 	virtual void Clear();
@@ -26,6 +28,7 @@ protected:
 	vector<shared_ptr<CollisionResult>> results;
 	unordered_map<DWORD, shared_ptr<CollisionResult>> key_results;
 	vector<shared_ptr<CollisionResult>> _results;
+	vector<shared_ptr<CollisionResult>> overlaps;
 	Vec2 jet;
 };
 
