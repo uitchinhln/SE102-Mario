@@ -108,18 +108,20 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 
 		for (TiXmlElement* node = root->FirstChildElement("objectgroup"); node != nullptr; node = node->NextSiblingElement("objectgroup")) {
 			for (TiXmlElement* object = node->FirstChildElement("object"); object != nullptr; object = object->NextSiblingElement("object")) {
-				Vec2 fixPos;
-				Vec2 size = VECTOR_0;
-				object->QueryFloatAttribute("x", &fixPos.x);
-				object->QueryFloatAttribute("y", &fixPos.y);
-				object->QueryFloatAttribute("width", &size.x);
-				object->QueryFloatAttribute("height", &size.y);
-				const char* type = object->Attribute("name");
+				try {
+					Vec2 fixPos;
+					Vec2 size = VECTOR_0;
+					object->QueryFloatAttribute("x", &fixPos.x);
+					object->QueryFloatAttribute("y", &fixPos.y);
+					object->QueryFloatAttribute("width", &size.x);
+					object->QueryFloatAttribute("height", &size.y);
+					const char* type = object->Attribute("type");
 
-				TiXmlElement* nodeProperties = object->FirstChildElement("properties");
-				MapProperties props = MapProperties(nodeProperties);
+					TiXmlElement* nodeProperties = object->FirstChildElement("properties");
+					MapProperties props = MapProperties(nodeProperties);
 
-				__raise (*Events::GetInstance()).ObjectLoadEvent(type, fixPos, size, props);
+					__raise (*Events::GetInstance()).ObjectLoadEvent(type, fixPos, size, props);
+				} catch (exception)	{}
 			}
 		}
 

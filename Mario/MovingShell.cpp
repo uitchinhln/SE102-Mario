@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "CrouchKoopas.h"
 #include "Game.h"
+#include "QuestionBlock.h"
 
 MovingShell::MovingShell(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 {
@@ -84,8 +85,18 @@ void MovingShell::StatusUpdate()
 			if (jet.x != 0) k->GetVelocity().x = -k->GetVelocity().x;
 			if (jet.y != 0) k->GetVelocity().y = 0;
 
+			bool hitQBlock = false;
 			for each (shared_ptr<CollisionResult> coll in coResult)
 			{
+				if (!hitQBlock && coll->Object->GetObjectType() == MEntityType::QuestionBlock && ToVector(coll->SAABBResult.Direction).x != 0) {
+					shared_ptr<QuestionBlock> block = dynamic_pointer_cast<QuestionBlock>(coll->Object);
+					if (block->GetState() == QuestionBlockStates::Available) {
+						hitQBlock = true;
+						block->Hit();
+					}
+					continue;
+				}
+
 				if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 					if (coll->SAABBResult.Direction == Direction::Bottom) {
 						k->SetPower(make_shared<CrouchKoopas>(k, flip));

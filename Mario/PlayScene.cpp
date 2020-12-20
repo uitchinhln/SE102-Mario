@@ -16,6 +16,7 @@
 
 #include "SolidBlock.h"
 #include "GhostBlock.h"
+#include "Spawner.h"
 
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
@@ -146,6 +147,9 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	}
 	if (strcmp(type, MEntityType::QuestionBlock.ToString().c_str()) == 0) {
 		SpawnEntity(QuestionBlock::CreateQuestionBlock(fixedPos));
+	}
+	if (strcmp(type, MEntityType::Spawner.ToString().c_str()) == 0) {
+		SpawnEntity(Spawner::CreateSpawner(fixedPos, props));
 	}
 
 	//MapObjects

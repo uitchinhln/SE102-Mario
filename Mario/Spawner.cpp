@@ -1,13 +1,6 @@
 #include "Spawner.h"
 #include "MEntityType.h"
 
-shared_ptr<Spawner> Spawner::CreateSpawner(Vec2 fixedPos, MapProperties properties)
-{
-	shared_ptr<Spawner> spawner = make_shared<Spawner>();
-	spawner->SetPosition(Vec2(fixedPos.x, fixedPos.y));
-	return spawner;
-}
-
 Spawner::Spawner()
 {
 }
@@ -55,4 +48,12 @@ bool Spawner::IsGetThrough(GameObject& object, Direction direction)
 float Spawner::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 0.0f;
+}
+
+shared_ptr<Spawner> Spawner::CreateSpawner(Vec2 fixedPos, MapProperties properties)
+{
+	shared_ptr<Spawner> spawner = make_shared<Spawner>();
+	spawner->SetPosition(Vec2(fixedPos.x, fixedPos.y));
+
+	return spawner;
 }

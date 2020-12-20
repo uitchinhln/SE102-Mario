@@ -28,6 +28,20 @@ void QuestionBlock::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	collisionCal->CalcPotentialCollisions(coObj, false);
 }
 
+void QuestionBlock::Hit()
+{
+	if (state != QuestionBlockStates::Available) return;
+	Velocity.y = -2.8125f;
+	Gravity = 0;
+	backupPos = Position;
+	this->state = QuestionBlockStates::Bouncing;
+}
+
+QuestionBlockStates QuestionBlock::GetState()
+{
+	return state;
+}
+
 void QuestionBlock::PositionUpdate()
 {
 	if (state != QuestionBlockStates::Bouncing) return;
@@ -69,13 +83,11 @@ void QuestionBlock::StatusUpdate()
 	if (coResult.size() > 0) {
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
-			if (coll->Object->GetObjectType() == MEntityType::MarioTailed 
+			/*if (coll->Object->GetObjectType() == MEntityType::MarioTailed 
 				|| (coll->Object->GetObjectType() == MEntityType::KoopasImposter && ToVector(coll->SAABBResult.Direction).x != 0)
-				|| (MEntityType::IsMario(coll->Object->GetObjectType()) && coll->SAABBResult.Direction == Direction::Top)) {
-				Velocity.y = -2.8125f;
-				Gravity = 0;
-				backupPos = Position;
-				this->state = QuestionBlockStates::Bouncing;
+				|| (MEntityType::IsMario(coll->Object->GetObjectType()) && coll->SAABBResult.Direction == Direction::Top)) {*/
+			if (coll->Object->GetObjectType() == MEntityType::MarioTailed) {
+				Hit();
 				break;
 			}
 		}

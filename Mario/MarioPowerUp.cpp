@@ -6,6 +6,7 @@
 #include "Koopas.h"
 #include "GameObject.h"
 #include "Game.h"
+#include "QuestionBlock.h"
 
 MarioPowerUp::MarioPowerUp(shared_ptr<Mario> mario)
 {
@@ -31,6 +32,7 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 
 	if (shared_ptr<Mario> m = mario.lock()) {
 		m->GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
+		//Raycast here
 	}
 }
 
@@ -87,8 +89,21 @@ void MarioPowerUp::StatusUpdate()
 			}
 		}
 
+		shared_ptr<QuestionBlock> hitQBlock;
+		float hitLength = 0;
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
+			if (coll->Object->GetObjectType() == MEntityType::QuestionBlock && coll->SAABBResult.Direction == Direction::Bottom) {
+				shared_ptr<QuestionBlock> block = dynamic_pointer_cast<QuestionBlock>(coll->Object);
+				if (block->GetState() == QuestionBlockStates::Available) {
+					if (hitLength < coll->SAABBResult.TouchingLength) {
+						hitLength = coll->SAABBResult.TouchingLength;
+						hitQBlock = block;
+					}
+				}
+				continue;
+			}
+
 			if (MEntityType::IsEnemy(coll->Object->GetObjectType())) {
 				if (coll->Object->GetObjectType() == MEntityType::KoopasCrouch && coll->SAABBResult.Direction != Direction::Top) {
 					KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
@@ -97,6 +112,7 @@ void MarioPowerUp::StatusUpdate()
 					if (keyboard.IsKeyDown(DIK_A) && !m->GetInhand()) {
 						m->SetInhand(koopas);
 						koopas->SetHolder(m);
+						continue;
 					}
 				}
 
@@ -114,6 +130,10 @@ void MarioPowerUp::StatusUpdate()
 					}
 				}
 			}
+		}
+
+		if (hitQBlock) {
+			hitQBlock->Hit();
 		}
 	}
 }

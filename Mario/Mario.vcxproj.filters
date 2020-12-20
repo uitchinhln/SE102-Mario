@@ -130,6 +130,9 @@
     <Filter Include="Framework\World\Phys\Raycast">
       <UniqueIdentifier>{8f69219c-558d-42be-a62d-000e8f0ee36a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Entity\TriggerEntity\Spawner">
+      <UniqueIdentifier>{39570295-3cbf-427f-aa34-1cf118f9373f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -324,6 +327,9 @@
     <ClCompile Include="WorldScene.cpp">
       <Filter>MarioGame\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="Spawner.cpp">
+      <Filter>MarioGame\Entity\TriggerEntity\Spawner</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -511,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="WorldScene.h">
       <Filter>MarioGame\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>MarioGame\Entity\TriggerEntity\Spawner</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

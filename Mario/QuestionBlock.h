@@ -18,6 +18,10 @@ public:
 
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
 
+	virtual void Hit();
+
+	virtual QuestionBlockStates GetState();
+
 	virtual void PositionUpdate() override;
 
 	virtual void PositionLateUpdate() override;
