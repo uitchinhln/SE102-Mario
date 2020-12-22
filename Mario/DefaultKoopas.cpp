@@ -143,7 +143,7 @@ void DefaultKoopas::FinalUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
 		k->GetDistance() = k->GetVelocity() * (float) CGame::Time().ElapsedGameTime;
-		k->SetFacing(k->GetVelocity().x > 0 ? -1 : 1);
+		k->SetFacing(k->GetVelocity().x > 0 ? 1 : -1);
 	}
 }
 
@@ -160,7 +160,7 @@ void DefaultKoopas::Render()
 			ani = this->animations["Die"];
 		}
 
-		ani->GetTransform()->Scale.x = (float) k->GetFacing();
+		ani->GetTransform()->Scale.x = (float) -k->GetFacing();
 		ani->GetTransform()->Position = k->GetPosition() - cam;
 		ani->Render();
 	}

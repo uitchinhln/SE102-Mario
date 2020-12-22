@@ -93,6 +93,7 @@
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DisableSpecificWarnings>4005;4996;4244;4018;4305;4101;4715;4067; 26495;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,6 +151,7 @@
     <ClCompile Include="CrouchKoopas.cpp" />
     <ClCompile Include="CustomCollisionCalc.cpp" />
     <ClCompile Include="DefaultKoopas.cpp" />
+    <ClCompile Include="DefRedKoopas.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GhostBlock.cpp" />
@@ -157,6 +159,7 @@
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
     <ClCompile Include="IntroScene.cpp" />
+    <ClCompile Include="JumpingKoopas.cpp" />
     <ClCompile Include="Koopas.cpp" />
     <ClCompile Include="MapProperties.cpp" />
     <ClCompile Include="MarioFireBall.cpp" />
@@ -185,10 +188,12 @@
     <ClCompile Include="Mario.cpp" />
     <ClCompile Include="MarioGame.cpp" />
     <ClCompile Include="MEntityType.cpp" />
+    <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
+    <ClCompile Include="RayCast.cpp" />
     <ClCompile Include="RectF.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -217,6 +222,7 @@
     <ClInclude Include="CrouchKoopas.h" />
     <ClInclude Include="CustomCollisionCalc.h" />
     <ClInclude Include="DefaultKoopas.h" />
+    <ClInclude Include="DefRedKoopas.h" />
     <ClInclude Include="EndmapReward.h" />
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GhostBlock.h" />
@@ -224,6 +230,7 @@
     <ClInclude Include="Hud.h" />
     <ClInclude Include="IEnviroment.h" />
     <ClInclude Include="IntroScene.h" />
+    <ClInclude Include="JumpingKoopas.h" />
     <ClInclude Include="Koopas.h" />
     <ClInclude Include="MapProperties.h" />
     <ClInclude Include="MarioFireBall.h" />
@@ -252,10 +259,12 @@
     <ClInclude Include="Mario.h" />
     <ClInclude Include="MarioGame.h" />
     <ClInclude Include="MEntityType.h" />
+    <ClInclude Include="Pipe.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Polygon.h" />
     <ClInclude Include="QuestionBlock.h" />
     <ClInclude Include="RaccoonMario.h" />
+    <ClInclude Include="RayCast.h" />
     <ClInclude Include="RectF.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />

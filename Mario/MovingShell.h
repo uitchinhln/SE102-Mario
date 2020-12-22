@@ -24,9 +24,5 @@ public:
 
 protected:
 	bool flip = false;
-
-	Stopwatch respawnTimer;
-
-	long KP_RESPAWN_TIME = 8000;
 };
 

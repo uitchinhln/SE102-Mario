@@ -17,6 +17,8 @@ protected:
 
 	int facing = 1;
 
+	int renderOrder = 1000;
+
 	float Gravity = 0;
 
 	Vec2 Position;
@@ -36,6 +38,8 @@ public:
 	GameObject();
 
 	DWORD GetID();
+
+	int GetRenderOrder();
 
 	virtual bool IsActive();
 

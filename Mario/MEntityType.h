@@ -16,6 +16,13 @@ public:
 	static const ObjectType KoopasCrouch;
 	static const ObjectType KoopasPassenger;
 	static const ObjectType KoopasImposter;
+	static const ObjectType KoopasJumping;
+
+	static const ObjectType RedKoopas;
+	static const ObjectType RedKoopasCrouch;
+	static const ObjectType RedKoopasPassenger;
+	static const ObjectType RedKoopasImposter;
+	static const ObjectType RedKoopasJumping;
 
 	static const ObjectType EndmapReward;
 	static const ObjectType QuestionBlock;
@@ -23,6 +30,7 @@ public:
 
 	static const ObjectType SolidBlock;
 	static const ObjectType GhostBlock;
+	static const ObjectType Pipe;
 
 
 	static bool IsTile(ObjectType);

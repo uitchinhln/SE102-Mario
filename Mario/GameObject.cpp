@@ -14,6 +14,11 @@ DWORD GameObject::GetID()
 	return id;
 }
 
+int GameObject::GetRenderOrder()
+{
+	return renderOrder;
+}
+
 bool GameObject::IsActive()
 {
 	return active;

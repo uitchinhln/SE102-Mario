@@ -103,6 +103,7 @@ Mario::Mario() : GameObject()
 	this->Velocity = Vec2(0, 0);
 	this->accelerate = Vec2(0, 0);
 	this->Gravity = 0.00093f;
+	this->renderOrder = 250;
 	HookEvent();
 }
 

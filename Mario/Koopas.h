@@ -62,5 +62,9 @@ protected:
 	Stopwatch destroyTimer;
 
 	float KP_DESTROY_DELAY = 500;
+
+public:
+
+	bool OnGround = false;
 };
 

@@ -115,6 +115,7 @@ void Goomba::Update()
 void Goomba::FinalUpdate()
 {
 	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
+	facing = Velocity.x > 0 ? 1 : -1;
 	collisionCal->Clear();
 }
 

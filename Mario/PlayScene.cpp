@@ -16,7 +16,10 @@
 
 #include "SolidBlock.h"
 #include "GhostBlock.h"
+#include "Pipe.h"
 #include "Spawner.h"
+#include "JumpingKoopas.h"
+#include "DefRedKoopas.h"
 
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
@@ -113,8 +116,19 @@ void PlayScene::Render()
 	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));	
 	CGame::GetInstance()->GetGraphic().SetViewport(camera);
 
-	CScene::Render();
-	mario->Render();
+	gameMap->Render();
+	vector<shared_ptr<GameObject>> renderObjects;
+	renderObjects.insert(renderObjects.end(), objects.begin(), objects.end());
+	renderObjects.push_back(mario);
+
+	sort(renderObjects.begin(), renderObjects.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
+		return a->GetRenderOrder() < b->GetRenderOrder();
+	});
+
+	for each (shared_ptr<GameObject> obj in renderObjects)
+	{
+		obj->Render();
+	}
 
 	CGame::GetInstance()->GetGraphic().SetViewport(hud);
 
@@ -142,6 +156,16 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	if (strcmp(type, MEntityType::Koopas.ToString().c_str()) == 0) {
 		SpawnEntity(Koopas::CreateKoopas(fixedPos));
 	}
+	if (strcmp(type, MEntityType::KoopasJumping.ToString().c_str()) == 0) {
+		shared_ptr<Koopas> kp = Koopas::CreateKoopas(fixedPos);
+		kp->SetPower(make_shared<JumpingKoopas>(kp));
+		SpawnEntity(kp);
+	}
+	if (strcmp(type, MEntityType::RedKoopas.ToString().c_str()) == 0) {
+		shared_ptr<Koopas> kp = Koopas::CreateKoopas(fixedPos);
+		kp->SetPower(make_shared<DefRedKoopas>(kp));
+		SpawnEntity(kp);
+	}
 	if (strcmp(type, MEntityType::EndmapReward.ToString().c_str()) == 0) {
 		SpawnEntity(EndmapReward::CreateEndmapReward(fixedPos));
 	}
@@ -150,6 +174,9 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	}
 	if (strcmp(type, MEntityType::Spawner.ToString().c_str()) == 0) {
 		SpawnEntity(Spawner::CreateSpawner(fixedPos, props));
+	}
+	if (strcmp(type, MEntityType::Pipe.ToString().c_str()) == 0) {
+		SpawnEntity(Pipe::CreatePipe(fixedPos, size, props));
 	}
 
 	//MapObjects

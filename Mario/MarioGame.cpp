@@ -22,7 +22,24 @@ void MarioGame::LoadResources()
 		TiXmlElement* root = doc.RootElement();
 		TiXmlElement* resources = root->FirstChildElement("Resources");
 
-		for (TiXmlElement* node = resources->FirstChildElement("Resource"); node !=nullptr; node = node->NextSiblingElement("Resource"))
+		TiXmlElement* textures = resources->FirstChildElement("Textures");
+		TiXmlElement* sprites = resources->FirstChildElement("Sprites");
+		TiXmlElement* animations = resources->FirstChildElement("Animations");
+
+
+		for (TiXmlElement* node = textures->FirstChildElement("Texture"); node != nullptr; node = node->NextSiblingElement("Texture")) {
+			TextureManager::GetInstance()->Add(node->Attribute("id"), ToLPCWSTR(node->Attribute("path")), D3DCOLOR_ARGB(0, 0, 0, 0));
+		}
+
+		for (TiXmlElement* node = sprites->FirstChildElement("Sprite"); node != nullptr; node = node->NextSiblingElement("Sprite")) {
+			SpriteManager::GetInstance()->ImportFromXml(node->Attribute("path"));
+		}
+
+		for (TiXmlElement* node = animations->FirstChildElement("Animation"); node != nullptr; node = node->NextSiblingElement("Animation")) {
+			AnimationManager::GetInstance()->ImportFromXml(node->Attribute("path"));
+		}
+
+		/*for (TiXmlElement* node = resources->FirstChildElement("Resource"); node !=nullptr; node = node->NextSiblingElement("Resource"))
 		{
 			string textureId = node->Attribute("textureId");
 			string texturesPath = node->FirstChildElement("Texture")->Attribute("path");
@@ -41,7 +58,7 @@ void MarioGame::LoadResources()
 			TextureManager::GetInstance()->Add(textureId, ToLPCWSTR(texturesPath), D3DCOLOR_ARGB(stoi(argb[0]), stoi(argb[1]), stoi(argb[2]), stoi(argb[3])));
 			SpriteManager::GetInstance()->ImportFromXml(textureId, spritesPath.c_str());
 			AnimationManager::GetInstance()->ImportFromXml(textureId, animationsPath.c_str());
-		}
+		}*/
 
 		TiXmlElement* scenes = root->FirstChildElement("GameContent")->FirstChildElement("Scenes");
 

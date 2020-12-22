@@ -133,6 +133,12 @@
     <Filter Include="MarioGame\Entity\TriggerEntity\Spawner">
       <UniqueIdentifier>{39570295-3cbf-427f-aa34-1cf118f9373f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Entity\MapBlock\Pipe">
+      <UniqueIdentifier>{39aa5151-90fc-4439-9edc-f6c691e200b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates">
+      <UniqueIdentifier>{ac0bbc9e-704f-4547-b899-5adec986b8b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -330,6 +336,18 @@
     <ClCompile Include="Spawner.cpp">
       <Filter>MarioGame\Entity\TriggerEntity\Spawner</Filter>
     </ClCompile>
+    <ClCompile Include="Pipe.cpp">
+      <Filter>MarioGame\Entity\MapBlock\Pipe</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpingKoopas.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Koopas\States</Filter>
+    </ClCompile>
+    <ClCompile Include="RayCast.cpp">
+      <Filter>Framework\World\Phys\Raycast</Filter>
+    </ClCompile>
+    <ClCompile Include="DefRedKoopas.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -520,6 +538,18 @@
     </ClInclude>
     <ClInclude Include="Spawner.h">
       <Filter>MarioGame\Entity\TriggerEntity\Spawner</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipe.h">
+      <Filter>MarioGame\Entity\MapBlock\Pipe</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpingKoopas.h">
+      <Filter>MarioGame\Entity\LivingEntity\Koopas\States</Filter>
+    </ClInclude>
+    <ClInclude Include="RayCast.h">
+      <Filter>Framework\World\Phys\Raycast</Filter>
+    </ClInclude>
+    <ClInclude Include="DefRedKoopas.h">
+      <Filter>MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

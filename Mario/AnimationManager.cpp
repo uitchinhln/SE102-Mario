@@ -15,7 +15,7 @@ Animation AnimationManager::Get(string id)
 	return animations[id];
 }
 
-void AnimationManager::ImportFromXml(string textureId, const char* filePath)
+void AnimationManager::ImportFromXml(const char* filePath)
 {
 	TiXmlDocument doc(filePath);
 	if (doc.LoadFile())
@@ -25,7 +25,6 @@ void AnimationManager::ImportFromXml(string textureId, const char* filePath)
 		if (pRoot)
 		{
 			TiXmlElement* pObj = pRoot->FirstChildElement();
-			LPDIRECT3DTEXTURE9 texture = TextureManager::GetInstance()->Get(textureId);
 
 			DebugOut(L"Object ID: %s\n", ToLPCWSTR(pObj->Attribute("gameObjectId")));
 			DebugOut(L"Texture ID: %s\n", ToLPCWSTR(pObj->Attribute("textureId")));

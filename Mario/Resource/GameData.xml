@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Game>
     <Resources>
-        <Resource textureId="tex-mario">
-            <Texture path="Resource/Xml/Textures/Mario/Mario_x3.png" transparent="0,255,255,255"/>
-            <SpriteDB path="Resource/Xml/Textures/Mario/MarioDB.xml"/>
-            <AnimationDB path="Resource/Xml/Textures/Mario/MarioAnim.xml"/>
-        </Resource>
-        <Resource textureId="tex-enemy">
-            <Texture path="Resource/Xml/Textures/Enemy/enemy_x3.png" transparent="0,255,255,255"/>
-            <SpriteDB path="Resource/Xml/Textures/Enemy/EnemyDB.xml"/>
-            <AnimationDB path="Resource/Xml/Textures/Enemy/EnemyAnim.xml"/>
-        </Resource>
-        <Resource textureId="tex-intro">
-            <Texture path="Resource/Xml/Textures/Misc/Intro/intro_x3.png" transparent="0,255,255,255"/>
-            <SpriteDB path="Resource/Xml/Textures/Misc/Intro/IntroDB.xml"/>
-            <AnimationDB path="Resource/Xml/Textures/Misc/Intro/IntroAnim.xml"/>
-        </Resource>
-        <Resource textureId="tex-misc">
-            <Texture path="Resource/Xml/Textures/Misc/Misc (Goods_Item)/misc_x3.png" transparent="0,255,255,255"/>
-            <SpriteDB path="Resource/Xml/Textures/Misc/Misc (Goods_Item)/MiscDB.xml"/>
-            <AnimationDB path="Resource/Xml/Textures/Misc/Misc (Goods_Item)/MiscAnim.xml"/>
-        </Resource>
-        <Resource textureId="tex-ui">
-            <Texture path="Resource/Xml/Textures/Misc/UI/UI_x3.png" transparent="0,255,255,255"/>
-            <SpriteDB path="Resource/Xml/Textures/Misc/UI/UiDB.xml"/>
-            <AnimationDB path="Resource/Xml/Textures/Misc/UI/UiAnim.xml"/>
-        </Resource>
+        <Textures>
+            <Texture id="tex-mario" path="Resource/Textures/mario.png"/>
+            <Texture id="tex-enemy" path="Resource/Textures/enemy_white.png"/>
+            <Texture id="tex-misc" path="Resource/Textures/misc_x3.png"/>
+            <Texture id="tex-fire-ball" path="Resource/Textures/fire-ball-white.png"/>
+            <Texture id="tex-effect" path="Resource/Textures/effect_white_254_x3.png"/>
+            <Texture id="tex-pipe" path="Resource/Textures/pipe.png"/>
+            <Texture id="tex-ui" path="Resource/Textures/ui_x3.png"/>
+            <Texture id="tex-box" path="Resource/Textures/box-small.png"/>
+            <Texture id="tex-reward" path="Resource/Textures/reward_x3.png"/>
+            <Texture id="tex-overworld" path="Resource/Textures/overworld_x3.png"/>
+            <Texture id="tex-menu" path="Resource/Textures/intro_x3.png"/>
+            <Texture id="tex-dialog" path="Resource/Textures/dialogs_x3.png"/>
+            <Texture id="tex-pipe" path="Resource/Textures/pipe.png"/>
+        </Textures>
+        <Sprites>
+            <Sprite id="spr-mario" path="Resource/Sprites/MarioDB.xml"/>
+            <Sprite id="spr-enemy" path="Resource/Sprites/EnemyDB.xml"/>
+            <Sprite id="spr-misc" path="Resource/Sprites/MiscDB.xml"/>
+            <Sprite id="spr-effect" path="Resource/Sprites/EffectDB.xml"/>
+            <Sprite id="spr-hud" path="Resource/Sprites/UiDB.xml"/>
+            <Sprite id="spr-overworld" path="Resource/Sprites/OverworldMapDB.xml"/>
+            <Sprite id="spr-menu" path="Resource/Sprites/IntroDB.xml"/>
+        </Sprites>
+        <Animations>
+            <Animation id="ani-mario" path="Resource/Animations/MarioAnim.xml"/>
+            <Animation id="ani-enemy" path="Resource/Animations/EnemyAnim.xml"/>
+            <Animation id="ani-misc" path="Resource/Animations/MiscAnim.xml"/>
+            <Animation id="ani-effect" path="Resource/Animations/EffectAnim.xml"/>
+            <Animation id="ani-hud" path="Resource/Animations/UiAnim.xml"/>
+            <Animation id="ani-overworld" path="Resource/Animations/OverworldMapAnim.xml"/>
+            <Animation id="ani-menu" path="Resource/Animations/IntroAnim.xml"/>
+        </Animations>
     </Resources>
     <GameContent>       
         <Scenes start="demo">
             <Scene id="demo" type="PlayScene">
-                <TmxMap path="Resource/Xml/GameMap/World1-1" fileName="world-1-1-map-obj.tmx"/>
+                <TmxMap path="Resource/Map/World1-1" fileName="world-1-1-map-obj.tmx"/>
             </Scene>
         </Scenes>
     </GameContent>
