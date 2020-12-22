@@ -19,6 +19,11 @@ int GameObject::GetRenderOrder()
 	return renderOrder;
 }
 
+void GameObject::SetRenderOrder(int value)
+{
+	this->renderOrder = value;
+}
+
 bool GameObject::IsActive()
 {
 	return active;

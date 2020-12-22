@@ -348,6 +348,12 @@
     <ClCompile Include="DefRedKoopas.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates</Filter>
     </ClCompile>
+    <ClCompile Include="RedCrouchKoopas.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates</Filter>
+    </ClCompile>
+    <ClCompile Include="RedMovingShell.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -549,6 +555,12 @@
       <Filter>Framework\World\Phys\Raycast</Filter>
     </ClInclude>
     <ClInclude Include="DefRedKoopas.h">
+      <Filter>MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates</Filter>
+    </ClInclude>
+    <ClInclude Include="RedCrouchKoopas.h">
+      <Filter>MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates</Filter>
+    </ClInclude>
+    <ClInclude Include="RedMovingShell.h">
       <Filter>MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates</Filter>
     </ClInclude>
   </ItemGroup>

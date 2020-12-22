@@ -24,6 +24,8 @@ public:
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
+	~CrouchKoopas();
+
 protected:
 	bool flip = false;
 

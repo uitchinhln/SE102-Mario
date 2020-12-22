@@ -23,6 +23,8 @@ CrouchKoopas::CrouchKoopas(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas
 
 	koopas->GetDistance() = koopas->GetVelocity() * (float) dt;
 
+	koopas->SetRenderOrder(125);
+
 	respawnTimer.Start();
 }
 
@@ -228,4 +230,11 @@ float CrouchKoopas::GetDamageFor(GameObject& object, Direction direction)
 		}
 	}
 	return 0.0f;
+}
+
+CrouchKoopas::~CrouchKoopas()
+{
+	if (shared_ptr<Koopas> k = koopas.lock()) {
+		k->SetRenderOrder(1000);
+	}
 }

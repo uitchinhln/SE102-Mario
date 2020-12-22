@@ -61,5 +61,6 @@ bool MEntityType::IsEnemy(ObjectType obj)
 {
     bool goomba = obj == Goomba;
     bool koopas = obj == Koopas || obj == KoopasCrouch || obj == KoopasImposter || obj == KoopasJumping;
-    return goomba || koopas;
+    bool redkoopas = obj == RedKoopas || obj == RedKoopasCrouch || obj == RedKoopasImposter || obj == RedKoopasJumping;
+    return goomba || koopas || redkoopas;
 }

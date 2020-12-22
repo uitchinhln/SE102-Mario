@@ -41,6 +41,8 @@ public:
 
 	int GetRenderOrder();
 
+	void SetRenderOrder(int value);
+
 	virtual bool IsActive();
 
 	virtual void SetActive(bool);

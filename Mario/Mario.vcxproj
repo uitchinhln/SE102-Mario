@@ -195,6 +195,8 @@
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RayCast.cpp" />
     <ClCompile Include="RectF.cpp" />
+    <ClCompile Include="RedCrouchKoopas.cpp" />
+    <ClCompile Include="RedMovingShell.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Small.cpp" />
@@ -266,6 +268,8 @@
     <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RayCast.h" />
     <ClInclude Include="RectF.h" />
+    <ClInclude Include="RedCrouchKoopas.h" />
+    <ClInclude Include="RedMovingShell.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Small.h" />

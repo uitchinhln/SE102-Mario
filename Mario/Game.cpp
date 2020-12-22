@@ -19,7 +19,7 @@ void CGame::Draw()
 
 void CGame::Render()
 {
-	if (graphic->GetDirect3DDevice()->BeginScene())
+	if (SUCCEEDED(graphic->GetDirect3DDevice()->BeginScene()))
 	{
 		// Clear back buffer with a color
 		graphic->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);

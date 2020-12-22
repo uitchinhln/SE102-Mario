@@ -77,7 +77,7 @@ void RayCast::Shoot(Vec2 startPoint, Direction direction, float rayLength, Objec
 	}
 }
 
-void RayCast::MergeBox(ObjectList& input, Direction direction, vector<shared_ptr<Vec2>>& output)
+void RayCast::MergeBox(ObjectList& input, Direction direction, float maxSpace, vector<shared_ptr<Vec2>>& output)
 {
 	output.clear();
 	if (input.size() > 0) {
@@ -94,7 +94,7 @@ void RayCast::MergeBox(ObjectList& input, Direction direction, vector<shared_ptr
 				shared_ptr<Vec2> last = output.back();
 				RectF hitbox = o->GetHitBox();
 
-				if (last->y >= hitbox.left) {
+				if (last->y + maxSpace >= hitbox.left) {
 					last->y = max(hitbox.right, last->y);
 				}
 				else {
@@ -115,7 +115,7 @@ void RayCast::MergeBox(ObjectList& input, Direction direction, vector<shared_ptr
 				shared_ptr<Vec2> last = output.back();
 				RectF hitbox = o->GetHitBox();
 
-				if (last->y >= hitbox.top) {
+				if (last->y + maxSpace >= hitbox.top) {
 					last->y = max(hitbox.bottom, last->y);
 				}
 				else {

@@ -5,6 +5,7 @@
 #include "Koopas.h"
 #include "SceneManager.h"
 #include "Game.h"
+#include "RedCrouchKoopas.h"
 
 
 DefRedKoopas::DefRedKoopas(shared_ptr<Koopas> koopas)
@@ -43,9 +44,8 @@ void DefRedKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 			vector<shared_ptr<GameObject>> rcResults;
 
 			Direction direction = Direction::Left;
-			Vec2 startPoint = k->GetPosition();
-			startPoint.y += size.y + 0.2;
-			startPoint.x += size.x;
+			Vec2 startPoint = k->GetPosition() + size;
+			startPoint.y += 0.2;
 
 			if (k->GetFacing() > 0) {
 				direction = Direction::Right;
@@ -61,7 +61,7 @@ void DefRedKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 
 			if (rcResults.size() > 0) {
 				vector<shared_ptr<Vec2>> edges;
-				raycaster.MergeBox(rcResults, direction, edges);
+				raycaster.MergeBox(rcResults, direction, 0.0f, edges);
 
 				RectF hitbox = k->GetHitBox();
 
@@ -141,15 +141,15 @@ void DefRedKoopas::StatusUpdate()
 			{
 				if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 					if (coll->SAABBResult.Direction == Direction::Bottom) {
-						//k->SetPower(make_shared<CrouchKoopas>(k));
+						k->SetPower(make_shared<RedCrouchKoopas>(k));
 						return;
 					}
 				}
 
 				if (MEntityType::IsMarioWeapon(coll->Object->GetObjectType())) {
 					if (coll->Object->GetObjectType() == MEntityType::MarioTailed) {
-						//k->SetPower(make_shared<CrouchKoopas>(k, true));
-						//k->SetVelocity(Vec2(jet.x * 0.1f, -0.95f));
+						k->SetPower(make_shared<RedCrouchKoopas>(k, true));
+						k->SetVelocity(Vec2(jet.x * 0.1f, -0.95f));
 						return;
 					}
 					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
