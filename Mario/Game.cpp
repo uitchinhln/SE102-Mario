@@ -19,8 +19,9 @@ void CGame::Draw()
 
 void CGame::Render()
 {
-	if (SUCCEEDED(graphic->GetDirect3DDevice()->BeginScene()))
-	{
+	graphic->GetDirect3DDevice()->BeginScene();
+	//if (SUCCEEDED(graphic->GetDirect3DDevice()->BeginScene()))
+	//{
 		// Clear back buffer with a color
 		graphic->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
@@ -31,7 +32,7 @@ void CGame::Render()
 
 		graphic->GetSpriteHandler()->End();
 		graphic->GetDirect3DDevice()->EndScene();
-	}	       
+	//}	       
 	// Display back buffer content to the screen
 	graphic->GetDirect3DDevice()->Present(NULL, NULL, NULL, NULL);
 }
@@ -63,6 +64,7 @@ int CGame::Run()
 			//auto finish = std::chrono::high_resolution_clock::now();
 			//DebugOut(L"Loop: %d\t%d\n", accumulatedTime, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 			Render();
+			Sleep(0);
 		}
 		else {
 			Sleep(tickPerFrame - accumulatedTime);

@@ -12,6 +12,7 @@ public:
 	static const ObjectType MarioTailed;
 
 	static const ObjectType Goomba;
+
 	static const ObjectType Koopas;
 	static const ObjectType KoopasCrouch;
 	static const ObjectType KoopasPassenger;
@@ -23,6 +24,9 @@ public:
 	static const ObjectType RedKoopasPassenger;
 	static const ObjectType RedKoopasImposter;
 	static const ObjectType RedKoopasJumping;
+
+	static const ObjectType VenusFireBall;
+	static const ObjectType Venus;
 
 	static const ObjectType EndmapReward;
 	static const ObjectType QuestionBlock;

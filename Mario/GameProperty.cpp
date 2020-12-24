@@ -11,4 +11,8 @@ CGameProperties::CGameProperties()
 
 	d3dpp.BackBufferHeight = ScreenHeight + 1;
 	d3dpp.BackBufferWidth = ScreenWidth + 1;
+
+	d3dpp.PresentationInterval = D3DPRESENT_INTERVAL_IMMEDIATE;
+	d3dpp.MultiSampleType = D3DMULTISAMPLE_NONE;
+	d3dpp.MultiSampleQuality = NULL;
 }

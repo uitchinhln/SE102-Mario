@@ -9,6 +9,7 @@ const ObjectType MEntityType::MarioFireBall = ObjectType::CreateObjectType(11, "
 const ObjectType MEntityType::MarioTailed = ObjectType::CreateObjectType(12, "MarioTailed");
 
 const ObjectType MEntityType::Goomba = ObjectType::CreateObjectType(101, "Goomba");
+
 const ObjectType MEntityType::Koopas = ObjectType::CreateObjectType(102, "Koopas");
 const ObjectType MEntityType::KoopasCrouch = ObjectType::CreateObjectType(103, "KoopasCrouch");
 const ObjectType MEntityType::KoopasPassenger = ObjectType::CreateObjectType(104, "KoopasPassenger");
@@ -20,6 +21,9 @@ const ObjectType MEntityType::RedKoopasCrouch = ObjectType::CreateObjectType(113
 const ObjectType MEntityType::RedKoopasPassenger = ObjectType::CreateObjectType(114, "RedKoopasPassenger");
 const ObjectType MEntityType::RedKoopasImposter = ObjectType::CreateObjectType(115, "RedKoopasImposter");
 const ObjectType MEntityType::RedKoopasJumping = ObjectType::CreateObjectType(116, "RedKoopasJumping");
+
+const ObjectType MEntityType::Venus = ObjectType::CreateObjectType(117, "Venus");
+const ObjectType MEntityType::VenusFireBall = ObjectType::CreateObjectType(118, "VenusFireBall");
 
 const ObjectType MEntityType::EndmapReward = ObjectType::CreateObjectType(1001, "EndmapReward");
 const ObjectType MEntityType::QuestionBlock = ObjectType::CreateObjectType(1002, "QuestionBlock");
@@ -62,5 +66,6 @@ bool MEntityType::IsEnemy(ObjectType obj)
     bool goomba = obj == Goomba;
     bool koopas = obj == Koopas || obj == KoopasCrouch || obj == KoopasImposter || obj == KoopasJumping;
     bool redkoopas = obj == RedKoopas || obj == RedKoopasCrouch || obj == RedKoopasImposter || obj == RedKoopasJumping;
-    return goomba || koopas || redkoopas;
+	bool venus = obj == Venus || obj == VenusFireBall;
+    return goomba || koopas || redkoopas || venus;
 }

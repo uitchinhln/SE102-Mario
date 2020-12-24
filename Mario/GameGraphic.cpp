@@ -9,7 +9,7 @@ void GameGraphic::Init(D3DPRESENT_PARAMETERS d3dpp, HWND hwnd)
 		D3DADAPTER_DEFAULT,
 		D3DDEVTYPE_HAL,
 		hwnd,
-		D3DCREATE_SOFTWARE_VERTEXPROCESSING,
+		D3DCREATE_HARDWARE_VERTEXPROCESSING,
 		&d3dpp,
 		&d3ddv);
 
@@ -59,7 +59,8 @@ void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 t
 	if (transform.Rotation == 0 && transform.Scale == Vec2(1.0f, 1.0f)) {
 		spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
 	}
-	else {
+	else 
+	{
 		D3DXMATRIX oldMatrix, newMatrix;
 		spriteHandler->GetTransform(&oldMatrix);
 

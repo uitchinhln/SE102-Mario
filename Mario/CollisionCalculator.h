@@ -1,7 +1,6 @@
 #pragma once
 #include "Utils.h"
 #include "CollisionResult.h"
-#include "Polygon.h"
 
 class GameObject;
 

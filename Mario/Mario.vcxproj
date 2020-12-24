@@ -149,7 +149,6 @@
     <ClCompile Include="AttackablePower.cpp" />
     <ClCompile Include="BigMario.cpp" />
     <ClCompile Include="CrouchKoopas.cpp" />
-    <ClCompile Include="CustomCollisionCalc.cpp" />
     <ClCompile Include="DefaultKoopas.cpp" />
     <ClCompile Include="DefRedKoopas.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
@@ -190,7 +189,6 @@
     <ClCompile Include="MEntityType.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="PlayScene.cpp" />
-    <ClCompile Include="Polygon.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RayCast.cpp" />
@@ -215,6 +213,8 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vec2Utils.cpp" />
+    <ClCompile Include="Venus.cpp" />
+    <ClCompile Include="VenusBullet.cpp" />
     <ClCompile Include="Viewport.cpp" />
     <ClCompile Include="WorldScene.cpp" />
   </ItemGroup>
@@ -222,7 +222,6 @@
     <ClInclude Include="AttackablePower.h" />
     <ClInclude Include="BigMario.h" />
     <ClInclude Include="CrouchKoopas.h" />
-    <ClInclude Include="CustomCollisionCalc.h" />
     <ClInclude Include="DefaultKoopas.h" />
     <ClInclude Include="DefRedKoopas.h" />
     <ClInclude Include="EndmapReward.h" />
@@ -263,7 +262,6 @@
     <ClInclude Include="MEntityType.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="PlayScene.h" />
-    <ClInclude Include="Polygon.h" />
     <ClInclude Include="QuestionBlock.h" />
     <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RayCast.h" />
@@ -286,6 +284,8 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vec2Utils.h" />
+    <ClInclude Include="Venus.h" />
+    <ClInclude Include="VenusBullet.h" />
     <ClInclude Include="Viewport.h" />
     <ClInclude Include="WorldScene.h" />
   </ItemGroup>
