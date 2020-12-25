@@ -3,12 +3,29 @@
 #include "AnimationManager.h"
 #include "SceneManager.h"
 #include "Game.h"
+#include "Mario.h"
+#include "Vec2Utils.h"
 
 Venus::Venus()
 {
 	this->renderOrder = 125;
 	this->Gravity = 0;
 	this->Velocity.x = 0;
+	this->Velocity.y = 0;
+	this->Distance.y = 0;
+	this->Distance.y = 0;
+
+	this->shootTimer.Start();
+	this->movementTimer.Start();
+}
+
+void Venus::InitData()
+{
+	for (int i = 0; i < VENUS_N_POOLED_BULLETS; i++) {
+		shared_ptr<VenusFireball> ball = make_shared<VenusFireball>(shared_from_this());
+		ball->SetActive(false);
+		fireballs.push_back(ball);
+	}
 }
 
 void Venus::InitResource()
@@ -23,7 +40,15 @@ void Venus::InitResource()
 
 void Venus::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
-	GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
+	if (!canCollision) return;
+	vector<shared_ptr<GameObject>> objs;
+	for (shared_ptr<GameObject> o : *coObj) {
+		if (MEntityType::IsMario(o->GetObjectType()) || MEntityType::IsMarioWeapon(o->GetObjectType())) {
+			objs.push_back(o);
+		}
+	}
+	GetCollisionCalc()->CalcPotentialCollisions(&objs, false);
+	objs.clear();
 }
 
 void Venus::RestoreCollision()
@@ -33,7 +58,7 @@ void Venus::RestoreCollision()
 
 void Venus::PositionUpdate()
 {
-	Position += Distance;
+	//Do nothing
 }
 
 void Venus::PositionLateUpdate()
@@ -43,6 +68,7 @@ void Venus::PositionLateUpdate()
 
 void Venus::StatusUpdate()
 {
+	if (!canCollision) return;
 	vector<shared_ptr<CollisionResult>> coResult = GetCollisionCalc()->GetLastResults();
 
 	if (coResult.size() != 0) {
@@ -59,20 +85,124 @@ void Venus::StatusUpdate()
 	}
 }
 
+void Venus::MovingUpdate()
+{
+	long dt = CGame::Time().ElapsedGameTime;
+
+	if (state == VenusState::Reveal)
+	{
+		switch (movementState)
+		{
+		case 0:
+		{
+			Position.y -= VENUS_SPEED * dt;
+			if (rootPos.y - Position.y >= size.y)
+			{
+				Position.y = rootPos.y - size.y;
+				movementState = 1;
+				movementTimer.Restart();
+				OnRevealed();
+			}
+			canCollision = true;
+		}
+		break;
+		case 1:
+		{
+			if (movementTimer.Elapsed() > VENUS_WAIT_TIME)
+			{
+				movementTimer.Restart();
+				movementState = 2;
+			}
+		}
+		break;
+		case 2:
+		{
+			Position.y += VENUS_SPEED * dt;
+			if (Position.y > rootPos.y)
+			{
+				Position.y = rootPos.y;
+				movementState = 3;
+				movementTimer.Restart();
+				TrackPlayerPosition();
+				OnHidden();
+				canCollision = false;
+			}
+		}
+		break;
+		case 3:
+		{
+			if (movementTimer.Elapsed() > VENUS_WAIT_TIME)
+			{
+				movementTimer.Restart();
+				movementState = 0;
+			}
+		}
+		break;
+		}
+	}
+	else {
+		TrackPlayerPosition();
+	}
+}
+
 void Venus::Update()
 {
+	MovingUpdate();
 
+	shared_ptr<Mario> player = SceneManager::GetInstance()->GetPlayer<Mario>();
+	Vec2 marioPos = player->GetPosition();
+
+	if (movementState <= 1) {
+		facing = marioPos.x < Position.x ? -1 : 1;
+		verticalDirection = marioPos.y < Position.y ? -1 : 1;
+	}
+
+	long dt = CGame::Time().ElapsedGameTime;
+
+	if (targetLocking && this->shootTimer.Elapsed() > VENUS_SHOOT_WAIT_TIME) {
+		shootTimer.Restart();
+		targetLocking = 0;
+
+		for each (shared_ptr<VenusFireball> fireball in fireballs)
+		{
+			if (!fireball->IsActive()) {
+				fireball->Reset();
+				Vec2 ballPos = fireball->GetPosition();
+
+				RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
+
+				if (ballPos.x >= cam.left && ballPos.y >= cam.top && ballPos.x <= cam.right && ballPos.y <= cam.bottom) {
+					SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(fireball);
+					break;
+				}
+			}
+		}
+	}
 }
 
 void Venus::FinalUpdate()
 {
-	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
+	//Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
 	collisionCal->Clear();
 }
 
 void Venus::Render()
 {
+	InitResource();
+	Animation animation;
 
+	if (state == VenusState::Reveal) {
+		animation = verticalDirection < 0 ? animations["RevealHeadUp"] : animations["RevealHeadDown"];
+	}
+	else {
+		animation = verticalDirection < 0 ? animations["IdleHeadUp"] : animations["IdleHeadDown"];
+	}
+
+	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
+
+	animation->GetTransform()->Scale.x = -facing;
+	animation->GetTransform()->Position = Position - cam;
+	animation->Render();
 }
 
 ObjectType Venus::GetObjectType()
@@ -92,11 +222,53 @@ bool Venus::IsGetThrough(GameObject& object, Direction direction)
 
 float Venus::GetDamageFor(GameObject& object, Direction direction)
 {
-	if (MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
+	if (MEntityType::IsMario(object.GetObjectType())) {
 		return 1.0f;
 	}
 	if (MEntityType::IsMarioWeapon(object.GetObjectType())) {
 		return 1.0f;
 	}
 	return 0.0f;
+}
+
+void Venus::OnRevealed()
+{
+	targetLocking = true;
+	shootTimer.Restart();
+}
+
+void Venus::OnHidden()
+{
+
+}
+
+void Venus::TrackPlayerPosition()
+{
+	shared_ptr<Mario> player = SceneManager::GetInstance()->GetPlayer<Mario>();
+	if (!player) return;
+
+	Vec2 marioPos = player->GetPosition();
+	facing = marioPos.x < Position.x ? -1 : 1;
+
+	auto distance = abs(marioPos.x - Position.x);
+	if (distance < VENUS_HIDE_DISTANCE && state == VenusState::Reveal)
+	{
+		state = VenusState::Hidden;
+	}
+	else if (distance >= VENUS_HIDE_DISTANCE && state == VenusState::Hidden)
+	{
+		state = VenusState::Reveal;
+		movementState = 0;
+		movementTimer.Restart();
+	}
+
+}
+
+shared_ptr<Venus> Venus::CreateVenus(Vec2 fixedPos)
+{
+	shared_ptr<Venus> venus = make_shared<Venus>();
+	venus->SetCollisionCalculator(make_shared<CollisionCalculator>(venus));
+	venus->Position = venus->rootPos = fixedPos;
+	venus->InitData();
+	return venus;
 }

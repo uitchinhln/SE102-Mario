@@ -24,6 +24,8 @@ const ObjectType MEntityType::RedKoopasJumping = ObjectType::CreateObjectType(11
 
 const ObjectType MEntityType::Venus = ObjectType::CreateObjectType(117, "Venus");
 const ObjectType MEntityType::VenusFireBall = ObjectType::CreateObjectType(118, "VenusFireBall");
+const ObjectType MEntityType::RedVenus = ObjectType::CreateObjectType(119, "RedVenus");
+const ObjectType MEntityType::Piranha = ObjectType::CreateObjectType(120, "Piranha");
 
 const ObjectType MEntityType::EndmapReward = ObjectType::CreateObjectType(1001, "EndmapReward");
 const ObjectType MEntityType::QuestionBlock = ObjectType::CreateObjectType(1002, "QuestionBlock");
@@ -66,6 +68,7 @@ bool MEntityType::IsEnemy(ObjectType obj)
     bool goomba = obj == Goomba;
     bool koopas = obj == Koopas || obj == KoopasCrouch || obj == KoopasImposter || obj == KoopasJumping;
     bool redkoopas = obj == RedKoopas || obj == RedKoopasCrouch || obj == RedKoopasImposter || obj == RedKoopasJumping;
-	bool venus = obj == Venus || obj == VenusFireBall;
-    return goomba || koopas || redkoopas || venus;
+	bool venus = obj == Venus || obj == VenusFireBall || obj == RedVenus;
+    bool piranha = obj == Piranha;
+    return goomba || koopas || redkoopas || venus || piranha;
 }

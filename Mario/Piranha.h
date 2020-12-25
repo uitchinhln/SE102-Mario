@@ -1,22 +1,19 @@
 #pragma once
 #include "GameObject.h"
-#include "VenusFireball.h"
 #include "StopWatch.h"
 
-enum class VenusState 
+enum class PiranhaState
 {
 	Reveal,
 	Hidden
 };
 
-class Venus :
-	public GameObject,
-	public enable_shared_from_this<Venus>
+class Piranha :
+    public GameObject,
+	public enable_shared_from_this<Piranha>
 {
 public:
-	Venus();
-
-	virtual void InitData();
+    Piranha();
 
 	virtual void InitResource() override;
 
@@ -29,8 +26,6 @@ public:
 	virtual void PositionLateUpdate() override;
 
 	virtual void StatusUpdate() override;
-
-	virtual void MovingUpdate();
 
 	virtual void Update() override;
 
@@ -46,7 +41,7 @@ public:
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
-	static shared_ptr<Venus> CreateVenus(Vec2 fixedPos);
+	static shared_ptr<Piranha> CreatePiranha(Vec2 fixedPos);
 
 	virtual void OnRevealed();
 
@@ -55,25 +50,18 @@ public:
 protected:
 	void TrackPlayerPosition();
 
-	vector<shared_ptr<VenusFireball>> fireballs;
-
-	Vec2 size = Vec2(16 * 3, 32 * 3);
+	Vec2 size = Vec2(16 * 3, 23 * 3);
 	Vec2 rootPos;
 
 	bool canCollision = true;
 
-	VenusState state = VenusState::Reveal;
+	PiranhaState state = PiranhaState::Reveal;
 
-	int targetLocking = 1;
 	int movementState = 0;
-	int verticalDirection = 1;
-	Stopwatch shootTimer;
 	Stopwatch movementTimer;
 
 	int VENUS_WAIT_TIME = 1700;
 	float VENUS_SPEED = 0.13f;
 	float VENUS_HIDE_DISTANCE = 48 * 2;
-	int VENUS_N_POOLED_BULLETS = 2;
-	float VENUS_BULLET_SPEED = 0.18f;
-	int VENUS_SHOOT_WAIT_TIME = VENUS_WAIT_TIME / 2;
 };
+

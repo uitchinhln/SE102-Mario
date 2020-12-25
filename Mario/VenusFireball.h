@@ -3,12 +3,12 @@
 
 class Venus;
 
-class VenusBullet :
+class VenusFireball :
 	public GameObject,
-	public enable_shared_from_this<VenusBullet>
+	public enable_shared_from_this<VenusFireball>
 {
 public:
-	VenusBullet(shared_ptr<Venus> holder);
+	VenusFireball(shared_ptr<Venus> holder);
 
 	virtual void InitResource() override;
 
@@ -42,8 +42,6 @@ protected:
 
 	weak_ptr<Venus> holder;
 
-	float FIREBALL_GRAVITY = 0.002f;
-	float FIREBALL_JUMP_FORCE = 0.4f;
-	float FIREBALL_SPEED = 0.48f;
+	float FIREBALL_SPEED = 0.18f;
 };
 

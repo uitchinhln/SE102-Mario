@@ -20,6 +20,9 @@
 #include "Spawner.h"
 #include "JumpingKoopas.h"
 #include "DefRedKoopas.h"
+#include "Venus.h"
+#include "RedVenus.h"
+#include "Piranha.h"
 
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
@@ -165,6 +168,18 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 		shared_ptr<Koopas> kp = Koopas::CreateKoopas(fixedPos);
 		kp->SetPower(make_shared<DefRedKoopas>(kp));
 		SpawnEntity(kp);
+	}
+	if (strcmp(type, MEntityType::Venus.ToString().c_str()) == 0) {
+		shared_ptr<Venus> vn = Venus::CreateVenus(fixedPos);
+		SpawnEntity(vn);
+	}
+	if (strcmp(type, MEntityType::RedVenus.ToString().c_str()) == 0) {
+		shared_ptr<RedVenus> vn = RedVenus::CreateRedVenus(fixedPos);
+		SpawnEntity(vn);
+	}
+	if (strcmp(type, MEntityType::Piranha.ToString().c_str()) == 0) {
+		shared_ptr<Piranha> pi = Piranha::CreatePiranha(fixedPos);
+		SpawnEntity(pi);
 	}
 	if (strcmp(type, MEntityType::EndmapReward.ToString().c_str()) == 0) {
 		SpawnEntity(EndmapReward::CreateEndmapReward(fixedPos));

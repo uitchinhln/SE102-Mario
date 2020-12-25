@@ -136,14 +136,17 @@
     <Filter Include="MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates">
       <UniqueIdentifier>{ac0bbc9e-704f-4547-b899-5adec986b8b2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\Entity\LivingEntity\Piranha">
-      <UniqueIdentifier>{de073a96-3ee7-42c8-8509-92c185a6cdeb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MarioGame\Entity\LivingEntity\Venus">
       <UniqueIdentifier>{2ba88469-aac9-4c48-ac0e-181749ed545f}</UniqueIdentifier>
     </Filter>
     <Filter Include="MarioGame\Entity\LivingEntity\Venus\Bullet">
       <UniqueIdentifier>{db3b3b61-f8bd-479b-94cd-f7478b55d616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Venus\RedVenus">
+      <UniqueIdentifier>{96cdb4d4-01a6-4d98-9412-8094f123885e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Piranha">
+      <UniqueIdentifier>{de073a96-3ee7-42c8-8509-92c185a6cdeb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -357,8 +360,14 @@
     <ClCompile Include="Venus.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Venus</Filter>
     </ClCompile>
-    <ClCompile Include="VenusBullet.cpp">
+    <ClCompile Include="VenusFireball.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Venus\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="RedVenus.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Venus\RedVenus</Filter>
+    </ClCompile>
+    <ClCompile Include="Piranha.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Piranha</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -566,8 +575,14 @@
     <ClInclude Include="Venus.h">
       <Filter>MarioGame\Entity\LivingEntity\Venus</Filter>
     </ClInclude>
-    <ClInclude Include="VenusBullet.h">
+    <ClInclude Include="VenusFireball.h">
       <Filter>MarioGame\Entity\LivingEntity\Venus\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="RedVenus.h">
+      <Filter>MarioGame\Entity\LivingEntity\Venus\RedVenus</Filter>
+    </ClInclude>
+    <ClInclude Include="Piranha.h">
+      <Filter>MarioGame\Entity\LivingEntity\Piranha</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
