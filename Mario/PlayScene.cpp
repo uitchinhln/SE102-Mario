@@ -23,6 +23,7 @@
 #include "Venus.h"
 #include "RedVenus.h"
 #include "Piranha.h"
+#include "RedGoomba.h"
 
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
@@ -155,6 +156,9 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	//GameObjects
 	if (strcmp(type, MEntityType::Goomba.ToString().c_str()) == 0) {
 		SpawnEntity(Goomba::CreateGoomba(fixedPos));
+	}
+	if (strcmp(type, MEntityType::RedGoomba.ToString().c_str()) == 0) {
+		SpawnEntity(RedGoomba::CreateRedGoomba(fixedPos));
 	}
 	if (strcmp(type, MEntityType::Koopas.ToString().c_str()) == 0) {
 		SpawnEntity(Koopas::CreateKoopas(fixedPos));

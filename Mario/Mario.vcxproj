@@ -148,8 +148,10 @@
   <ItemGroup>
     <ClCompile Include="AttackablePower.cpp" />
     <ClCompile Include="BigMario.cpp" />
+    <ClCompile Include="Brick.cpp" />
     <ClCompile Include="CrouchKoopas.cpp" />
     <ClCompile Include="DefaultKoopas.cpp" />
+    <ClCompile Include="DefaultRedGoomba.cpp" />
     <ClCompile Include="DefRedKoopas.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
     <ClCompile Include="FontManager.cpp" />
@@ -159,6 +161,7 @@
     <ClCompile Include="IEnviroment.cpp" />
     <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="JumpingKoopas.cpp" />
+    <ClCompile Include="JumpingRedGoomba.cpp" />
     <ClCompile Include="Koopas.cpp" />
     <ClCompile Include="MapProperties.cpp" />
     <ClCompile Include="MarioFireBall.cpp" />
@@ -191,11 +194,14 @@
     <ClCompile Include="Piranha.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
+    <ClCompile Include="RaccoonLeaf.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RayCast.cpp" />
     <ClCompile Include="RectF.cpp" />
     <ClCompile Include="RedCrouchKoopas.cpp" />
+    <ClCompile Include="RedGoomba.cpp" />
     <ClCompile Include="RedMovingShell.cpp" />
+    <ClCompile Include="RedMushroom.cpp" />
     <ClCompile Include="RedVenus.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -223,8 +229,10 @@
   <ItemGroup>
     <ClInclude Include="AttackablePower.h" />
     <ClInclude Include="BigMario.h" />
+    <ClInclude Include="Brick.h" />
     <ClInclude Include="CrouchKoopas.h" />
     <ClInclude Include="DefaultKoopas.h" />
+    <ClInclude Include="DefaultRedGoomba.h" />
     <ClInclude Include="DefRedKoopas.h" />
     <ClInclude Include="EndmapReward.h" />
     <ClInclude Include="FontManager.h" />
@@ -234,6 +242,7 @@
     <ClInclude Include="IEnviroment.h" />
     <ClInclude Include="IntroScene.h" />
     <ClInclude Include="JumpingKoopas.h" />
+    <ClInclude Include="JumpingRedGoomba.h" />
     <ClInclude Include="Koopas.h" />
     <ClInclude Include="MapProperties.h" />
     <ClInclude Include="MarioFireBall.h" />
@@ -266,11 +275,14 @@
     <ClInclude Include="Piranha.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="QuestionBlock.h" />
+    <ClInclude Include="RaccoonLeaf.h" />
     <ClInclude Include="RaccoonMario.h" />
     <ClInclude Include="RayCast.h" />
     <ClInclude Include="RectF.h" />
     <ClInclude Include="RedCrouchKoopas.h" />
+    <ClInclude Include="RedGoomba.h" />
     <ClInclude Include="RedMovingShell.h" />
+    <ClInclude Include="RedMushroom.h" />
     <ClInclude Include="RedVenus.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />

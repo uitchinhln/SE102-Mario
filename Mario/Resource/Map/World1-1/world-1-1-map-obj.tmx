@@ -308,7 +308,7 @@
   <object id="74" type="QuestionBlock" x="480" y="1056">
    <point/>
   </object>
-  <object id="249" type="KoopasJumping" x="928" y="990.667">
+  <object id="249" type="RedGoomba" x="544" y="1243.67">
    <point/>
   </object>
   <object id="250" type="RedKoopas" x="1674.67" y="1128">

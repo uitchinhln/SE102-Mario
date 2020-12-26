@@ -10,22 +10,24 @@ const ObjectType MEntityType::MarioTailed = ObjectType::CreateObjectType(12, "Ma
 
 const ObjectType MEntityType::Goomba = ObjectType::CreateObjectType(101, "Goomba");
 
-const ObjectType MEntityType::Koopas = ObjectType::CreateObjectType(102, "Koopas");
-const ObjectType MEntityType::KoopasCrouch = ObjectType::CreateObjectType(103, "KoopasCrouch");
-const ObjectType MEntityType::KoopasPassenger = ObjectType::CreateObjectType(104, "KoopasPassenger");
-const ObjectType MEntityType::KoopasImposter = ObjectType::CreateObjectType(105, "KoopasImposter");
-const ObjectType MEntityType::KoopasJumping = ObjectType::CreateObjectType(106, "KoopasJumping");
+const ObjectType MEntityType::Koopas = ObjectType::CreateObjectType(121, "Koopas");
+const ObjectType MEntityType::KoopasCrouch = ObjectType::CreateObjectType(122, "KoopasCrouch");
+const ObjectType MEntityType::KoopasPassenger = ObjectType::CreateObjectType(123, "KoopasPassenger");
+const ObjectType MEntityType::KoopasImposter = ObjectType::CreateObjectType(124, "KoopasImposter");
+const ObjectType MEntityType::KoopasJumping = ObjectType::CreateObjectType(125, "KoopasJumping");
 
-const ObjectType MEntityType::RedKoopas = ObjectType::CreateObjectType(112, "RedKoopas");
-const ObjectType MEntityType::RedKoopasCrouch = ObjectType::CreateObjectType(113, "RedKoopasCrouch");
-const ObjectType MEntityType::RedKoopasPassenger = ObjectType::CreateObjectType(114, "RedKoopasPassenger");
-const ObjectType MEntityType::RedKoopasImposter = ObjectType::CreateObjectType(115, "RedKoopasImposter");
-const ObjectType MEntityType::RedKoopasJumping = ObjectType::CreateObjectType(116, "RedKoopasJumping");
+const ObjectType MEntityType::RedKoopas = ObjectType::CreateObjectType(141, "RedKoopas");
+const ObjectType MEntityType::RedKoopasCrouch = ObjectType::CreateObjectType(142, "RedKoopasCrouch");
+const ObjectType MEntityType::RedKoopasPassenger = ObjectType::CreateObjectType(143, "RedKoopasPassenger");
+const ObjectType MEntityType::RedKoopasImposter = ObjectType::CreateObjectType(144, "RedKoopasImposter");
+const ObjectType MEntityType::RedKoopasJumping = ObjectType::CreateObjectType(145, "RedKoopasJumping");
 
-const ObjectType MEntityType::Venus = ObjectType::CreateObjectType(117, "Venus");
-const ObjectType MEntityType::VenusFireBall = ObjectType::CreateObjectType(118, "VenusFireBall");
-const ObjectType MEntityType::RedVenus = ObjectType::CreateObjectType(119, "RedVenus");
-const ObjectType MEntityType::Piranha = ObjectType::CreateObjectType(120, "Piranha");
+const ObjectType MEntityType::Venus = ObjectType::CreateObjectType(161, "Venus");
+const ObjectType MEntityType::VenusFireBall = ObjectType::CreateObjectType(162, "VenusFireBall");
+const ObjectType MEntityType::RedVenus = ObjectType::CreateObjectType(163, "RedVenus");
+const ObjectType MEntityType::Piranha = ObjectType::CreateObjectType(164, "Piranha");
+
+const ObjectType MEntityType::RedGoomba = ObjectType::CreateObjectType(181, "RedGoomba");
 
 const ObjectType MEntityType::EndmapReward = ObjectType::CreateObjectType(1001, "EndmapReward");
 const ObjectType MEntityType::QuestionBlock = ObjectType::CreateObjectType(1002, "QuestionBlock");
@@ -34,6 +36,10 @@ const ObjectType MEntityType::Spawner = ObjectType::CreateObjectType(1003, "Spaw
 const ObjectType MEntityType::SolidBlock = ObjectType::CreateObjectType(5001, "SolidBlock");
 const ObjectType MEntityType::GhostBlock = ObjectType::CreateObjectType(5002, "GhostBlock");
 const ObjectType MEntityType::Pipe = ObjectType::CreateObjectType(5003, "Pipe");
+
+const ObjectType MEntityType::RedMushroom = ObjectType::CreateObjectType(10001, "RedMushroom");
+const ObjectType MEntityType::RaccoonLeaf = ObjectType::CreateObjectType(10002, "RaccoonLeaf");
+const ObjectType MEntityType::Coin = ObjectType::CreateObjectType(10003, "Coin");
 
 bool MEntityType::IsTile(ObjectType type)
 {
@@ -66,9 +72,17 @@ bool MEntityType::IsMarioWeapon(ObjectType obj)
 bool MEntityType::IsEnemy(ObjectType obj)
 {
     bool goomba = obj == Goomba;
+    bool redgoomba = obj == RedGoomba;
     bool koopas = obj == Koopas || obj == KoopasCrouch || obj == KoopasImposter || obj == KoopasJumping;
     bool redkoopas = obj == RedKoopas || obj == RedKoopasCrouch || obj == RedKoopasImposter || obj == RedKoopasJumping;
 	bool venus = obj == Venus || obj == VenusFireBall || obj == RedVenus;
     bool piranha = obj == Piranha;
-    return goomba || koopas || redkoopas || venus || piranha;
+    return goomba || redgoomba || koopas || redkoopas || venus || piranha;
+}
+
+bool MEntityType::IsPowerUpItem(ObjectType obj)
+{
+    bool mushroom = obj == RedMushroom;
+    bool raccoonleaf = obj == RaccoonLeaf;
+    return mushroom || raccoonleaf;
 }

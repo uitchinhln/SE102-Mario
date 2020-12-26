@@ -1,26 +1,20 @@
 #pragma once
 #include "GameObject.h"
 
-class Venus;
-
-class VenusFireball :
-	public GameObject,
-	public enable_shared_from_this<VenusFireball>
+class RedMushroom :
+    public GameObject,
+	public enable_shared_from_this<RedMushroom>
 {
 public:
-	VenusFireball(shared_ptr<Venus> holder);
+    RedMushroom();
 
 	virtual void InitResource() override;
 
-	virtual void Reset(RectF hitbox, int facing);
-
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
 
-	virtual void CollisionDoubleFilter() override;
+	virtual void PositionUpdate() override;
 
-	virtual void PositionLateUpdate() override;
-
-	virtual bool HasCollideWith(DWORD id) override;
+	virtual void StatusUpdate() override;
 
 	virtual void Update() override;
 
@@ -36,12 +30,17 @@ public:
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
+	static shared_ptr<RedMushroom> CreateRedMushroom(Vec2 pos);
+
 protected:
-	Vec2 size = Vec2(24, 24);
-	RectF hitbox;
+	Vec2 size = Vec2(45, 45);
 
-	weak_ptr<Venus> holder;
+	Vec2 rootPos;
 
-	float FIREBALL_SPEED = 0.18f;
+	int movingStep = 0;
+
+	const float MUSHROOM_SPEED = 0.15f;
+	const float MUSHROOM_GRAVITY = 0.0024f;
+	const float MUSHROOM_GROWUP_SPEED = 0.0012f;
 };
 

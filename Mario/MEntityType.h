@@ -12,6 +12,7 @@ public:
 	static const ObjectType MarioTailed;
 
 	static const ObjectType Goomba;
+	static const ObjectType RedGoomba;
 
 	static const ObjectType Koopas;
 	static const ObjectType KoopasCrouch;
@@ -38,6 +39,10 @@ public:
 	static const ObjectType GhostBlock;
 	static const ObjectType Pipe;
 
+	static const ObjectType RedMushroom;
+	static const ObjectType RaccoonLeaf;
+	static const ObjectType Coin;
+
 
 	static bool IsTile(ObjectType);
 
@@ -46,5 +51,7 @@ public:
 	static bool IsMarioWeapon(ObjectType);
 
 	static bool IsEnemy(ObjectType);
+
+	static bool IsPowerUpItem(ObjectType);
 };
 

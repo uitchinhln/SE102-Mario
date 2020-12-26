@@ -1,26 +1,18 @@
 #pragma once
 #include "GameObject.h"
-
-class Venus;
-
-class VenusFireball :
-	public GameObject,
-	public enable_shared_from_this<VenusFireball>
+class RaccoonLeaf :
+    public GameObject
 {
 public:
-	VenusFireball(shared_ptr<Venus> holder);
+    RaccoonLeaf();
 
 	virtual void InitResource() override;
 
-	virtual void Reset(RectF hitbox, int facing);
-
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
 
-	virtual void CollisionDoubleFilter() override;
+	virtual void PositionUpdate() override;
 
-	virtual void PositionLateUpdate() override;
-
-	virtual bool HasCollideWith(DWORD id) override;
+	virtual void StatusUpdate() override;
 
 	virtual void Update() override;
 
@@ -37,11 +29,6 @@ public:
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
 protected:
-	Vec2 size = Vec2(24, 24);
-	RectF hitbox;
 
-	weak_ptr<Venus> holder;
-
-	float FIREBALL_SPEED = 0.18f;
 };
 

@@ -3,9 +3,11 @@
 #include "AnimationManager.h"
 #include "SceneManager.h"
 #include "Game.h"
+#include "RedMushroom.h"
 
 QuestionBlock::QuestionBlock()
 {
+	this->renderOrder = 1500;
 	this->Gravity = 0;
 	this->state = QuestionBlockStates::Available;
 }
@@ -34,6 +36,7 @@ void QuestionBlock::Hit()
 	Gravity = 0;
 	backupPos = Position;
 	this->state = QuestionBlockStates::Bouncing;
+	SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
 }
 
 QuestionBlockStates QuestionBlock::GetState()

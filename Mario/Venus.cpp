@@ -166,7 +166,7 @@ void Venus::Update()
 		for each (shared_ptr<VenusFireball> fireball in fireballs)
 		{
 			if (!fireball->IsActive()) {
-				fireball->Reset();
+				fireball->Reset(GetHitBox(), facing);
 				Vec2 ballPos = fireball->GetPosition();
 
 				RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
@@ -191,11 +191,16 @@ void Venus::Render()
 	InitResource();
 	Animation animation;
 
-	if (state == VenusState::Reveal) {
+	switch (movementState)
+	{
+	case 0:
+	case 2:
 		animation = verticalDirection < 0 ? animations["RevealHeadUp"] : animations["RevealHeadDown"];
-	}
-	else {
+		break;
+	case 1:
+	case 3:
 		animation = verticalDirection < 0 ? animations["IdleHeadUp"] : animations["IdleHeadDown"];
+		break;
 	}
 
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
