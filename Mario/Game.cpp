@@ -19,22 +19,22 @@ void CGame::Draw()
 
 void CGame::Render()
 {
+	//auto start = std::chrono::high_resolution_clock::now();
 	graphic->GetDirect3DDevice()->BeginScene();
 	//if (SUCCEEDED(graphic->GetDirect3DDevice()->BeginScene()))
 	//{
-		// Clear back buffer with a color
-		graphic->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
+	// Clear back buffer with a color
+	graphic->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
 
-		//auto start = std::chrono::high_resolution_clock::now();
-		Draw();
-		//auto finish = std::chrono::high_resolution_clock::now();
-		//DebugOut(L"Loop: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
+	Draw();
 
-		graphic->GetSpriteHandler()->End();
-		graphic->GetDirect3DDevice()->EndScene();
+	graphic->GetSpriteHandler()->End();
+	graphic->GetDirect3DDevice()->EndScene();
 	//}	       
 	// Display back buffer content to the screen
 	graphic->GetDirect3DDevice()->Present(NULL, NULL, NULL, NULL);
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//DebugOut(L"Loop: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 int CGame::Run()
