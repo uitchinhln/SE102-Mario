@@ -22,7 +22,7 @@ Venus::Venus()
 void Venus::InitData()
 {
 	for (int i = 0; i < VENUS_N_POOLED_BULLETS; i++) {
-		shared_ptr<VenusFireball> ball = make_shared<VenusFireball>(shared_from_this());
+		shared_ptr<VenusFireball> ball = make_shared<VenusFireball>();
 		ball->SetActive(false);
 		fireballs.push_back(ball);
 	}
@@ -154,14 +154,14 @@ void Venus::Update()
 
 	if (movementState <= 1) {
 		facing = marioPos.x < Position.x ? -1 : 1;
-		verticalDirection = marioPos.y < Position.y ? -1 : 1;
+		if (!targetLocking) verticalDirection = marioPos.y < Position.y ? -1 : 1;
 	}
 
 	long dt = CGame::Time().ElapsedGameTime;
 
 	if (targetLocking && this->shootTimer.Elapsed() > VENUS_SHOOT_WAIT_TIME) {
 		shootTimer.Restart();
-		targetLocking = 0;
+		targetLocking = false;
 
 		for each (shared_ptr<VenusFireball> fireball in fireballs)
 		{

@@ -2,15 +2,13 @@
 #include "MEntityType.h"
 #include "AnimationManager.h"
 #include "SceneManager.h"
-#include "Venus.h"
 #include "Game.h"
 #include "Vec2Utils.h"
 #include "Mario.h"
 
-VenusFireball::VenusFireball(shared_ptr<Venus> holder)
+VenusFireball::VenusFireball()
 {
 	this->renderOrder = 64;
-	this->holder = holder;
 	this->Gravity = 0;
 }
 

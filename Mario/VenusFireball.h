@@ -1,14 +1,12 @@
 #pragma once
 #include "GameObject.h"
 
-class Venus;
-
 class VenusFireball :
 	public GameObject,
 	public enable_shared_from_this<VenusFireball>
 {
 public:
-	VenusFireball(shared_ptr<Venus> holder);
+	VenusFireball();
 
 	virtual void InitResource() override;
 
@@ -39,8 +37,6 @@ public:
 protected:
 	Vec2 size = Vec2(24, 24);
 	RectF hitbox;
-
-	weak_ptr<Venus> holder;
 
 	float FIREBALL_SPEED = 0.18f;
 };
