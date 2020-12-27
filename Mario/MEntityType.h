@@ -40,6 +40,7 @@ public:
 	static const ObjectType Pipe;
 
 	static const ObjectType RedMushroom;
+	static const ObjectType GreenMushroom;
 	static const ObjectType RaccoonLeaf;
 
 	static const ObjectType Coin;

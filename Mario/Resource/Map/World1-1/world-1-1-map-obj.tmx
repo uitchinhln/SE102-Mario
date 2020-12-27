@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="295">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="327">
  <editorsettings>
   <chunksize width="8" height="8"/>
   <export target="world-1-1-map.xml" format="tmx"/>
@@ -344,7 +344,10 @@
   <object id="277" type="Coin" x="3936" y="240.004">
    <point/>
   </object>
-  <object id="278" type="Brick" x="4272" y="384.004">
+  <object id="278" type="QuestionBlock" x="4272" y="384.004">
+   <properties>
+    <property name="AsBrick" type="bool" value="true"/>
+   </properties>
    <point/>
   </object>
   <object id="279" type="Coin" x="4368" y="336">
@@ -390,6 +393,105 @@
    <point/>
   </object>
   <object id="294" type="Coin" x="5520" y="384">
+   <point/>
+  </object>
+  <object id="295" type="QuestionBlock" x="4368" y="1104">
+   <point/>
+  </object>
+  <object id="296" type="Brick" x="5808" y="1200">
+   <point/>
+  </object>
+  <object id="297" type="Brick" x="5856" y="1200">
+   <point/>
+  </object>
+  <object id="298" type="Brick" x="5904" y="1200">
+   <point/>
+  </object>
+  <object id="299" type="Brick" x="5952" y="1200">
+   <point/>
+  </object>
+  <object id="300" type="Brick" x="6000" y="1200">
+   <point/>
+  </object>
+  <object id="301" type="Brick" x="6048" y="1200">
+   <point/>
+  </object>
+  <object id="302" type="Brick" x="6096" y="1200">
+   <point/>
+  </object>
+  <object id="303" type="Brick" x="5856" y="1152">
+   <point/>
+  </object>
+  <object id="304" type="Brick" x="5904" y="1152">
+   <point/>
+  </object>
+  <object id="305" type="Brick" x="5952" y="1152">
+   <point/>
+  </object>
+  <object id="306" type="Brick" x="6000" y="1152">
+   <point/>
+  </object>
+  <object id="307" type="Brick" x="6048" y="1152">
+   <point/>
+  </object>
+  <object id="308" type="Brick" x="5905" y="1104">
+   <point/>
+  </object>
+  <object id="309" type="Brick" x="5952" y="1104">
+   <point/>
+  </object>
+  <object id="310" type="Brick" x="6000" y="1104">
+   <point/>
+  </object>
+  <object id="311" type="QuestionBlock" x="6048" y="1104">
+   <properties>
+    <property name="AsBrick" type="bool" value="true"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="312" type="Brick" x="6240" y="1200">
+   <point/>
+  </object>
+  <object id="313" type="Brick" x="6240" y="1152">
+   <point/>
+  </object>
+  <object id="314" type="Brick" x="6288" y="1200">
+   <point/>
+  </object>
+  <object id="315" type="Coin" x="6480" y="1512">
+   <point/>
+  </object>
+  <object id="316" type="Coin" x="6528" y="1464">
+   <point/>
+  </object>
+  <object id="317" type="Coin" x="6576" y="1464">
+   <point/>
+  </object>
+  <object id="318" type="Coin" x="6624" y="1512">
+   <point/>
+  </object>
+  <object id="319" type="Coin" x="6624" y="1560">
+   <point/>
+  </object>
+  <object id="320" type="Coin" x="6576" y="1608">
+   <point/>
+  </object>
+  <object id="321" type="Coin" x="6528" y="1608">
+   <point/>
+  </object>
+  <object id="322" type="Coin" x="6624" y="1656">
+   <point/>
+  </object>
+  <object id="323" type="Coin" x="6624" y="1704">
+   <point/>
+  </object>
+  <object id="324" type="Coin" x="6576" y="1756">
+   <point/>
+  </object>
+  <object id="325" type="Coin" x="6528" y="1756">
+   <point/>
+  </object>
+  <object id="326" type="Coin" x="6480" y="1704">
    <point/>
   </object>
  </objectgroup>
@@ -457,7 +559,7 @@
     <property name="Type" type="int" value="1"/>
    </properties>
   </object>
-  <object id="224" type="SolidBlock" x="5856" y="1392" width="384" height="576"/>
+  <object id="224" type="SolidBlock" x="6192" y="1440" width="48" height="480"/>
   <object id="225" type="Pipe" x="6240" y="1392" width="96" height="96">
    <properties>
     <property name="Direction" type="int" value="2"/>
@@ -466,7 +568,7 @@
    </properties>
   </object>
   <object id="227" type="SolidBlock" x="6336" y="1392" width="576" height="48"/>
-  <object id="228" type="SolidBlock" x="7008" y="1392" width="384" height="576"/>
+  <object id="228" type="SolidBlock" x="7008" y="1440" width="48" height="480"/>
   <object id="230" type="Pipe" x="6914" y="1392" width="96" height="96">
    <properties>
     <property name="Direction" type="int" value="2"/>
@@ -474,11 +576,11 @@
     <property name="Type" type="int" value="2"/>
    </properties>
   </object>
-  <object id="231" type="SolidBlock" x="6240" y="1872" width="768" height="96"/>
-  <object id="233" type="SolidBlock" x="6864" y="1584" width="144" height="288"/>
-  <object id="236" type="SolidBlock" x="6816" y="1632" width="48" height="240"/>
-  <object id="237" type="SolidBlock" x="6768" y="1680.5" width="48" height="194"/>
-  <object id="238" type="SolidBlock" x="6720.5" y="1728" width="48" height="144"/>
+  <object id="231" type="SolidBlock" x="6240" y="1872" width="768" height="48"/>
+  <object id="233" type="SolidBlock" x="6864" y="1584" width="144" height="96"/>
+  <object id="236" type="SolidBlock" x="6816" y="1632" width="48" height="96"/>
+  <object id="237" type="SolidBlock" x="6768" y="1680.5" width="48" height="96"/>
+  <object id="238" type="SolidBlock" x="6720.5" y="1728" width="48" height="96"/>
   <object id="239" type="SolidBlock" x="6672" y="1776" width="48" height="96"/>
   <object id="240" type="SolidBlock" x="6624" y="1824" width="48" height="48"/>
   <object id="244" type="SolidBlock" x="6720" y="912" width="96" height="48"/>

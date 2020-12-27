@@ -399,6 +399,7 @@
     <ClCompile Include="Coin.cpp">
       <Filter>MarioGame\Entity\Items\Coins</Filter>
     </ClCompile>
+    <ClCompile Include="GreenMushroom.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -632,5 +633,6 @@
     <ClInclude Include="Coin.h">
       <Filter>MarioGame\Entity\Items\Coins</Filter>
     </ClInclude>
+    <ClInclude Include="GreenMushroom.h" />
   </ItemGroup>
 </Project>

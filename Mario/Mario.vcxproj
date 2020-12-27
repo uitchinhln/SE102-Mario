@@ -157,6 +157,7 @@
     <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="GhostBlock.cpp" />
     <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="GreenMushroom.cpp" />
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
     <ClCompile Include="IntroScene.cpp" />
@@ -238,6 +239,7 @@
     <ClInclude Include="FontManager.h" />
     <ClInclude Include="GhostBlock.h" />
     <ClInclude Include="Goomba.h" />
+    <ClInclude Include="GreenMushroom.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="IEnviroment.h" />
     <ClInclude Include="IntroScene.h" />

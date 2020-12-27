@@ -38,7 +38,8 @@ const ObjectType MEntityType::GhostBlock = ObjectType::CreateObjectType(5002, "G
 const ObjectType MEntityType::Pipe = ObjectType::CreateObjectType(5003, "Pipe");
 
 const ObjectType MEntityType::RedMushroom = ObjectType::CreateObjectType(10001, "RedMushroom");
-const ObjectType MEntityType::RaccoonLeaf = ObjectType::CreateObjectType(10002, "RaccoonLeaf");
+const ObjectType MEntityType::GreenMushroom = ObjectType::CreateObjectType(10002, "GreenMushroom");
+const ObjectType MEntityType::RaccoonLeaf = ObjectType::CreateObjectType(10003, "RaccoonLeaf");
 
 const ObjectType MEntityType::Coin = ObjectType::CreateObjectType(10011, "Coin");
 const ObjectType MEntityType::Brick = ObjectType::CreateObjectType(10012, "Brick");

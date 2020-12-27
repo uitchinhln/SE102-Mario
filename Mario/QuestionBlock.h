@@ -1,10 +1,16 @@
 #pragma once
 #include "GameObject.h"
+#include "MapProperties.h"
 
 enum class QuestionBlockStates {
 	Available,
 	Bouncing,
 	Unavailable
+};
+
+enum class QuestionBlockActiveStates {
+	Question,
+	GlassBrick
 };
 
 class QuestionBlock :
@@ -44,7 +50,7 @@ public:
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
-	static shared_ptr<QuestionBlock> CreateQuestionBlock(Vec2 fixedPos = Vec2(100, 100));
+	static shared_ptr<QuestionBlock> CreateQuestionBlock(Vec2 fixedPos, MapProperties& props);
 
 protected:
 	Vec2 size = Vec2(48, 48);
@@ -54,5 +60,6 @@ protected:
 	float MaxBounce = 37;
 
 	QuestionBlockStates state = QuestionBlockStates::Available;
+	QuestionBlockActiveStates activeState = QuestionBlockActiveStates::Question;
 };
 

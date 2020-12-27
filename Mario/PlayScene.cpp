@@ -190,7 +190,7 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 		SpawnEntity(EndmapReward::CreateEndmapReward(fixedPos));
 	}
 	if (strcmp(type, MEntityType::QuestionBlock.ToString().c_str()) == 0) {
-		SpawnEntity(QuestionBlock::CreateQuestionBlock(fixedPos));
+		SpawnEntity(QuestionBlock::CreateQuestionBlock(fixedPos, props));
 	}
 	if (strcmp(type, MEntityType::Spawner.ToString().c_str()) == 0) {
 		SpawnEntity(Spawner::CreateSpawner(fixedPos, props));

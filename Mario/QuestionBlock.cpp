@@ -17,6 +17,7 @@ void QuestionBlock::InitResource()
 {
 	if (this->animations.size() < 1) {
 		this->animations["Avail"] = AnimationManager::GetInstance()->Get("ani-question-block")->Clone();
+		this->animations["BrickAvail"] = AnimationManager::GetInstance()->Get("ani-brick")->Clone();
 		this->animations["Unavail"] = AnimationManager::GetInstance()->Get("ani-empty-block")->Clone();
 	}
 }
@@ -37,7 +38,6 @@ void QuestionBlock::Hit()
 	Gravity = 0;
 	backupPos = Position;
 	this->state = QuestionBlockStates::Bouncing;
-	//SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RaccoonLeaf::CreateRaccoonLeaf(Position));
 }
 
 QuestionBlockStates QuestionBlock::GetState()
@@ -115,7 +115,7 @@ void QuestionBlock::Render()
 {
 	InitResource();
 
-	Animation ani = animations["Avail"];
+	Animation ani = activeState == QuestionBlockActiveStates::Question ? animations["Avail"] : animations["BrickAvail"];
 
 	if (state != QuestionBlockStates::Available) {
 		ani = animations["Unavail"];
@@ -147,10 +147,11 @@ float QuestionBlock::GetDamageFor(GameObject& object, Direction direction)
 	return 0.0f;
 }
 
-shared_ptr<QuestionBlock> QuestionBlock::CreateQuestionBlock(Vec2 fixedPos)
+shared_ptr<QuestionBlock> QuestionBlock::CreateQuestionBlock(Vec2 fixedPos, MapProperties& props)
 {
 	shared_ptr<QuestionBlock> block = make_shared<QuestionBlock>();
 	block->SetCollisionCalculator(make_shared<CollisionCalculator>(block));
 	block->SetPosition(Vec2(fixedPos.x, fixedPos.y));
+	block->activeState = props.GetBool("AsBrick", false) ? QuestionBlockActiveStates::GlassBrick : QuestionBlockActiveStates::Question;
 	return block;
 }
