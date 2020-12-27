@@ -1,11 +1,18 @@
 #pragma once
 #include "GameObject.h"
-class RaccoonLeaf :
+#include "MapProperties.h"
+
+enum class CoinState {
+	COIN,
+	BRICK
+};
+
+class Coin :
     public GameObject,
-	public enable_shared_from_this<RaccoonLeaf>
+	public enable_shared_from_this<Coin>
 {
 public:
-    RaccoonLeaf();
+    Coin();
 
 	virtual void InitResource() override;
 
@@ -29,21 +36,13 @@ public:
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
-	static shared_ptr<RaccoonLeaf> CreateRaccoonLeaf(Vec2 pos);
+	static shared_ptr<Coin> CreateCoin(Vec2 pos, CoinState state);
 
 protected:
-	Vec2 size = Vec2(45, 45);
+	CoinState state = CoinState::COIN;
 
-	Vec2 rootPos;
+	bool isFreeze = false;
 
-	int movingStep = 0;
-
-	const int LEAF_AMPLITUDE = 48; // px
-	const int LEAF_ROUNDTRIP_TIME = 800;
-	const float LEAF_REVEAL_DISTANCE = 48 * 1.5f; // px
-	const float LEAF_REVEAL_FORCE = 0.03f;
-	const float LEAF_GRAVITY = 0.0012f;
-	const float LEAF_FALLING_VEL = 0.065f;
-	const float LEAF_GROWUP_SPEED = 0.0012f;
+	Vec2 size = Vec2(48, 48);
 };
 

@@ -18,10 +18,6 @@ void RayCast::Shoot(Vec2 startPoint, Direction direction, float rayLength, Objec
 				}
 			}
 		}
-		/*sort(results.begin(), results.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
-			return a->GetPosition().x > b->GetPosition().x;
-			}
-		);*/
 		break;
 	case Direction::Top:
 		for each (shared_ptr<GameObject> obj in *objects)
@@ -35,10 +31,6 @@ void RayCast::Shoot(Vec2 startPoint, Direction direction, float rayLength, Objec
 				}
 			}
 		}
-		/*sort(results.begin(), results.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
-			return a->GetPosition().y > b->GetPosition().y;
-			}
-		);*/
 		break;
 	case Direction::Right:
 		for each (shared_ptr<GameObject> obj in *objects)
@@ -52,10 +44,6 @@ void RayCast::Shoot(Vec2 startPoint, Direction direction, float rayLength, Objec
 				}
 			}
 		}
-		/*sort(results.begin(), results.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
-			return a->GetPosition().x < b->GetPosition().x;
-			}
-		);*/
 		break;
 	case Direction::Bottom:
 		for each (shared_ptr<GameObject> obj in *objects)
@@ -69,10 +57,6 @@ void RayCast::Shoot(Vec2 startPoint, Direction direction, float rayLength, Objec
 				}
 			}
 		}
-		/*sort(results.begin(), results.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
-			return a->GetPosition().y < b->GetPosition().y;
-			}
-		);*/
 		break;
 	}
 }

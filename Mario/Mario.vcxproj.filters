@@ -154,11 +154,11 @@
     <Filter Include="MarioGame\Entity\LivingEntity\RedGoomba\RedGoombaStates">
       <UniqueIdentifier>{e3a614ce-507c-4719-b3a7-014653773869}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\Entity\TriggerEntity\Bricks">
-      <UniqueIdentifier>{75dc9a14-9df7-4620-aeb7-e4ff0692cf49}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MarioGame\Entity\Items">
       <UniqueIdentifier>{b7583881-343a-4144-86ea-3902f9394289}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\Items\Coins">
+      <UniqueIdentifier>{e28d6010-2320-41fc-a477-ff30774be428}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -390,14 +390,14 @@
     <ClCompile Include="JumpingRedGoomba.cpp">
       <Filter>MarioGame\Entity\LivingEntity\RedGoomba\RedGoombaStates</Filter>
     </ClCompile>
-    <ClCompile Include="Brick.cpp">
-      <Filter>MarioGame\Entity\TriggerEntity\Bricks</Filter>
-    </ClCompile>
     <ClCompile Include="RaccoonLeaf.cpp">
       <Filter>MarioGame\Entity\Items</Filter>
     </ClCompile>
     <ClCompile Include="RedMushroom.cpp">
       <Filter>MarioGame\Entity\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>MarioGame\Entity\Items\Coins</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -623,14 +623,14 @@
     <ClInclude Include="JumpingRedGoomba.h">
       <Filter>MarioGame\Entity\LivingEntity\RedGoomba\RedGoombaStates</Filter>
     </ClInclude>
-    <ClInclude Include="Brick.h">
-      <Filter>MarioGame\Entity\TriggerEntity\Bricks</Filter>
-    </ClInclude>
     <ClInclude Include="RaccoonLeaf.h">
       <Filter>MarioGame\Entity\Items</Filter>
     </ClInclude>
     <ClInclude Include="RedMushroom.h">
       <Filter>MarioGame\Entity\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>MarioGame\Entity\Items\Coins</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

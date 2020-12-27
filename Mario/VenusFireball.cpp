@@ -81,7 +81,8 @@ void VenusFireball::FinalUpdate()
 
 	RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
 	if (Position.x < cam.left - 100 || Position.y < cam.top - 100 || Position.x > cam.right + 100 || Position.y > cam.bottom + 100) {
-		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+		//SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+		this->active = false;
 	}
 }
 

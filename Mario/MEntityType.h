@@ -41,7 +41,9 @@ public:
 
 	static const ObjectType RedMushroom;
 	static const ObjectType RaccoonLeaf;
+
 	static const ObjectType Coin;
+	static const ObjectType Brick;
 
 
 	static bool IsTile(ObjectType);

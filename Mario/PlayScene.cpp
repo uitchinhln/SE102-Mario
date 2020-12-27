@@ -24,6 +24,7 @@
 #include "RedVenus.h"
 #include "Piranha.h"
 #include "RedGoomba.h"
+#include "Coin.h"
 
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
@@ -131,7 +132,7 @@ void PlayScene::Render()
 
 	for each (shared_ptr<GameObject> obj in renderObjects)
 	{
-		obj->Render();
+		if (obj->Visible) obj->Render();
 	}
 
 	CGame::GetInstance()->GetGraphic().SetViewport(hud);
@@ -196,6 +197,12 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	}
 	if (strcmp(type, MEntityType::Pipe.ToString().c_str()) == 0) {
 		SpawnEntity(Pipe::CreatePipe(fixedPos, size, props));
+	}
+	if (strcmp(type, MEntityType::Coin.ToString().c_str()) == 0) {
+		SpawnEntity(Coin::CreateCoin(fixedPos, CoinState::COIN));
+	}
+	if (strcmp(type, MEntityType::Brick.ToString().c_str()) == 0) {
+		SpawnEntity(Coin::CreateCoin(fixedPos, CoinState::BRICK));
 	}
 
 	//MapObjects

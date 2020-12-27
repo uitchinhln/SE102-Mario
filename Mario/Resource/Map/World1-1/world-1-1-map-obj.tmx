@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="262">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="295">
  <editorsettings>
   <chunksize width="8" height="8"/>
   <export target="world-1-1-map.xml" format="tmx"/>
@@ -290,9 +290,6 @@
   </object>
  </objectgroup>
  <objectgroup id="20" name="Object Layer">
-  <object id="21" type="Koopas" x="1643" y="888">
-   <point/>
-  </object>
   <object id="23" type="EndmapReward" x="8038.58" y="984.06">
    <point/>
   </object>
@@ -308,16 +305,91 @@
   <object id="74" type="QuestionBlock" x="480" y="1056">
    <point/>
   </object>
-  <object id="249" type="RedGoomba" x="544" y="1243.67">
-   <point/>
-  </object>
-  <object id="250" type="RedKoopas" x="1674.67" y="1128">
-   <point/>
-  </object>
   <object id="259" type="RedVenus" x="1080" y="1104.6">
    <point/>
   </object>
   <object id="260" type="Venus" x="5544" y="1104.33">
+   <point/>
+  </object>
+  <object id="262" type="QuestionBlock" x="720" y="912">
+   <point/>
+  </object>
+  <object id="263" type="QuestionBlock" x="672" y="912">
+   <point/>
+  </object>
+  <object id="266" type="QuestionBlock" x="1248" y="960">
+   <point/>
+  </object>
+  <object id="267" type="Coin" x="3216" y="960">
+   <point/>
+  </object>
+  <object id="268" type="Coin" x="3312" y="864.004">
+   <point/>
+  </object>
+  <object id="269" type="Coin" x="3408" y="768.004">
+   <point/>
+  </object>
+  <object id="271" type="Coin" x="3504" y="672">
+   <point/>
+  </object>
+  <object id="272" type="Coin" x="3600" y="576.004">
+   <point/>
+  </object>
+  <object id="273" type="Coin" x="4032" y="240">
+   <point/>
+  </object>
+  <object id="276" type="Coin" x="3984" y="240">
+   <point/>
+  </object>
+  <object id="277" type="Coin" x="3936" y="240.004">
+   <point/>
+  </object>
+  <object id="278" type="Brick" x="4272" y="384.004">
+   <point/>
+  </object>
+  <object id="279" type="Coin" x="4368" y="336">
+   <point/>
+  </object>
+  <object id="280" type="Coin" x="4416" y="336">
+   <point/>
+  </object>
+  <object id="281" type="Coin" x="4560" y="384">
+   <point/>
+  </object>
+  <object id="282" type="Coin" x="4608" y="384">
+   <point/>
+  </object>
+  <object id="283" type="Coin" x="4656" y="384">
+   <point/>
+  </object>
+  <object id="284" type="Coin" x="4704" y="384">
+   <point/>
+  </object>
+  <object id="285" type="Coin" x="4800" y="336">
+   <point/>
+  </object>
+  <object id="286" type="Coin" x="4848" y="336">
+   <point/>
+  </object>
+  <object id="287" type="Coin" x="4896" y="336">
+   <point/>
+  </object>
+  <object id="288" type="Coin" x="4944" y="336">
+   <point/>
+  </object>
+  <object id="289" type="Coin" x="5088" y="432">
+   <point/>
+  </object>
+  <object id="291" type="Coin" x="5184" y="336">
+   <point/>
+  </object>
+  <object id="292" type="Coin" x="5280" y="384">
+   <point/>
+  </object>
+  <object id="293" type="Coin" x="5424" y="288">
+   <point/>
+  </object>
+  <object id="294" type="Coin" x="5520" y="384">
    <point/>
   </object>
  </objectgroup>

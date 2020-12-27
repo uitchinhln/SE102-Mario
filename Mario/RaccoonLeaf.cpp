@@ -14,12 +14,13 @@ RaccoonLeaf::RaccoonLeaf()
 	this->Velocity = Vec2(0, Gravity);
 
 	this->Distance = Velocity * (float)dt;
+	this->Visible = false;
 }
 
 void RaccoonLeaf::InitResource()
 {
 	if (this->animations.size() < 1) {
-		this->animations["Default"] = AnimationManager::GetInstance()->Get("ani-super-mushroom");
+		this->animations["Default"] = AnimationManager::GetInstance()->Get("ani-super-leaf-red");
 	}
 }
 
@@ -75,25 +76,37 @@ void RaccoonLeaf::Update()
 			movingStep = 1;
 		}
 		else {
+			if (!this->Visible && Position.y + 10.0f <= rootPos.y) {
+				this->Visible = true;
+			}
 			Velocity.y -= LEAF_GROWUP_SPEED * CGame::Time().ElapsedGameTime;
 		}
 		break;
 	case 1:
 		this->GetGravity() = LEAF_GRAVITY;
-		Velocity.x = 0.03;
+		this->renderOrder = 1500;
+
+		if (abs(Position.x - rootPos.x) >= LEAF_REVEAL_DISTANCE) {
+			facing = -facing;
+		}
+
+		Velocity.x = LEAF_REVEAL_FORCE * dt * facing;
+
 		break;
 	default:
 		break;
 	}
 
-	GetVelocity().y += GetGravity() * (float)dt;
+	Velocity.y = min(Velocity.y + Gravity * dt, LEAF_FALLING_VEL);
 	GetDistance() = GetVelocity() * (float)dt;
+
+
 }
 
 void RaccoonLeaf::FinalUpdate()
 {
 	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
-	facing = Velocity.x > 0 ? 1 : -1;
+	//facing = Velocity.x > 0 ? 1 : -1;
 	collisionCal->Clear();
 }
 
@@ -105,6 +118,7 @@ void RaccoonLeaf::Render()
 
 	Animation animation = this->animations["Default"];
 
+	animation->GetTransform()->Scale.x = -facing;
 	animation->GetTransform()->Position = GetPosition() - cam;
 	animation->Render();
 }
@@ -127,4 +141,13 @@ bool RaccoonLeaf::IsGetThrough(GameObject& object, Direction direction)
 float RaccoonLeaf::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 0.0f;
+}
+
+shared_ptr<RaccoonLeaf> RaccoonLeaf::CreateRaccoonLeaf(Vec2 pos)
+{
+	shared_ptr<RaccoonLeaf> leaf = make_shared<RaccoonLeaf>();
+	leaf->SetCollisionCalculator(make_shared<CollisionCalculator>(leaf));
+	leaf->SetPosition(pos);
+	leaf->rootPos = pos;
+	return leaf;
 }

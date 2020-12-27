@@ -16,7 +16,6 @@ protected:
 	bool active = true;
 
 	int facing = 1;
-
 	int renderOrder = 1000;
 
 	float Gravity = 0;
@@ -33,6 +32,9 @@ protected:
 	shared_ptr<CollisionCalculator> collisionCal;
 
 	shared_ptr<DataTag> tags;
+
+public:
+	bool Visible = true;
 
 public:
 	GameObject();

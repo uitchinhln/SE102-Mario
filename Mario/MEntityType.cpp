@@ -39,7 +39,9 @@ const ObjectType MEntityType::Pipe = ObjectType::CreateObjectType(5003, "Pipe");
 
 const ObjectType MEntityType::RedMushroom = ObjectType::CreateObjectType(10001, "RedMushroom");
 const ObjectType MEntityType::RaccoonLeaf = ObjectType::CreateObjectType(10002, "RaccoonLeaf");
-const ObjectType MEntityType::Coin = ObjectType::CreateObjectType(10003, "Coin");
+
+const ObjectType MEntityType::Coin = ObjectType::CreateObjectType(10011, "Coin");
+const ObjectType MEntityType::Brick = ObjectType::CreateObjectType(10012, "Brick");
 
 bool MEntityType::IsTile(ObjectType type)
 {

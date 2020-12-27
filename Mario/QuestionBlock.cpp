@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "Game.h"
 #include "RedMushroom.h"
+#include "RaccoonLeaf.h"
 
 QuestionBlock::QuestionBlock()
 {
@@ -36,7 +37,7 @@ void QuestionBlock::Hit()
 	Gravity = 0;
 	backupPos = Position;
 	this->state = QuestionBlockStates::Bouncing;
-	SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
+	//SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RaccoonLeaf::CreateRaccoonLeaf(Position));
 }
 
 QuestionBlockStates QuestionBlock::GetState()
