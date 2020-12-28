@@ -25,6 +25,7 @@
 #include "Piranha.h"
 #include "RedGoomba.h"
 #include "Coin.h"
+#include "VoidBlock.h"
 
 void PlayScene::LoadFromXml(TiXmlElement* data)
 {
@@ -61,7 +62,13 @@ void PlayScene::Update()
 
 	mario->Update();
 
+	RectF cam = camera->GetBoundingBox();
+
 	for (shared_ptr<GameObject> obj : objects) {
+		Vec2 Position = obj->GetPosition();
+		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
+			continue;
+		}
 		obj->Update();
 	}
 
@@ -73,27 +80,47 @@ void PlayScene::Update()
 
 	objs.push_back(this->mario);
 	for (shared_ptr<GameObject> obj : objects) {
+		Vec2 Position = obj->GetPosition();
+		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
+			continue;
+		}
 		obj->CollisionUpdate(&objs);
 	}
 
 	mario->CollisionDoubleFilter();
 	for (shared_ptr<GameObject> obj : objects) {
+		Vec2 Position = obj->GetPosition();
+		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
+			continue;
+		}
 		obj->CollisionDoubleFilter();
 	}
 
 	mario->PositionUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
+		Vec2 Position = obj->GetPosition();
+		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
+			continue;
+		}
 		obj->PositionUpdate();
 	}
 
 	mario->RestoreCollision();
 	for (shared_ptr<GameObject> obj : objects) {
+		Vec2 Position = obj->GetPosition();
+		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
+			continue;
+		}
 		obj->RestoreCollision();
 	}
 
 	//auto start = std::chrono::high_resolution_clock::now();
 	mario->PositionLateUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
+		Vec2 Position = obj->GetPosition();
+		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
+			continue;
+		}
 		obj->PositionLateUpdate();
 	}
 	//auto finish = std::chrono::high_resolution_clock::now();
@@ -101,11 +128,19 @@ void PlayScene::Update()
 
 	mario->StatusUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
+		Vec2 Position = obj->GetPosition();
+		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
+			continue;
+		}
 		obj->StatusUpdate();
 	}
 
 	mario->FinalUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
+		Vec2 Position = obj->GetPosition();
+		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
+			continue;
+		}
 		obj->FinalUpdate();
 	}
 
@@ -130,8 +165,13 @@ void PlayScene::Render()
 		return a->GetRenderOrder() < b->GetRenderOrder();
 	});
 
+	RectF cam = camera->GetBoundingBox();
 	for each (shared_ptr<GameObject> obj in renderObjects)
 	{
+		Vec2 Position = obj->GetPosition();
+		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
+			continue;
+		}
 		if (obj->Visible) obj->Render();
 	}
 
@@ -211,6 +251,9 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	}
 	if (strcmp(type, MEntityType::GhostBlock.ToString().c_str()) == 0) {
 		mapObjects.push_back(GhostBlock::CreateGhostBlock(fixedPos, size));
+	}
+	if (strcmp(type, MEntityType::VoidBlock.ToString().c_str()) == 0) {
+		mapObjects.push_back(VoidBlock::CreateVoidBlock(fixedPos, size));
 	}
 }
 

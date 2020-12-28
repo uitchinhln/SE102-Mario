@@ -1,6 +1,6 @@
 #pragma once
 #include "GameObject.h"
-class Brick :
+class QuestionCoin :
     public GameObject
 {
 };

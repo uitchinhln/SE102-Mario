@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "MapProperties.h"
+#include "MEntityType.h"
 
 enum class QuestionBlockStates {
 	Available,
@@ -53,6 +54,8 @@ public:
 	static shared_ptr<QuestionBlock> CreateQuestionBlock(Vec2 fixedPos, MapProperties& props);
 
 protected:
+	ObjectType reward = MEntityType::QuestionCoin;
+
 	Vec2 size = Vec2(48, 48);
 
 	Vec2 backupPos = Vec2(0, 0);

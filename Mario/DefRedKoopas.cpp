@@ -12,6 +12,9 @@ DefRedKoopas::DefRedKoopas(shared_ptr<Koopas> koopas)
 {
 	this->koopas = koopas;
 
+	KP_SPEED = 0.12;
+	size = Vec2(30, 45);
+
 	koopas->GetDestroyTimer().Stop();
 
 	koopas->GetLiveState() = KoopasLiveStates::ALIVE;
@@ -23,6 +26,7 @@ DefRedKoopas::DefRedKoopas(shared_ptr<Koopas> koopas)
 	koopas->SetVelocity(Vec2(KP_SPEED * koopas->GetFacing(), 0));
 
 	koopas->GetDistance() = koopas->GetVelocity() * (float)dt;
+
 }
 
 void DefRedKoopas::InitResource(bool force)

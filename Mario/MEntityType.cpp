@@ -35,11 +35,14 @@ const ObjectType MEntityType::Spawner = ObjectType::CreateObjectType(1003, "Spaw
 
 const ObjectType MEntityType::SolidBlock = ObjectType::CreateObjectType(5001, "SolidBlock");
 const ObjectType MEntityType::GhostBlock = ObjectType::CreateObjectType(5002, "GhostBlock");
-const ObjectType MEntityType::Pipe = ObjectType::CreateObjectType(5003, "Pipe");
+const ObjectType MEntityType::VoidBlock = ObjectType::CreateObjectType(5003, "Void");
+const ObjectType MEntityType::Pipe = ObjectType::CreateObjectType(5004, "Pipe");
 
 const ObjectType MEntityType::RedMushroom = ObjectType::CreateObjectType(10001, "RedMushroom");
 const ObjectType MEntityType::GreenMushroom = ObjectType::CreateObjectType(10002, "GreenMushroom");
 const ObjectType MEntityType::RaccoonLeaf = ObjectType::CreateObjectType(10003, "RaccoonLeaf");
+const ObjectType MEntityType::QuestionCoin = ObjectType::CreateObjectType(10004, "QuestionCoin");
+const ObjectType MEntityType::PSwitch = ObjectType::CreateObjectType(10005, "PSwitch");
 
 const ObjectType MEntityType::Coin = ObjectType::CreateObjectType(10011, "Coin");
 const ObjectType MEntityType::Brick = ObjectType::CreateObjectType(10012, "Brick");
@@ -51,7 +54,8 @@ bool MEntityType::IsTile(ObjectType type)
 	bool solidBlock = type == SolidBlock;
 	bool ghostBlock = type == GhostBlock;
 	bool pipe = type == Pipe;
-    return normalTile || questionTile || solidBlock || ghostBlock;
+	bool brick = type == Brick;
+    return normalTile || questionTile || solidBlock || ghostBlock || pipe || brick;
 }
 
 bool MEntityType::IsMario(ObjectType obj)
@@ -69,7 +73,8 @@ bool MEntityType::IsMarioWeapon(ObjectType obj)
     bool isBullet = obj == MarioFireBall;
     bool isTail = obj == MarioTailed;
 	bool isShell = obj == KoopasPassenger || obj == KoopasImposter;
-	return isBullet || isTail || isShell;
+    bool voidblock = obj == VoidBlock;
+	return isBullet || isTail || isShell || voidblock;
 }
 
 bool MEntityType::IsEnemy(ObjectType obj)
@@ -80,12 +85,14 @@ bool MEntityType::IsEnemy(ObjectType obj)
     bool redkoopas = obj == RedKoopas || obj == RedKoopasCrouch || obj == RedKoopasImposter || obj == RedKoopasJumping;
 	bool venus = obj == Venus || obj == VenusFireBall || obj == RedVenus;
     bool piranha = obj == Piranha;
-    return goomba || redgoomba || koopas || redkoopas || venus || piranha;
+    bool voidblock = obj == VoidBlock;
+    return goomba || redgoomba || koopas || redkoopas || venus || piranha || voidblock;
 }
 
 bool MEntityType::IsPowerUpItem(ObjectType obj)
 {
     bool mushroom = obj == RedMushroom;
-    bool raccoonleaf = obj == RaccoonLeaf;
-    return mushroom || raccoonleaf;
+    bool greenmushroom = obj == GreenMushroom;
+    bool leaf = obj == RaccoonLeaf;
+    return mushroom || greenmushroom || leaf;
 }

@@ -44,6 +44,18 @@ void Coin::StatusUpdate()
 			if (state == CoinState::COIN && MEntityType::IsMario(coll->Object->GetObjectType())) {
 				SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 			}
+
+			if (state == CoinState::BRICK) {
+				if (MEntityType::IsMario(coll->Object->GetObjectType()) && coll->SAABBResult.Direction == Direction::Top) {
+					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+				}
+				if (coll->Object->GetObjectType() == MEntityType::KoopasImposter && ToVector(coll->SAABBResult.Direction).x != 0) {
+					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+				}
+				if (coll->Object->GetObjectType() == MEntityType::MarioTailed) {
+					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+				}
+			}
 		}
 	}
 }
@@ -80,12 +92,22 @@ void Coin::Render()
 
 ObjectType Coin::GetObjectType()
 {
+	if (state == CoinState::BRICK)
+		return MEntityType::Brick;
 	return MEntityType::Coin;
 }
 
 RectF Coin::GetHitBox()
 {
+	if (state == CoinState::BRICK) {
+		return RectF(Position.x, Position.y, Position.x + 48, Position.y + 48);
+	}
 	return RectF(Position.x, Position.y, Position.x + size.x, Position.y + size.y);
+}
+
+CoinState& Coin::State()
+{
+	return state;
 }
 
 bool Coin::IsGetThrough(GameObject& object, Direction direction)

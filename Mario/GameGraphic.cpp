@@ -26,6 +26,10 @@ void GameGraphic::Init(D3DPRESENT_PARAMETERS d3dpp, HWND hwnd)
 
 	d3ddv->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
 
+	d3ddv->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
+	d3ddv->SetRenderState(D3DRS_ZWRITEENABLE, D3DZB_FALSE);
+	d3ddv->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+
 	OutputDebugString(L"[INFO] InitGame done;\n");
 }
 

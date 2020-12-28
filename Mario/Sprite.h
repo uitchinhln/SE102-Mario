@@ -4,6 +4,7 @@
 
 class CSprite
 {
+public:
 	string id = "";
 
 	int left = 0;

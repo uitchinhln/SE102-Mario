@@ -5,7 +5,6 @@
 #include "SceneManager.h"
 #include "PlayScene.h"
 #include "Mario.h"
-#include "FontManager.h"
 
 MarioGame::MarioGame() : CGame(new CGameProperties())
 {
@@ -39,27 +38,6 @@ void MarioGame::LoadResources()
 			AnimationManager::GetInstance()->ImportFromXml(node->Attribute("path"));
 		}
 
-		/*for (TiXmlElement* node = resources->FirstChildElement("Resource"); node !=nullptr; node = node->NextSiblingElement("Resource"))
-		{
-			string textureId = node->Attribute("textureId");
-			string texturesPath = node->FirstChildElement("Texture")->Attribute("path");
-			string spritesPath = node->FirstChildElement("SpriteDB")->Attribute("path");
-			string animationsPath = node->FirstChildElement("AnimationDB")->Attribute("path");
-
-			string transColor;
-			if (!node->FirstChildElement("Texture")->Attribute("transparent")) {
-				transColor = "0,255,255,255";
-			}
-			else {
-				transColor = node->FirstChildElement("Texture")->Attribute("transparent");
-			}
-			vector<string> argb = split(transColor, ",");
-
-			TextureManager::GetInstance()->Add(textureId, ToLPCWSTR(texturesPath), D3DCOLOR_ARGB(stoi(argb[0]), stoi(argb[1]), stoi(argb[2]), stoi(argb[3])));
-			SpriteManager::GetInstance()->ImportFromXml(textureId, spritesPath.c_str());
-			AnimationManager::GetInstance()->ImportFromXml(textureId, animationsPath.c_str());
-		}*/
-
 		TiXmlElement* scenes = root->FirstChildElement("GameContent")->FirstChildElement("Scenes");
 
 		for (TiXmlElement* node = scenes->FirstChildElement("Scene"); node != NULL; node = node->NextSiblingElement("Scene")) {
@@ -77,16 +55,24 @@ void MarioGame::LoadResources()
 
 		string startId = scenes->Attribute("start");
 		SceneManager::GetInstance()->ActiveScene(startId);
+
+
+
+		DefaultFont = new Font();
+		vector<FontSprite> fontSet;
+		std::string prefix = "spr-font-";
+		for (char c = '0'; c <= '9'; ++c)
+			fontSet.push_back(FontSprite{ c, prefix + c });
+		for (char c = 'A'; c <= 'Z'; ++c)
+			fontSet.push_back(FontSprite{ c, prefix + c });
+		fontSet.push_back(FontSprite{ '!', "spr-font-exclamation-point" });
+		DefaultFont->Import(fontSet);
 	}
-	FontManager::GetInstance()->HardTest();
 }
 
 void MarioGame::Update()
 {
-	//auto start = std::chrono::high_resolution_clock::now();
 	SceneManager::GetInstance()->Update();
-	//auto finish = std::chrono::high_resolution_clock::now();
-	//DebugOut(L"Render: \t%d\n", std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 }
 
 void MarioGame::Draw()

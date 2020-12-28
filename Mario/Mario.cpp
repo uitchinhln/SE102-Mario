@@ -92,6 +92,10 @@ void Mario::OnKeyDown(int key)
 	case DIK_P:
 		DebugOut(L"Position: x = %f\ty = %f\n", Position.x, Position.y);
 		break;
+	case DIK_T:
+		Position.x = 6172.319336;
+		Position.y = 1167.000000;
+		break;
 	}
 
 }

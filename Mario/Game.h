@@ -6,6 +6,7 @@
 #include "KeyboardProcessor.h"
 #include "GameTime.h"
 #include "StopWatch.h"
+#include "Font.h"
 
 class CGame
 {
@@ -24,6 +25,8 @@ public:
 
 	static CGame* GetInstance();
 	~CGame();
+
+	Font* DefaultFont;
 
 protected:
 	CGame(GameProperties properties);

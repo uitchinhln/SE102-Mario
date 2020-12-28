@@ -1,18 +1,10 @@
 #pragma once
 #include "GameObject.h"
-#include "MapProperties.h"
-
-enum class CoinState {
-	COIN,
-	BRICK
-};
-
-class Coin :
-    public GameObject,
-	public enable_shared_from_this<Coin>
+class PSwitch :
+    public GameObject
 {
 public:
-    Coin();
+    PSwitch();
 
 	virtual void InitResource() override;
 
@@ -32,19 +24,21 @@ public:
 
 	virtual RectF GetHitBox() override;
 
-	virtual CoinState& State();
-
 	virtual bool IsGetThrough(GameObject& object, Direction direction) override;
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
-	static shared_ptr<Coin> CreateCoin(Vec2 pos, CoinState state);
+	static shared_ptr<PSwitch> CreatePSwitch(Vec2 pos);
 
 protected:
-	CoinState state = CoinState::COIN;
+	Vec2 size = Vec2(45, 45);
 
-	bool isFreeze = false;
+	Vec2 rootPos;
 
-	Vec2 size = Vec2(48, 48);
+	int movingStep = 0;
+
+	const float MUSHROOM_GROWUP_SPEED = 0.0012f;
+
+	bool Pressed = false;
 };
 

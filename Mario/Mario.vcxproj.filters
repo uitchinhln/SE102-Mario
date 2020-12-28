@@ -160,6 +160,15 @@
     <Filter Include="MarioGame\Entity\Items\Coins">
       <UniqueIdentifier>{e28d6010-2320-41fc-a477-ff30774be428}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\UI">
+      <UniqueIdentifier>{e7e8789c-ffa8-4820-b6e9-859764038a47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\UI\Text">
+      <UniqueIdentifier>{bde66aa8-9ef5-44e8-b5d6-e19e6f0e739b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\FX">
+      <UniqueIdentifier>{bade033b-056c-4b65-9491-2fa0ad49101a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -339,9 +348,6 @@
     <ClCompile Include="Viewport.cpp">
       <Filter>Framework\Graphic</Filter>
     </ClCompile>
-    <ClCompile Include="FontManager.cpp">
-      <Filter>Framework\Font</Filter>
-    </ClCompile>
     <ClCompile Include="IntroScene.cpp">
       <Filter>MarioGame\Scenes</Filter>
     </ClCompile>
@@ -400,6 +406,27 @@
       <Filter>MarioGame\Entity\Items\Coins</Filter>
     </ClCompile>
     <ClCompile Include="GreenMushroom.cpp">
+      <Filter>MarioGame\Entity\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="PowerMeter.cpp">
+      <Filter>MarioGame\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>MarioGame\UI\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>MarioGame\UI\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponents.cpp">
+      <Filter>MarioGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="QuestionCoin.cpp">
+      <Filter>MarioGame\Entity\TriggerEntity\QuestionBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="VoidBlock.cpp">
+      <Filter>MarioGame\Entity\MapBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="PSwitch.cpp">
       <Filter>MarioGame\Entity\Items</Filter>
     </ClCompile>
   </ItemGroup>
@@ -575,9 +602,6 @@
     <ClInclude Include="Viewport.h">
       <Filter>Framework\Graphic</Filter>
     </ClInclude>
-    <ClInclude Include="FontManager.h">
-      <Filter>Framework\Font</Filter>
-    </ClInclude>
     <ClInclude Include="IntroScene.h">
       <Filter>MarioGame\Scenes</Filter>
     </ClInclude>
@@ -636,6 +660,27 @@
       <Filter>MarioGame\Entity\Items\Coins</Filter>
     </ClInclude>
     <ClInclude Include="GreenMushroom.h">
+      <Filter>MarioGame\Entity\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="PowerMeter.h">
+      <Filter>MarioGame\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>MarioGame\UI\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>MarioGame\UI\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponents.h">
+      <Filter>MarioGame\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="QuestionCoin.h">
+      <Filter>MarioGame\Entity\TriggerEntity\QuestionBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="VoidBlock.h">
+      <Filter>MarioGame\Entity\MapBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="PSwitch.h">
       <Filter>MarioGame\Entity\Items</Filter>
     </ClInclude>
   </ItemGroup>

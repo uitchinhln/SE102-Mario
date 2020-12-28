@@ -4,7 +4,10 @@
 #include "SceneManager.h"
 #include "Game.h"
 #include "RedMushroom.h"
+#include "GreenMushroom.h"
 #include "RaccoonLeaf.h"
+#include "PSwitch.h"
+#include "Mario.h"
 
 QuestionBlock::QuestionBlock()
 {
@@ -38,6 +41,31 @@ void QuestionBlock::Hit()
 	Gravity = 0;
 	backupPos = Position;
 	this->state = QuestionBlockStates::Bouncing;
+
+	shared_ptr<Mario> mario = SceneManager::GetInstance()->GetPlayer<Mario>();
+
+	DebugOut(L"Reward: %s\n", ToLPCWSTR(reward.ToString()));
+
+	if (reward == MEntityType::QuestionCoin) {
+		//SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
+	}
+	else if (reward == MEntityType::GreenMushroom) {
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(GreenMushroom::CreateGreenMushroom(Position));
+	}
+	else if (reward == MEntityType::PSwitch) {
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(PSwitch::CreatePSwitch(Position));
+	}
+	else if (mario->GetObjectType() != MEntityType::SmallMario) {
+		if (reward == MEntityType::RedMushroom) {
+			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
+		}
+		if (reward == MEntityType::RaccoonLeaf) {
+			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RaccoonLeaf::CreateRaccoonLeaf(Position));
+		}
+	}
+	else {
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
+	}
 }
 
 QuestionBlockStates QuestionBlock::GetState()
@@ -153,5 +181,23 @@ shared_ptr<QuestionBlock> QuestionBlock::CreateQuestionBlock(Vec2 fixedPos, MapP
 	block->SetCollisionCalculator(make_shared<CollisionCalculator>(block));
 	block->SetPosition(Vec2(fixedPos.x, fixedPos.y));
 	block->activeState = props.GetBool("AsBrick", false) ? QuestionBlockActiveStates::GlassBrick : QuestionBlockActiveStates::Question;
+
+	string rwType = props.GetText("HiddenItem", "QuestionCoin");
+	if (rwType.compare(MEntityType::RedMushroom.ToString()) == 0) {
+		block->reward = MEntityType::RedMushroom;
+	}
+	if (rwType.compare(MEntityType::GreenMushroom.ToString()) == 0) {
+		block->reward = MEntityType::GreenMushroom;
+	}
+	if (rwType.compare(MEntityType::RaccoonLeaf.ToString()) == 0) {
+		block->reward = MEntityType::RaccoonLeaf;
+	}
+	if (rwType.compare(MEntityType::PSwitch.ToString()) == 0) {
+		block->reward = MEntityType::PSwitch;
+	}
+	if (rwType.compare(MEntityType::QuestionCoin.ToString()) == 0) {
+		block->reward = MEntityType::QuestionCoin;
+	}
+
 	return block;
 }

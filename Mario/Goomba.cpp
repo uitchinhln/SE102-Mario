@@ -9,6 +9,8 @@ Goomba::Goomba()
 	destroyTimer.Stop();
 	state = GoombaState::WALK;
 
+	Position = VECTOR_0;
+
 	DWORD dt = CGame::Time().ElapsedGameTime;
 	this->SetFacing(-1);
 

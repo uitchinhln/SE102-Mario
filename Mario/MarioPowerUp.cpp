@@ -7,6 +7,9 @@
 #include "GameObject.h"
 #include "Game.h"
 #include "QuestionBlock.h"
+#include "BigMario.h"
+#include "RaccoonMario.h"
+#include "Small.h"
 
 MarioPowerUp::MarioPowerUp(shared_ptr<Mario> mario)
 {
@@ -118,17 +121,68 @@ void MarioPowerUp::StatusUpdate()
 
 				float damage = coll->Object->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
-					//Die, down level...
-					DebugOut(L"Damage from %s[%d]: %f\n", ToLPCWSTR(coll->Object->GetObjectType().ToString()), coll->Object->GetID(),  damage);
+					if (damage <= 1) {
+						ObjectType mPower = m->GetObjectType();
+						if (mPower == MEntityType::SmallMario) {
+							DebugOut(L"Die\n");
+						}
+						else {
+							if (mPower == MEntityType::BigMario) {
+								Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
+								m->SetPowerUp(make_shared<Small>(m));
+								m->GetPosition().x = fixPos.x;
+								m->GetPosition().y = fixPos.y - (m->GetHitBox().bottom - m->GetHitBox().top);
+							}
+							else {
+								Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
+								m->SetPowerUp(make_shared<BigMario>(m));
+								m->GetPosition().x = fixPos.x;
+								m->GetPosition().y = fixPos.y - (m->GetHitBox().bottom - m->GetHitBox().top);
+							}
+						}
+					}
+					else {
+						DebugOut(L"Die\n");
+					}
 				}
 				else {
-					//DebugOut(L"Check: %d\n", !coll->Object->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top);
 					if (!coll->Object->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
 						if (coll->Object->GetObjectType() != MEntityType::KoopasCrouch) {
 							MiniJumpDetect(true);
 						}
 					}
 				}
+			}
+
+			if (MEntityType::IsPowerUpItem(coll->Object->GetObjectType())) {
+
+				DebugOut(L"Reward: %d\n", 1);
+				ObjectType power = coll->Object->GetObjectType();
+				ObjectType mPower = m->GetObjectType();
+				Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
+
+				if (power == MEntityType::RedMushroom) {
+					if (mPower == MEntityType::SmallMario) {
+						m->SetPowerUp(make_shared<BigMario>(m));
+					}
+					else {
+						//Tang tien
+					}
+				}
+				if (power == MEntityType::RaccoonLeaf) {
+					if (mPower != MEntityType::RaccoonMario) {
+						m->SetPowerUp(make_shared<RaccoonMario>(m));
+					}
+					else {
+						//Tang tien
+					}
+				}
+				if (power == MEntityType::GreenMushroom) {
+					//Tang mang
+				}
+
+				m->GetPosition().x = fixPos.x;
+				m->GetPosition().y = fixPos.y - (m->GetHitBox().bottom - m->GetHitBox().top);
 			}
 		}
 

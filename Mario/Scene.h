@@ -22,6 +22,8 @@ public:
 
 	virtual void DespawnEntity(shared_ptr<GameObject> entity);
 
+	virtual vector<shared_ptr<GameObject>> GetObjects();
+
 	virtual void OnKeyDown(int key);
 	virtual void OnKeyUp(int key);
 

@@ -58,6 +58,11 @@ void CScene::DespawnEntity(shared_ptr<GameObject> entity)
 	entity->SetActive(false);
 }
 
+vector<shared_ptr<GameObject>> CScene::GetObjects()
+{
+	return objects;
+}
+
 void CScene::OnKeyDown(int key)
 {
 }

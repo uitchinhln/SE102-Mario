@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="327">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="348">
  <editorsettings>
   <chunksize width="8" height="8"/>
   <export target="world-1-1-map.xml" format="tmx"/>
@@ -297,6 +297,9 @@
    <point/>
   </object>
   <object id="30" type="QuestionBlock" x="1968" y="1152">
+   <properties>
+    <property name="HiddenItem" value="RaccoonLeaf"/>
+   </properties>
    <point/>
   </object>
   <object id="66" type="QuestionBlock" x="2112" y="1056">
@@ -312,6 +315,9 @@
    <point/>
   </object>
   <object id="262" type="QuestionBlock" x="720" y="912">
+   <properties>
+    <property name="HiddenItem" value="RaccoonLeaf"/>
+   </properties>
    <point/>
   </object>
   <object id="263" type="QuestionBlock" x="672" y="912">
@@ -347,6 +353,7 @@
   <object id="278" type="QuestionBlock" x="4272" y="384.004">
    <properties>
     <property name="AsBrick" type="bool" value="true"/>
+    <property name="HiddenItem" value="GreenMushroom"/>
    </properties>
    <point/>
   </object>
@@ -396,6 +403,9 @@
    <point/>
   </object>
   <object id="295" type="QuestionBlock" x="4368" y="1104">
+   <properties>
+    <property name="HiddenItem" value="RaccoonLeaf"/>
+   </properties>
    <point/>
   </object>
   <object id="296" type="Brick" x="5808" y="1200">
@@ -446,6 +456,7 @@
   <object id="311" type="QuestionBlock" x="6048" y="1104">
    <properties>
     <property name="AsBrick" type="bool" value="true"/>
+    <property name="HiddenItem" value="PSwitch"/>
    </properties>
    <point/>
   </object>
@@ -511,6 +522,10 @@
   <object id="45" type="SolidBlock" x="6720" y="1248" width="1825.27" height="48"/>
   <object id="46" type="GhostBlock" x="816" y="1008" width="144" height="48"/>
   <object id="47" type="GhostBlock" x="720" y="1104" width="144" height="48"/>
+  <object id="332" type="Void" x="3180" y="1397" width="356" height="37"/>
+  <object id="333" type="Void" x="4332" y="1393.5" width="356" height="37"/>
+  <object id="334" type="Void" x="4711" y="1392.5" width="356" height="37"/>
+  <object id="335" type="Void" x="6531" y="1382.5" width="356" height="37"/>
   <object id="48" type="Pipe" x="1056" y="1104" width="96" height="144">
    <properties>
     <property name="Direction" type="int" value="1"/>
@@ -585,6 +600,66 @@
   <object id="240" type="SolidBlock" x="6624" y="1824" width="48" height="48"/>
   <object id="244" type="SolidBlock" x="6720" y="912" width="96" height="48"/>
   <object id="261" type="Piranha" x="5352" y="1153.2">
+   <point/>
+  </object>
+  <object id="327" type="SpawnPoint" x="98" y="1245">
+   <point/>
+  </object>
+  <object id="328" type="EndPortal" x="6250" y="1366" width="75" height="122">
+   <properties>
+    <property name="Direction" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="329" type="BeginPortal" x="6928" y="1375" width="65" height="115">
+   <properties>
+    <property name="CameraBoundary" value="0, 672, 8448, 1296"/>
+    <property name="Destination" value="6935 1245"/>
+    <property name="Direction" type="int" value="2"/>
+   </properties>
+  </object>
+  <object id="330" type="BeginPortal" x="6732" y="479" width="72" height="96">
+   <properties>
+    <property name="CameraBoundary" value="5856, 1392, 7392, 1968"/>
+    <property name="Destination" value="6258, 1485"/>
+    <property name="Direction" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="331" type="EndPortal" x="6932" y="1152" width="61" height="158">
+   <properties>
+    <property name="Direction" type="int" value="1"/>
+   </properties>
+  </object>
+  <object id="337" type="Goomba" x="677.333" y="1243.33">
+   <point/>
+  </object>
+  <object id="338" type="Goomba" x="1586.67" y="1242.67">
+   <point/>
+  </object>
+  <object id="339" type="Goomba" x="2498.67" y="1194.67">
+   <point/>
+  </object>
+  <object id="340" type="Goomba" x="2646.67" y="1196">
+   <point/>
+  </object>
+  <object id="341" type="RedGoomba" x="2842.67" y="1194.67">
+   <point/>
+  </object>
+  <object id="342" type="RedKoopas" x="1686.67" y="1146.67">
+   <point/>
+  </object>
+  <object id="343" type="RedKoopas" x="6245.33" y="1149.33">
+   <point/>
+  </object>
+  <object id="344" type="Koopas" x="4372" y="1242.67">
+   <point/>
+  </object>
+  <object id="345" type="KoopasJumping" x="3941.33" y="954.667">
+   <point/>
+  </object>
+  <object id="346" type="KoopasJumping" x="4084" y="956">
+   <point/>
+  </object>
+  <object id="347" type="KoopasJumping" x="4228" y="956">
    <point/>
   </object>
  </objectgroup>

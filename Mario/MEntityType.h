@@ -37,11 +37,14 @@ public:
 
 	static const ObjectType SolidBlock;
 	static const ObjectType GhostBlock;
+	static const ObjectType VoidBlock;
 	static const ObjectType Pipe;
 
 	static const ObjectType RedMushroom;
 	static const ObjectType GreenMushroom;
 	static const ObjectType RaccoonLeaf;
+	static const ObjectType QuestionCoin;
+	static const ObjectType PSwitch;
 
 	static const ObjectType Coin;
 	static const ObjectType Brick;
