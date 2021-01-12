@@ -62,7 +62,8 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 					dis.x = dis.x * result->SAABBResult.TimeToCollide;
 				}
 				SweptCollisionResult aabbResult = SweptAABB(sp->GetHitBox(), dis, coll->Object->GetHitBox());
-				coll->SAABBResult.Status = aabbResult.Status;
+				if (aabbResult.Status != CollisionStatus::COLLIDE)
+					coll->SAABBResult.Status = aabbResult.Status;
 			}
 			if (coll->SAABBResult.Status == CollisionStatus::COLLIDE) {
 				results.push_back(coll);
