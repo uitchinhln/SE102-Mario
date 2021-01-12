@@ -6,6 +6,19 @@
 #include "PlayScene.h"
 #include "Mario.h"
 
+void MarioGame::LoadDefaultFont()
+{
+	DefaultFont = new Font();
+	vector<FontSprite> fontSet;
+	std::string prefix = "spr-font-";
+	for (char c = '0'; c <= '9'; ++c)
+		fontSet.push_back(FontSprite{ c, prefix + c });
+	for (char c = 'A'; c <= 'Z'; ++c)
+		fontSet.push_back(FontSprite{ c, prefix + c });
+	fontSet.push_back(FontSprite{ '!', "spr-font-exclamation-point" });
+	DefaultFont->Import(fontSet);
+}
+
 MarioGame::MarioGame() : CGame(new CGameProperties())
 {
 	this->LoadResources();
@@ -56,17 +69,7 @@ void MarioGame::LoadResources()
 		string startId = scenes->Attribute("start");
 		SceneManager::GetInstance()->ActiveScene(startId);
 
-
-
-		DefaultFont = new Font();
-		vector<FontSprite> fontSet;
-		std::string prefix = "spr-font-";
-		for (char c = '0'; c <= '9'; ++c)
-			fontSet.push_back(FontSprite{ c, prefix + c });
-		for (char c = 'A'; c <= 'Z'; ++c)
-			fontSet.push_back(FontSprite{ c, prefix + c });
-		fontSet.push_back(FontSprite{ '!', "spr-font-exclamation-point" });
-		DefaultFont->Import(fontSet);
+		this->LoadDefaultFont();
 	}
 }
 

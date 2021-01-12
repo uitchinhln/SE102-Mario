@@ -65,10 +65,6 @@ void PlayScene::Update()
 	RectF cam = camera->GetBoundingBox();
 
 	for (shared_ptr<GameObject> obj : objects) {
-		Vec2 Position = obj->GetPosition();
-		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
-			continue;
-		}
 		obj->Update();
 	}
 
@@ -80,67 +76,36 @@ void PlayScene::Update()
 
 	objs.push_back(this->mario);
 	for (shared_ptr<GameObject> obj : objects) {
-		Vec2 Position = obj->GetPosition();
-		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
-			continue;
-		}
 		obj->CollisionUpdate(&objs);
 	}
 
 	mario->CollisionDoubleFilter();
 	for (shared_ptr<GameObject> obj : objects) {
-		Vec2 Position = obj->GetPosition();
-		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
-			continue;
-		}
 		obj->CollisionDoubleFilter();
 	}
 
 	mario->PositionUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
-		Vec2 Position = obj->GetPosition();
-		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
-			continue;
-		}
 		obj->PositionUpdate();
 	}
 
 	mario->RestoreCollision();
 	for (shared_ptr<GameObject> obj : objects) {
-		Vec2 Position = obj->GetPosition();
-		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
-			continue;
-		}
 		obj->RestoreCollision();
 	}
 
-	//auto start = std::chrono::high_resolution_clock::now();
 	mario->PositionLateUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
-		Vec2 Position = obj->GetPosition();
-		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
-			continue;
-		}
 		obj->PositionLateUpdate();
 	}
-	//auto finish = std::chrono::high_resolution_clock::now();
-	//DebugOut(L"%d\n", std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 
 	mario->StatusUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
-		Vec2 Position = obj->GetPosition();
-		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
-			continue;
-		}
 		obj->StatusUpdate();
 	}
 
 	mario->FinalUpdate();
 	for (shared_ptr<GameObject> obj : objects) {
-		Vec2 Position = obj->GetPosition();
-		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
-			continue;
-		}
 		obj->FinalUpdate();
 	}
 

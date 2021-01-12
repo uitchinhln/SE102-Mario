@@ -3,6 +3,9 @@
 
 class MarioGame : public CGame
 {
+protected:
+	virtual void LoadDefaultFont();
+
 public:
 	MarioGame();
 

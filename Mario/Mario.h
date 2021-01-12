@@ -27,6 +27,7 @@ class Mario :
 private:
 
 protected:
+#pragma region Physic Data
 	bool controllable = true;
 
 	bool onGround = true;
@@ -52,6 +53,15 @@ protected:
 	virtual void HookEvent();
 
 	virtual void UnHookEvent();
+#pragma endregion
+
+
+#pragma region Account Data
+	int lives = 4;
+
+	
+#pragma endregion
+
 public:
 	Mario();
 
