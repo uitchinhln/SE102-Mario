@@ -9,15 +9,13 @@ class PlayScene :
     public CScene
 {
 public:
-	void LoadFromXml(TiXmlElement* data);
-
 	void Load() override;
 
 	void Unload() override;
 
-	void Update();
+	void Update() override;
 
-	void Render();
+	void Render() override;
 
 	virtual void OnKeyDown(int key) override;
 
@@ -25,6 +23,7 @@ public:
 
 	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
 
+	~PlayScene();
 protected:
 	vector<shared_ptr<GameObject>> mapObjects;
 

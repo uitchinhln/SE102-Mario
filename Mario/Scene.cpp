@@ -81,6 +81,20 @@ shared_ptr<CGameMap> CScene::GetGameMap()
 	return gameMap;
 }
 
+void CScene::SetSceneContentPath(string path)
+{
+	TiXmlDocument doc(path.c_str());
+
+	if (!doc.LoadFile()) {
+		DebugOut(L"Get scene data failed. File: %s\n", ToLPCWSTR(path));
+		return;
+	}
+	DebugOut(L"Get scene data success. File: %s\n", ToLPCWSTR(path));
+	doc.Clear();
+
+	this->dataPath = path;
+}
+
 void CScene::RemoveDespawnedObjects()
 {
 	objects.erase(remove_if(objects.begin(), objects.end(), [](const shared_ptr<GameObject>& obj) {

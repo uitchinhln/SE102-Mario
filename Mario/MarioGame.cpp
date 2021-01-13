@@ -56,11 +56,11 @@ void MarioGame::LoadResources()
 		for (TiXmlElement* node = scenes->FirstChildElement("Scene"); node != NULL; node = node->NextSiblingElement("Scene")) {
 			string id = node->Attribute("id");
 			string type = node->Attribute("type");
+			string path = node->Attribute("path");
 
 			if (type == "PlayScene") {
 				shared_ptr<PlayScene> scene = make_shared<PlayScene>();
-				scene->Load();
-				scene->LoadFromXml(node);
+				scene->SetSceneContentPath(path);
 
 				SceneManager::GetInstance()->AddScene(id, scene);
 			}
@@ -70,6 +70,7 @@ void MarioGame::LoadResources()
 		SceneManager::GetInstance()->ActiveScene(startId);
 
 		this->LoadDefaultFont();
+		doc.Clear();
 	}
 }
 

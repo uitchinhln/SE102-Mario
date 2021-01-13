@@ -28,8 +28,8 @@ TextureManager::TextureManager() {
 
 TextureManager::~TextureManager()
 {
-	if (__instance) {
-		delete __instance;
+	for (const auto& [key, value] : textures) {
+		value->Release();
 	}
 	__instance = nullptr;
 }

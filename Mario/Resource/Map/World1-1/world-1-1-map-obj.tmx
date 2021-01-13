@@ -612,14 +612,14 @@
   </object>
   <object id="329" type="BeginPortal" x="6928" y="1375" width="65" height="115">
    <properties>
-    <property name="CameraBoundary" value="0, 672, 8448, 1296"/>
+    <property name="CameraBoundary" type="int" value="0"/>
     <property name="Destination" value="6935 1245"/>
     <property name="Direction" type="int" value="2"/>
    </properties>
   </object>
   <object id="330" type="BeginPortal" x="6732" y="479" width="72" height="96">
    <properties>
-    <property name="CameraBoundary" value="5856, 1392, 7392, 1968"/>
+    <property name="CameraBoundary" type="int" value="1"/>
     <property name="Destination" value="6258, 1485"/>
     <property name="Direction" type="int" value="1"/>
    </properties>

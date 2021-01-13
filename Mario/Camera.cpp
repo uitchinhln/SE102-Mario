@@ -55,4 +55,5 @@ void Camera::LockPosition(Vec2 pos)
 
 Camera::~Camera()
 {
+	DebugOut(L"Camera destroyed!!!");
 }

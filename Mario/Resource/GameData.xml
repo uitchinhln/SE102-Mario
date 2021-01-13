@@ -36,15 +36,25 @@
         </Animations>
     </Resources>
     <GameContent>       
-        <Scenes start="demo">
-            <Scene id="demo" type="PlayScene">
-                <TmxMap path="Resource/Map/World1-1/world-1-1-map-obj.tmx"/>
-                <Camera start="0">
-                    <Boundary id="0" left="0" top="672" right="8448" bottom="1296"/>
-                    <Boundary id="2" left="0" top="0" right="8448" bottom="1296"/>
-                    <Boundary id="1" left="5856" top="1392" right="7392" bottom="1968"/>
-                </Camera> 
-            </Scene>
+        <Scenes start="demo0">
+            <Scene id="demo0" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo01" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo02" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo03" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo04" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo05" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo06" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo07" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo0a" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo0xxas" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo0a" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo0asx" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo0afvd" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo0sdfv" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo0sfdv" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demo0asdc" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demasdcaso0" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+            <Scene id="demascaso0" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
         </Scenes>
     </GameContent>
 </Game>

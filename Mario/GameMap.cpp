@@ -70,10 +70,9 @@ void CGameMap::Render()
 	//DebugOut(L"Render: \t%d\n", std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 }
 
-shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
+shared_ptr<CGameMap> CGameMap::FromTMX(string filePath)
 {
-	string fullPath = filePath + "/" + fileName;
-	TiXmlDocument doc(fullPath.c_str());
+	TiXmlDocument doc(filePath.c_str());
 
 	if (doc.LoadFile()) {
 		TiXmlElement* root = doc.RootElement();
@@ -97,7 +96,9 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 		MapProperties mapProps = MapProperties(properties);
 
 		//Load tileset
-		gameMap->tileSet = make_shared<CTileSet>(root->FirstChildElement("tileset"), filePath);
+		char mapDir[_MAX_DIR];
+		_splitpath(filePath.c_str(), NULL, mapDir, NULL, NULL);
+		gameMap->tileSet = make_shared<CTileSet>(root->FirstChildElement("tileset"), mapDir);
 
 		//Load layer
 		for (TiXmlElement* node = root->FirstChildElement("layer"); node != nullptr; node = node->NextSiblingElement("layer")) {
@@ -125,13 +126,18 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath, string fileName)
 			}
 		}
 
+		doc.Clear();
+
+		DebugOut(L"Game map loadded!!!\n");
+
 		return gameMap;
 	}
-
 	throw "Load map that bai!!";
 }
 
 CGameMap::~CGameMap()
 {
+	ptr_layers.clear();
 	layers.clear();
+	DebugOut(L"Game map destroyed!!!\n");
 }

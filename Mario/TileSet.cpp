@@ -45,8 +45,5 @@ void CTileSet::Draw(int gid, float x, float y, Transform& transform, D3DCOLOR ov
 
 CTileSet::~CTileSet()
 {
-	if (texture) {
-		delete texture;
-	}
-	texture = NULL;
+	texture->Release();
 }

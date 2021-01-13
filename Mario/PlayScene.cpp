@@ -27,10 +27,20 @@
 #include "Coin.h"
 #include "VoidBlock.h"
 
-void PlayScene::LoadFromXml(TiXmlElement* data)
+void PlayScene::Load()
 {
-	string mapPath = data->FirstChildElement("TmxMap")->Attribute("path");
-	string mapName = data->FirstChildElement("TmxMap")->Attribute("fileName");
+	HookEvent();
+
+	TiXmlDocument doc(this->dataPath.c_str());
+
+	if (!doc.LoadFile()) {
+		DebugOut(L"Get scene data failed. File: %s\n", ToLPCWSTR(this->dataPath));
+		return;
+	}
+
+	TiXmlElement* root = doc.RootElement();
+
+	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
 
 	this->mario = SceneManager::GetInstance()->GetPlayer<Mario>();
 	this->mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
@@ -41,19 +51,20 @@ void PlayScene::LoadFromXml(TiXmlElement* data)
 
 	this->hud = make_shared<Hud>(hudPos, hudSize);
 
-	this->gameMap = CGameMap::FromTMX(mapPath, mapName);
+	this->gameMap = CGameMap::FromTMX(mapPath);
 	this->gameMap->SetCamera(camera);
-}
 
-void PlayScene::Load()
-{
-	HookEvent();
+	doc.Clear();
 }
 
 void PlayScene::Unload()
 {
-	CScene::Unload();
 	UnhookEvent();
+	mapObjects.clear();
+	objects.clear();
+	camera.reset();
+	hud.reset();
+	gameMap.reset();
 }
 
 void PlayScene::Update()
@@ -117,7 +128,6 @@ void PlayScene::Update()
 
 void PlayScene::Render()
 {
-	//auto start = std::chrono::high_resolution_clock::now();
 	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));	
 	CGame::GetInstance()->GetGraphic().SetViewport(camera);
 
@@ -220,6 +230,11 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	if (strcmp(type, MEntityType::VoidBlock.ToString().c_str()) == 0) {
 		mapObjects.push_back(VoidBlock::CreateVoidBlock(fixedPos, size));
 	}
+}
+
+PlayScene::~PlayScene()
+{
+	Unload();
 }
 
 void PlayScene::HookEvent()

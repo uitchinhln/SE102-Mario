@@ -39,7 +39,7 @@ public:
 
 	virtual void Render();
 
-	static shared_ptr<CGameMap> FromTMX(string filePath, string fileName);
+	static shared_ptr<CGameMap> FromTMX(string filePath);
 	~CGameMap();
 };
 

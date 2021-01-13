@@ -6,6 +6,7 @@ class CScene
 {
 protected:
 	string id;
+	string dataPath = "";
 
 	shared_ptr<Camera> camera;
 	shared_ptr<CGameMap> gameMap;
@@ -29,6 +30,8 @@ public:
 
 	virtual shared_ptr<Camera> GetCamera();
 	virtual shared_ptr<CGameMap> GetGameMap();
+
+	virtual void SetSceneContentPath(string path);
 
 protected:
 	virtual void RemoveDespawnedObjects();

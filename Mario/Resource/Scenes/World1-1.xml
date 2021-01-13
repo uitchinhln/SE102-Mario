@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SceneContent>
+	<TmxMap path="Resource/Map/World1-1/world-1-1-map-obj.tmx"/>
+    <Camera start="0">
+        <Boundary id="0" left="0" top="672" right="8448" bottom="1296"/>
+        <Boundary id="2" left="0" top="0" right="8448" bottom="1296"/>
+        <Boundary id="1" left="5856" top="1392" right="7392" bottom="1968"/>
+    </Camera> 
+</SceneContent>
