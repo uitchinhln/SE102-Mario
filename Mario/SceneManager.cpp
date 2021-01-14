@@ -13,7 +13,10 @@ bool SceneManager::ActiveScene(string id)
 	if (scenes.find(id) == scenes.end()) return false;
 
 	activeSceneID = id;
+	auto start = std::chrono::high_resolution_clock::now();
 	GetActiveScene()->Load();
+	auto finish = std::chrono::high_resolution_clock::now();
+	DebugOut(L"Loop: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 	return true;
 }
 

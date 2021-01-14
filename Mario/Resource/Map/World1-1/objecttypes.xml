@@ -57,7 +57,11 @@
   <property name="height" type="float" default="12"/>
   <property name="width" type="float" default="12"/>
  </objecttype>
- <objecttype name="Pipe" color="#a0a0a4"/>
+ <objecttype name="Pipe" color="#a0a0a4">
+  <property name="Direction" type="int" default="1"/>
+  <property name="Length" type="int" default="3"/>
+  <property name="Type" type="int" default="1"/>
+ </objecttype>
  <objecttype name="Piranha" color="#a0a0a4">
   <property name="height" type="float" default="69"/>
   <property name="width" type="float" default="48"/>

@@ -140,13 +140,8 @@ void PlayScene::Render()
 		return a->GetRenderOrder() < b->GetRenderOrder();
 	});
 
-	RectF cam = camera->GetBoundingBox();
 	for each (shared_ptr<GameObject> obj in renderObjects)
 	{
-		Vec2 Position = obj->GetPosition();
-		if (Position.x < cam.left - 200 || Position.y < cam.top - 200 || Position.x > cam.right + 200 || Position.y > cam.bottom + 200) {
-			continue;
-		}
 		if (obj->Visible) obj->Render();
 	}
 
