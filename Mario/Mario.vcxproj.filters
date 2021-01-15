@@ -172,6 +172,12 @@
     <Filter Include="Framework\RapidJson">
       <UniqueIdentifier>{6ec863a4-254a-46af-925c-5fd95b4554e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Framework\World\Map\Partitioning">
+      <UniqueIdentifier>{fd4e6ef6-1d73-4d44-ad4e-7220f077189a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Framework\World\Map\Partitioning\Grid">
+      <UniqueIdentifier>{8041ada7-5e04-4b48-9599-d73dc77bec76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -434,6 +440,9 @@
     </ClCompile>
     <ClCompile Include="Card.cpp">
       <Filter>MarioGame\Entity\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
+      <Filter>Framework\World\Map\Partitioning\Grid</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -796,6 +805,9 @@
     </ClInclude>
     <ClInclude Include="rapidjson\writer.h">
       <Filter>Framework\RapidJson</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
+      <Filter>Framework\World\Map\Partitioning\Grid</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

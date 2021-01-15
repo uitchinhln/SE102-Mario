@@ -18,6 +18,7 @@ public:
 	virtual void Clear();
 	virtual void DropRemovedCollision();
 	virtual bool AABB(RectF movingBounding, RectF staticBounding);
+	static bool CommonAABB(RectF movingBounding, RectF staticBounding);
 	virtual bool BroadPhase(RectF movingBounding, Vec2 distance, RectF staticBounding);
 	virtual SweptCollisionResult SweptAABB(RectF movingBounding, Vec2 distance, RectF staticBounding, bool debug = false);
 	virtual bool Has(DWORD id);

@@ -3,6 +3,7 @@
 #include "Mario.h"
 #include "MapProperties.h"
 #include "Hud.h"
+#include "Grid.h"
 
 [event_receiver(native)]
 class PlayScene :
@@ -17,15 +18,27 @@ public:
 
 	void Render() override;
 
+	virtual void SpawnEntity(shared_ptr<GameObject> entity) override;
+
+	virtual void SpawnEntity(shared_ptr<GameObject> entity, MapProperties& props) override;
+
+	virtual vector<shared_ptr<GameObject>> GetMovingObjects() override;
+
 	virtual void OnKeyDown(int key) override;
 
 	virtual void OnKeyUp(int key) override;
 
 	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
 
+	virtual void MapReadEvent(MapProperties& props);
+
 	~PlayScene();
 protected:
-	vector<shared_ptr<GameObject>> mapObjects;
+	vector<shared_ptr<GameObject>> staticObjects;
+	vector<shared_ptr<GameObject>> movingObjects;
+
+	Grid* movingObjectGrid;
+	Grid* staticObjectGrid;
 
 	shared_ptr<Hud> hud;
 

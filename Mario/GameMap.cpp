@@ -94,6 +94,7 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath)
 		//Load custom properties
 		TiXmlElement* properties = root->FirstChildElement("properties");
 		MapProperties mapProps = MapProperties(properties);
+		__raise (*Events::GetInstance()).MapReadEvent(mapProps);
 
 		//Load tileset
 		char mapDir[_MAX_DIR];

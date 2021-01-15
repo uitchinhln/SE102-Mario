@@ -59,5 +59,7 @@ public:
 	static bool IsEnemy(ObjectType);
 
 	static bool IsPowerUpItem(ObjectType);
+
+	static bool IsMapObject(ObjectType);
 };
 

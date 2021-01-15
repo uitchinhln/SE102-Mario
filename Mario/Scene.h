@@ -2,6 +2,7 @@
 #include "Camera.h"
 #include "GameMap.h"
 #include "GameObject.h"
+#include "MapProperties.h"
 class CScene
 {
 protected:
@@ -11,7 +12,7 @@ protected:
 	shared_ptr<Camera> camera;
 	shared_ptr<CGameMap> gameMap;
 
-	vector<shared_ptr<GameObject>> objects;
+	unordered_map<DWORD, shared_ptr<GameObject>> objects;
 
 public:
 	virtual void Load() = 0;
@@ -21,9 +22,15 @@ public:
 
 	virtual void SpawnEntity(shared_ptr<GameObject> entity);
 
+	virtual void SpawnEntity(shared_ptr<GameObject> entity, MapProperties& props);
+
 	virtual void DespawnEntity(shared_ptr<GameObject> entity);
 
-	virtual vector<shared_ptr<GameObject>> GetObjects();
+	virtual unordered_map<DWORD, shared_ptr<GameObject>> GetObjects();
+
+	virtual vector<shared_ptr<GameObject>> GetStaticObjects();
+
+	virtual vector<shared_ptr<GameObject>> GetMovingObjects();
 
 	virtual void OnKeyDown(int key);
 	virtual void OnKeyUp(int key);

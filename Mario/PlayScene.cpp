@@ -27,6 +27,10 @@
 #include "Coin.h"
 #include "VoidBlock.h"
 
+#include "rapidjson/document.h"
+
+using namespace rapidjson;
+
 void PlayScene::Load()
 {
 	HookEvent();
@@ -60,7 +64,12 @@ void PlayScene::Load()
 void PlayScene::Unload()
 {
 	UnhookEvent();
-	mapObjects.clear();
+	staticObjects.clear();
+	movingObjects.clear();
+	if (staticObjectGrid) 
+		staticObjectGrid->ClearAll();
+	if (movingObjectGrid)
+		movingObjectGrid->ClearAll();
 	objects.clear();
 	camera.reset();
 	hud.reset();
@@ -69,54 +78,63 @@ void PlayScene::Unload()
 
 void PlayScene::Update()
 {
+	staticObjects.clear();
+	movingObjects.clear();
+
+	auto start = std::chrono::high_resolution_clock::now();
+	staticObjectGrid->GetByCamera(this->camera, this->objects, staticObjects);
+	movingObjectGrid->GetByCamera(this->camera, this->objects, movingObjects);
+	auto finish = std::chrono::high_resolution_clock::now();
+	DebugOut(L"Loop: static: %d\tmoving: %d\t%d\n", staticObjects.size(), movingObjects.size(), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
+
 	gameMap->Update();
 
 	mario->Update();
 
-	RectF cam = camera->GetBoundingBox();
-
-	for (shared_ptr<GameObject> obj : objects) {
+	for (shared_ptr<GameObject> obj : movingObjects) {
 		obj->Update();
 	}
 
 	vector<shared_ptr<GameObject>> objs;
 	objs.clear();
-	objs.insert(objs.end(), objects.begin(), objects.end());
-	objs.insert(objs.end(), mapObjects.begin(), mapObjects.end());
+	objs.insert(objs.end(), movingObjects.begin(), movingObjects.end());
+	objs.insert(objs.end(), staticObjects.begin(), staticObjects.end());
 	mario->CollisionUpdate(&objs);	
 
+#pragma region CollisionUpdate
 	objs.push_back(this->mario);
-	for (shared_ptr<GameObject> obj : objects) {
+	for (shared_ptr<GameObject> obj : movingObjects) {
 		obj->CollisionUpdate(&objs);
 	}
 
 	mario->CollisionDoubleFilter();
-	for (shared_ptr<GameObject> obj : objects) {
+	for (shared_ptr<GameObject> obj : movingObjects) {
 		obj->CollisionDoubleFilter();
 	}
 
 	mario->PositionUpdate();
-	for (shared_ptr<GameObject> obj : objects) {
+	for (shared_ptr<GameObject> obj : movingObjects) {
 		obj->PositionUpdate();
 	}
 
 	mario->RestoreCollision();
-	for (shared_ptr<GameObject> obj : objects) {
+	for (shared_ptr<GameObject> obj : movingObjects) {
 		obj->RestoreCollision();
 	}
 
 	mario->PositionLateUpdate();
-	for (shared_ptr<GameObject> obj : objects) {
+	for (shared_ptr<GameObject> obj : movingObjects) {
 		obj->PositionLateUpdate();
 	}
+#pragma endregion
 
 	mario->StatusUpdate();
-	for (shared_ptr<GameObject> obj : objects) {
+	for (shared_ptr<GameObject> obj : movingObjects) {
 		obj->StatusUpdate();
 	}
 
 	mario->FinalUpdate();
-	for (shared_ptr<GameObject> obj : objects) {
+	for (shared_ptr<GameObject> obj : movingObjects) {
 		obj->FinalUpdate();
 	}
 
@@ -133,7 +151,7 @@ void PlayScene::Render()
 
 	gameMap->Render();
 	vector<shared_ptr<GameObject>> renderObjects;
-	renderObjects.insert(renderObjects.end(), objects.begin(), objects.end());
+	renderObjects.insert(renderObjects.end(), movingObjects.begin(), movingObjects.end());
 	renderObjects.push_back(mario);
 
 	sort(renderObjects.begin(), renderObjects.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
@@ -142,12 +160,40 @@ void PlayScene::Render()
 
 	for each (shared_ptr<GameObject> obj in renderObjects)
 	{
-		if (obj->Visible) obj->Render();
+		if (obj->Visible && obj->IsActive()) obj->Render();
 	}
 
 	CGame::GetInstance()->GetGraphic().SetViewport(hud);
 
 	hud->Render();
+}
+
+void PlayScene::SpawnEntity(shared_ptr<GameObject> entity)
+{
+	CScene::SpawnEntity(entity);
+}
+
+void PlayScene::SpawnEntity(shared_ptr<GameObject> entity, MapProperties& props)
+{
+	CScene::SpawnEntity(entity, props);
+	if (props.HasProperty("Grid")) {
+		Grid* grid = MEntityType::IsMapObject(entity->GetObjectType()) ? staticObjectGrid : movingObjectGrid;
+		Document document;
+		document.Parse(props.GetText("Grid").c_str());
+		for (auto& v : document.GetArray()) {
+			auto cr = v.GetObjectW();
+			int x = cr["x"].GetInt();
+			int y = cr["y"].GetInt();
+
+			grid->Add(entity->GetID(), x, y);
+		}
+		document.Clear();
+	}
+}
+
+vector<shared_ptr<GameObject>> PlayScene::GetMovingObjects()
+{
+	return movingObjects;
 }
 
 void PlayScene::OnKeyDown(int key)
@@ -166,65 +212,73 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 {
 	//GameObjects
 	if (strcmp(type, MEntityType::Goomba.ToString().c_str()) == 0) {
-		SpawnEntity(Goomba::CreateGoomba(fixedPos));
+		SpawnEntity(Goomba::CreateGoomba(fixedPos), props);
 	}
 	if (strcmp(type, MEntityType::RedGoomba.ToString().c_str()) == 0) {
-		SpawnEntity(RedGoomba::CreateRedGoomba(fixedPos));
+		SpawnEntity(RedGoomba::CreateRedGoomba(fixedPos), props);
 	}
 	if (strcmp(type, MEntityType::Koopas.ToString().c_str()) == 0) {
-		SpawnEntity(Koopas::CreateKoopas(fixedPos));
+		SpawnEntity(Koopas::CreateKoopas(fixedPos), props);
 	}
 	if (strcmp(type, MEntityType::KoopasJumping.ToString().c_str()) == 0) {
 		shared_ptr<Koopas> kp = Koopas::CreateKoopas(fixedPos);
 		kp->SetPower(make_shared<JumpingKoopas>(kp));
-		SpawnEntity(kp);
+		SpawnEntity(kp, props);
 	}
 	if (strcmp(type, MEntityType::RedKoopas.ToString().c_str()) == 0) {
 		shared_ptr<Koopas> kp = Koopas::CreateKoopas(fixedPos);
 		kp->SetPower(make_shared<DefRedKoopas>(kp));
-		SpawnEntity(kp);
+		SpawnEntity(kp, props);
 	}
 	if (strcmp(type, MEntityType::Venus.ToString().c_str()) == 0) {
-		shared_ptr<Venus> vn = Venus::CreateVenus(fixedPos);
-		SpawnEntity(vn);
+		SpawnEntity(Venus::CreateVenus(fixedPos), props);
 	}
 	if (strcmp(type, MEntityType::RedVenus.ToString().c_str()) == 0) {
-		shared_ptr<RedVenus> vn = RedVenus::CreateRedVenus(fixedPos);
-		SpawnEntity(vn);
+		SpawnEntity(RedVenus::CreateRedVenus(fixedPos), props);
 	}
 	if (strcmp(type, MEntityType::Piranha.ToString().c_str()) == 0) {
-		shared_ptr<Piranha> pi = Piranha::CreatePiranha(fixedPos);
-		SpawnEntity(pi);
+		SpawnEntity(Piranha::CreatePiranha(fixedPos), props);
 	}
 	if (strcmp(type, MEntityType::EndmapReward.ToString().c_str()) == 0) {
-		SpawnEntity(EndmapReward::CreateEndmapReward(fixedPos));
+		SpawnEntity(EndmapReward::CreateEndmapReward(fixedPos), props);
 	}
 	if (strcmp(type, MEntityType::QuestionBlock.ToString().c_str()) == 0) {
-		SpawnEntity(QuestionBlock::CreateQuestionBlock(fixedPos, props));
+		SpawnEntity(QuestionBlock::CreateQuestionBlock(fixedPos, props), props);
 	}
 	if (strcmp(type, MEntityType::Spawner.ToString().c_str()) == 0) {
-		SpawnEntity(Spawner::CreateSpawner(fixedPos, props));
+		SpawnEntity(Spawner::CreateSpawner(fixedPos, props), props);
 	}
 	if (strcmp(type, MEntityType::Pipe.ToString().c_str()) == 0) {
-		SpawnEntity(Pipe::CreatePipe(fixedPos, size, props));
+		SpawnEntity(Pipe::CreatePipe(fixedPos, size, props), props);
 	}
 	if (strcmp(type, MEntityType::Coin.ToString().c_str()) == 0) {
-		SpawnEntity(Coin::CreateCoin(fixedPos, CoinState::COIN));
+		SpawnEntity(Coin::CreateCoin(fixedPos, CoinState::COIN), props);
 	}
 	if (strcmp(type, MEntityType::Brick.ToString().c_str()) == 0) {
-		SpawnEntity(Coin::CreateCoin(fixedPos, CoinState::BRICK));
+		SpawnEntity(Coin::CreateCoin(fixedPos, CoinState::BRICK), props);
 	}
 
 	//MapObjects
 	if (strcmp(type, MEntityType::SolidBlock.ToString().c_str()) == 0) {
-		mapObjects.push_back(SolidBlock::CreateSolidBlock(fixedPos, size));
+		SpawnEntity(SolidBlock::CreateSolidBlock(fixedPos, size), props);
 	}
 	if (strcmp(type, MEntityType::GhostBlock.ToString().c_str()) == 0) {
-		mapObjects.push_back(GhostBlock::CreateGhostBlock(fixedPos, size));
+		SpawnEntity(GhostBlock::CreateGhostBlock(fixedPos, size), props);
 	}
 	if (strcmp(type, MEntityType::VoidBlock.ToString().c_str()) == 0) {
-		mapObjects.push_back(VoidBlock::CreateVoidBlock(fixedPos, size));
+		SpawnEntity(VoidBlock::CreateVoidBlock(fixedPos, size), props);
 	}
+}
+
+void PlayScene::MapReadEvent(MapProperties& props)
+{
+	int cellW = props.GetInt("CellWidth");
+	int cellH = props.GetInt("CellHeight");
+	int totalCol = props.GetInt("TotalColumn");
+	int totalRow = props.GetInt("TotalRow");
+
+	movingObjectGrid = new Grid(totalCol, totalRow, cellW, cellH);
+	staticObjectGrid = new Grid(totalCol, totalRow, cellW, cellH);
 }
 
 PlayScene::~PlayScene()
@@ -235,9 +289,11 @@ PlayScene::~PlayScene()
 void PlayScene::HookEvent()
 {
 	__hook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
+	__hook(&Events::MapReadEvent, Events::GetInstance(), &PlayScene::MapReadEvent);
 }
 
 void PlayScene::UnhookEvent()
 {
 	__unhook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
+	__unhook(&Events::MapReadEvent, Events::GetInstance(), &PlayScene::MapReadEvent);
 }

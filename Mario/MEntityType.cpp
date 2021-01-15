@@ -96,3 +96,11 @@ bool MEntityType::IsPowerUpItem(ObjectType obj)
     bool leaf = obj == RaccoonLeaf;
     return mushroom || greenmushroom || leaf;
 }
+
+bool MEntityType::IsMapObject(ObjectType obj)
+{
+    bool isVoid = obj == VoidBlock;
+    bool isGhost = obj == GhostBlock;
+    bool isSolid = obj == SolidBlock;
+    return isVoid || isGhost || isSolid;
+}

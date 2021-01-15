@@ -291,6 +291,11 @@ bool CollisionCalculator::AABB(RectF b1, RectF b2)
 	return !(b1.right <= b2.left || b1.left >= b2.right || b1.top >= b2.bottom || b1.bottom <= b2.top);
 }
 
+bool CollisionCalculator::CommonAABB(RectF b1, RectF b2)
+{
+	return !(b1.right <= b2.left || b1.left >= b2.right || b1.top >= b2.bottom || b1.bottom <= b2.top);
+}
+
 bool CollisionCalculator::BroadPhase(RectF movingBounding, Vec2 distance, RectF staticBounding)
 {
 	float bl = distance.x > 0 ? movingBounding.left : movingBounding.left + distance.x;
