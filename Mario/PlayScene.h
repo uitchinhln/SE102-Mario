@@ -22,7 +22,7 @@ public:
 
 	virtual void SpawnEntity(shared_ptr<GameObject> entity, MapProperties& props) override;
 
-	virtual vector<shared_ptr<GameObject>> GetMovingObjects() override;
+	virtual vector<shared_ptr<GameObject>> GetUpdatingObjects() override;
 
 	virtual void OnKeyDown(int key) override;
 
@@ -34,11 +34,9 @@ public:
 
 	~PlayScene();
 protected:
-	vector<shared_ptr<GameObject>> staticObjects;
-	vector<shared_ptr<GameObject>> movingObjects;
+	vector<shared_ptr<GameObject>> objectList;
 
-	Grid* movingObjectGrid;
-	Grid* staticObjectGrid;
+	Grid* grid;
 
 	shared_ptr<Hud> hud;
 

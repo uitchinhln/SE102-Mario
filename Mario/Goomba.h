@@ -42,6 +42,10 @@ public:
 
 	~Goomba();
 
+#pragma region Events
+	virtual void OnLostCamera() override;
+#pragma endregion
+
 protected:
 	GoombaState state;
 

@@ -14,6 +14,9 @@ RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 	this->MARIO_SUPER_PUSH_FORCE = MARIO_FLYING_UP_FORCE;
 	this->MARIO_SUPER_JUMP_HEIGHT = 80;
 	this->MAX_FLY_SPEED = 0.405f;
+
+	tail = make_shared<MarioTailed>(mario, MARIO_ATTACK_TIME / 2);
+	tail->SetCollisionCalculator(make_shared<CollisionCalculator>(tail));
 }
 
 void RaccoonMario::InitResource(bool force)
@@ -41,10 +44,9 @@ void RaccoonMario::InitResource(bool force)
 
 void RaccoonMario::OnAttackStart()
 {
-	if (shared_ptr<Mario> m = mario.lock()) {
-		shared_ptr<MarioTailed> tail = make_shared<MarioTailed>(m, MARIO_ATTACK_TIME / 2);
-		tail->SetCollisionCalculator(make_shared<CollisionCalculator>(tail));
-		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(tail);
+	if (shared_ptr<Mario> m = mario.lock()) {	
+		tail->Reset();
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntityWithoutGrid(tail);
 	}
 }
 

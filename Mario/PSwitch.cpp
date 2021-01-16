@@ -50,7 +50,7 @@ void PSwitch::StatusUpdate()
                 Position.y += 30;
                 size.y = 15;
 
-                vector<shared_ptr<GameObject>> objects = SceneManager::GetInstance()->GetActiveScene()->GetMovingObjects();
+                vector<shared_ptr<GameObject>> objects = SceneManager::GetInstance()->GetActiveScene()->GetUpdatingObjects();
                 for each (shared_ptr<GameObject> obj in objects)
                 {
                     if (obj->GetObjectType() == MEntityType::Brick) {

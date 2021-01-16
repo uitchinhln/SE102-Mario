@@ -10,6 +10,8 @@ class MarioTailed :
 public:
 	MarioTailed(shared_ptr<Mario> holder, DWORD attackTime);
 
+	virtual void Reset();
+
 	virtual void CollisionDoubleFilter() override;
 
 	virtual bool HasCollideWith(DWORD id) override;

@@ -35,17 +35,18 @@ void CScene::DespawnEntity(shared_ptr<GameObject> entity)
 	entity->SetActive(false);
 }
 
+void CScene::SpawnEntityWithoutGrid(shared_ptr<GameObject> entity)
+{
+	entity->SetActive(true);
+	objectsWithoutGrid.push_back(entity);
+}
+
 unordered_map<DWORD, shared_ptr<GameObject>> CScene::GetObjects()
 {
 	return objects;
 }
 
-vector<shared_ptr<GameObject>> CScene::GetStaticObjects()
-{
-	return vector<shared_ptr<GameObject>>();
-}
-
-vector<shared_ptr<GameObject>> CScene::GetMovingObjects()
+vector<shared_ptr<GameObject>> CScene::GetUpdatingObjects()
 {
 	return vector<shared_ptr<GameObject>>();
 }
@@ -84,13 +85,7 @@ void CScene::SetSceneContentPath(string path)
 
 void CScene::RemoveDespawnedObjects()
 {
-	//objects.erase(remove_if(objects.begin(), objects.end(), [](const shared_ptr<GameObject>& obj) {
-	//	return !obj->IsActive();
-	//	}), objects.end());
-	for (auto it = objects.begin(); it != objects.end(); ) {
-		if (!(*it).second->IsActive()) 
-			it = objects.erase(it);
-		else 
-			++it;
-	}
+	objectsWithoutGrid.erase(remove_if(objectsWithoutGrid.begin(), objectsWithoutGrid.end(), [](const shared_ptr<GameObject>& obj) {
+		return !obj->IsActive();
+		}), objectsWithoutGrid.end());
 }

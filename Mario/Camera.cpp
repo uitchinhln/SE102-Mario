@@ -31,26 +31,40 @@ void Camera::SetTracking(weak_ptr<GameObject> target)
 void Camera::Update()
 {
 	if (shared_ptr<GameObject> obj = target.lock()) {
-		Position.x = obj->GetPosition().x - this->d3dvp.Width / 2;
-		
-		if (obj->GetPosition().y - Position.y < this->d3dvp.Height / 4) {
-			Position.y = obj->GetPosition().y - this->d3dvp.Height / 4;
-		}
-		else if (obj->GetHitBox().bottom - Position.y >= this->d3dvp.Height - 48) {
-			Position.y = obj->GetHitBox().bottom - this->d3dvp.Height + 48;
-		}
-		
-		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound() - GetCamSize();
+		RectF targetBound = obj->GetHitBox();
 
-		if (Position.x < 0) Position.x = 0;
-		if (Position.y < 0) Position.y = 0;
-		if (Position.x > mapBound.x) Position.x = mapBound.x;
-		if (Position.y > mapBound.y) Position.y = mapBound.y;
+		Position.x = targetBound.left - this->d3dvp.Width / 2;
+		Position.y = targetBound.top - this->d3dvp.Height / 2;
+		
+		Vec2 camSize = GetCamSize();
+		RectF camBound = GetBoundingBox();
+		RectF camLimit = bounds.at(activeBound);
+
+		if (camBound.left < camLimit.left) Position.x = camLimit.left;
+		if (camBound.top < camLimit.top) Position.y = camLimit.top;
+		if (camBound.right > camLimit.right) Position.x = camLimit.right - camSize.x;
+		if (camBound.bottom > camLimit.bottom) Position.y = camLimit.bottom - camSize.y;
 	}
 }
 
-void Camera::LockPosition(Vec2 pos)
+void Camera::AddBound(int id, float left, float top, float right, float bottom)
 {
+	this->bounds[id] = RectF(left, top, right, bottom);
+	if (bounds.find(activeBound) == bounds.end()) {
+		activeBound = id;
+	}
+}
+
+RectF Camera::GetActiveBound()
+{
+	return bounds.at(activeBound);
+}
+
+void Camera::SetActiveBound(int id)
+{
+	if (bounds.find(id) == bounds.end()) {
+		activeBound = id;
+	}
 }
 
 Camera::~Camera()

@@ -15,15 +15,6 @@ RectF SolidBlock::GetHitBox()
 	return hitbox;
 }
 
-void SolidBlock::CollisionDoubleFilter()
-{
-}
-
-bool SolidBlock::HasCollideWith(DWORD id)
-{
-	return true;
-}
-
 bool SolidBlock::IsGetThrough(GameObject& object, Direction direction)
 {
 	return false;
@@ -32,10 +23,6 @@ bool SolidBlock::IsGetThrough(GameObject& object, Direction direction)
 float SolidBlock::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 0.0f;
-}
-
-void SolidBlock::Render()
-{
 }
 
 shared_ptr<SolidBlock> SolidBlock::CreateSolidBlock(Vec2 fixedPos, Vec2 size)

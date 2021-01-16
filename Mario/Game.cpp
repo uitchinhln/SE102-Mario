@@ -54,17 +54,17 @@ int CGame::Run()
 
 		if (accumulatedTime >= tickPerFrame)
 		{
+			//auto start = std::chrono::high_resolution_clock::now();
 			gameTime.ElapsedGameTime = accumulatedTime;
 			gameTime.TotalGameTime += accumulatedTime;
 			gameTime.SetPreviousTicks(now);
 
 			keyboard->ProcessKeyboard();
-			//auto start = std::chrono::high_resolution_clock::now();
 			Update();
-			//auto finish = std::chrono::high_resolution_clock::now();
-			//DebugOut(L"Loop: %d\t%d\n", accumulatedTime, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 			Render();
 			Sleep(0);
+			//auto finish = std::chrono::high_resolution_clock::now();
+			//DebugOut(L"Loop: %d\t%d\n", accumulatedTime, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 		}
 		else {
 			Sleep(tickPerFrame - accumulatedTime);

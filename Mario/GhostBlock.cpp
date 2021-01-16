@@ -11,15 +11,6 @@ RectF GhostBlock::GetHitBox()
 	return hitbox;
 }
 
-void GhostBlock::CollisionDoubleFilter()
-{
-}
-
-bool GhostBlock::HasCollideWith(DWORD id)
-{
-	return true;
-}
-
 bool GhostBlock::IsGetThrough(GameObject& object, Direction direction)
 {
 	return direction != Direction::Top;
@@ -28,10 +19,6 @@ bool GhostBlock::IsGetThrough(GameObject& object, Direction direction)
 float GhostBlock::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 0.0f;
-}
-
-void GhostBlock::Render()
-{
 }
 
 shared_ptr<GhostBlock> GhostBlock::CreateGhostBlock(Vec2 fixedPos, Vec2 size)

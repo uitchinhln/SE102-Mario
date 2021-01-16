@@ -10,6 +10,8 @@ class Camera :
 {
 protected:
 	weak_ptr<GameObject> target;
+	unordered_map<int, RectF> bounds;
+	int activeBound = 0;
 public:
 	Camera();
 	Camera(Vec2 pos, Vec2 size);
@@ -24,7 +26,11 @@ public:
 
 	virtual void Update();
 
-	virtual void LockPosition(Vec2 pos);
+	virtual void AddBound(int id, float left, float top, float right, float bottom);
+
+	virtual RectF GetActiveBound();
+
+	virtual void SetActiveBound(int id);
 
 	~Camera();
 };

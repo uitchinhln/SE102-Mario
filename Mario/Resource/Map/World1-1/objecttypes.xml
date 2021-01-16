@@ -125,8 +125,8 @@
  </objecttype>
  <objecttype name="SolidBlock" color="#a0a0a4"/>
  <objecttype name="Spawner" color="#a0a0a4">
-  <property name="height" type="float" default="48"/>
-  <property name="width" type="float" default="48"/>
+  <property name="height" type="float" default="1"/>
+  <property name="width" type="float" default="1"/>
  </objecttype>
  <objecttype name="Venus" color="#a0a0a4">
   <property name="height" type="float" default="96"/>

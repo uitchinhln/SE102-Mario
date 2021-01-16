@@ -19,6 +19,19 @@ Venus::Venus()
 	this->movementTimer.Start();
 }
 
+void Venus::Reset()
+{
+	this->shootTimer.Restart();
+	this->movementTimer.Restart();
+	canCollision = true;
+
+	state = VenusState::Reveal;
+
+	targetLocking = 1;
+	movementState = 0;
+	verticalDirection = 1;
+}
+
 void Venus::InitData()
 {
 	for (int i = 0; i < VENUS_N_POOLED_BULLETS; i++) {
@@ -172,7 +185,7 @@ void Venus::Update()
 				RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
 
 				if (ballPos.x >= cam.left && ballPos.y >= cam.top && ballPos.x <= cam.right && ballPos.y <= cam.bottom) {
-					SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(fireball);
+					SceneManager::GetInstance()->GetActiveScene()->SpawnEntityWithoutGrid(fireball);
 					break;
 				}
 			}
@@ -245,6 +258,17 @@ void Venus::OnRevealed()
 void Venus::OnHidden()
 {
 
+}
+
+void Venus::OnGetInCamera()
+{
+	for each (shared_ptr<VenusFireball> fireball in fireballs)
+	{
+		if (!fireball->IsActive()) {
+			Reset();
+			break;
+		}
+	}
 }
 
 void Venus::TrackPlayerPosition()

@@ -15,6 +15,7 @@ private:
 protected:
 	bool active = true;
 
+
 	int facing = 1;
 	int renderOrder = 1000;
 
@@ -35,6 +36,8 @@ protected:
 
 public:
 	bool Visible = true;
+
+	bool GetInCamera = false;
 
 public:
 	GameObject();
@@ -104,5 +107,10 @@ public:
 	virtual ObjectType GetObjectType() = 0;
 
 	~GameObject();
+
+	#pragma region Events
+	virtual void OnLostCamera();
+	virtual void OnGetInCamera();
+	#pragma endregion
 };
 

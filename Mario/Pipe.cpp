@@ -19,15 +19,6 @@ RectF Pipe::GetHitBox()
     return hitbox;
 }
 
-void Pipe::CollisionDoubleFilter()
-{
-}
-
-bool Pipe::HasCollideWith(DWORD id)
-{
-    return true;
-}
-
 bool Pipe::IsGetThrough(GameObject& object, Direction direction)
 {
     return false;

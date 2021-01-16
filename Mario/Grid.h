@@ -13,6 +13,8 @@ public:
 
 	void GetByCamera(shared_ptr<Camera> cam, unordered_map<DWORD, shared_ptr<GameObject>>& objects, vector<shared_ptr<GameObject>>& result);
 
+	RectF GetBoundingBox(shared_ptr<Camera> cam);
+
 	void Clear(int col, int row);
 
 	void ClearAll();

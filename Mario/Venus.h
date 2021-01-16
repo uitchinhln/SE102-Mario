@@ -16,6 +16,8 @@ class Venus :
 public:
 	Venus();
 
+	virtual void Reset();
+
 	virtual void InitData();
 
 	virtual void InitResource() override;
@@ -51,6 +53,8 @@ public:
 	virtual void OnRevealed();
 
 	virtual void OnHidden();
+
+	virtual void OnGetInCamera() override;
 
 protected:
 	void TrackPlayerPosition();

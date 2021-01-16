@@ -58,7 +58,7 @@ void FireMario::OnAttackStart()
 	{
 		if (!bullet->IsActive()) {
 			bullet->Reset();
-			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(bullet);
+			SceneManager::GetInstance()->GetActiveScene()->SpawnEntityWithoutGrid(bullet);
 			return;
 		}
 	}

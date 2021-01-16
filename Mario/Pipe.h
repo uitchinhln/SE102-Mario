@@ -1,10 +1,10 @@
 #pragma once
-#include "GameObject.h"
+#include "MapBlock.h"
 #include "MapProperties.h"
 #include "Sprite.h"
 
 class Pipe :
-    public GameObject
+    public MapBlock
 {
 public:
 	Pipe();
@@ -12,10 +12,6 @@ public:
 	virtual ObjectType GetObjectType() override;
 
 	virtual RectF GetHitBox() override;
-
-	virtual void CollisionDoubleFilter() override;
-
-	virtual bool HasCollideWith(DWORD id) override;
 
 	virtual bool IsGetThrough(GameObject& object, Direction direction) override;
 

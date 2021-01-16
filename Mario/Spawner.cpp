@@ -9,7 +9,19 @@ void Spawner::PositionUpdate()
 {
 }
 
+void Spawner::RestoreCollision()
+{
+}
+
 void Spawner::PositionLateUpdate()
+{
+}
+
+void Spawner::CollisionDoubleFilter()
+{
+}
+
+void Spawner::StatusUpdate()
 {
 }
 
@@ -20,9 +32,15 @@ bool Spawner::HasCollideWith(DWORD id)
 
 void Spawner::FinalUpdate()
 {
+	this->active = true;
 }
 
 void Spawner::Update()
+{
+	this->active = false;
+}
+
+void Spawner::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 }
 

@@ -204,3 +204,11 @@ void GameObject::SetActive(bool value)
 GameObject::~GameObject()
 {
 }
+
+void GameObject::OnLostCamera()
+{
+}
+
+void GameObject::OnGetInCamera()
+{
+}

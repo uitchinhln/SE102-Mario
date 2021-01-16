@@ -1,6 +1,8 @@
 #pragma once
 #include "AttackablePower.h"
 
+class MarioTailed;
+
 class RaccoonMario :
 	public AttackablePower
 {
@@ -25,6 +27,8 @@ public:
 
 protected:
 	Stopwatch flyTimer;
+
+	shared_ptr<MarioTailed> tail;
 
 	float MARIO_FLYING_UP_FORCE = 0.252f;
 	float MARIO_FLOATING_SPEED = 0.021f;

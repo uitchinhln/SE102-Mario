@@ -13,6 +13,7 @@ protected:
 	shared_ptr<CGameMap> gameMap;
 
 	unordered_map<DWORD, shared_ptr<GameObject>> objects;
+	vector<shared_ptr<GameObject>> objectsWithoutGrid;
 
 public:
 	virtual void Load() = 0;
@@ -24,13 +25,13 @@ public:
 
 	virtual void SpawnEntity(shared_ptr<GameObject> entity, MapProperties& props);
 
+	virtual void SpawnEntityWithoutGrid(shared_ptr<GameObject> entity);
+
 	virtual void DespawnEntity(shared_ptr<GameObject> entity);
 
 	virtual unordered_map<DWORD, shared_ptr<GameObject>> GetObjects();
 
-	virtual vector<shared_ptr<GameObject>> GetStaticObjects();
-
-	virtual vector<shared_ptr<GameObject>> GetMovingObjects();
+	virtual vector<shared_ptr<GameObject>> GetUpdatingObjects();
 
 	virtual void OnKeyDown(int key);
 	virtual void OnKeyUp(int key);

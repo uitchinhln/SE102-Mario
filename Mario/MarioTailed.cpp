@@ -9,6 +9,13 @@ MarioTailed::MarioTailed(shared_ptr<Mario> holder, DWORD attackTime)
 	MovingUpdate();
 }
 
+void MarioTailed::Reset()
+{
+	attackTimer.Reset();
+	attackState = -1;
+	MovingUpdate();
+}
+
 void MarioTailed::CollisionDoubleFilter()
 {
 }
@@ -100,5 +107,5 @@ float MarioTailed::GetDamageFor(GameObject& object, Direction direction)
 
 MarioTailed::~MarioTailed()
 {
-	//DebugOut(L"Huy mario tail\n");
+	DebugOut(L"Huy mario tail\n");
 }

@@ -166,6 +166,7 @@
     <ClCompile Include="JumpingKoopas.cpp" />
     <ClCompile Include="JumpingRedGoomba.cpp" />
     <ClCompile Include="Koopas.cpp" />
+    <ClCompile Include="MapBlock.cpp" />
     <ClCompile Include="MapProperties.cpp" />
     <ClCompile Include="MarioFireBall.cpp" />
     <ClCompile Include="MarioTailed.cpp" />
@@ -256,6 +257,7 @@
     <ClInclude Include="JumpingKoopas.h" />
     <ClInclude Include="JumpingRedGoomba.h" />
     <ClInclude Include="Koopas.h" />
+    <ClInclude Include="MapBlock.h" />
     <ClInclude Include="MapProperties.h" />
     <ClInclude Include="MarioFireBall.h" />
     <ClInclude Include="MarioTailed.h" />

@@ -43,6 +43,7 @@ void PlayScene::Load()
 	}
 
 	TiXmlElement* root = doc.RootElement();
+	TiXmlElement* cameraConfig = root->FirstChildElement("Camera");
 
 	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
 
@@ -52,6 +53,21 @@ void PlayScene::Load()
 
 	this->camera = make_shared<Camera>(camPos, camSize);
 	this->camera->SetTracking(mario);
+
+	float left = 0, top = 0, bottom = 0, right = 0;
+	int startId = 0, id = 0; 
+
+	cameraConfig->QueryIntAttribute("start", &startId);
+	for (TiXmlElement* node = cameraConfig->FirstChildElement("Boundary"); node != nullptr; node = node->NextSiblingElement("Boundary"))
+	{
+		node->QueryIntAttribute("id", &id);
+		node->QueryFloatAttribute("left", &left);
+		node->QueryFloatAttribute("top", &top);
+		node->QueryFloatAttribute("right", &right);
+		node->QueryFloatAttribute("bottom", &bottom);
+		camera->AddBound(id, left, top, right, bottom);
+	}
+	camera->SetActiveBound(startId);
 
 	this->hud = make_shared<Hud>(hudPos, hudSize);
 
@@ -64,13 +80,11 @@ void PlayScene::Load()
 void PlayScene::Unload()
 {
 	UnhookEvent();
-	staticObjects.clear();
-	movingObjects.clear();
-	if (staticObjectGrid) 
-		staticObjectGrid->ClearAll();
-	if (movingObjectGrid)
-		movingObjectGrid->ClearAll();
+	objectList.clear();
+	if (grid)
+		grid->ClearAll();
 	objects.clear();
+	objectsWithoutGrid.clear();
 	camera.reset();
 	hud.reset();
 	gameMap.reset();
@@ -78,80 +92,90 @@ void PlayScene::Unload()
 
 void PlayScene::Update()
 {
-	staticObjects.clear();
-	movingObjects.clear();
-
-	auto start = std::chrono::high_resolution_clock::now();
-	staticObjectGrid->GetByCamera(this->camera, this->objects, staticObjects);
-	movingObjectGrid->GetByCamera(this->camera, this->objects, movingObjects);
-	auto finish = std::chrono::high_resolution_clock::now();
-	DebugOut(L"Loop: static: %d\tmoving: %d\t%d\n", staticObjects.size(), movingObjects.size(), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
+	//auto start = std::chrono::high_resolution_clock::now();	
+	RectF camBox = camera->GetBoundingBox();
 
 	gameMap->Update();
 
 	mario->Update();
 
-	for (shared_ptr<GameObject> obj : movingObjects) {
+	for (shared_ptr<GameObject> obj : objectList) {
 		obj->Update();
 	}
 
 	vector<shared_ptr<GameObject>> objs;
 	objs.clear();
-	objs.insert(objs.end(), movingObjects.begin(), movingObjects.end());
-	objs.insert(objs.end(), staticObjects.begin(), staticObjects.end());
+	objs.insert(objs.end(), objectList.begin(), objectList.end());
 	mario->CollisionUpdate(&objs);	
 
-#pragma region CollisionUpdate
+	#pragma region CollisionUpdate
 	objs.push_back(this->mario);
-	for (shared_ptr<GameObject> obj : movingObjects) {
+	for (shared_ptr<GameObject> obj : objectList) {
 		obj->CollisionUpdate(&objs);
 	}
 
 	mario->CollisionDoubleFilter();
-	for (shared_ptr<GameObject> obj : movingObjects) {
+	for (shared_ptr<GameObject> obj : objectList) {
 		obj->CollisionDoubleFilter();
 	}
 
 	mario->PositionUpdate();
-	for (shared_ptr<GameObject> obj : movingObjects) {
+	for (shared_ptr<GameObject> obj : objectList) {
 		obj->PositionUpdate();
 	}
 
 	mario->RestoreCollision();
-	for (shared_ptr<GameObject> obj : movingObjects) {
+	for (shared_ptr<GameObject> obj : objectList) {
 		obj->RestoreCollision();
 	}
 
 	mario->PositionLateUpdate();
-	for (shared_ptr<GameObject> obj : movingObjects) {
+	for (shared_ptr<GameObject> obj : objectList) {
 		obj->PositionLateUpdate();
 	}
-#pragma endregion
+	#pragma endregion
 
 	mario->StatusUpdate();
-	for (shared_ptr<GameObject> obj : movingObjects) {
+	for (shared_ptr<GameObject> obj : objectList) {
 		obj->StatusUpdate();
 	}
 
 	mario->FinalUpdate();
-	for (shared_ptr<GameObject> obj : movingObjects) {
+	for (shared_ptr<GameObject> obj : objectList) {
 		obj->FinalUpdate();
-	}
 
+		RectF objBox = obj->GetHitBox();
+		if (!CollisionCalculator::CommonAABB(camBox, objBox)) {
+			if (obj->GetInCamera) obj->OnLostCamera();
+			obj->GetInCamera = false;
+		}
+		else {
+			if (!obj->GetInCamera) obj->OnGetInCamera();
+			obj->GetInCamera = true;
+		}
+	}
+	
 	RemoveDespawnedObjects();
 
 	camera->Update();
 	hud->Update();
+
+	objectList.clear();
+	grid->GetByCamera(this->camera, this->objects, objectList);
+	objectList.insert(objectList.end(), objectsWithoutGrid.begin(), objectsWithoutGrid.end());
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//DebugOut(L"Update: static: %d\tmoving: %d\t%d\n", objectList.size(), objectList.size(), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 void PlayScene::Render()
 {
+	//auto start = std::chrono::high_resolution_clock::now();
 	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));	
 	CGame::GetInstance()->GetGraphic().SetViewport(camera);
 
 	gameMap->Render();
 	vector<shared_ptr<GameObject>> renderObjects;
-	renderObjects.insert(renderObjects.end(), movingObjects.begin(), movingObjects.end());
+	renderObjects.insert(renderObjects.end(), objectList.begin(), objectList.end());
 	renderObjects.push_back(mario);
 
 	sort(renderObjects.begin(), renderObjects.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
@@ -166,18 +190,20 @@ void PlayScene::Render()
 	CGame::GetInstance()->GetGraphic().SetViewport(hud);
 
 	hud->Render();
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//DebugOut(L"Render: static: %d\tmoving: %d\t%d\n", objectList.size(), objectList.size(), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 void PlayScene::SpawnEntity(shared_ptr<GameObject> entity)
 {
 	CScene::SpawnEntity(entity);
+	grid->Add(entity);
 }
 
 void PlayScene::SpawnEntity(shared_ptr<GameObject> entity, MapProperties& props)
 {
 	CScene::SpawnEntity(entity, props);
 	if (props.HasProperty("Grid")) {
-		Grid* grid = MEntityType::IsMapObject(entity->GetObjectType()) ? staticObjectGrid : movingObjectGrid;
 		Document document;
 		document.Parse(props.GetText("Grid").c_str());
 		for (auto& v : document.GetArray()) {
@@ -191,9 +217,9 @@ void PlayScene::SpawnEntity(shared_ptr<GameObject> entity, MapProperties& props)
 	}
 }
 
-vector<shared_ptr<GameObject>> PlayScene::GetMovingObjects()
+vector<shared_ptr<GameObject>> PlayScene::GetUpdatingObjects()
 {
-	return movingObjects;
+	return objectList;
 }
 
 void PlayScene::OnKeyDown(int key)
@@ -210,6 +236,12 @@ void PlayScene::OnKeyUp(int key)
 
 void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props)
 {
+	//Player Spawn Point
+	if (strcmp(type, "SpawnPoint") == 0) {
+		RectF marioBox = mario->GetHitBox();
+		mario->SetPosition(fixedPos - Vec2(0, marioBox.bottom - marioBox.top));
+	}
+
 	//GameObjects
 	if (strcmp(type, MEntityType::Goomba.ToString().c_str()) == 0) {
 		SpawnEntity(Goomba::CreateGoomba(fixedPos), props);
@@ -277,8 +309,7 @@ void PlayScene::MapReadEvent(MapProperties& props)
 	int totalCol = props.GetInt("TotalColumn");
 	int totalRow = props.GetInt("TotalRow");
 
-	movingObjectGrid = new Grid(totalCol, totalRow, cellW, cellH);
-	staticObjectGrid = new Grid(totalCol, totalRow, cellW, cellH);
+	grid = new Grid(totalCol, totalRow, cellW, cellH);
 }
 
 PlayScene::~PlayScene()
