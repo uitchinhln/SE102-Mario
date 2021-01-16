@@ -82,8 +82,8 @@ let jumpToObject = tiled.registerAction("BuildGrid", function(/* action */) {
 		return;
 	}
 
-	const cellWidth = tiled.prompt("Enter cell width (pixel):", "385");
-	const cellHeight = tiled.prompt("Enter cell height (pixel):", "290");
+	const cellWidth = parseInt(tiled.prompt("Enter cell width (pixel):", "385"));
+	const cellHeight = parseInt(tiled.prompt("Enter cell height (pixel):", "290"));
 
 	const mapWidthInPixel = map.width * map.tileWidth;
 	const mapHeightInPixel = map.height * map.tileHeight;
@@ -100,8 +100,8 @@ let jumpToObject = tiled.registerAction("BuildGrid", function(/* action */) {
 	addGridToObject(map, gridConfig);
 
 	map.setProperties({
-		CellWidth: gridConfig.cellWidth,
-		CellHeight: gridConfig.cellHeight,
+		CellWidth: Math.floor(gridConfig.cellWidth),
+		CellHeight: Math.floor(gridConfig.cellHeight),
 		TotalColumn: gridConfig.totalColumn,
 		TotalRow: gridConfig.totalRow
 	});
