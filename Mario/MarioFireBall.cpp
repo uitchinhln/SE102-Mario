@@ -47,13 +47,17 @@ void MarioFireBall::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	}
 
 	RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
-	if (Position.x < cam.left || Position.y < cam.top || Position.x > cam.right || Position.y > cam.bottom) {
+	if (!collisionCal->AABB(cam, hitbox)) {
 		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 	}
 
 	for each (shared_ptr<CollisionResult> coll in coResult)
 	{
 		if (MEntityType::IsMario(coll->Object->GetObjectType())) continue;
+		if (MEntityType::IsEnemy(coll->Object->GetObjectType())) {
+			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+			continue;
+		}
 		if (!coll->Object->IsGetThrough(*this, coll->SAABBResult.Direction)) {
 			if (!MEntityType::IsTile(coll->Object->GetObjectType()) || coll->SAABBResult.Direction != Direction::Top) {
 				SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());

@@ -39,6 +39,7 @@ void CScene::SpawnEntityWithoutGrid(shared_ptr<GameObject> entity)
 {
 	entity->SetActive(true);
 	objectsWithoutGrid.push_back(entity);
+	objects.insert(make_pair(entity->GetID(), entity));
 }
 
 unordered_map<DWORD, shared_ptr<GameObject>> CScene::GetObjects()

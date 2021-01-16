@@ -37,6 +37,7 @@ public:
 protected:
 	Vec2 size = Vec2(24, 24);
 	RectF hitbox;
+	Vec2 rootPos;
 
 	float FIREBALL_SPEED = 0.18f;
 };

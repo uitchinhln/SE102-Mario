@@ -1,12 +1,19 @@
 #pragma once
 #include "GameObject.h"
 #include "MapProperties.h"
+#include "StopWatch.h"
 
 class Spawner : 
 	public GameObject
 {
 public:
 	Spawner();
+
+	virtual shared_ptr<GameObject> GetEntity();
+
+	virtual void Spawn();
+
+	virtual void OnGetInCamera() override;
 
 	virtual void Update() override;
 
@@ -40,5 +47,17 @@ public:
 
 protected:
 	Vec2 size = Vec2(1, 1);
+	
+	bool autoSpawn = false;
+	
+	vector<shared_ptr<GameObject>> entities;
+
+	string type = "Goomba";
+
+	int respawnLimit = 0;
+	int spawnLimit = 0;
+
+	long spawnDelay = 0;
+	Stopwatch spawnTimer;
 };
 

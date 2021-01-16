@@ -7,7 +7,6 @@
 Coin::Coin()
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
-	this->renderOrder = 32;
 	this->SetFacing(-1);
 
 	this->GetGravity() = 0;

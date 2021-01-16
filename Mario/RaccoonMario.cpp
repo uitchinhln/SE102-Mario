@@ -83,10 +83,17 @@ bool RaccoonMario::MiniJumpDetect(bool forceX)
 				return true;
 			}
 
+			floatEndTime = 0;
 			if (m->GetJumpingState() == JumpingStates::FALLING || m->GetJumpingState() == JumpingStates::FLOATING) {
-				m->SetJumpingState(JumpingStates::FLOATING);
-				m->GetVelocity().y = MARIO_FLOATING_SPEED * dt;
+				floatEndTime = CGame::Time().TotalGameTime + dt;
+				if (forceX) {
+					floatEndTime += 90;
+				}
 			}
+		}
+		if (CGame::Time().TotalGameTime < floatEndTime) {
+			m->SetJumpingState(JumpingStates::FLOATING);
+			m->GetVelocity().y = MARIO_FLOATING_SPEED * dt;
 		}
 	}
 	return false;

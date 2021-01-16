@@ -48,6 +48,7 @@ void VenusFireball::Reset(RectF hitbox, int facing)
 	Velocity = directionalVector * FIREBALL_SPEED;
 
 	this->Distance = Velocity * (float)dt;
+	this->rootPos = Position;
 }
 
 void VenusFireball::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
@@ -73,6 +74,10 @@ void VenusFireball::Update()
 
 	GetVelocity().y += GetGravity() * (float)dt;
 	GetDistance() = GetVelocity() * (float)dt;
+
+	if (renderOrder < 999 && (abs(rootPos.x - Position.x) > 20 || abs(rootPos.y - Position.y) > 20)) {
+		renderOrder = 1000;
+	}
 }
 
 void VenusFireball::FinalUpdate()
@@ -80,7 +85,7 @@ void VenusFireball::FinalUpdate()
 	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
 
 	RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
-	if (Position.x < cam.left - 100 || Position.y < cam.top - 100 || Position.x > cam.right + 100 || Position.y > cam.bottom + 100) {
+	if (Position.x < cam.left || Position.y < cam.top || Position.x > cam.right || Position.y > cam.bottom) {
 		//SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 		this->active = false;
 	}

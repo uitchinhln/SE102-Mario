@@ -28,6 +28,8 @@ public:
 protected:
 	Stopwatch flyTimer;
 
+	long floatEndTime = 0;
+
 	shared_ptr<MarioTailed> tail;
 
 	float MARIO_FLYING_UP_FORCE = 0.252f;
