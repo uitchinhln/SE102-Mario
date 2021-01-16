@@ -15,6 +15,8 @@ class Piranha :
 public:
     Piranha();
 
+	void Reset();
+
 	virtual void InitResource() override;
 
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
@@ -46,6 +48,8 @@ public:
 	virtual void OnRevealed();
 
 	virtual void OnHidden();
+
+	virtual void OnGetInCamera() override;
 
 protected:
 	void TrackPlayerPosition();

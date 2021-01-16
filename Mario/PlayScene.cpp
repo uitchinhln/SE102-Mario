@@ -95,6 +95,10 @@ void PlayScene::Update()
 	//auto start = std::chrono::high_resolution_clock::now();	
 	RectF camBox = camera->GetBoundingBox();
 
+	objectList.clear();
+	grid->GetByCamera(this->camera, this->objects, objectList);
+	objectList.insert(objectList.end(), objectsWithoutGrid.begin(), objectsWithoutGrid.end());
+
 	gameMap->Update();
 
 	mario->Update();
@@ -159,10 +163,6 @@ void PlayScene::Update()
 
 	camera->Update();
 	hud->Update();
-
-	objectList.clear();
-	grid->GetByCamera(this->camera, this->objects, objectList);
-	objectList.insert(objectList.end(), objectsWithoutGrid.begin(), objectsWithoutGrid.end());
 	//auto finish = std::chrono::high_resolution_clock::now();
 	//DebugOut(L"Update: static: %d\tmoving: %d\t%d\n", objectList.size(), objectList.size(), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }

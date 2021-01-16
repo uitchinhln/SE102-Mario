@@ -30,6 +30,7 @@ void Venus::Reset()
 	targetLocking = 1;
 	movementState = 0;
 	verticalDirection = 1;
+	Position = rootPos;
 }
 
 void Venus::InitData()

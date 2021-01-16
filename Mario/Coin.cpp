@@ -7,6 +7,7 @@
 Coin::Coin()
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
+	this->renderOrder = 32;
 	this->SetFacing(-1);
 
 	this->GetGravity() = 0;
@@ -47,6 +48,7 @@ void Coin::StatusUpdate()
 
 			if (state == CoinState::BRICK) {
 				if (MEntityType::IsMario(coll->Object->GetObjectType()) && coll->SAABBResult.Direction == Direction::Top) {
+					if (coll->Object->GetObjectType() == MEntityType::SmallMario) continue;
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 				}
 				if (coll->Object->GetObjectType() == MEntityType::KoopasImposter && ToVector(coll->SAABBResult.Direction).x != 0) {

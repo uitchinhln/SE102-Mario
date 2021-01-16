@@ -14,6 +14,16 @@ Piranha::Piranha()
 	this->movementTimer.Start();
 }
 
+void Piranha::Reset()
+{
+	state = PiranhaState::Reveal;
+
+	movementState = 0;
+	movementTimer.Restart();
+
+	Position = rootPos;
+}
+
 void Piranha::InitResource()
 {
 	if (animations.size() < 1) {
@@ -182,6 +192,11 @@ void Piranha::OnRevealed()
 
 void Piranha::OnHidden()
 {
+}
+
+void Piranha::OnGetInCamera()
+{
+	Reset();
 }
 
 void Piranha::TrackPlayerPosition()

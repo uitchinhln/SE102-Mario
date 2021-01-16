@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="350">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="350">
  <editorsettings>
   <chunksize width="8" height="8"/>
   <export target="world-1-1-map.xml" format="tmx"/>
@@ -583,7 +583,7 @@
    </properties>
    <point/>
   </object>
-  <object id="308" type="Brick" x="5905" y="1104">
+  <object id="308" type="Brick" x="5904" y="1104">
    <properties>
     <property name="Grid" value="[{&quot;x&quot;:22,&quot;y&quot;:3}]"/>
    </properties>
