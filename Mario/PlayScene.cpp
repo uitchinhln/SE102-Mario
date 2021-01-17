@@ -185,6 +185,7 @@ void PlayScene::Render()
 	for each (shared_ptr<GameObject> obj in renderObjects)
 	{
 		if (obj->Visible && obj->IsActive()) obj->Render();
+		obj->RenderTestBox();
 	}
 
 	CGame::GetInstance()->GetGraphic().SetViewport(hud);

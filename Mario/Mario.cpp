@@ -1,5 +1,6 @@
 #include "Mario.h"
 #include "Game.h"
+#include "TextureManager.h"
 #include "AnimationManager.h"
 #include "SceneManager.h"
 #include "Events.h"
@@ -93,8 +94,8 @@ void Mario::OnKeyDown(int key)
 		DebugOut(L"Position: x = %f\ty = %f\n", Position.x, Position.y);
 		break;
 	case DIK_T:
-		Position.x = 6172.319336;
-		Position.y = 1167.000000;
+		Position.x = 5711;
+		Position.y = 1150;
 		break;
 	}
 
@@ -107,7 +108,8 @@ Mario::Mario() : GameObject()
 	this->Velocity = Vec2(0, 0);
 	this->accelerate = Vec2(0, 0);
 	this->Gravity = 0.00093f;
-	this->renderOrder = 250;
+	this->renderOrder = 1001;
+	this->raycaster = make_shared<RayCast>();
 	HookEvent();
 }
 
@@ -120,6 +122,75 @@ void Mario::InitResource()
 {
 }
 
+void Mario::OverlapUpdate()
+{
+	vector<shared_ptr<CollisionResult>> overlapsEvents = collisionCal->GetOverlaps();
+	if (overlapsEvents.size() > 0) {
+		overlapsEvents.erase(remove_if(overlapsEvents.begin(), overlapsEvents.end(), [](const shared_ptr<CollisionResult>& evt) {
+			return !MEntityType::IsTile(evt->Object->GetObjectType());
+			}), overlapsEvents.end());
+	}
+
+	if (overlapsEvents.size() > 0) {
+		DWORD marioId = this->GetID();
+		RectF hitbox = GetHitBox();
+		float marioWidth = hitbox.right - hitbox.left;
+		Vec2 headPoint = Vec2(hitbox.left, hitbox.top + (hitbox.bottom - hitbox.top) / 4);
+		Vec2 legPoint = Vec2(hitbox.left, hitbox.bottom - (hitbox.bottom - hitbox.top) / 4);
+		ObjectList headResult;
+		ObjectList legResult;
+		vector<shared_ptr<Vec2>> headBoxes;
+		vector<shared_ptr<Vec2>> legBoxes;
+
+		raycaster->Shoot(headPoint, Direction::Right, 960, headResult);
+		raycaster->Shoot(legPoint, Direction::Right, 960, legResult);
+
+		raycaster->MergeBox(headResult, Direction::Right, marioWidth - 0.0001, headBoxes);
+		raycaster->MergeBox(legResult, Direction::Right, marioWidth - 0.0001, legBoxes);
+
+		Vec2 headBox = headBoxes.empty() ? Vec2(99999, -99999) : *headBoxes[0];
+		Vec2 legsBox = legBoxes.empty() ? Vec2(99999, -99999) : *legBoxes[0];
+
+		//Debug
+		//RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
+		//testbox.push_back(RectF(headBox.x - cam.left, headPoint.y - 10 - cam.top, abs(headBox.y - headBox.x), 20));
+		//testbox.push_back(RectF(legsBox.x - cam.left, legPoint.y - 10 - cam.top, abs(legsBox.y - legsBox.x), 20));
+
+		Vec2 overBox = legsBox, 
+			barrierBox = headBox;
+		if (headBox.x <= legsBox.x) {
+			overBox = headBox;
+			barrierBox = legsBox;
+		}
+
+		if (hitbox.left + marioWidth < overBox.x) {
+			headPoint.x = headBox.x - 0.1;
+			legPoint.x = legsBox.x - 0.1;
+			raycaster->Shoot(headPoint, Direction::Left, marioWidth, headResult);
+			raycaster->Shoot(legPoint, Direction::Left, marioWidth, legResult);
+			if (headResult.size() > 0 || legResult.size() > 0) {
+				if (barrierBox.x - overBox.y >= marioWidth) {
+					Position.x += 0.7 * CGame::Time().ElapsedGameTime;
+				}
+				else {
+					Position.x -= 0.7 * CGame::Time().ElapsedGameTime;
+				}
+			}
+			else {
+				Position.x -= 0.7 * CGame::Time().ElapsedGameTime;
+			}
+		}
+		else {
+			if (barrierBox.x - overBox.y >= marioWidth) {
+				Position.x += 0.7 * CGame::Time().ElapsedGameTime;
+			}
+			else {
+				Position.x -= 0.7 * CGame::Time().ElapsedGameTime;
+			}
+		}
+	}
+}
+
 void Mario::StatusUpdate()
 {
 	shared_ptr<MarioPowerUp> p = powerUp;
@@ -130,6 +201,8 @@ void Mario::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	shared_ptr<MarioPowerUp> p = powerUp;
 	p->CollisionUpdate(coObj);
+	raycaster->SetInput(coObj);
+	OverlapUpdate();
 }
 
 void Mario::PositionUpdate()
@@ -165,6 +238,11 @@ void Mario::Update()
 void Mario::Render()
 {
 	powerUp->Render();
+}
+
+shared_ptr<RayCast> Mario::GetRayCaster()
+{
+	return raycaster;
 }
 
 bool Mario::IsLockController()

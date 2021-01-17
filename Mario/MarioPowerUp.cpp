@@ -472,6 +472,7 @@ void MarioPowerUp::Render()
 
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
+		if (selectedAnimation == nullptr) return;
 		selectedAnimation->SetPlayScale(max(0.4f, min(abs(m->GetVelocity().x) / MARIO_WALK_SPEED, 4)) * 1.5f);
 		selectedAnimation->GetTransform()->Scale = Vec2((float)m->GetFacing(), 1);
 		selectedAnimation->GetTransform()->Position = m->GetPosition() - cam;

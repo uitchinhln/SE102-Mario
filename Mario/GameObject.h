@@ -34,6 +34,8 @@ protected:
 
 	shared_ptr<DataTag> tags;
 
+	vector<RectF> testbox;
+
 public:
 	bool Visible = true;
 
@@ -87,6 +89,8 @@ public:
 	virtual void FinalUpdate();
 
 	virtual void Render() = 0;
+
+	virtual void RenderTestBox();
 
 	virtual void SetCollisionCalculator(shared_ptr<CollisionCalculator>);
 

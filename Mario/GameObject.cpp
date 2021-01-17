@@ -1,5 +1,6 @@
 #include "GameObject.h"
 #include "Game.h"
+#include "TextureManager.h"
 
 GameObject::GameObject()
 {
@@ -161,6 +162,20 @@ void GameObject::PositionLateUpdate()
 void GameObject::FinalUpdate()
 {
 	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
+}
+
+void GameObject::RenderTestBox()
+{
+	if (testbox.size() > 0) {
+		for each (RectF box in testbox)
+		{
+			LPDIRECT3DTEXTURE9 texture = TextureManager::GetInstance()->Get("tex-test");
+			RECT r{ 0, 0, (long)box.right, (long)box.bottom };
+			D3DXVECTOR3 pivot(0, 0, 0);
+			CGame::GetInstance()->GetGraphic().Draw(box.left, box.top, pivot, texture, r, Transform());
+		}
+		testbox.clear();
+	}
 }
 
 void GameObject::SetCollisionCalculator(shared_ptr<CollisionCalculator> calc)

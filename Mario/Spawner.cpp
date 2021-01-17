@@ -68,7 +68,14 @@ void Spawner::Spawn()
 	shared_ptr<Mario> mario = SceneManager::GetInstance()->GetPlayer<Mario>();
 	shared_ptr<GameObject> obj = GetEntity();
 	
-	obj->SetFacing(mario->GetPosition().x < Position.x ? -1 : 1);
+	if (mario->GetPosition().x < Position.x) {
+		obj->SetFacing(-1);
+		obj->GetVelocity().x = -abs(obj->GetVelocity().x);
+	}
+	else {
+		obj->SetFacing(1);
+		obj->GetVelocity().x = abs(obj->GetVelocity().x);
+	}
 
 	entities.push_back(obj);
 	SceneManager::GetInstance()->GetActiveScene()->SpawnEntityWithoutGrid(obj);

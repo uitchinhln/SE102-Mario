@@ -9,6 +9,7 @@
 JumpingKoopas::JumpingKoopas(shared_ptr<Koopas> koopas) : DefaultKoopas()
 {
 	this->koopas = koopas; 
+	this->KP_SPEED = 0.12f;
 	
 	koopas->GetDestroyTimer().Stop();
 
@@ -135,6 +136,7 @@ void JumpingKoopas::Render()
 			ani = this->animations["Die"];
 		}
 
+		ani->GetTransform()->Scale.x = (float)-k->GetFacing();
 		ani->GetTransform()->Position = k->GetPosition() - cam;
 		ani->Render();
 	}

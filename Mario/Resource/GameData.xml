@@ -15,6 +15,7 @@
             <Texture id="tex-menu" path="Resource/Textures/intro_x3.png"/>
             <Texture id="tex-dialog" path="Resource/Textures/dialogs_x3.png"/>
             <Texture id="tex-pipe" path="Resource/Textures/pipe.png"/>
+            <Texture id="tex-test" path="Resource/Textures/test-box.png"/>
         </Textures>
         <Sprites>
             <Sprite id="spr-mario" path="Resource/Sprites/MarioDB.xml"/>

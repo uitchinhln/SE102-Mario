@@ -19,6 +19,6 @@ public:
 	virtual ObjectType GetObjectType() override;
 
 protected:
-	float KOOPAS_JUMP_FORCE = 0.55f;
+	float KOOPAS_JUMP_FORCE = 0.475f;
 };
 

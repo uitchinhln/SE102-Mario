@@ -2,6 +2,7 @@
 #include "Utils.h"
 #include "GameObject.h"
 #include "MarioPowerUp.h"
+#include "RayCast.h"
 
 enum class MovingStates {
 	IDLE,
@@ -50,11 +51,12 @@ protected:
 
 	weak_ptr<GameObject> inhand;
 
+	shared_ptr<RayCast> raycaster;
+
 	virtual void HookEvent();
 
 	virtual void UnHookEvent();
 #pragma endregion
-
 
 #pragma region Account Data
 	int lives = 4;
@@ -69,6 +71,8 @@ public:
 
 	virtual void InitResource() override;
 
+	virtual void OverlapUpdate();
+
 	virtual void StatusUpdate() override;
 
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
@@ -80,6 +84,8 @@ public:
 	virtual void Update() override;
 
 	virtual void Render() override;
+
+	virtual shared_ptr<RayCast> GetRayCaster();
 
 	virtual bool IsLockController();
 
