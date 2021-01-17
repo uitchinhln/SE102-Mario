@@ -553,6 +553,12 @@
    </properties>
    <point/>
   </object>
+  <object id="306" type="Brick" x="6000" y="1152">
+   <properties>
+    <property name="Grid" value="[{&quot;x&quot;:23,&quot;y&quot;:3},{&quot;x&quot;:23,&quot;y&quot;:4}]"/>
+   </properties>
+   <point/>
+  </object>
   <object id="307" type="Brick" x="6048" y="1152">
    <properties>
     <property name="Grid" value="[{&quot;x&quot;:23,&quot;y&quot;:3},{&quot;x&quot;:23,&quot;y&quot;:4}]"/>

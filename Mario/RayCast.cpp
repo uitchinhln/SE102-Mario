@@ -7,7 +7,7 @@ void RayCast::Shoot(Vec2 startPoint, Direction direction, float rayLength, Objec
 	switch (direction)
 	{
 	case Direction::Left:
-		for each (shared_ptr<GameObject> obj in *objects)
+		for each (shared_ptr<GameObject> obj in objects)
 		{
 			hitbox = obj->GetHitBox();
 			if ((startPoint.x - rayLength <= hitbox.left && hitbox.left <= startPoint.x) ||
@@ -20,7 +20,7 @@ void RayCast::Shoot(Vec2 startPoint, Direction direction, float rayLength, Objec
 		}
 		break;
 	case Direction::Top:
-		for each (shared_ptr<GameObject> obj in *objects)
+		for each (shared_ptr<GameObject> obj in objects)
 		{
 			hitbox = obj->GetHitBox();
 			if ((startPoint.y - rayLength <= hitbox.top && hitbox.top <= startPoint.y) ||
@@ -33,7 +33,7 @@ void RayCast::Shoot(Vec2 startPoint, Direction direction, float rayLength, Objec
 		}
 		break;
 	case Direction::Right:
-		for each (shared_ptr<GameObject> obj in *objects)
+		for each (shared_ptr<GameObject> obj in objects)
 		{
 			hitbox = obj->GetHitBox();
 			if ((startPoint.x <= hitbox.left && hitbox.left <= startPoint.x + rayLength) ||
@@ -46,7 +46,7 @@ void RayCast::Shoot(Vec2 startPoint, Direction direction, float rayLength, Objec
 		}
 		break;
 	case Direction::Bottom:
-		for each (shared_ptr<GameObject> obj in *objects)
+		for each (shared_ptr<GameObject> obj in objects)
 		{
 			hitbox = obj->GetHitBox();
 			if ((startPoint.y <= hitbox.top && hitbox.top <= startPoint.y + rayLength) ||
@@ -110,7 +110,21 @@ void RayCast::MergeBox(ObjectList& input, Direction direction, float maxSpace, v
 	}
 }
 
+void RayCast::Clear()
+{
+	this->objects.clear();
+}
+
+void RayCast::Filter(function<bool(shared_ptr<GameObject>)> callback)
+{
+	if (callback != nullptr) {
+		objects.erase(remove_if(objects.begin(), objects.end(), [callback](const shared_ptr<GameObject>& obj) {
+			return callback(obj);
+			}), objects.end());
+	}
+}
+
 void RayCast::SetInput(ObjectList* objects)
 {
-	this->objects = objects;
+	this->objects = *objects;
 }

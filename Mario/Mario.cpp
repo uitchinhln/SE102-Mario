@@ -135,12 +135,19 @@ void Mario::OverlapUpdate()
 		DWORD marioId = this->GetID();
 		RectF hitbox = GetHitBox();
 		float marioWidth = hitbox.right - hitbox.left;
+
 		Vec2 headPoint = Vec2(hitbox.left, hitbox.top + (hitbox.bottom - hitbox.top) / 4);
 		Vec2 legPoint = Vec2(hitbox.left, hitbox.bottom - (hitbox.bottom - hitbox.top) / 4);
+
 		ObjectList headResult;
 		ObjectList legResult;
+
 		vector<shared_ptr<Vec2>> headBoxes;
 		vector<shared_ptr<Vec2>> legBoxes;
+
+		raycaster->Filter([marioId](const shared_ptr<GameObject>& obj) {
+			return !MEntityType::IsTile(obj->GetObjectType()) || obj->GetID() == marioId;
+			});
 
 		raycaster->Shoot(headPoint, Direction::Right, 960, headResult);
 		raycaster->Shoot(legPoint, Direction::Right, 960, legResult);
@@ -148,36 +155,64 @@ void Mario::OverlapUpdate()
 		raycaster->MergeBox(headResult, Direction::Right, marioWidth - 0.0001, headBoxes);
 		raycaster->MergeBox(legResult, Direction::Right, marioWidth - 0.0001, legBoxes);
 
+		sort(headBoxes.begin(), headBoxes.end(), [](shared_ptr<Vec2> a, shared_ptr<Vec2> b) {return a->x < b->x; });
+		sort(legBoxes.begin(), legBoxes.end(), [](shared_ptr<Vec2> a, shared_ptr<Vec2> b) {return a->x < b->x; });
+
 		Vec2 headBox = headBoxes.empty() ? Vec2(99999, -99999) : *headBoxes[0];
 		Vec2 legsBox = legBoxes.empty() ? Vec2(99999, -99999) : *legBoxes[0];
 
 		//Debug
-		//RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
-		//testbox.push_back(RectF(headBox.x - cam.left, headPoint.y - 10 - cam.top, abs(headBox.y - headBox.x), 20));
-		//testbox.push_back(RectF(legsBox.x - cam.left, legPoint.y - 10 - cam.top, abs(legsBox.y - legsBox.x), 20));
+		/*RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
+		testbox.push_back(RectF(headBox.x - cam.left, headPoint.y - 10 - cam.top, abs(headBox.y - headBox.x), 20));
+		testbox.push_back(RectF(legsBox.x - cam.left, legPoint.y - 10 - cam.top, abs(legsBox.y - legsBox.x), 20));*/
 
-		Vec2 overBox = legsBox, 
+		Vec2 overBox = legsBox,
 			barrierBox = headBox;
 		if (headBox.x <= legsBox.x) {
 			overBox = headBox;
 			barrierBox = legsBox;
 		}
 
-		if (hitbox.left + marioWidth < overBox.x) {
-			headPoint.x = headBox.x - 0.1;
-			legPoint.x = legsBox.x - 0.1;
-			raycaster->Shoot(headPoint, Direction::Left, marioWidth, headResult);
-			raycaster->Shoot(legPoint, Direction::Left, marioWidth, legResult);
-			if (headResult.size() > 0 || legResult.size() > 0) {
+		if (hitbox.left + marioWidth / 3 < overBox.x) {
+			headPoint.x = min(headBox.x, hitbox.right);
+			legPoint.x = min(legsBox.x, hitbox.right);
+
+			raycaster->Shoot(headPoint, Direction::Left, 480, headResult);
+			raycaster->Shoot(legPoint, Direction::Left, 480, legResult);
+
+			raycaster->MergeBox(headResult, Direction::Left, marioWidth - 0.0001, headBoxes);
+			raycaster->MergeBox(legResult, Direction::Left, marioWidth - 0.0001, legBoxes);
+
+			sort(headBoxes.begin(), headBoxes.end(), [](shared_ptr<Vec2> a, shared_ptr<Vec2> b) {return a->y > b->y; });
+			sort(legBoxes.begin(), legBoxes.end(), [](shared_ptr<Vec2> a, shared_ptr<Vec2> b) {return a->y > b->y; });
+
+			//Debug
+			/*RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
+			for each (shared_ptr<Vec2> var in headBoxes)
+				testbox.push_back(RectF(var->x - cam.left, headPoint.y - 10 - cam.top, abs(var->y - var->x), 20));
+			for each (shared_ptr<Vec2> var in legBoxes)
+				testbox.push_back(RectF(var->x - cam.left, legPoint.y - 10 - cam.top, abs(var->y - var->x), 20));*/
+			
+			headBox = headBoxes.empty() ? Vec2(99999, -99999) : *headBoxes[0];
+			legsBox = legBoxes.empty() ? Vec2(99999, -99999) : *legBoxes[0];
+
+			Vec2 overBoxL = legsBox,
+				barrierBoxL = headBox;
+			if (headBox.y >= legsBox.y) {
+				overBoxL = headBox;
+				barrierBoxL = legsBox;
+			}
+
+			if (hitbox.left < overBoxL.x) {
+				Position.x -= 0.7 * CGame::Time().ElapsedGameTime;
+			}
+			else {
 				if (barrierBox.x - overBox.y >= marioWidth) {
 					Position.x += 0.7 * CGame::Time().ElapsedGameTime;
 				}
 				else {
 					Position.x -= 0.7 * CGame::Time().ElapsedGameTime;
 				}
-			}
-			else {
-				Position.x -= 0.7 * CGame::Time().ElapsedGameTime;
 			}
 		}
 		else {
@@ -189,6 +224,7 @@ void Mario::OverlapUpdate()
 			}
 		}
 	}
+	raycaster->Clear();
 }
 
 void Mario::StatusUpdate()
@@ -202,7 +238,10 @@ void Mario::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	shared_ptr<MarioPowerUp> p = powerUp;
 	p->CollisionUpdate(coObj);
 	raycaster->SetInput(coObj);
+	//auto start = std::chrono::high_resolution_clock::now();
 	OverlapUpdate();
+	//auto finish = std::chrono::high_resolution_clock::now();
+	//DebugOut(L"Mario raycast: %d\n", std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 void Mario::PositionUpdate()

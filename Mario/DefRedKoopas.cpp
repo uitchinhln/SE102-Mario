@@ -45,6 +45,7 @@ void DefRedKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
 
 		if (k->OnGround) {
+			//auto start = std::chrono::high_resolution_clock::now();
 			vector<shared_ptr<GameObject>> rcResults;
 
 			Direction direction = Direction::Left;
@@ -57,11 +58,12 @@ void DefRedKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 			}
 
 			raycaster.SetInput(coObj);
-			raycaster.Shoot(startPoint, direction, size.y + size.y + 1, rcResults);
 
-			rcResults.erase(remove_if(rcResults.begin(), rcResults.end(), [k](const shared_ptr<GameObject>& obj) {
+			raycaster.Filter([k](const shared_ptr<GameObject>& obj) {
 				return !MEntityType::IsTile(obj->GetObjectType()) || obj->GetID() == k->GetID();
-				}), rcResults.end());
+				});
+
+			raycaster.Shoot(startPoint, direction, size.y + size.y + 1, rcResults);
 
 			if (rcResults.size() > 0) {
 				vector<shared_ptr<Vec2>> edges;
@@ -92,8 +94,10 @@ void DefRedKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 					}
 				}
 			}	
+			//auto finish = std::chrono::high_resolution_clock::now();
+			//DebugOut(L"Koopas raycast: %d\n", std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 		}
-
+		raycaster.Clear();
 		k->GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
 	}
 }

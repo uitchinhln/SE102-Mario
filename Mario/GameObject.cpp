@@ -173,6 +173,7 @@ void GameObject::RenderTestBox()
 			RECT r{ 0, 0, (long)box.right, (long)box.bottom };
 			D3DXVECTOR3 pivot(0, 0, 0);
 			CGame::GetInstance()->GetGraphic().Draw(box.left, box.top, pivot, texture, r, Transform());
+			//DebugOut(L"x = %f y = %f width = %f height = %f\n", box.left, box.top, box.right, box.bottom);
 		}
 		testbox.clear();
 	}
