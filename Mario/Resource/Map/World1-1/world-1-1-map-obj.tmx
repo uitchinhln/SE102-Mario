@@ -993,31 +993,33 @@
   <object id="327" type="SpawnPoint" x="98" y="1245">
    <point/>
   </object>
-  <object id="328" type="EndPortal" x="6250" y="1366" width="75" height="122">
+  <object id="328" type="EndPortal" x="6284.33" y="1392" width="7.33333" height="96">
    <properties>
-    <property name="Direction" type="int" value="2"/>
+    <property name="Direction" type="int" value="1"/>
     <property name="Grid" value="[{&quot;x&quot;:24,&quot;y&quot;:4},{&quot;x&quot;:24,&quot;y&quot;:5}]"/>
    </properties>
   </object>
-  <object id="329" type="BeginPortal" x="6928" y="1375" width="65" height="115">
+  <object id="329" type="BeginPortal" x="6953.25" y="1392" width="14" height="107.333">
    <properties>
     <property name="CameraBoundary" type="int" value="0"/>
-    <property name="Destination" value="6935 1245"/>
+    <property name="DestinationX" type="float" value="6954.67"/>
+    <property name="DestinationY" type="float" value="1152"/>
     <property name="Direction" type="int" value="2"/>
     <property name="Grid" value="[{&quot;x&quot;:26,&quot;y&quot;:4},{&quot;x&quot;:26,&quot;y&quot;:5}]"/>
    </properties>
   </object>
-  <object id="330" type="BeginPortal" x="6732" y="479" width="72" height="96">
+  <object id="330" type="BeginPortal" x="6760" y="474.5" width="17" height="100.5">
    <properties>
     <property name="CameraBoundary" type="int" value="1"/>
-    <property name="Destination" value="6258, 1485"/>
+    <property name="DestinationX" type="float" value="6284.33"/>
+    <property name="DestinationY" type="float" value="1392"/>
     <property name="Direction" type="int" value="1"/>
     <property name="Grid" value="[{&quot;x&quot;:25,&quot;y&quot;:1},{&quot;x&quot;:26,&quot;y&quot;:1}]"/>
    </properties>
   </object>
-  <object id="331" type="EndPortal" x="6932" y="1152" width="61" height="158">
+  <object id="331" type="EndPortal" x="6954.67" y="1152" width="10.6667" height="96">
    <properties>
-    <property name="Direction" type="int" value="1"/>
+    <property name="Direction" type="int" value="2"/>
     <property name="Grid" value="[{&quot;x&quot;:26,&quot;y&quot;:3},{&quot;x&quot;:26,&quot;y&quot;:4}]"/>
    </properties>
   </object>

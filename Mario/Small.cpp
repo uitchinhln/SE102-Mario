@@ -24,10 +24,14 @@ void Small::InitResource(bool force)
 		this->animations["Float"] = AnimationManager::GetInstance()->Get("ani-small-mario-jump")->Clone();
 		this->animations["Skid"] = AnimationManager::GetInstance()->Get("ani-small-mario-skid")->Clone();
 		this->animations["Kick"] = AnimationManager::GetInstance()->Get("ani-small-mario-kick")->Clone();
+		this->animations["Crouch"] = AnimationManager::GetInstance()->Get("ani-small-mario-idle")->Clone();
 
 		this->animations["Hold"] = AnimationManager::GetInstance()->Get("ani-small-mario-hold")->Clone();
 		this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-small-mario-hold-idle")->Clone();
 		this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-small-mario-hold-fall")->Clone();
+
+		this->animations["TeleVer"] = AnimationManager::GetInstance()->Get("ani-small-mario-idle-front")->Clone();
+		this->animations["TeleHor"] = AnimationManager::GetInstance()->Get("ani-small-mario-walk")->Clone();
 	}
 }
 

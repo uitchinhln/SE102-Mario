@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "MapProperties.h"
+#include "StopWatch.h"
 
 enum class CoinState {
 	COIN,
@@ -34,6 +35,8 @@ public:
 
 	virtual CoinState& State();
 
+	virtual void Reverser();
+
 	virtual bool IsGetThrough(GameObject& object, Direction direction) override;
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
@@ -44,6 +47,10 @@ protected:
 	CoinState state = CoinState::COIN;
 
 	bool isFreeze = false;
+
+	Stopwatch reverseTimer;
+
+	int reverseDuration = 10000;
 
 	Vec2 size = Vec2(48, 48);
 };

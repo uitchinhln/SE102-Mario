@@ -45,6 +45,7 @@ void PSwitch::StatusUpdate()
     if (coResult.size() > 0) {
         for each (shared_ptr<CollisionResult> coll in coResult)
         {
+            if (coll->SAABBResult.Direction != Direction::Bottom) continue;
             if (MEntityType::IsMario(coll->Object->GetObjectType())) {
                 Pressed = true;
                 Position.y += 30;
@@ -53,9 +54,10 @@ void PSwitch::StatusUpdate()
                 vector<shared_ptr<GameObject>> objects = SceneManager::GetInstance()->GetActiveScene()->GetUpdatingObjects();
                 for each (shared_ptr<GameObject> obj in objects)
                 {
-                    if (obj->GetObjectType() == MEntityType::Brick) {
+                    if (obj->GetObjectType() == MEntityType::Brick || obj->GetObjectType() == MEntityType::Coin) {
                         shared_ptr<Coin> coin = dynamic_pointer_cast<Coin>(obj);
-                        coin->State() = CoinState::COIN;
+                        coin->Reverser();
+                        SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Shake(CAMERA_SHAKE_DURATION);
                     }
                 }
             }
@@ -119,7 +121,7 @@ RectF PSwitch::GetHitBox()
 
 bool PSwitch::IsGetThrough(GameObject& object, Direction direction)
 {
-    return true;
+    return Pressed;
 }
 
 float PSwitch::GetDamageFor(GameObject& object, Direction direction)

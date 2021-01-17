@@ -92,6 +92,12 @@ void CrouchKoopas::HeldUpdate()
 					m->GetHitBox().left - size.x + (m->GetObjectType() != MEntityType::SmallMario ? 12 : 4),
 					m->GetHitBox().bottom - size.y - (m->GetObjectType() != MEntityType::SmallMario ? 9 : 2)));
 			}
+			if (m->GetWarpState() == WarpStates::VERTICAL) {
+				k->SetPosition(Vec2(
+					m->GetHitBox().left,
+					k->GetPosition().y
+				));
+			}
 		}
 	}
 }

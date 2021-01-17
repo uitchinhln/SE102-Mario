@@ -25,6 +25,9 @@ void BigMario::InitResource(bool force)
 		this->animations["Hold"] = AnimationManager::GetInstance()->Get("ani-big-mario-hold")->Clone();
 		this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-big-mario-hold-idle")->Clone();
 		this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-big-mario-hold-fall")->Clone();
+
+		this->animations["TeleVer"] = AnimationManager::GetInstance()->Get("ani-big-mario-idle-front")->Clone();
+		this->animations["TeleHor"] = AnimationManager::GetInstance()->Get("ani-big-mario-walk")->Clone();
 	}
 }
 

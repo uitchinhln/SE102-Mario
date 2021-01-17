@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="361">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="364">
  <editorsettings>
   <chunksize width="8" height="8"/>
   <export target="world-1-1-map.xml" format="tmx"/>
@@ -553,12 +553,6 @@
    </properties>
    <point/>
   </object>
-  <object id="306" type="Brick" x="6000" y="1152">
-   <properties>
-    <property name="Grid" value="[{&quot;x&quot;:23,&quot;y&quot;:3},{&quot;x&quot;:23,&quot;y&quot;:4}]"/>
-   </properties>
-   <point/>
-  </object>
   <object id="307" type="Brick" x="6048" y="1152">
    <properties>
     <property name="Grid" value="[{&quot;x&quot;:23,&quot;y&quot;:3},{&quot;x&quot;:23,&quot;y&quot;:4}]"/>
@@ -684,6 +678,24 @@
   <object id="360" type="Brick" x="5768" y="1152">
    <properties>
     <property name="Grid" value="[{&quot;x&quot;:22,&quot;y&quot;:3},{&quot;x&quot;:22,&quot;y&quot;:4}]"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="361" type="Coin" x="5759.96" y="960.935">
+   <properties>
+    <property name="Grid" value="[{&quot;x&quot;:22,&quot;y&quot;:3}]"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="362" type="Coin" x="5807.96" y="912.935">
+   <properties>
+    <property name="Grid" value="[{&quot;x&quot;:22,&quot;y&quot;:3}]"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="363" type="Coin" x="5855.96" y="863.935">
+   <properties>
+    <property name="Grid" value="[{&quot;x&quot;:22,&quot;y&quot;:2},{&quot;x&quot;:22,&quot;y&quot;:3}]"/>
    </properties>
    <point/>
   </object>
@@ -969,13 +981,13 @@
   <object id="327" type="SpawnPoint" x="98" y="1245">
    <point/>
   </object>
-  <object id="328" type="EndPortal" x="6250" y="1366" width="75" height="122">
+  <object id="328" type="EndPortal" x="6250" y="1392" width="75" height="96">
    <properties>
     <property name="Direction" type="int" value="2"/>
     <property name="Grid" value="[{&quot;x&quot;:24,&quot;y&quot;:4},{&quot;x&quot;:24,&quot;y&quot;:5}]"/>
    </properties>
   </object>
-  <object id="329" type="BeginPortal" x="6928" y="1375" width="65" height="115">
+  <object id="329" type="BeginPortal" x="6952.67" y="1392" width="13.6667" height="96">
    <properties>
     <property name="CameraBoundary" type="int" value="0"/>
     <property name="Destination" value="6935 1245"/>
@@ -983,7 +995,7 @@
     <property name="Grid" value="[{&quot;x&quot;:26,&quot;y&quot;:4},{&quot;x&quot;:26,&quot;y&quot;:5}]"/>
    </properties>
   </object>
-  <object id="330" type="BeginPortal" x="6732" y="479" width="72" height="96">
+  <object id="330" type="BeginPortal" x="6754.67" y="480" width="24" height="95">
    <properties>
     <property name="CameraBoundary" type="int" value="1"/>
     <property name="Destination" value="6258, 1485"/>
@@ -991,7 +1003,7 @@
     <property name="Grid" value="[{&quot;x&quot;:25,&quot;y&quot;:1},{&quot;x&quot;:26,&quot;y&quot;:1}]"/>
    </properties>
   </object>
-  <object id="331" type="EndPortal" x="6932" y="1152" width="61" height="158">
+  <object id="331" type="EndPortal" x="6932" y="1152" width="61" height="95.6667">
    <properties>
     <property name="Direction" type="int" value="1"/>
     <property name="Grid" value="[{&quot;x&quot;:26,&quot;y&quot;:3},{&quot;x&quot;:26,&quot;y&quot;:4}]"/>

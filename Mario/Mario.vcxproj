@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AttackablePower.cpp" />
+    <ClCompile Include="BeginPortal.cpp" />
     <ClCompile Include="BigMario.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Coin.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="DefaultRedGoomba.cpp" />
     <ClCompile Include="DefRedKoopas.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
+    <ClCompile Include="EndPortal.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GhostBlock.cpp" />
     <ClCompile Include="Goomba.cpp" />
@@ -197,6 +199,7 @@
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Piranha.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="Portal.cpp" />
     <ClCompile Include="PowerMeter.cpp" />
     <ClCompile Include="PSwitch.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
@@ -238,6 +241,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AttackablePower.h" />
+    <ClInclude Include="BeginPortal.h" />
     <ClInclude Include="BigMario.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="Coin.h" />
@@ -246,6 +250,7 @@
     <ClInclude Include="DefaultRedGoomba.h" />
     <ClInclude Include="DefRedKoopas.h" />
     <ClInclude Include="EndmapReward.h" />
+    <ClInclude Include="EndPortal.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GhostBlock.h" />
     <ClInclude Include="Goomba.h" />
@@ -288,6 +293,7 @@
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Piranha.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="Portal.h" />
     <ClInclude Include="PowerMeter.h" />
     <ClInclude Include="PSwitch.h" />
     <ClInclude Include="QuestionBlock.h" />

@@ -47,6 +47,9 @@ const ObjectType MEntityType::PSwitch = ObjectType::CreateObjectType(10005, "PSw
 const ObjectType MEntityType::Coin = ObjectType::CreateObjectType(10011, "Coin");
 const ObjectType MEntityType::Brick = ObjectType::CreateObjectType(10012, "Brick");
 
+const ObjectType MEntityType::BeginPortal = ObjectType::CreateObjectType(20011, "BeginPortal");
+const ObjectType MEntityType::EndPortal = ObjectType::CreateObjectType(20012, "EndPortal");
+
 bool MEntityType::IsTile(ObjectType type)
 {
     bool normalTile = type == DEFAULT_TILE_ID;

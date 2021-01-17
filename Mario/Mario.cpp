@@ -14,54 +14,27 @@
 
 void Mario::OnKeyUp(int key)
 {
-	if (!controllable) return;
+	//if (IsControllerLocked()) return;
 	powerUp->OnKeyUp(key);
 	switch (key)
 	{
 	case DIK_A:
-		if (shared_ptr<GameObject> obj = inhand.lock()) {
-			if (obj->GetObjectType() == MEntityType::KoopasPassenger) {
-				shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(obj);
-
-				Vec2 size = Vec2(
-					koopas->GetHitBox().right - koopas->GetHitBox().left,
-					koopas->GetHitBox().bottom - koopas->GetHitBox().top
-				);
-
-				if (GetFacing() > 0) {
-					obj->SetPosition(Vec2(
-						GetHitBox().right + 2,
-						obj->GetHitBox().top));
-				}
-				else {
-					obj->SetPosition(Vec2(
-						GetHitBox().left - size.x - 2,
-						obj->GetHitBox().top));
-				}
-				Velocity.x += GetFacing();
-
-				koopas->ClearHolder();
-				this->ClearInhand();
-			}
-		}
-		else {
-			inhand.reset();
-		}
+		DropShell();
 		break;
 	case DIK_Q:
-		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(Goomba::CreateGoomba(Position - Vec2(0, 230)));
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntityWithoutGrid(Goomba::CreateGoomba(Position - Vec2(0, 230)));
 		break;
 	case DIK_D:
 		shared_ptr<Koopas> kp = Koopas::CreateKoopas(Position - Vec2(0, 230));
 		kp->SetPower(make_shared<CrouchKoopas>(kp));
-		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(kp);
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntityWithoutGrid(kp);
 		break;
 	}
 }
 
 void Mario::OnKeyDown(int key)
 {
-	if (!controllable) return;
+	//if (IsControllerLocked()) return;
 	shared_ptr<MarioPowerUp> p = powerUp;
 	p->OnKeyDown(key);
 	
@@ -97,6 +70,14 @@ void Mario::OnKeyDown(int key)
 		Position.x = 5711;
 		Position.y = 1150;
 		break;
+	case DIK_R:
+		Position.x = 6742;
+		Position.y = 370;
+		SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetActiveBound(2);
+		break;
+	case DIK_V:
+		warpState = WarpStates::VERTICAL;
+		break;
 	}
 
 }
@@ -124,6 +105,8 @@ void Mario::InitResource()
 
 void Mario::OverlapUpdate()
 {
+	sliding = false;
+
 	vector<shared_ptr<CollisionResult>> overlapsEvents = collisionCal->GetOverlaps();
 	if (overlapsEvents.size() > 0) {
 		overlapsEvents.erase(remove_if(overlapsEvents.begin(), overlapsEvents.end(), [](const shared_ptr<CollisionResult>& evt) {
@@ -149,8 +132,8 @@ void Mario::OverlapUpdate()
 			return !MEntityType::IsTile(obj->GetObjectType()) || obj->GetID() == marioId;
 			});
 
-		raycaster->Shoot(headPoint, Direction::Right, 960, headResult);
-		raycaster->Shoot(legPoint, Direction::Right, 960, legResult);
+		raycaster->Shoot(headPoint, Direction::Right, 680, headResult);
+		raycaster->Shoot(legPoint, Direction::Right, 680, legResult);
 
 		raycaster->MergeBox(headResult, Direction::Right, marioWidth - 0.0001, headBoxes);
 		raycaster->MergeBox(legResult, Direction::Right, marioWidth - 0.0001, legBoxes);
@@ -173,12 +156,13 @@ void Mario::OverlapUpdate()
 			barrierBox = legsBox;
 		}
 
-		if (hitbox.left + marioWidth / 3 < overBox.x) {
+		sliding = true;
+		if (hitbox.left + marioWidth / 5 < overBox.x) {
 			headPoint.x = min(headBox.x, hitbox.right);
 			legPoint.x = min(legsBox.x, hitbox.right);
 
-			raycaster->Shoot(headPoint, Direction::Left, 480, headResult);
-			raycaster->Shoot(legPoint, Direction::Left, 480, legResult);
+			raycaster->Shoot(headPoint, Direction::Left, 340, headResult);
+			raycaster->Shoot(legPoint, Direction::Left, 340, legResult);
 
 			raycaster->MergeBox(headResult, Direction::Left, marioWidth - 0.0001, headBoxes);
 			raycaster->MergeBox(legResult, Direction::Left, marioWidth - 0.0001, legBoxes);
@@ -204,25 +188,77 @@ void Mario::OverlapUpdate()
 			}
 
 			if (hitbox.left < overBoxL.x) {
-				Position.x -= 0.7 * CGame::Time().ElapsedGameTime;
+				Position.x -= 0.3 * CGame::Time().ElapsedGameTime;
 			}
 			else {
-				if (barrierBox.x - overBox.y >= marioWidth) {
-					Position.x += 0.7 * CGame::Time().ElapsedGameTime;
+				if (barrierBox.x - overBox.y >= marioWidth || overBoxL.x - barrierBoxL.y < marioWidth) {
+					Position.x += 0.3 * CGame::Time().ElapsedGameTime;
 				}
 				else {
-					Position.x -= 0.7 * CGame::Time().ElapsedGameTime;
+					Position.x -= 0.3 * CGame::Time().ElapsedGameTime;
 				}
 			}
 		}
 		else {
 			if (barrierBox.x - overBox.y >= marioWidth) {
-				Position.x += 0.7 * CGame::Time().ElapsedGameTime;
+				Position.x += 0.3 * CGame::Time().ElapsedGameTime;
 			}
 			else {
-				Position.x -= 0.7 * CGame::Time().ElapsedGameTime;
+				Position.x -= 0.3 * CGame::Time().ElapsedGameTime;
 			}
 		}
+	}
+	raycaster->Clear();
+}
+
+void Mario::OverlapUpdateOriginal()
+{
+	sliding = false;
+
+	vector<shared_ptr<CollisionResult>> overlapsEvents = collisionCal->GetOverlaps();
+	if (overlapsEvents.size() > 0) {
+		overlapsEvents.erase(remove_if(overlapsEvents.begin(), overlapsEvents.end(), [](const shared_ptr<CollisionResult>& evt) {
+			return !MEntityType::IsTile(evt->Object->GetObjectType());
+			}), overlapsEvents.end());
+	}
+
+	if (overlapsEvents.size() > 0) {
+		RectF hitbox = GetHitBox();
+		float marioWidth = hitbox.right - hitbox.left;
+
+		Vec2 headPoint = Vec2(hitbox.left, hitbox.top + (hitbox.bottom - hitbox.top) / 4);
+
+		ObjectList headResult;
+
+		vector<shared_ptr<Vec2>> headBoxes;
+
+		raycaster->Filter([](const shared_ptr<GameObject>& obj) {
+			return !MEntityType::IsTile(obj->GetObjectType());
+			});
+
+		raycaster->Shoot(headPoint, Direction::Right, 680, headResult);
+
+		raycaster->MergeBox(headResult, Direction::Right, marioWidth - 0.0001, headBoxes);
+
+		if (headBoxes.size() < 1) return;
+
+		sort(headBoxes.begin(), headBoxes.end(), [](shared_ptr<Vec2> a, shared_ptr<Vec2> b) {return a->x < b->x; });
+
+		Vec2 headBox = *headBoxes[0];
+
+		if (hitbox.right <= headBox.x || hitbox.left >= headBox.y) return;
+
+		//Debug
+		//RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
+		//testbox.push_back(RectF(headBox.x - cam.left, headPoint.y - 10 - cam.top, abs(headBox.y - headBox.x), 20));
+
+		if (hitbox.left + marioWidth / 5 < headBox.x) {
+			Position.x -= 0.3 * CGame::Time().ElapsedGameTime;
+		}
+		else {
+			Position.x += 0.3 * CGame::Time().ElapsedGameTime;
+		}
+		sliding = true;
 	}
 	raycaster->Clear();
 }
@@ -239,7 +275,7 @@ void Mario::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	p->CollisionUpdate(coObj);
 	raycaster->SetInput(coObj);
 	//auto start = std::chrono::high_resolution_clock::now();
-	OverlapUpdate();
+	OverlapUpdateOriginal();
 	//auto finish = std::chrono::high_resolution_clock::now();
 	//DebugOut(L"Mario raycast: %d\n", std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
@@ -272,6 +308,19 @@ void Mario::Update()
 	if (!controllable) return;
 	shared_ptr<MarioPowerUp> p = powerUp;
 	p->Update();
+
+	switch (warpState)
+	{
+	case WarpStates::NONE:
+		renderOrder = 1001;
+		break;
+	case WarpStates::VERTICAL:
+		renderOrder = 124;
+		break;
+	case WarpStates::HORIZONTAL:
+		renderOrder = 499;
+		break;
+	}
 }
 
 void Mario::Render()
@@ -284,14 +333,47 @@ shared_ptr<RayCast> Mario::GetRayCaster()
 	return raycaster;
 }
 
-bool Mario::IsLockController()
+bool Mario::IsControllerLocked()
 {
-	return !controllable;
+	return !controllable || sliding || warpState != WarpStates::NONE;
 }
 
 void Mario::SetLockController(bool value)
 {
 	this->controllable = !value;
+}
+
+void Mario::DropShell()
+{
+	if (IsControllerLocked()) return;
+	if (shared_ptr<GameObject> obj = inhand.lock()) {
+		if (obj->GetObjectType() == MEntityType::KoopasPassenger) {
+			shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(obj);
+
+			Vec2 size = Vec2(
+				koopas->GetHitBox().right - koopas->GetHitBox().left,
+				koopas->GetHitBox().bottom - koopas->GetHitBox().top
+			);
+
+			if (GetFacing() > 0) {
+				obj->SetPosition(Vec2(
+					GetHitBox().right + 2,
+					obj->GetHitBox().top));
+			}
+			else {
+				obj->SetPosition(Vec2(
+					GetHitBox().left - size.x - 2,
+					obj->GetHitBox().top));
+			}
+			Velocity.x += GetFacing();
+
+			koopas->ClearHolder();
+			this->ClearInhand();
+		}
+	}
+	else {
+		inhand.reset();
+	}
 }
 
 void Mario::ClearInhand()
@@ -330,6 +412,16 @@ int& Mario::GetSkid()
 void Mario::SetSkid(int skid)
 {
 	this->skid = skid;
+}
+
+int& Mario::GetKickCountDown()
+{
+	return this->kickCountDown;
+}
+
+void Mario::SetKickCountDown(int duration)
+{
+	this->kickCountDown = duration;
 }
 
 float& Mario::GetJumpBeginPosition()
@@ -395,6 +487,16 @@ JumpingStates& Mario::GetJumpingState()
 void Mario::SetJumpingState(JumpingStates state)
 {
 	this->jumpingState = state;
+}
+
+WarpStates& Mario::GetWarpState()
+{
+	return this->warpState;
+}
+
+void Mario::SetWarpState(WarpStates state)
+{
+	this->warpState = state;
 }
 
 ObjectType Mario::GetObjectType()

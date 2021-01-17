@@ -178,6 +178,9 @@
     <Filter Include="Framework\World\Map\Partitioning\Grid">
       <UniqueIdentifier>{8041ada7-5e04-4b48-9599-d73dc77bec76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Entity\TriggerEntity\Portal">
+      <UniqueIdentifier>{08c2b594-c8ae-4150-8047-7c9b621a0d89}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -446,6 +449,15 @@
     </ClCompile>
     <ClCompile Include="MapBlock.cpp">
       <Filter>MarioGame\Entity\MapBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="Portal.cpp">
+      <Filter>MarioGame\Entity\TriggerEntity\Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="BeginPortal.cpp">
+      <Filter>MarioGame\Entity\TriggerEntity\Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="EndPortal.cpp">
+      <Filter>MarioGame\Entity\TriggerEntity\Portal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -814,6 +826,15 @@
     </ClInclude>
     <ClInclude Include="MapBlock.h">
       <Filter>MarioGame\Entity\MapBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="Portal.h">
+      <Filter>MarioGame\Entity\TriggerEntity\Portal</Filter>
+    </ClInclude>
+    <ClInclude Include="EndPortal.h">
+      <Filter>MarioGame\Entity\TriggerEntity\Portal</Filter>
+    </ClInclude>
+    <ClInclude Include="BeginPortal.h">
+      <Filter>MarioGame\Entity\TriggerEntity\Portal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

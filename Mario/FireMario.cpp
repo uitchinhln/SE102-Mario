@@ -8,7 +8,7 @@
 
 FireMario::FireMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {
-	this->MARIO_ATTACK_TIME = 100;
+	this->MARIO_ATTACK_DURATION = 100;
 
 	for (int i = 0; i < 2; i++) {
 		shared_ptr<MarioFireBall> fireball = make_shared<MarioFireBall>(mario);
@@ -38,6 +38,9 @@ void FireMario::InitResource(bool force)
 		this->animations["Hold"] = AnimationManager::GetInstance()->Get("ani-fire-mario-hold")->Clone();
 		this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-fire-mario-hold-idle")->Clone();
 		this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-fire-mario-hold-fall")->Clone();
+
+		this->animations["TeleVer"] = AnimationManager::GetInstance()->Get("ani-fire-mario-idle-front")->Clone();
+		this->animations["TeleHor"] = AnimationManager::GetInstance()->Get("ani-fire-mario-walk")->Clone();
 	}
 }
 

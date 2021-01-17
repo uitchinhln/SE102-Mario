@@ -31,13 +31,15 @@ public:
 	static shared_ptr<PSwitch> CreatePSwitch(Vec2 pos);
 
 protected:
-	Vec2 size = Vec2(45, 45);
+	Vec2 size = Vec2(48, 48);
 
 	Vec2 rootPos;
 
 	int movingStep = 0;
 
 	const float MUSHROOM_GROWUP_SPEED = 0.0012f;
+
+	int CAMERA_SHAKE_DURATION = 400;
 
 	bool Pressed = false;
 };

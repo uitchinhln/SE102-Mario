@@ -13,6 +13,9 @@ Coin::Coin()
 	this->Velocity = Vec2(0, Gravity);
 
 	this->Distance = Velocity * (float)dt;
+
+	this->reverseTimer.Reset();
+	this->reverseTimer.Stop();
 }
 
 void Coin::InitResource()
@@ -63,6 +66,19 @@ void Coin::StatusUpdate()
 
 void Coin::Update()
 {
+	if (reverseTimer.IsRunning() && reverseTimer.Elapsed() >= reverseDuration) {
+		reverseTimer.Reset();
+		reverseTimer.Stop();
+
+		if (state == CoinState::COIN) {
+			state = CoinState::BRICK;
+		}
+		else {
+			state = CoinState::COIN;
+		}
+
+		this->isFreeze = false;
+	}
 }
 
 void Coin::FinalUpdate()
@@ -109,6 +125,18 @@ RectF Coin::GetHitBox()
 CoinState& Coin::State()
 {
 	return state;
+}
+
+void Coin::Reverser()
+{
+	if (state == CoinState::COIN) {
+		state = CoinState::BRICK;
+	}
+	else {
+		state = CoinState::COIN;
+	}
+	isFreeze = true;
+	reverseTimer.Start();
 }
 
 bool Coin::IsGetThrough(GameObject& object, Direction direction)

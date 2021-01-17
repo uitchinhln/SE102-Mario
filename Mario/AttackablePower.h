@@ -31,6 +31,6 @@ public:
 protected:
     Stopwatch attackTimer;
 
-    long MARIO_ATTACK_TIME = 250;
+    long MARIO_ATTACK_DURATION = 250;
 };
 

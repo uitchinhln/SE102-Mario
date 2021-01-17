@@ -10,12 +10,12 @@
 
 RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {
-	this->MARIO_ATTACK_TIME = 250;
+	this->MARIO_ATTACK_DURATION = 250;
 	this->MARIO_SUPER_PUSH_FORCE = MARIO_FLYING_UP_FORCE;
 	this->MARIO_SUPER_JUMP_HEIGHT = 80;
 	this->MAX_FLY_SPEED = 0.405f;
 
-	tail = make_shared<MarioTailed>(mario, MARIO_ATTACK_TIME / 2);
+	tail = make_shared<MarioTailed>(mario, MARIO_ATTACK_DURATION / 2);
 	tail->SetCollisionCalculator(make_shared<CollisionCalculator>(tail));
 }
 
@@ -39,6 +39,9 @@ void RaccoonMario::InitResource(bool force)
 		this->animations["Hold"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold")->Clone();
 		this->animations["HoldIdle"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold-idle")->Clone();
 		this->animations["HoldFall"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-hold-fall")->Clone();
+
+		this->animations["TeleVer"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-idle-front")->Clone();
+		this->animations["TeleHor"] = AnimationManager::GetInstance()->Get("ani-raccoon-mario-walk")->Clone();
 	}
 }
 

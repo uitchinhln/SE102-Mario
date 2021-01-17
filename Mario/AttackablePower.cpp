@@ -25,7 +25,7 @@ void AttackablePower::AttackUpdate()
 			if (attackTimer.Elapsed() < 1) {
 				OnAttackStart();
 			}
-			if (attackTimer.Elapsed() >= MARIO_ATTACK_TIME) {
+			if (attackTimer.Elapsed() >= MARIO_ATTACK_DURATION) {
 				attackTimer.Stop();
 				OnAttackFinish();
 			}
@@ -92,14 +92,19 @@ void AttackablePower::Render()
 			selectedAnimation = animations["Attack"];
 			selectedAnimation->GetTransform()->Scale = Vec2((float)m->GetFacing(), 1);
 			selectedAnimation->GetTransform()->Position = m->GetPosition() - cam;
-			selectedAnimation->Render(attackTimer.Elapsed(), MARIO_ATTACK_TIME);
+			selectedAnimation->Render(attackTimer.Elapsed(), MARIO_ATTACK_DURATION);
 			return;
 		}
 
 		if (m->GetMovingState() == MovingStates::CROUCH) {
 			selectedAnimation = animations["Crouch"];
-		}		
+		}
 
+		if (m->GetWarpState() != WarpStates::NONE) {
+			selectedAnimation = m->GetWarpState() == WarpStates::HORIZONTAL ? animations["TeleHor"] : animations["TeleVer"];
+		}
+
+		if (selectedAnimation == nullptr) return;
 		selectedAnimation->SetPlayScale(max(0.4f, min(abs(m->GetVelocity().x) / MARIO_WALK_SPEED, 4)) * 1.5f);
 		selectedAnimation->GetTransform()->Scale = Vec2((float)m->GetFacing(), 1);
 		selectedAnimation->GetTransform()->Position = m->GetPosition() - cam;

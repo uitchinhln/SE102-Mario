@@ -16,7 +16,9 @@
 
 #include "SolidBlock.h"
 #include "GhostBlock.h"
+#include "VoidBlock.h"
 #include "Pipe.h"
+
 #include "Spawner.h"
 #include "JumpingKoopas.h"
 #include "DefRedKoopas.h"
@@ -25,7 +27,9 @@
 #include "Piranha.h"
 #include "RedGoomba.h"
 #include "Coin.h"
-#include "VoidBlock.h"
+
+#include "BeginPortal.h"
+#include "EndPortal.h"
 
 #include "rapidjson/document.h"
 
@@ -292,6 +296,12 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	}
 
 	//MapObjects
+	if (strcmp(type, MEntityType::BeginPortal.ToString().c_str()) == 0) {
+		SpawnEntity(BeginPortal::CreatePortal(fixedPos, size, props), props);
+	}
+	if (strcmp(type, MEntityType::EndPortal.ToString().c_str()) == 0) {
+		SpawnEntity(EndPortal::CreatePortal(fixedPos, size, props), props);
+	}
 	if (strcmp(type, MEntityType::SolidBlock.ToString().c_str()) == 0) {
 		SpawnEntity(SolidBlock::CreateSolidBlock(fixedPos, size), props);
 	}

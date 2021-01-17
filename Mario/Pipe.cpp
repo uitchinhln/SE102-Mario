@@ -6,7 +6,7 @@
 
 Pipe::Pipe()
 {
-    renderOrder = 500;
+    renderOrder = 1;
 }
 
 ObjectType Pipe::GetObjectType()

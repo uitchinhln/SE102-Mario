@@ -117,6 +117,9 @@ void MarioPowerUp::StatusUpdate()
 						koopas->SetHolder(m);
 						continue;
 					}
+					else {
+						m->SetKickCountDown(150);
+					}
 				}
 
 				float damage = coll->Object->GetDamageFor(*m, coll->SAABBResult.Direction);
@@ -198,6 +201,8 @@ void MarioPowerUp::MoveProcess()
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
+		if (m->IsControllerLocked()) return;
+
 		if (keyboard.IsKeyDown(DIK_LEFT) || keyboard.IsKeyDown(DIK_RIGHT)) {
 			int keySign = keyboard.IsKeyDown(DIK_LEFT) ? -1 : 1;
 
@@ -305,6 +310,8 @@ void MarioPowerUp::JumpProcess()
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
+		if (m->IsControllerLocked()) return;
+
 		float jumpHeight = MARIO_JUMP_HEIGHT;
 		float minJumpHeight = MARIO_MIN_JUMP_HEIGHT;
 		float height = 0;
@@ -351,6 +358,7 @@ void MarioPowerUp::CrouchUpdate()
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
+		if (m->IsControllerLocked()) return;
 		if (keyboard.IsKeyDown(DIK_DOWN)) {
 			if (m->GetJumpingState() == JumpingStates::IDLE && !m->GetInhand()) {
 				m->SetMovingState(MovingStates::CROUCH);
@@ -384,6 +392,12 @@ void MarioPowerUp::Update()
 
 		m->GetVelocity().y += m->GetGravity() * (float)dt;
 		m->GetDistance() = m->GetVelocity() * (float)dt;
+
+		if (CGame::GetInstance()->GetKeyBoard().IsKeyUp(DIK_A)) {
+			m->DropShell();
+		}
+
+		m->GetKickCountDown() -= dt;
 	}
 }
 
@@ -451,6 +465,10 @@ void MarioPowerUp::MoveAnimation()
 				break;
 			}
 
+			if (m->GetKickCountDown() > 0) {
+				selectedAnimation = animations["Kick"];
+			}
+
 			if (m->GetInhand()) {
 				selectedAnimation = animations["Hold"];
 			}
@@ -468,6 +486,10 @@ void MarioPowerUp::Render()
 
 		if (m->GetMovingState() == MovingStates::CROUCH) {
 			selectedAnimation = animations["Crouch"];
+		}
+
+		if (m->GetWarpState() != WarpStates::NONE) {
+			selectedAnimation = m->GetWarpState() == WarpStates::HORIZONTAL ? animations["TeleHor"] : animations["TeleVer"];
 		}
 
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;

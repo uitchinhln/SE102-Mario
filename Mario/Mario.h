@@ -20,6 +20,12 @@ enum class JumpingStates {
 	FLOATING
 };
 
+enum class WarpStates {
+	NONE,
+	VERTICAL,
+	HORIZONTAL
+};
+
 [event_receiver(native)]
 class Mario : 
 	public GameObject,
@@ -31,11 +37,15 @@ protected:
 #pragma region Physic Data
 	bool controllable = true;
 
+	bool sliding = false;
+
 	bool onGround = true;
 
 	float drag = 0;
 
 	int skid = 0;
+
+	int kickCountDown = 0;
 
 	float jumpBeginPos = 0;
 
@@ -46,6 +56,8 @@ protected:
 	MovingStates movingState = MovingStates::IDLE;
 
 	JumpingStates jumpingState = JumpingStates::IDLE;
+
+	WarpStates warpState = WarpStates::NONE;
 
 	shared_ptr<MarioPowerUp> powerUp;
 
@@ -73,6 +85,8 @@ public:
 
 	virtual void OverlapUpdate();
 
+	virtual void OverlapUpdateOriginal();
+
 	virtual void StatusUpdate() override;
 
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
@@ -87,9 +101,11 @@ public:
 
 	virtual shared_ptr<RayCast> GetRayCaster();
 
-	virtual bool IsLockController();
+	virtual bool IsControllerLocked();
 
 	virtual void SetLockController(bool value = true);
+
+	virtual void DropShell();
 
 	virtual void ClearInhand();
 
@@ -104,6 +120,10 @@ public:
 	virtual int& GetSkid();
 
 	virtual void SetSkid(int skid);
+
+	virtual int& GetKickCountDown();
+
+	virtual void SetKickCountDown(int duration);
 
 	virtual float& GetJumpBeginPosition();
 
@@ -130,6 +150,10 @@ public:
 	virtual JumpingStates& GetJumpingState();
 
 	virtual void SetJumpingState(JumpingStates state);
+
+	virtual WarpStates& GetWarpState();
+
+	virtual void SetWarpState(WarpStates state);
 
 	virtual ObjectType GetObjectType();
 

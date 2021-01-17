@@ -49,6 +49,8 @@ public:
 	static const ObjectType Coin;
 	static const ObjectType Brick;
 
+	static const ObjectType BeginPortal;
+	static const ObjectType EndPortal;
 
 	static bool IsTile(ObjectType);
 
