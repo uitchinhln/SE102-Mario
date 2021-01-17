@@ -16,7 +16,7 @@ DefaultKoopas::DefaultKoopas(shared_ptr<Koopas> koopas)
 
 	koopas->GetDestroyTimer().Stop();
 
-	koopas->GetLiveState() = KoopasLiveStates::ALIVE;
+	koopas->GetLiveState() = KoopasLifeStates::ALIVE;
 
 	DWORD dt = CGame::Time().ElapsedGameTime;
 	koopas->SetFacing(-1);
@@ -40,7 +40,7 @@ void DefaultKoopas::InitResource(bool force)
 void DefaultKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
+		if (k->GetLiveState() == KoopasLifeStates::DIE) return;
 
 		k->GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
 	}
@@ -49,7 +49,7 @@ void DefaultKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 void DefaultKoopas::PositionUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::ALIVE) {
+		if (k->GetLiveState() == KoopasLifeStates::ALIVE) {
 			shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 			k->GetUpdatedDistance() = collisionCal->GetClampDistance();
 		}
@@ -63,12 +63,12 @@ void DefaultKoopas::PositionUpdate()
 void DefaultKoopas::StatusUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
+		if (k->GetLiveState() == KoopasLifeStates::DIE) return;
 
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 
 		if (collisionCal->HasOverlapped()) {
-			k->GetLiveState() = KoopasLiveStates::DIE;
+			k->GetLiveState() = KoopasLifeStates::DIE;
 			k->SetVelocity(Vec2(0 * 0.1f, -0.6f));
 			KP_DESTROY_DELAY = 3000;
 
@@ -104,7 +104,7 @@ void DefaultKoopas::StatusUpdate()
 					}
 					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
-						k->GetLiveState() = KoopasLiveStates::DIE;
+						k->GetLiveState() = KoopasLifeStates::DIE;
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
 						KP_DESTROY_DELAY = 3000;
 
@@ -156,7 +156,7 @@ void DefaultKoopas::Render()
 
 		Animation ani = this->animations["Move"];
 
-		if (k->GetLiveState() == KoopasLiveStates::DIE) {
+		if (k->GetLiveState() == KoopasLifeStates::DIE) {
 			ani = this->animations["Die"];
 		}
 
@@ -186,11 +186,11 @@ RectF DefaultKoopas::GetHitBox()
 float DefaultKoopas::GetDamageFor(GameObject& object, Direction direction)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if ((k->GetLiveState() == KoopasLiveStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5)
+		if ((k->GetLiveState() == KoopasLifeStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5)
 			&& MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
 			return 1.0f;
 		}
-		if ((k->GetLiveState() == KoopasLiveStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5) 
+		if ((k->GetLiveState() == KoopasLifeStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5) 
 			&& MEntityType::IsMarioWeapon(object.GetObjectType())) {
 			return 1.0f;
 		}

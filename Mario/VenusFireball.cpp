@@ -83,12 +83,6 @@ void VenusFireball::Update()
 void VenusFireball::FinalUpdate()
 {
 	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
-
-	RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
-	if (Position.x < cam.left || Position.y < cam.top || Position.x > cam.right || Position.y > cam.bottom) {
-		//SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
-		this->active = false;
-	}
 }
 
 void VenusFireball::Render()
@@ -122,4 +116,9 @@ float VenusFireball::GetDamageFor(GameObject& object, Direction direction)
 	if (MEntityType::IsMario(object.GetObjectType()))
 		return 1.0f;
 	return 0.0f;
+}
+
+void VenusFireball::OnLostCamera()
+{
+	SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 }

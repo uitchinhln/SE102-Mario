@@ -55,11 +55,6 @@ void RaccoonLeaf::StatusUpdate()
 			}
 		}
 	}
-
-	Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
-	if (GetPosition().x < 0.3 - size.x || GetPosition().y < 0.3 - size.y || GetPosition().x > mapBound.x || GetPosition().y > mapBound.y) {
-		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
-	}
 }
 
 void RaccoonLeaf::Update()
@@ -84,7 +79,7 @@ void RaccoonLeaf::Update()
 		break;
 	case 1:
 		this->GetGravity() = LEAF_GRAVITY;
-		this->renderOrder = 1500;
+		this->renderOrder = 1501;
 
 		if (abs(Position.x - rootPos.x) >= LEAF_REVEAL_DISTANCE) {
 			facing = -facing;
@@ -141,6 +136,11 @@ bool RaccoonLeaf::IsGetThrough(GameObject& object, Direction direction)
 float RaccoonLeaf::GetDamageFor(GameObject& object, Direction direction)
 {
 	return 0.0f;
+}
+
+void RaccoonLeaf::OnLostCamera()
+{
+	SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 }
 
 shared_ptr<RaccoonLeaf> RaccoonLeaf::CreateRaccoonLeaf(Vec2 pos)

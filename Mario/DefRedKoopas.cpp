@@ -17,7 +17,7 @@ DefRedKoopas::DefRedKoopas(shared_ptr<Koopas> koopas)
 
 	koopas->GetDestroyTimer().Stop();
 
-	koopas->GetLiveState() = KoopasLiveStates::ALIVE;
+	koopas->GetLiveState() = KoopasLifeStates::ALIVE;
 
 	DWORD dt = CGame::Time().ElapsedGameTime;
 	koopas->SetFacing(1);
@@ -42,7 +42,7 @@ void DefRedKoopas::InitResource(bool force)
 void DefRedKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
+		if (k->GetLiveState() == KoopasLifeStates::DIE) return;
 
 		if (k->OnGround) {
 			//auto start = std::chrono::high_resolution_clock::now();
@@ -105,7 +105,7 @@ void DefRedKoopas::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 void DefRedKoopas::PositionUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::ALIVE) {
+		if (k->GetLiveState() == KoopasLifeStates::ALIVE) {
 			shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 			k->GetUpdatedDistance() = collisionCal->GetClampDistance();
 		}
@@ -119,12 +119,12 @@ void DefRedKoopas::PositionUpdate()
 void DefRedKoopas::StatusUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
+		if (k->GetLiveState() == KoopasLifeStates::DIE) return;
 
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 
 		if (collisionCal->HasOverlapped()) {
-			k->GetLiveState() = KoopasLiveStates::DIE;
+			k->GetLiveState() = KoopasLifeStates::DIE;
 			k->SetVelocity(Vec2(0 * 0.1f, -0.6f));
 			KP_DESTROY_DELAY = 3000;
 
@@ -162,7 +162,7 @@ void DefRedKoopas::StatusUpdate()
 					}
 					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
-						k->GetLiveState() = KoopasLiveStates::DIE;
+						k->GetLiveState() = KoopasLifeStates::DIE;
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
 						KP_DESTROY_DELAY = 3000;
 

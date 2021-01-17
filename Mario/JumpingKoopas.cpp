@@ -13,7 +13,7 @@ JumpingKoopas::JumpingKoopas(shared_ptr<Koopas> koopas) : DefaultKoopas()
 	
 	koopas->GetDestroyTimer().Stop();
 
-	koopas->GetLiveState() = KoopasLiveStates::ALIVE;
+	koopas->GetLiveState() = KoopasLifeStates::ALIVE;
 
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
@@ -54,12 +54,12 @@ void JumpingKoopas::Update()
 void JumpingKoopas::StatusUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
+		if (k->GetLiveState() == KoopasLifeStates::DIE) return;
 
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 
 		if (collisionCal->HasOverlapped()) {
-			k->GetLiveState() = KoopasLiveStates::DIE;
+			k->GetLiveState() = KoopasLifeStates::DIE;
 			k->SetVelocity(Vec2(0 * 0.1f, -0.6f));
 			KP_DESTROY_DELAY = 3000;
 
@@ -102,7 +102,7 @@ void JumpingKoopas::StatusUpdate()
 					}
 					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
-						k->GetLiveState() = KoopasLiveStates::DIE;
+						k->GetLiveState() = KoopasLifeStates::DIE;
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
 						KP_DESTROY_DELAY = 3000;
 
@@ -132,7 +132,7 @@ void JumpingKoopas::Render()
 
 		Animation ani = this->animations["Move"];
 
-		if (k->GetLiveState() == KoopasLiveStates::DIE) {
+		if (k->GetLiveState() == KoopasLifeStates::DIE) {
 			ani = this->animations["Die"];
 		}
 

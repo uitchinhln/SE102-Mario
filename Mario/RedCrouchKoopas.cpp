@@ -30,7 +30,7 @@ void RedCrouchKoopas::InitResource(bool force)
 void RedCrouchKoopas::StatusUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
+		if (k->GetLiveState() == KoopasLifeStates::DIE) return;
 
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 		vector<shared_ptr<CollisionResult>> coResult = collisionCal->GetLastResults();
@@ -83,7 +83,7 @@ void RedCrouchKoopas::StatusUpdate()
 					}
 					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
-						k->GetLiveState() = KoopasLiveStates::DIE;
+						k->GetLiveState() = KoopasLifeStates::DIE;
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
 						KP_DESTROY_DELAY = 3000;
 
@@ -124,10 +124,10 @@ void RedCrouchKoopas::FinalUpdate()
 		}
 
 		if (k->GetDestroyTimer().IsRunning()) {
-			k->GetLiveState() = KoopasLiveStates::DIE;
+			k->GetLiveState() = KoopasLifeStates::DIE;
 		}
 
-		if (k->GetLiveState() == KoopasLiveStates::DIE) {
+		if (k->GetLiveState() == KoopasLifeStates::DIE) {
 			if (shared_ptr<Mario> m = k->GetHolder().lock()) {
 				m->ClearInhand();
 			}

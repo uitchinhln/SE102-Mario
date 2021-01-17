@@ -164,24 +164,26 @@ void MarioPowerUp::StatusUpdate()
 				ObjectType mPower = m->GetObjectType();
 				Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
 
-				if (power == MEntityType::RedMushroom) {
+				if (power == MEntityType::GreenMushroom) {
+					//Tang mang
+				}
+				else {
 					if (mPower == MEntityType::SmallMario) {
 						m->SetPowerUp(make_shared<BigMario>(m));
 					}
 					else {
-						//Tang tien
+						if (power == MEntityType::RedMushroom) {
+							//Tang tien
+						}
+						if (power == MEntityType::RaccoonLeaf) {
+							if (mPower != MEntityType::RaccoonMario) {
+								m->SetPowerUp(make_shared<RaccoonMario>(m));
+							}
+							else {
+								//Tang tien
+							}
+						}
 					}
-				}
-				if (power == MEntityType::RaccoonLeaf) {
-					if (mPower != MEntityType::RaccoonMario) {
-						m->SetPowerUp(make_shared<RaccoonMario>(m));
-					}
-					else {
-						//Tang tien
-					}
-				}
-				if (power == MEntityType::GreenMushroom) {
-					//Tang mang
 				}
 
 				m->GetPosition().x = fixPos.x;

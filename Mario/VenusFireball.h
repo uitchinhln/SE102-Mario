@@ -34,6 +34,8 @@ public:
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
+	virtual void OnLostCamera();
+
 protected:
 	Vec2 size = Vec2(24, 24);
 	RectF hitbox;

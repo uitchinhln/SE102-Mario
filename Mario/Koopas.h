@@ -5,20 +5,21 @@
 
 class Mario;
 
-enum class KoopasLiveStates {
+enum class KoopasLifeStates {
 	ALIVE,
 	DIE
 };
 
 class Koopas :
-    public GameObject
+    public GameObject,
+	public enable_shared_from_this<Koopas>
 {
 public:
 	Koopas();
 	
 	virtual Stopwatch& GetDestroyTimer();
 
-	virtual KoopasLiveStates& GetLiveState();
+	virtual KoopasLifeStates& GetLiveState();
 
 	virtual weak_ptr<Mario> GetHolder();
 
@@ -48,6 +49,8 @@ public:
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
+	virtual void OnLostCamera() override;
+
 	static shared_ptr<Koopas> CreateKoopas(Vec2 fixedPos = Vec2(100, 100));
 
 	~Koopas();
@@ -57,7 +60,7 @@ protected:
 
 	shared_ptr<DefaultKoopas> power;
 
-	KoopasLiveStates state;
+	KoopasLifeStates state;
 
 	Stopwatch destroyTimer;
 

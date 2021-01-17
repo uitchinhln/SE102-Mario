@@ -3,6 +3,7 @@
 #include "AnimationManager.h"
 #include "CrouchKoopas.h"
 #include "Mario.h"
+#include "SceneManager.h"
 
 Koopas::Koopas()
 {
@@ -14,7 +15,7 @@ Stopwatch& Koopas::GetDestroyTimer()
 	return destroyTimer;
 }
 
-KoopasLiveStates& Koopas::GetLiveState()
+KoopasLifeStates& Koopas::GetLiveState()
 {
 	return state;
 }
@@ -26,7 +27,7 @@ weak_ptr<Mario> Koopas::GetHolder()
 
 void Koopas::SetHolder(shared_ptr<Mario> holder)
 {
-	if (state == KoopasLiveStates::DIE) {
+	if (state == KoopasLifeStates::DIE) {
 		holder->ClearInhand();
 		return;
 	}
@@ -97,12 +98,19 @@ bool Koopas::IsGetThrough(GameObject& object, Direction direction)
 	//bool koopasImp = object.GetObjectType() == MEntityType::KoopasImposter;
 	bool notKoopas = object.GetObjectType() != MEntityType::Koopas;
 	bool notKoopasCrouch = object.GetObjectType() != MEntityType::KoopasCrouch;
-	return state == KoopasLiveStates::DIE || ((notKoopas && notKoopasCrouch) && MEntityType::IsEnemy(object.GetObjectType()));
+	return state == KoopasLifeStates::DIE || ((notKoopas && notKoopasCrouch) && MEntityType::IsEnemy(object.GetObjectType()));
 }
 
 float Koopas::GetDamageFor(GameObject& object, Direction direction)
 {
 	return power->GetDamageFor(object, direction);
+}
+
+void Koopas::OnLostCamera()
+{
+	if (state == KoopasLifeStates::DIE) {
+		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+	}
 }
 
 shared_ptr<Koopas> Koopas::CreateKoopas(Vec2 fixedPos)
@@ -117,5 +125,5 @@ shared_ptr<Koopas> Koopas::CreateKoopas(Vec2 fixedPos)
 
 Koopas::~Koopas()
 {
-	//DebugOut(L"Huy koopas\n");
+	DebugOut(L"Huy koopas\n");
 }

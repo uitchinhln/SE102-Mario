@@ -14,7 +14,7 @@ CrouchKoopas::CrouchKoopas(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas
 
 	koopas->GetDestroyTimer().Stop();
 
-	koopas->GetLiveState() = KoopasLiveStates::ALIVE;
+	koopas->GetLiveState() = KoopasLifeStates::ALIVE;
 
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
@@ -58,10 +58,10 @@ void CrouchKoopas::FinalUpdate()
 		}
 
 		if (k->GetDestroyTimer().IsRunning()) {
-			k->GetLiveState() = KoopasLiveStates::DIE;
+			k->GetLiveState() = KoopasLifeStates::DIE;
 		}
 
-		if (k->GetLiveState() == KoopasLiveStates::DIE) {
+		if (k->GetLiveState() == KoopasLifeStates::DIE) {
 			if (shared_ptr<Mario> m = k->GetHolder().lock()) {
 				m->ClearInhand();
 			}
@@ -74,7 +74,7 @@ void CrouchKoopas::HeldUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
 		if (shared_ptr<Mario> m = k->GetHolder().lock()) {
-			if (k->GetLiveState() == KoopasLiveStates::DIE) {
+			if (k->GetLiveState() == KoopasLifeStates::DIE) {
 				m->ClearInhand();
 				k->ClearHolder();
 				return;
@@ -111,7 +111,7 @@ void CrouchKoopas::Update()
 void CrouchKoopas::StatusUpdate()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::DIE) return;
+		if (k->GetLiveState() == KoopasLifeStates::DIE) return;
 
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 		vector<shared_ptr<CollisionResult>> coResult = collisionCal->GetLastResults();
@@ -164,7 +164,7 @@ void CrouchKoopas::StatusUpdate()
 					}
 					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
-						k->GetLiveState() = KoopasLiveStates::DIE;
+						k->GetLiveState() = KoopasLifeStates::DIE;
 						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
 						KP_DESTROY_DELAY = 3000;
 
@@ -226,7 +226,7 @@ ObjectType CrouchKoopas::GetObjectType()
 float CrouchKoopas::GetDamageFor(GameObject& object, Direction direction)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLiveStates::DIE && k->GetDestroyTimer().Elapsed() > 5) return 0.0f;
+		if (k->GetLiveState() == KoopasLifeStates::DIE && k->GetDestroyTimer().Elapsed() > 5) return 0.0f;
 
 		if (MEntityType::IsEnemy(object.GetObjectType()) && k->GetHolder().lock()) {
 			return 999.0f;

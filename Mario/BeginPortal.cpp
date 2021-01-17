@@ -47,6 +47,11 @@ void BeginPortal::Update()
 
                 if (hitbox.top > Position.y + 1) {
                     mario->SetPosition(destination);
+                    shared_ptr<GameObject> passenger = mario->GetInhand();
+                    if (passenger) {
+                        passenger->SetPosition(destination);
+                        SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(passenger);
+                    }
 
                     SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetActiveBound(cameraBoundId);
                     SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetLocking(false);
@@ -58,6 +63,11 @@ void BeginPortal::Update()
 
                 if (hitbox.bottom < this->hitbox.bottom - 1) {
                     mario->SetPosition(destination);
+                    shared_ptr<GameObject> passenger = mario->GetInhand();
+                    if (passenger) {
+                        passenger->SetPosition(destination);
+                        SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(passenger);
+                    }
 
                     SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetActiveBound(cameraBoundId);
                     SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetLocking(false);

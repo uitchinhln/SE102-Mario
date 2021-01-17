@@ -22,12 +22,12 @@ void Mario::OnKeyUp(int key)
 		DropShell();
 		break;
 	case DIK_Q:
-		SceneManager::GetInstance()->GetActiveScene()->SpawnEntityWithoutGrid(Goomba::CreateGoomba(Position - Vec2(0, 230)));
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(Goomba::CreateGoomba(Position - Vec2(0, 230)));
 		break;
 	case DIK_D:
 		shared_ptr<Koopas> kp = Koopas::CreateKoopas(Position - Vec2(0, 230));
 		kp->SetPower(make_shared<CrouchKoopas>(kp));
-		SceneManager::GetInstance()->GetActiveScene()->SpawnEntityWithoutGrid(kp);
+		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(kp);
 		break;
 	}
 }
@@ -236,7 +236,7 @@ void Mario::OverlapUpdateOriginal()
 			return !MEntityType::IsTile(obj->GetObjectType());
 			});
 
-		raycaster->Shoot(headPoint, Direction::Right, 680, headResult);
+		raycaster->Shoot(headPoint, Direction::Right, 480, headResult);
 
 		raycaster->MergeBox(headResult, Direction::Right, marioWidth - 0.0001, headBoxes);
 

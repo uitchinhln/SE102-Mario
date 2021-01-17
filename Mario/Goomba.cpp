@@ -93,14 +93,6 @@ void Goomba::StatusUpdate()
 			}
 		}
 	}
-
-	Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
-	if (GetPosition().x < 0.3 - size.x || GetPosition().y < 0.3 - size.y || GetPosition().x > mapBound.x || GetPosition().y > mapBound.y) {
-		GB_DESTROY_DELAY = 100;
-		if (!destroyTimer.IsRunning()) {
-			destroyTimer.Restart();
-		}
-	}
 }
 
 void Goomba::Update()
@@ -190,7 +182,7 @@ shared_ptr<Goomba> Goomba::CreateGoomba(Vec2 fixedPos)
 
 Goomba::~Goomba()
 {
-	//DebugOut(L"Huy goomba\n");
+	DebugOut(L"Huy goomba\n");
 }
 
 void Goomba::OnLostCamera()

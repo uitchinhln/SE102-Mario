@@ -15,7 +15,7 @@ Venus::Venus()
 	this->Distance.y = 0;
 	this->Distance.y = 0;
 
-	this->shootTimer.Start();
+	this->shootTimer.Stop();
 	this->movementTimer.Start();
 }
 

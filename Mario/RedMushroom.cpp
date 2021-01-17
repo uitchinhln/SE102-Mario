@@ -79,6 +79,7 @@ void RedMushroom::Update()
         this->GetGravity() = MUSHROOM_GRAVITY;
         player = SceneManager::GetInstance()->GetPlayer<Mario>();
         Velocity.x = MUSHROOM_SPEED * (player->GetPosition().x < Position.x ? 1 : -1);
+        renderOrder = 1501;
         movingStep = 2;
         break;
     default:        
