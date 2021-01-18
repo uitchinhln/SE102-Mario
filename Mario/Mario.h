@@ -5,6 +5,7 @@
 #include "RayCast.h"
 #include "MarioUtils.h"
 #include "IEffect.h"
+#include "StopWatch.h"
 
 enum class MovingStates {
 	IDLE,
@@ -44,6 +45,10 @@ protected:
 	bool onGround = true;
 
 	bool death = false;
+
+	long freezeTime = 0;
+
+	Stopwatch freezeTimer = Stopwatch(TimeMode::SYSTEM_TIME);
 
 	float drag = 0;
 

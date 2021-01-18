@@ -15,6 +15,9 @@
 #include "CrouchKoopas.h"
 #include "ScoreFX.h"
 #include "MarioDeathFX.h"
+#include "GrowUpFX.h"
+#include "ShrinkDownFX.h"
+#include "TransformFX.h"
 
 void Mario::OnKeyUp(int key)
 {
@@ -133,12 +136,41 @@ Mario::Mario() : GameObject()
 	this->Gravity = 0.00093f;
 	this->renderOrder = 1001;
 	this->raycaster = make_shared<RayCast>();
+	this->freezeTimer.Stop();
 	HookEvent();
 }
 
 void Mario::SetPowerUp(shared_ptr<MarioPower> power)
 {
+	if (power == nullptr) return;
+	if (this->power == nullptr) {
+		this->power = power;
+		return;
+	}
+
+	ObjectType cur = this->power->GetMarioType();
+	ObjectType next = power->GetMarioType();
+
 	this->power = power;
+
+	if (cur == next) return;
+
+	if (cur == MEntityType::SmallMario) {
+		EffectServer::GetInstance()->SpawnEffect(make_shared<GrowUpFX>(Position, shared_from_this()));
+		freezeTime = 1440;
+	}
+	else if (next == MEntityType::SmallMario) {
+		EffectServer::GetInstance()->SpawnEffect(make_shared<ShrinkDownFX>(Position, shared_from_this()));
+		freezeTime = 1620;
+	}
+	else {
+		EffectServer::GetInstance()->SpawnEffect(make_shared<TransformFX>(Position, shared_from_this()));
+		freezeTime = 600;
+	}
+
+	Visible = false;
+	freezeTimer.Restart();
+	CGame::GetInstance()->SetTimeScale(0.0f);
 }
 
 void Mario::InitResource()
@@ -347,6 +379,13 @@ void Mario::FinalUpdate()
 
 void Mario::Update()
 {
+	if (freezeTimer.IsRunning() && freezeTimer.Elapsed() > freezeTime) {
+		freezeTimer.Stop();
+
+		CGame::GetInstance()->SetTimeScale(1.0f);
+		Visible = true;
+	}
+
 	if (!controllable) return;
 	shared_ptr<MarioPower> p = power;
 	p->Update();

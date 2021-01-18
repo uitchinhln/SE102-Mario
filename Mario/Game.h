@@ -23,6 +23,10 @@ public:
 
 	static GameTime Time();
 
+	float GetTimeScale();
+
+	void SetTimeScale(float value);
+
 	static CGame* GetInstance();
 	~CGame();
 
@@ -38,6 +42,8 @@ protected:
 	void Init(GameProperties properties);
 
 	static CGame* __instance;
+
+	float timescale = 1.0f;
 
 private:
 

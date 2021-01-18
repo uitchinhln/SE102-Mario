@@ -55,8 +55,8 @@ int CGame::Run()
 		if (accumulatedTime >= tickPerFrame)
 		{
 			//auto start = std::chrono::high_resolution_clock::now();
-			gameTime.ElapsedGameTime = accumulatedTime;
-			gameTime.TotalGameTime += accumulatedTime;
+			gameTime.ElapsedGameTime = accumulatedTime * this->timescale;
+			gameTime.TotalGameTime += accumulatedTime * this->timescale;
 			gameTime.SetPreviousTicks(now);
 
 			keyboard->ProcessKeyboard();
@@ -99,6 +99,16 @@ KeyboardProcessor& CGame::GetKeyBoard()
 GameTime CGame::Time()
 {
 	return gameTime;
+}
+
+float CGame::GetTimeScale()
+{
+	return timescale;
+}
+
+void CGame::SetTimeScale(float value)
+{
+	this->timescale = value;
 }
 
 CGame* CGame::GetInstance()

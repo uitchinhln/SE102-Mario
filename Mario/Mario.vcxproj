@@ -169,6 +169,7 @@
     <ClCompile Include="GoombaExplodeFX.cpp" />
     <ClCompile Include="GreenMushroom.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="GrowUpFX.cpp" />
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="IEffect.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="MapProperties.cpp" />
     <ClCompile Include="MarioDeathFX.cpp" />
     <ClCompile Include="MarioFireBall.cpp" />
+    <ClCompile Include="MarioFX.cpp" />
     <ClCompile Include="MarioTailed.cpp" />
     <ClCompile Include="HitStarFX.cpp" />
     <ClCompile Include="MarioUtils.cpp" />
@@ -230,6 +232,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ScoreFX.cpp" />
+    <ClCompile Include="ShrinkDownFX.cpp" />
     <ClCompile Include="Small.cpp" />
     <ClCompile Include="SmokeSpotFX.cpp" />
     <ClCompile Include="SolidBlock.cpp" />
@@ -247,6 +250,7 @@
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="TransformFX.cpp" />
     <ClCompile Include="UIComponents.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vec2Utils.cpp" />
@@ -280,6 +284,7 @@
     <ClInclude Include="GoombaExplodeFX.h" />
     <ClInclude Include="GreenMushroom.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="GrowUpFX.h" />
     <ClInclude Include="Hud.h" />
     <ClInclude Include="IEffect.h" />
     <ClInclude Include="IEnviroment.h" />
@@ -292,6 +297,7 @@
     <ClInclude Include="MapProperties.h" />
     <ClInclude Include="MarioDeathFX.h" />
     <ClInclude Include="MarioFireBall.h" />
+    <ClInclude Include="MarioFX.h" />
     <ClInclude Include="MarioTailed.h" />
     <ClInclude Include="HitStarFX.h" />
     <ClInclude Include="MarioUtils.h" />
@@ -376,6 +382,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ScoreFX.h" />
+    <ClInclude Include="ShrinkDownFX.h" />
     <ClInclude Include="Small.h" />
     <ClInclude Include="SmokeSpotFX.h" />
     <ClInclude Include="SolidBlock.h" />
@@ -391,6 +398,7 @@
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="TransformFX.h" />
     <ClInclude Include="UIComponents.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vec2Utils.h" />

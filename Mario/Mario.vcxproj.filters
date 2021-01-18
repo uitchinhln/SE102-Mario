@@ -214,6 +214,18 @@
     <Filter Include="MarioGame\Effects\MarioEffects">
       <UniqueIdentifier>{27806c20-4a4e-4d65-a2bf-c5ce6e50339f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Effects\MarioEffects\DeathFX">
+      <UniqueIdentifier>{779902f0-9f8c-4808-9a15-431d6d994417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\MarioEffects\GrowUpFX">
+      <UniqueIdentifier>{f6253ee9-946e-491e-b211-ae3f9ca97de7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\MarioEffects\ShrinkDownFX">
+      <UniqueIdentifier>{630443af-563a-47b1-b781-51ee2eee3d10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\MarioEffects\TransformFX">
+      <UniqueIdentifier>{c4567535-a4f7-454f-95c2-f7d2b324567a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -540,7 +552,21 @@
     <ClCompile Include="GameEvent.cpp">
       <Filter>MarioGame\Event</Filter>
     </ClCompile>
-    <ClCompile Include="MarioDeathFX.cpp" />
+    <ClCompile Include="MarioDeathFX.cpp">
+      <Filter>MarioGame\Effects\MarioEffects\DeathFX</Filter>
+    </ClCompile>
+    <ClCompile Include="GrowUpFX.cpp">
+      <Filter>MarioGame\Effects\MarioEffects\GrowUpFX</Filter>
+    </ClCompile>
+    <ClCompile Include="ShrinkDownFX.cpp">
+      <Filter>MarioGame\Effects\MarioEffects\ShrinkDownFX</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformFX.cpp">
+      <Filter>MarioGame\Effects\MarioEffects\TransformFX</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioFX.cpp">
+      <Filter>MarioGame\Effects\MarioEffects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -966,6 +992,20 @@
     <ClInclude Include="GameEvent.h">
       <Filter>MarioGame\Event</Filter>
     </ClInclude>
-    <ClInclude Include="MarioDeathFX.h" />
+    <ClInclude Include="MarioDeathFX.h">
+      <Filter>MarioGame\Effects\MarioEffects\DeathFX</Filter>
+    </ClInclude>
+    <ClInclude Include="GrowUpFX.h">
+      <Filter>MarioGame\Effects\MarioEffects\GrowUpFX</Filter>
+    </ClInclude>
+    <ClInclude Include="ShrinkDownFX.h">
+      <Filter>MarioGame\Effects\MarioEffects\ShrinkDownFX</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformFX.h">
+      <Filter>MarioGame\Effects\MarioEffects\TransformFX</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioFX.h">
+      <Filter>MarioGame\Effects\MarioEffects</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

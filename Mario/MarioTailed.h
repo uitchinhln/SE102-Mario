@@ -16,6 +16,8 @@ public:
 
 	virtual void MovingUpdate();
 
+	virtual bool HasCollideWith(DWORD id) override;
+
 	virtual void Update() override;
 
 	virtual void PositionUpdate() override;

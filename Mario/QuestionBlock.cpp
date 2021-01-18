@@ -89,6 +89,7 @@ bool QuestionBlock::HasCollideWith(DWORD id)
 void QuestionBlock::StatusUpdate()
 {
 	if (state == QuestionBlockStates::Gifting) {
+
 		state = QuestionBlockStates::Unavailable;
 
 		if (reward == MEntityType::QuestionCoin) return;
@@ -99,18 +100,18 @@ void QuestionBlock::StatusUpdate()
 			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(PSwitch::CreatePSwitch(Position));
 		} 
 		else if (reward == MEntityType::GreenMushroom) {
-			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(GreenMushroom::CreateGreenMushroom(Position));
+			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(GreenMushroom::CreateGreenMushroom(Position + Vec2(2, 0)));
 		}
 		else if (mario->GetObjectType() != MEntityType::SmallMario) {
 			if (reward == MEntityType::RedMushroom) {
-				SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
+				SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position + Vec2(2, 0)));
 			}
 			if (reward == MEntityType::RaccoonLeaf) {
-				SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RaccoonLeaf::CreateRaccoonLeaf(Position));
+				SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RaccoonLeaf::CreateRaccoonLeaf(Position + Vec2(2, 0)));
 			}
 		}
 		else {
-			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
+			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position + Vec2(2, 0)));
 		}
 	}
 

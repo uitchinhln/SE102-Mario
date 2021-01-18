@@ -50,6 +50,11 @@ void MarioTailed::MovingUpdate()
 	}
 }
 
+bool MarioTailed::HasCollideWith(DWORD id)
+{
+	return true;
+}
+
 void MarioTailed::Update()
 {
 	if (!attackTimer.IsRunning()) {
