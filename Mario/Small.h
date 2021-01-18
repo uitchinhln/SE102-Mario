@@ -11,6 +11,11 @@ public:
 	virtual void CrouchUpdate() override;
 
 	virtual ObjectType GetMarioType() override;
+
+
+	virtual void OnDamaged(float damage) override;
+
+	virtual void OnPowerUp(ObjectType powerType) override;
 protected:
 	
 };

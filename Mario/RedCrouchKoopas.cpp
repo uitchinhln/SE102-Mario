@@ -34,6 +34,19 @@ void RedCrouchKoopas::StatusUpdate()
 		if (k->GetLiveState() == KoopasLifeStates::DIE) return;
 
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
+
+		if (collisionCal->HasOverlapped()) {
+			if (!k->GetHolder().lock()) {
+				k->GetLiveState() = KoopasLifeStates::DIE;
+				OnDeath(Vec2(0 * 0.1f, -0.6f));
+
+				//Giet rua
+				shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+				__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+			}
+			return;
+		}
+
 		vector<shared_ptr<CollisionResult>> coResult = collisionCal->GetLastResults();
 
 		if (coResult.size() != 0)

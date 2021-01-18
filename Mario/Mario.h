@@ -43,6 +43,8 @@ protected:
 
 	bool onGround = true;
 
+	bool death = false;
+
 	float drag = 0;
 
 	int skid = 0;
@@ -159,14 +161,22 @@ public:
 
 	virtual ObjectType GetObjectType();
 
+	bool IsGetThrough(GameObject& object, Direction direction) override;
+
+	virtual float GetDamageFor(GameObject& object, Direction direction) override;
+
+
+
 	virtual void OnKeyUp(int key);
 
 	virtual void OnKeyDown(int key);
 
 	virtual void OnGetBonus(const char* source, shared_ptr<IEffect>& effect, Score score);
 
-	bool IsGetThrough(GameObject& object, Direction direction) override;
+	virtual void OnDeath();
 
-	virtual float GetDamageFor(GameObject& object, Direction direction) override;
+	virtual void OnDamaged(float damage);
+
+	virtual void OnPowerUp(ObjectType powerType);
 };
 

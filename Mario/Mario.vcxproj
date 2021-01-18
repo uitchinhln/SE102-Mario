@@ -179,6 +179,7 @@
     <ClCompile Include="KoopasDieFX.cpp" />
     <ClCompile Include="MapBlock.cpp" />
     <ClCompile Include="MapProperties.cpp" />
+    <ClCompile Include="MarioDeathFX.cpp" />
     <ClCompile Include="MarioFireBall.cpp" />
     <ClCompile Include="MarioTailed.cpp" />
     <ClCompile Include="HitStarFX.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="KoopasDieFX.h" />
     <ClInclude Include="MapBlock.h" />
     <ClInclude Include="MapProperties.h" />
+    <ClInclude Include="MarioDeathFX.h" />
     <ClInclude Include="MarioFireBall.h" />
     <ClInclude Include="MarioTailed.h" />
     <ClInclude Include="HitStarFX.h" />

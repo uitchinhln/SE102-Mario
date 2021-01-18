@@ -7,6 +7,10 @@
 #include "Koopas.h"
 #include "GameObject.h"
 #include "Game.h"
+#include "Small.h"
+#include "FireMario.h"
+#include "ScoreFX.h"
+#include "GameEvent.h"
 
 RaccoonMario::RaccoonMario(shared_ptr<Mario> mario) : AttackablePower(mario)
 {
@@ -135,6 +139,51 @@ void RaccoonMario::OnKeyDown(int key)
 	// Attack
 	if (key == DIK_A && CanAttack() && !IsAttacking()) {
 		attackTimer.Restart();
+	}
+}
+
+void RaccoonMario::OnDamaged(float damage)
+{
+	if (shared_ptr<Mario> m = mario.lock()) {
+		if (damage >= 3) {
+			m->OnDeath();
+			return;
+		}
+
+		Vec2 fixPos = Vec2(m->GetHitBox().left, m->GetHitBox().bottom);
+
+		if (damage >= 2) {
+			m->SetPowerUp(make_shared<Small>(m));
+		} 
+		else if (damage >= 1) {
+			m->SetPowerUp(make_shared<BigMario>(m));
+		}
+
+		m->GetPosition().x = fixPos.x;
+		m->GetPosition().y = fixPos.y - (m->GetHitBox().bottom - m->GetHitBox().top);
+	}
+}
+
+void RaccoonMario::OnPowerUp(ObjectType powerType)
+{
+	if (shared_ptr<Mario> m = mario.lock()) {
+		if (powerType == MEntityType::RaccoonLeaf) {
+			shared_ptr<IEffect> effect = make_shared<ScoreFX>(m->GetPosition(), Score::S1000);
+			__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S1000);
+			return;
+		}
+
+		Vec2 fixPos = Vec2(m->GetHitBox().left, m->GetHitBox().bottom);
+
+		if (powerType == MEntityType::RedMushroom) {
+			m->SetPowerUp(make_shared<BigMario>(m));
+		}
+		else if (powerType == MEntityType::FireFlower) {
+			m->SetPowerUp(make_shared<FireMario>(m));
+		}
+
+		m->GetPosition().x = fixPos.x;
+		m->GetPosition().y = fixPos.y - (m->GetHitBox().bottom - m->GetHitBox().top);
 	}
 }
 

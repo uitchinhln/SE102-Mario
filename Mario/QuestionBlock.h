@@ -6,6 +6,7 @@
 enum class QuestionBlockStates {
 	Available,
 	Bouncing,
+	Gifting,
 	Unavailable
 };
 

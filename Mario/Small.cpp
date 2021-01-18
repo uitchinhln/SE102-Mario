@@ -1,4 +1,5 @@
 #include "Small.h"
+#include "BigMario.h"
 #include "Mario.h"
 #include "AnimationManager.h"
 #include "SceneManager.h"
@@ -42,4 +43,23 @@ void Small::CrouchUpdate()
 ObjectType Small::GetMarioType()
 {
 	return MEntityType::SmallMario;
+}
+
+void Small::OnDamaged(float damage)
+{
+	if (shared_ptr<Mario> m = mario.lock()) {
+		m->OnDeath();
+	}
+}
+
+void Small::OnPowerUp(ObjectType powerType)
+{
+	if (shared_ptr<Mario> m = mario.lock()) {
+		Vec2 fixPos = Vec2(m->GetHitBox().left, m->GetHitBox().bottom);
+
+		m->SetPowerUp(make_shared<BigMario>(m));
+
+		m->GetPosition().x = fixPos.x;
+		m->GetPosition().y = fixPos.y - (m->GetHitBox().bottom - m->GetHitBox().top);
+	}
 }

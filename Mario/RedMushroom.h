@@ -33,7 +33,7 @@ public:
 	static shared_ptr<RedMushroom> CreateRedMushroom(Vec2 pos);
 
 protected:
-	Vec2 size = Vec2(45, 45);
+	Vec2 size = Vec2(48, 45);
 
 	Vec2 rootPos;
 

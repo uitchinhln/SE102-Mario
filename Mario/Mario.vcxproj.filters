@@ -211,6 +211,9 @@
     <Filter Include="MarioGame\Event">
       <UniqueIdentifier>{6bf6e75f-3e71-4fcc-a67c-ccdcc3da1438}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Effects\MarioEffects">
+      <UniqueIdentifier>{27806c20-4a4e-4d65-a2bf-c5ce6e50339f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -537,6 +540,7 @@
     <ClCompile Include="GameEvent.cpp">
       <Filter>MarioGame\Event</Filter>
     </ClCompile>
+    <ClCompile Include="MarioDeathFX.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -962,5 +966,6 @@
     <ClInclude Include="GameEvent.h">
       <Filter>MarioGame\Event</Filter>
     </ClInclude>
+    <ClInclude Include="MarioDeathFX.h" />
   </ItemGroup>
 </Project>

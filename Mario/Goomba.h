@@ -50,7 +50,7 @@ protected:
 
 	float GB_GRAVITY = 0.002f;
 	float GB_SPEED = 0.10f;
-	Vec2 size = Vec2(45, 44);
+	Vec2 size = Vec2(45, 43.5);
 	RectF hitbox;
 };
 

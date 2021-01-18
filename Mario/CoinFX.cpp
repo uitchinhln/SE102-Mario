@@ -25,7 +25,7 @@ void CoinFX::Update()
 		Position.y += fallDownSpeed * CGame::Time().ElapsedGameTime;
 
 		if (rootPos.y - Position.y < 24) {
-			EffectServer::GetInstance()->SpawnEffect(make_shared<ScoreFX>(Position, score));
+			EffectServer::GetInstance()->SpawnEffect(make_shared<ScoreFX>(Position + Vec2(0, 30), score));
 			Active = false;
 		}
 	}

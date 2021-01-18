@@ -39,15 +39,19 @@ public:
 
 	virtual void Render();
 
-	virtual void OnKeyDown(int key);
-
-	virtual void OnKeyUp(int key);
-
 	virtual shared_ptr<Mario> GetMario();
 
 	virtual ObjectType GetMarioType() = 0;
 
 	~MarioPower();
+
+	virtual void OnKeyDown(int key);
+
+	virtual void OnKeyUp(int key);
+
+	virtual void OnDamaged(float damage) = 0;
+
+	virtual void OnPowerUp(ObjectType powerType) = 0;
 
 protected:
 	weak_ptr<Mario> mario;

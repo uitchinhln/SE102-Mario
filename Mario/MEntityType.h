@@ -43,6 +43,7 @@ public:
 	static const ObjectType RedMushroom;
 	static const ObjectType GreenMushroom;
 	static const ObjectType RaccoonLeaf;
+	static const ObjectType FireFlower;
 	static const ObjectType QuestionCoin;
 	static const ObjectType PSwitch;
 

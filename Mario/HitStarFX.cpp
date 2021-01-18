@@ -4,7 +4,7 @@
 #include "SceneManager.h"
 #include "Game.h"
 
-HitStarFX::HitStarFX(Vec2 position) : IEffect(position, 300)
+HitStarFX::HitStarFX(Vec2 position) : IEffect(position, 200)
 {
 	Particle* particle = new Particle();
 	particle->Position = position;

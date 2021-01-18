@@ -13,6 +13,8 @@
 #include "Koopas.h"
 #include "Goomba.h"
 #include "CrouchKoopas.h"
+#include "ScoreFX.h"
+#include "MarioDeathFX.h"
 
 void Mario::OnKeyUp(int key)
 {
@@ -92,6 +94,34 @@ void Mario::OnGetBonus(const char* source, shared_ptr<IEffect>& effect, Score sc
 {
 	EffectServer::GetInstance()->SpawnEffect(effect);
 	DebugOut(L"Get Bonus: %d from %s\n", score, ToLPCWSTR(source));
+}
+
+void Mario::OnDamaged(float damage)
+{
+	shared_ptr<MarioPower> p = power;
+	p->OnDamaged(damage);
+}
+
+void Mario::OnDeath()
+{
+	if (death) return;
+	SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetFreeze(true);
+	EffectServer::GetInstance()->SpawnEffect(make_shared<MarioDeathFX>(Position));
+	this->Visible = false;
+	this->SetLockController(true);
+	this->death = true;
+}
+
+void Mario::OnPowerUp(ObjectType powerType)
+{
+	if (powerType == MEntityType::GreenMushroom) {
+		shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S1UP);
+		__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S1UP);
+	}
+	else {
+		shared_ptr<MarioPower> p = power;
+		p->OnPowerUp(powerType);
+	}
 }
 
 Mario::Mario() : GameObject()

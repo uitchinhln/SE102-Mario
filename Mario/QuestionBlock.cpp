@@ -45,30 +45,9 @@ void QuestionBlock::Hit()
 	backupPos = Position;
 	this->state = QuestionBlockStates::Bouncing;
 
-	shared_ptr<Mario> mario = SceneManager::GetInstance()->GetPlayer<Mario>();
-
-	DebugOut(L"Reward: %s\n", ToLPCWSTR(reward.ToString()));
-
 	if (reward == MEntityType::QuestionCoin) {
 		shared_ptr<IEffect> effect = make_shared<CoinFX>(Position - Vec2(0, 48), Score::S100);
 		__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
-	}
-	else if (reward == MEntityType::GreenMushroom) {
-		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(GreenMushroom::CreateGreenMushroom(Position));
-	}
-	else if (reward == MEntityType::PSwitch) {
-		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(PSwitch::CreatePSwitch(Position));
-	}
-	else if (mario->GetObjectType() != MEntityType::SmallMario) {
-		if (reward == MEntityType::RedMushroom) {
-			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
-		}
-		if (reward == MEntityType::RaccoonLeaf) {
-			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RaccoonLeaf::CreateRaccoonLeaf(Position));
-		}
-	}
-	else {
-		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
 	}
 }
 
@@ -93,7 +72,7 @@ void QuestionBlock::PositionUpdate()
 		Gravity = 0;
 		Velocity = Vec2(0, 0);
 		Distance = Vec2(0, 0);
-		state = QuestionBlockStates::Unavailable;
+		state = QuestionBlockStates::Gifting;
 	}
 	UpdatedDistance = Distance;
 }
@@ -109,6 +88,32 @@ bool QuestionBlock::HasCollideWith(DWORD id)
 
 void QuestionBlock::StatusUpdate()
 {
+	if (state == QuestionBlockStates::Gifting) {
+		state = QuestionBlockStates::Unavailable;
+
+		if (reward == MEntityType::QuestionCoin) return;
+
+		shared_ptr<Mario> mario = SceneManager::GetInstance()->GetPlayer<Mario>();
+
+		if (reward == MEntityType::PSwitch) {
+			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(PSwitch::CreatePSwitch(Position));
+		} 
+		else if (reward == MEntityType::GreenMushroom) {
+			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(GreenMushroom::CreateGreenMushroom(Position));
+		}
+		else if (mario->GetObjectType() != MEntityType::SmallMario) {
+			if (reward == MEntityType::RedMushroom) {
+				SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
+			}
+			if (reward == MEntityType::RaccoonLeaf) {
+				SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RaccoonLeaf::CreateRaccoonLeaf(Position));
+			}
+		}
+		else {
+			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
+		}
+	}
+
 	if (state != QuestionBlockStates::Available) return;
 
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
@@ -118,9 +123,6 @@ void QuestionBlock::StatusUpdate()
 	if (coResult.size() > 0) {
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
-			/*if (coll->Object->GetObjectType() == MEntityType::MarioTailed 
-				|| (coll->Object->GetObjectType() == MEntityType::KoopasImposter && ToVector(coll->SAABBResult.Direction).x != 0)
-				|| (MEntityType::IsMario(coll->Object->GetObjectType()) && coll->SAABBResult.Direction == Direction::Top)) {*/
 			if (coll->Object->GetObjectType() == MEntityType::MarioTailed) {
 				Hit();
 				break;

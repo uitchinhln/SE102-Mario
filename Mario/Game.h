@@ -43,7 +43,7 @@ private:
 
 	static GameTime gameTime;
 
-	Stopwatch gameTimer;
+	Stopwatch gameTimer = Stopwatch(TimeMode::SYSTEM_TIME);
 
 	bool initialized = false;
 

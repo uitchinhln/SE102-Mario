@@ -43,11 +43,6 @@ void RaccoonLeaf::StatusUpdate()
 	vector<shared_ptr<CollisionResult>> coResult = GetCollisionCalc()->GetLastResults();
 
 	if (coResult.size() > 0) {
-	/*	Vec2 jet = collisionCal->GetJet();
-
-		if (jet.x != 0) Velocity.x = -Velocity.x;
-		if (jet.y != 0) Velocity.y = 0;*/
-
 		for each (shared_ptr<CollisionResult> coll in coResult)
 		{
 			if (MEntityType::IsMario(coll->Object->GetObjectType())) {

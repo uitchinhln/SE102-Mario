@@ -21,9 +21,14 @@ public:
 
 	virtual void PowerMeterProcess() override;
 
+	virtual ObjectType GetMarioType() override;
+
+
 	virtual void OnKeyDown(int key) override;
 
-	virtual ObjectType GetMarioType() override;
+	virtual void OnDamaged(float damage) override;
+
+	virtual void OnPowerUp(ObjectType powerType) override;
 
 protected:
 	Stopwatch flyTimer;

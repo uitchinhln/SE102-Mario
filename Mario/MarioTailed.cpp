@@ -30,15 +30,6 @@ void MarioTailed::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	collisionCal->CalcPotentialCollisions(&objs);
 }
 
-void MarioTailed::CollisionDoubleFilter()
-{
-}
-
-bool MarioTailed::HasCollideWith(DWORD id)
-{
-	return true;
-}
-
 void MarioTailed::MovingUpdate()
 {
 	if (shared_ptr<Mario> m = holder.lock()) {
@@ -82,6 +73,10 @@ void MarioTailed::PositionUpdate()
 {
 }
 
+void MarioTailed::RestoreCollision()
+{
+}
+
 void MarioTailed::PositionLateUpdate()
 {
 }
@@ -91,7 +86,7 @@ void MarioTailed::StatusUpdate()
 	vector<shared_ptr<CollisionResult>> coResult = collisionCal->GetLastResults();
 	if (coResult.size() > 0) {
 		Vec2 pos = Position + collisionCal->GetClampDistance();
-		EffectServer::GetInstance()->SpawnEffect(make_shared<HitStarFX>(pos));
+		EffectServer::GetInstance()->SpawnEffect(make_shared<HitStarFX>(pos - Vec2(18, 18)));
 
 		if (attackState < 0) {
 			attackState *= -1;

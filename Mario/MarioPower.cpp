@@ -128,29 +128,7 @@ void MarioPower::StatusUpdate()
 
 				float damage = coll->Object->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
-					if (damage <= 1) {
-						ObjectType mPower = m->GetObjectType();
-						if (mPower == MEntityType::SmallMario) {
-							DebugOut(L"Die\n");
-						}
-						else {
-							if (mPower == MEntityType::BigMario) {
-								Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
-								m->SetPowerUp(make_shared<Small>(m));
-								m->GetPosition().x = fixPos.x;
-								m->GetPosition().y = fixPos.y - (m->GetHitBox().bottom - m->GetHitBox().top);
-							}
-							else {
-								Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
-								m->SetPowerUp(make_shared<BigMario>(m));
-								m->GetPosition().x = fixPos.x;
-								m->GetPosition().y = fixPos.y - (m->GetHitBox().bottom - m->GetHitBox().top);
-							}
-						}
-					}
-					else {
-						DebugOut(L"Die\n");
-					}
+					m->OnDamaged(damage);
 				}
 				else {
 					if (!coll->Object->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
@@ -162,41 +140,7 @@ void MarioPower::StatusUpdate()
 			}
 
 			if (MEntityType::IsPowerUpItem(coll->Object->GetObjectType())) {
-
-				DebugOut(L"Reward: %d\n", 1);
-				ObjectType power = coll->Object->GetObjectType();
-				ObjectType mPower = m->GetObjectType();
-				Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
-
-				if (power == MEntityType::GreenMushroom) {
-					shared_ptr<IEffect> effect = make_shared<ScoreFX>(m->GetPosition(), Score::S1UP);
-					__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S1UP);
-				}
-				else {
-					if (mPower == MEntityType::SmallMario) {
-						m->SetPowerUp(make_shared<BigMario>(m));
-					}
-					else {
-
-						if (power == MEntityType::RedMushroom) {
-							shared_ptr<IEffect> effect = make_shared<ScoreFX>(m->GetPosition(), Score::S1000);
-							__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S1000);
-						}
-
-						if (power == MEntityType::RaccoonLeaf) {
-							if (mPower != MEntityType::RaccoonMario) {
-								m->SetPowerUp(make_shared<RaccoonMario>(m));
-							}
-							else {
-								shared_ptr<IEffect> effect = make_shared<ScoreFX>(m->GetPosition(), Score::S1000);
-								__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S1000);
-							}
-						}
-					}
-				}
-
-				m->GetPosition().x = fixPos.x;
-				m->GetPosition().y = fixPos.y - (m->GetHitBox().bottom - m->GetHitBox().top);
+				m->OnPowerUp(coll->Object->GetObjectType());
 			}
 		}
 
