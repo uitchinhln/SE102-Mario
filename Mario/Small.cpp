@@ -4,7 +4,7 @@
 #include "SceneManager.h"
 #include "GameObject.h"
 
-Small::Small(shared_ptr<Mario> mario) : MarioPowerUp(mario)
+Small::Small(shared_ptr<Mario> mario) : MarioPower(mario)
 {
 	size = Vec2(36, 45);
 	sizeFixed = Vec2(36, 45);

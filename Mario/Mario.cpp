@@ -3,7 +3,9 @@
 #include "TextureManager.h"
 #include "AnimationManager.h"
 #include "SceneManager.h"
+#include "EffectServer.h"
 #include "Events.h"
+#include "GameEvent.h"
 #include "Small.h"
 #include "BigMario.h"
 #include "FireMario.h"
@@ -15,7 +17,7 @@
 void Mario::OnKeyUp(int key)
 {
 	//if (IsControllerLocked()) return;
-	powerUp->OnKeyUp(key);
+	power->OnKeyUp(key);
 	switch (key)
 	{
 	case DIK_A:
@@ -35,7 +37,7 @@ void Mario::OnKeyUp(int key)
 void Mario::OnKeyDown(int key)
 {
 	//if (IsControllerLocked()) return;
-	shared_ptr<MarioPowerUp> p = powerUp;
+	shared_ptr<MarioPower> p = power;
 	p->OnKeyDown(key);
 	
 	// Change mario power
@@ -73,13 +75,23 @@ void Mario::OnKeyDown(int key)
 	case DIK_R:
 		Position.x = 6742;
 		Position.y = 370;
-		SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetActiveBound(2);
+		SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetBoundingEdge(Direction::Top, 0);
+		break;
+	case DIK_E:
+		Position.x = 7900;
+		Position.y = 1136;
 		break;
 	case DIK_V:
 		warpState = WarpStates::VERTICAL;
 		break;
 	}
 
+}
+
+void Mario::OnGetBonus(const char* source, shared_ptr<IEffect>& effect, Score score)
+{
+	EffectServer::GetInstance()->SpawnEffect(effect);
+	DebugOut(L"Get Bonus: %d from %s\n", score, ToLPCWSTR(source));
 }
 
 Mario::Mario() : GameObject()
@@ -94,9 +106,9 @@ Mario::Mario() : GameObject()
 	HookEvent();
 }
 
-void Mario::SetPowerUp(shared_ptr<MarioPowerUp> powerUp)
+void Mario::SetPowerUp(shared_ptr<MarioPower> power)
 {
-	this->powerUp = powerUp;
+	this->power = power;
 }
 
 void Mario::InitResource()
@@ -265,13 +277,13 @@ void Mario::OverlapUpdateOriginal()
 
 void Mario::StatusUpdate()
 {
-	shared_ptr<MarioPowerUp> p = powerUp;
+	shared_ptr<MarioPower> p = power;
 	p->StatusUpdate();
 }
 
 void Mario::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
-	shared_ptr<MarioPowerUp> p = powerUp;
+	shared_ptr<MarioPower> p = power;
 	p->CollisionUpdate(coObj);
 	raycaster->SetInput(coObj);
 	//auto start = std::chrono::high_resolution_clock::now();
@@ -306,7 +318,7 @@ void Mario::FinalUpdate()
 void Mario::Update()
 {
 	if (!controllable) return;
-	shared_ptr<MarioPowerUp> p = powerUp;
+	shared_ptr<MarioPower> p = power;
 	p->Update();
 
 	switch (warpState)
@@ -325,7 +337,7 @@ void Mario::Update()
 
 void Mario::Render()
 {
-	powerUp->Render();
+	power->Render();
 }
 
 shared_ptr<RayCast> Mario::GetRayCaster()
@@ -356,16 +368,16 @@ void Mario::DropShell()
 			);
 
 			if (GetFacing() > 0) {
-				obj->SetPosition(Vec2(
+				koopas->SetPosition(Vec2(
 					GetHitBox().right + 2,
-					obj->GetHitBox().top));
+					koopas->GetHitBox().top));
 			}
 			else {
-				obj->SetPosition(Vec2(
+				koopas->SetPosition(Vec2(
 					GetHitBox().left - size.x - 2,
-					obj->GetHitBox().top));
+					koopas->GetHitBox().top));
 			}
-			Velocity.x += GetFacing();
+			Velocity.x += GetFacing() * 0.1f;
 
 			koopas->ClearHolder();
 			this->ClearInhand();
@@ -466,7 +478,7 @@ Vec2& Mario::GetAccelerate()
 
 RectF Mario::GetHitBox()
 {
-	return powerUp->GetHitBox();
+	return power->GetHitBox();
 }
 
 MovingStates& Mario::GetMovingState()
@@ -501,7 +513,7 @@ void Mario::SetWarpState(WarpStates state)
 
 ObjectType Mario::GetObjectType()
 {
-	return powerUp->GetMarioType();
+	return power->GetMarioType();
 }
 
 bool Mario::IsGetThrough(GameObject& object, Direction direction)
@@ -523,10 +535,12 @@ void Mario::HookEvent()
 {
 	__hook(&Events::KeyDownEvent, Events::GetInstance(), &Mario::OnKeyDown);
 	__hook(&Events::KeyUpEvent, Events::GetInstance(), &Mario::OnKeyUp);
+	__hook(&GameEvent::PlayerBonusEvent, GameEvent::GetInstance(), &Mario::OnGetBonus);
 }
 
 void Mario::UnHookEvent()
 {
 	__unhook(&Events::KeyDownEvent, Events::GetInstance(), &Mario::OnKeyDown);
 	__unhook(&Events::KeyUpEvent, Events::GetInstance(), &Mario::OnKeyUp);
+	__unhook(&GameEvent::PlayerBonusEvent, GameEvent::GetInstance(), &Mario::OnGetBonus);
 }

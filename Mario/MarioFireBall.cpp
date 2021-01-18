@@ -3,6 +3,8 @@
 #include "SceneManager.h"
 #include "MEntityType.h"
 #include "Game.h"
+#include "EffectServer.h"
+#include "SmokeSpotFX.h"
 
 MarioFireBall::MarioFireBall(shared_ptr<Mario> holder)
 {
@@ -35,35 +37,14 @@ void MarioFireBall::Reset()
 
 void MarioFireBall::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
-	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
-
-	vector<shared_ptr<CollisionResult>> coResult = collisionCal->CalcPotentialCollisions(coObj, false);
-
-	// No collision occured, proceed normally
-	if (coResult.size() > 0) {
-		Vec2 jet = collisionCal->GetJet();
-
-		if (jet.y != 0) GetVelocity().y = jet.y * FIREBALL_JUMP_FORCE;
-	}
-
-	RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
-	if (!collisionCal->AABB(cam, hitbox)) {
-		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
-	}
-
-	for each (shared_ptr<CollisionResult> coll in coResult)
+	vector<shared_ptr<GameObject>> objs;
+	for each (shared_ptr<GameObject> var in *coObj)
 	{
-		if (MEntityType::IsMario(coll->Object->GetObjectType())) continue;
-		if (MEntityType::IsEnemy(coll->Object->GetObjectType())) {
-			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
-			continue;
+		if (MEntityType::IsEnemy(var->GetObjectType()) || MEntityType::IsTile(var->GetObjectType())) {
+			objs.push_back(var);
 		}
-		if (!coll->Object->IsGetThrough(*this, coll->SAABBResult.Direction)) {
-			if (!MEntityType::IsTile(coll->Object->GetObjectType()) || coll->SAABBResult.Direction != Direction::Top) {
-				SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
-			}
-		}		
 	}
+	collisionCal->CalcPotentialCollisions(&objs);
 }
 
 void MarioFireBall::CollisionDoubleFilter()
@@ -87,6 +68,40 @@ void MarioFireBall::Update()
 	GetDistance() = GetVelocity() * (float)dt;
 }
 
+void MarioFireBall::StatusUpdate()
+{
+	vector<shared_ptr<CollisionResult>> coResult = collisionCal->GetLastResults();
+
+	// No collision occured, proceed normally
+	if (coResult.size() > 0) {
+		Vec2 jet = collisionCal->GetJet();
+
+		if (jet.y != 0) GetVelocity().y = jet.y * FIREBALL_JUMP_FORCE;
+	}
+
+	RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
+	if (!collisionCal->AABB(cam, hitbox)) {
+		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+	}
+
+	for each (shared_ptr<CollisionResult> coll in coResult)
+	{
+		if (MEntityType::IsMario(coll->Object->GetObjectType())) continue;
+		if (MEntityType::IsEnemy(coll->Object->GetObjectType())) {
+			EffectServer::GetInstance()->SpawnEffect(make_shared<SmokeSpotFX>(Position + collisionCal->GetClampDistance()));
+			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+			continue;
+		}
+		if (!coll->Object->IsGetThrough(*this, coll->SAABBResult.Direction)) {
+			if (!MEntityType::IsTile(coll->Object->GetObjectType()) || coll->SAABBResult.Direction != Direction::Top) {
+				EffectServer::GetInstance()->SpawnEffect(make_shared<SmokeSpotFX>(Position + collisionCal->GetClampDistance()));
+				SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+
+			}
+		}
+	}
+}
+
 void MarioFireBall::FinalUpdate()
 {
 	GameObject::FinalUpdate();
@@ -99,7 +114,7 @@ void MarioFireBall::Render()
 
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
-	this->animations["Default"]->GetTransform()->Position = GetPosition() - cam;
+	this->animations["Default"]->GetTransform()->Position = GetPosition() - cam + size / 2;
 	this->animations["Default"]->Render();
 }
 

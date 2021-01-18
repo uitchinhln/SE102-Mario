@@ -1,4 +1,4 @@
-#include "MarioPowerUp.h"
+#include "MarioPower.h"
 #include "Mario.h"
 #include "TextureManager.h"
 #include "SceneManager.h"
@@ -10,17 +10,20 @@
 #include "BigMario.h"
 #include "RaccoonMario.h"
 #include "Small.h"
+#include "EffectServer.h"
+#include "ScoreFX.h"
+#include "GameEvent.h"
 
-MarioPowerUp::MarioPowerUp(shared_ptr<Mario> mario)
+MarioPower::MarioPower(shared_ptr<Mario> mario)
 {
 	this->mario = mario;
 }
 
-void MarioPowerUp::InitResource(bool force)
+void MarioPower::InitResource(bool force)
 {
 }
 
-RectF MarioPowerUp::GetHitBox()
+RectF MarioPower::GetHitBox()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		Vec2 pos = m->GetPosition();
@@ -29,7 +32,7 @@ RectF MarioPowerUp::GetHitBox()
 	return RectF(0, 0, 0, 0);
 }
 
-void MarioPowerUp::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
+void MarioPower::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
@@ -39,7 +42,7 @@ void MarioPowerUp::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	}
 }
 
-void MarioPowerUp::StatusUpdate()
+void MarioPower::StatusUpdate()
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
@@ -166,22 +169,27 @@ void MarioPowerUp::StatusUpdate()
 				Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
 
 				if (power == MEntityType::GreenMushroom) {
-					//Tang mang
+					shared_ptr<IEffect> effect = make_shared<ScoreFX>(m->GetPosition(), Score::S1UP);
+					__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S1UP);
 				}
 				else {
 					if (mPower == MEntityType::SmallMario) {
 						m->SetPowerUp(make_shared<BigMario>(m));
 					}
 					else {
+
 						if (power == MEntityType::RedMushroom) {
-							//Tang tien
+							shared_ptr<IEffect> effect = make_shared<ScoreFX>(m->GetPosition(), Score::S1000);
+							__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S1000);
 						}
+
 						if (power == MEntityType::RaccoonLeaf) {
 							if (mPower != MEntityType::RaccoonMario) {
 								m->SetPowerUp(make_shared<RaccoonMario>(m));
 							}
 							else {
-								//Tang tien
+								shared_ptr<IEffect> effect = make_shared<ScoreFX>(m->GetPosition(), Score::S1000);
+								__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S1000);
 							}
 						}
 					}
@@ -198,7 +206,7 @@ void MarioPowerUp::StatusUpdate()
 	}
 }
 
-void MarioPowerUp::MoveProcess()
+void MarioPower::MoveProcess()
 {
 	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 	DWORD dt = CGame::Time().ElapsedGameTime;
@@ -275,7 +283,7 @@ void MarioPowerUp::MoveProcess()
 	}
 }
 
-void MarioPowerUp::PowerMeterProcess()
+void MarioPower::PowerMeterProcess()
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
@@ -289,7 +297,7 @@ void MarioPowerUp::PowerMeterProcess()
 	}
 }
 
-bool MarioPowerUp::MiniJumpDetect(bool forceX)
+bool MarioPower::MiniJumpDetect(bool forceX)
 {
 	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 	DWORD dt = CGame::Time().ElapsedGameTime;
@@ -307,7 +315,7 @@ bool MarioPowerUp::MiniJumpDetect(bool forceX)
 	return false;
 }
 
-void MarioPowerUp::JumpProcess()
+void MarioPower::JumpProcess()
 {
 	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 	DWORD dt = CGame::Time().ElapsedGameTime;
@@ -355,7 +363,7 @@ void MarioPowerUp::JumpProcess()
 	}
 }
 
-void MarioPowerUp::CrouchUpdate()
+void MarioPower::CrouchUpdate()
 {
 	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 	DWORD dt = CGame::Time().ElapsedGameTime;
@@ -371,7 +379,7 @@ void MarioPowerUp::CrouchUpdate()
 	}
 }
 
-void MarioPowerUp::Update()
+void MarioPower::Update()
 {
 	CrouchUpdate();
 	MoveProcess();
@@ -400,11 +408,15 @@ void MarioPowerUp::Update()
 			m->DropShell();
 		}
 
+		if (m->GetInhand() == NULL || !m->GetInhand()->IsActive()) {
+			m->ClearInhand();
+		}
+
 		m->GetKickCountDown() -= dt;
 	}
 }
 
-void MarioPowerUp::JumpAnimation()
+void MarioPower::JumpAnimation()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (m->IsOnGround()) return;
@@ -434,7 +446,7 @@ void MarioPowerUp::JumpAnimation()
 	}
 }
 
-void MarioPowerUp::MoveAnimation()
+void MarioPower::MoveAnimation()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (!m->IsOnGround()) return;
@@ -479,7 +491,7 @@ void MarioPowerUp::MoveAnimation()
 	}
 }
 
-void MarioPowerUp::Render()
+void MarioPower::Render()
 {
 	this->InitResource();
 
@@ -500,12 +512,12 @@ void MarioPowerUp::Render()
 		if (selectedAnimation == nullptr) return;
 		selectedAnimation->SetPlayScale(max(0.4f, min(abs(m->GetVelocity().x) / MARIO_WALK_SPEED, 4)) * 1.5f);
 		selectedAnimation->GetTransform()->Scale = Vec2((float)m->GetFacing(), 1);
-		selectedAnimation->GetTransform()->Position = m->GetPosition() - cam;
+		selectedAnimation->GetTransform()->Position = m->GetPosition() - cam + sizeFixed / 2;
 		selectedAnimation->Render();
 	}
 }
 
-void MarioPowerUp::OnKeyDown(int key)
+void MarioPower::OnKeyDown(int key)
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (key == DIK_S) {
@@ -520,7 +532,7 @@ void MarioPowerUp::OnKeyDown(int key)
 	}
 }
 
-void MarioPowerUp::OnKeyUp(int key)
+void MarioPower::OnKeyUp(int key)
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (key == DIK_DOWN) {
@@ -531,7 +543,7 @@ void MarioPowerUp::OnKeyUp(int key)
 	}
 }
 
-shared_ptr<Mario> MarioPowerUp::GetMario()
+shared_ptr<Mario> MarioPower::GetMario()
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		return m;
@@ -539,7 +551,7 @@ shared_ptr<Mario> MarioPowerUp::GetMario()
 	return nullptr;
 }
 
-MarioPowerUp::~MarioPowerUp()
+MarioPower::~MarioPower()
 {
 	//DebugOut(L"Huy mario power\n");
 }

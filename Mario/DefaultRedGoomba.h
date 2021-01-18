@@ -34,10 +34,11 @@ public:
 protected:
 	weak_ptr<RedGoomba> holder;
 
+	long createTime;
+
 	unordered_map<string, shared_ptr<CAnimation>> animations;
 
 	float GB_GRAVITY = 0.002f;
 	float GB_SPEED = 0.10f;
-	float GB_DESTROY_DELAY = 500;
 };
 

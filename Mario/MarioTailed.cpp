@@ -1,5 +1,7 @@
 #include "MarioTailed.h"
 #include "SceneManager.h"
+#include "EffectServer.h"
+#include "HitStarFX.h"
 
 MarioTailed::MarioTailed(shared_ptr<Mario> holder, DWORD attackTime)
 {
@@ -14,6 +16,18 @@ void MarioTailed::Reset()
 	attackTimer.Reset();
 	attackState = -1;
 	MovingUpdate();
+}
+
+void MarioTailed::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
+{
+	vector<shared_ptr<GameObject>> objs;
+	for each (shared_ptr<GameObject> var in *coObj)
+	{
+		if (MEntityType::IsEnemy(var->GetObjectType())) {
+			objs.push_back(var);
+		}
+	}
+	collisionCal->CalcPotentialCollisions(&objs);
 }
 
 void MarioTailed::CollisionDoubleFilter()
@@ -72,9 +86,27 @@ void MarioTailed::PositionLateUpdate()
 {
 }
 
+void MarioTailed::StatusUpdate()
+{
+	vector<shared_ptr<CollisionResult>> coResult = collisionCal->GetLastResults();
+	if (coResult.size() > 0) {
+		Vec2 pos = Position + collisionCal->GetClampDistance();
+		EffectServer::GetInstance()->SpawnEffect(make_shared<HitStarFX>(pos));
+
+		if (attackState < 0) {
+			attackState *= -1;
+			attackTimer.Restart();
+		}
+		else {
+			attackTimer.Stop();
+			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+		}
+	}
+}
+
 void MarioTailed::FinalUpdate()
 {
-	//collisionCal->Clear();
+	collisionCal->Clear();
 }
 
 void MarioTailed::Render()

@@ -3,10 +3,14 @@
 #include "AnimationManager.h"
 #include "SceneManager.h"
 #include "Game.h"
+#include "EffectServer.h"
+#include "GoombaDieFX.h"
+#include "GoombaExplodeFX.h"
+#include "ScoreFX.h"
+#include "GameEvent.h"
 
 Goomba::Goomba()
 {
-	destroyTimer.Stop();
 	state = GoombaState::WALK;
 
 	Position = VECTOR_0;
@@ -24,10 +28,6 @@ void Goomba::InitResource()
 {
 	if (animations.size() < 1) {
 		this->animations["Walk"] = AnimationManager::GetInstance()->Get("ani-goomba-walk")->Clone();
-		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-goomba-die")->Clone();
-		this->animations["Explode"] = AnimationManager::GetInstance()->Get("ani-goomba-idle")->Clone();
-
-		this->animations["Explode"]->GetTransform()->Scale.y = -1;
 	}
 }
 
@@ -66,16 +66,16 @@ void Goomba::StatusUpdate()
 			if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 				if (coll->SAABBResult.Direction == Direction::Bottom) {
 					state = GoombaState::DIE;
-					Velocity = VECTOR_0;
-					Gravity = 0;
 
 					Position.y += size.y;
 					size.y = 27;
 					Position.y -= size.y;
 
-					if (!destroyTimer.IsRunning()) {
-						destroyTimer.Restart();
-					}
+					EffectServer::GetInstance()->SpawnEffect(make_shared<GoombaDieFX>(Position));
+					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+
+					shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S100);
+					__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 				}
 			}
 
@@ -83,12 +83,12 @@ void Goomba::StatusUpdate()
 				float damage = coll->Object->GetDamageFor(*this, coll->SAABBResult.Direction);
 				if (damage > 0) {
 					state = GoombaState::EXPLODE;
-					Velocity = Vec2(jet.x * 0.1f, -0.65f);
-					GB_DESTROY_DELAY = 3000;
 
-					if (!destroyTimer.IsRunning()) {
-						destroyTimer.Restart();
-					}
+					EffectServer::GetInstance()->SpawnEffect(make_shared<GoombaExplodeFX>(Position, Vec2(jet.x * 0.1f, -0.65f)));
+					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+
+					shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S100);
+					__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 				}
 			}
 		}
@@ -97,9 +97,6 @@ void Goomba::StatusUpdate()
 
 void Goomba::Update()
 {
-	if (destroyTimer.IsRunning() && destroyTimer.Elapsed() >= GB_DESTROY_DELAY) {
-		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
-	}
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	GetVelocity().y += GetGravity() * (float)dt;
@@ -121,19 +118,7 @@ void Goomba::Render()
 	
 	Animation animation = this->animations["Walk"];
 
-	switch (state)
-	{
-	case GoombaState::DIE:
-		animation = this->animations["Die"];
-		break;
-	case GoombaState::EXPLODE:
-		animation = this->animations["Explode"];
-		break;
-	default:
-		break;
-	}
-
-	animation->GetTransform()->Position = GetPosition() - cam;
+	animation->GetTransform()->Position = GetPosition() - cam + size / 2;
 	animation->Render();
 }
 
@@ -162,10 +147,10 @@ bool Goomba::IsGetThrough(GameObject& object, Direction direction)
 
 float Goomba::GetDamageFor(GameObject& object, Direction direction)
 {
-	if ((state == GoombaState::WALK || destroyTimer.Elapsed() <= 5) && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
+	if (state == GoombaState::WALK && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
 		return 1.0f;
 	}
-	if ((state == GoombaState::WALK || destroyTimer.Elapsed() <= 5) && MEntityType::IsMarioWeapon(object.GetObjectType())) {
+	if (state == GoombaState::WALK && MEntityType::IsMarioWeapon(object.GetObjectType())) {
 		return 1.0f;
 	}
 	return 0.0f;

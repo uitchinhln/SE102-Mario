@@ -6,6 +6,10 @@
 #include "SceneManager.h"
 #include "Game.h"
 #include "RedCrouchKoopas.h"
+#include "KoopasDieFX.h"
+#include "EffectServer.h"
+#include "ScoreFX.h"
+#include "GameEvent.h"
 
 
 DefRedKoopas::DefRedKoopas(shared_ptr<Koopas> koopas)
@@ -14,8 +18,6 @@ DefRedKoopas::DefRedKoopas(shared_ptr<Koopas> koopas)
 
 	KP_SPEED = 0.12;
 	size = Vec2(30, 45);
-
-	koopas->GetDestroyTimer().Stop();
 
 	koopas->GetLiveState() = KoopasLifeStates::ALIVE;
 
@@ -33,9 +35,6 @@ void DefRedKoopas::InitResource(bool force)
 {
 	if (this->animations.size() < 1 || force) {
 		this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-red-koopa-troopa-move")->Clone();
-		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-red-koopa-troopa-crouch")->Clone();
-
-		this->animations["Die"]->GetTransform()->Scale.y = -1;
 	}
 }
 
@@ -125,12 +124,11 @@ void DefRedKoopas::StatusUpdate()
 
 		if (collisionCal->HasOverlapped()) {
 			k->GetLiveState() = KoopasLifeStates::DIE;
-			k->SetVelocity(Vec2(0 * 0.1f, -0.6f));
-			KP_DESTROY_DELAY = 3000;
+			OnDeath(Vec2(0 * 0.1f, -0.6f));
 
-			if (!k->GetDestroyTimer().IsRunning()) {
-				k->GetDestroyTimer().Restart();
-			}
+			//Giet rua
+			shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+			__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 			return;
 		}
 
@@ -150,6 +148,10 @@ void DefRedKoopas::StatusUpdate()
 				if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 					if (coll->SAABBResult.Direction == Direction::Bottom) {
 						k->SetPower(make_shared<RedCrouchKoopas>(k));
+
+						//Dap rua
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 						return;
 					}
 				}
@@ -163,12 +165,11 @@ void DefRedKoopas::StatusUpdate()
 					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
 						k->GetLiveState() = KoopasLifeStates::DIE;
-						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
-						KP_DESTROY_DELAY = 3000;
+						OnDeath(Vec2(jet.x * 0.1f, -0.6f));
 
-						if (!k->GetDestroyTimer().IsRunning()) {
-							k->GetDestroyTimer().Restart();
-						}
+						//Giet rua
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 					}
 				}
 			}
@@ -176,10 +177,7 @@ void DefRedKoopas::StatusUpdate()
 
 		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
 		if (k->GetPosition().x < 0.3 - size.x || k->GetPosition().y < 0.3 - size.y || k->GetPosition().x > mapBound.x || k->GetPosition().y > mapBound.y) {
-			KP_DESTROY_DELAY = 100;
-			if (!k->GetDestroyTimer().IsRunning()) {
-				k->GetDestroyTimer().Restart();
-			}
+			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(k);
 		}
 	}
 }
@@ -187,6 +185,14 @@ void DefRedKoopas::StatusUpdate()
 ObjectType DefRedKoopas::GetObjectType()
 {
 	return MEntityType::RedKoopas;
+}
+
+void DefRedKoopas::OnDeath(Vec2 veloc)
+{
+	if (shared_ptr<Koopas> k = koopas.lock()) {
+		EffectServer::GetInstance()->SpawnEffect(make_shared<KoopasDieFX>(k->GetPosition(), veloc, "ani-red-koopa-troopa-crouch"));
+		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(k);
+	}
 }
 
 DefRedKoopas::~DefRedKoopas()

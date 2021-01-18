@@ -6,6 +6,8 @@
 #include "CrouchKoopas.h"
 #include "Game.h"
 #include "QuestionBlock.h"
+#include "ScoreFX.h"
+#include "GameEvent.h"
 
 MovingShell::MovingShell(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 {
@@ -13,8 +15,6 @@ MovingShell::MovingShell(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 	this->flip = flip;
 
 	KP_SPEED *= 3;
-
-	koopas->GetDestroyTimer().Stop();
 
 	koopas->GetLiveState() = KoopasLifeStates::ALIVE;
 
@@ -30,13 +30,10 @@ void MovingShell::InitResource(bool force)
 {
 	if (this->animations.size() < 1 || force) {
 		this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-shell-run")->Clone();
-		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
 
 		if (this->flip) {
 			this->animations["Move"]->GetTransform()->Scale.y = -1;
 		}
-
-		this->animations["Die"]->GetTransform()->Scale.y = -1;
 	}
 }
 
@@ -48,9 +45,6 @@ void MovingShell::FinalUpdate()
 void MovingShell::Update()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetDestroyTimer().IsRunning() && k->GetDestroyTimer().Elapsed() >= KP_DESTROY_DELAY) {
-			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(k);
-		}
 		DWORD dt = CGame::Time().ElapsedGameTime;
 
 		k->GetVelocity().y += k->GetGravity() * (float)dt;
@@ -67,12 +61,11 @@ void MovingShell::StatusUpdate()
 
 		if (collisionCal->HasOverlapped()) {
 			k->GetLiveState() = KoopasLifeStates::DIE;
-			k->SetVelocity(Vec2(0 * 0.1f, -0.6f));
-			KP_DESTROY_DELAY = 3000;
+			OnDeath(Vec2(0 * 0.1f, -0.6f));
 
-			if (!k->GetDestroyTimer().IsRunning()) {
-				k->GetDestroyTimer().Restart();
-			}
+			//Giet rua
+			shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+			__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 			return;
 		}
 
@@ -100,6 +93,10 @@ void MovingShell::StatusUpdate()
 				if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 					if (coll->SAABBResult.Direction == Direction::Bottom) {
 						k->SetPower(make_shared<CrouchKoopas>(k, flip));
+
+						//Dap rua
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 						return;
 					}
 				}
@@ -113,12 +110,11 @@ void MovingShell::StatusUpdate()
 					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
 						k->GetLiveState() = KoopasLifeStates::DIE;
-						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
-						KP_DESTROY_DELAY = 3000;
+						OnDeath(Vec2(jet.x * 0.1f, -0.6f));
 
-						if (!k->GetDestroyTimer().IsRunning()) {
-							k->GetDestroyTimer().Restart();
-						}
+						//Giet rua
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 					}
 				}
 			}
@@ -126,10 +122,7 @@ void MovingShell::StatusUpdate()
 
 		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
 		if (k->GetPosition().x < 0.3 - size.x || k->GetPosition().y < 0.3 - size.y || k->GetPosition().x > mapBound.x || k->GetPosition().y > mapBound.y) {
-			KP_DESTROY_DELAY = 100;
-			if (!k->GetDestroyTimer().IsRunning()) {
-				k->GetDestroyTimer().Restart();
-			}
+			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(k);
 		}
 	}
 }
@@ -142,11 +135,7 @@ void MovingShell::Render()
 
 		Animation ani = this->animations["Move"];
 
-		if (k->GetLiveState() == KoopasLifeStates::DIE) {
-			ani = this->animations["Die"];
-		}
-
-		ani->GetTransform()->Position = k->GetPosition() - cam;
+		ani->GetTransform()->Position = k->GetPosition() - cam + size / 2;
 		ani->Render();
 	}
 }
@@ -159,15 +148,15 @@ ObjectType MovingShell::GetObjectType()
 float MovingShell::GetDamageFor(GameObject& object, Direction direction)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if ((k->GetLiveState() == KoopasLifeStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5)
+		if ((k->GetLiveState() == KoopasLifeStates::ALIVE)
 			&& MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
 			return 1.0f;
 		}
-		if ((k->GetLiveState() == KoopasLifeStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5)
+		if ((k->GetLiveState() == KoopasLifeStates::ALIVE)
 			&& MEntityType::IsMarioWeapon(object.GetObjectType())) {
 			return 1.0f;
 		}
-		if ((k->GetLiveState() == KoopasLifeStates::ALIVE || k->GetDestroyTimer().Elapsed() <= 5)
+		if ((k->GetLiveState() == KoopasLifeStates::ALIVE)
 			&& MEntityType::IsEnemy(object.GetObjectType())) {
 			return 1.0f;
 		}

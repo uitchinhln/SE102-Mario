@@ -6,16 +6,17 @@
 #include "Mario.h"
 #include "MovingShell.h"
 #include "Game.h"
+#include "ScoreFX.h"
+#include "GameEvent.h"
 
 CrouchKoopas::CrouchKoopas(shared_ptr<Koopas> koopas, bool flip) : DefaultKoopas()
 {
 	this->koopas = koopas;
 	this->flip = flip;
 
-	koopas->GetDestroyTimer().Stop();
-
 	koopas->GetLiveState() = KoopasLifeStates::ALIVE;
 
+	createTime = CGame::Time().TotalGameTime;
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	koopas->GetGravity() = KP_GRAVITY;
@@ -33,13 +34,10 @@ void CrouchKoopas::InitResource(bool force)
 	if (this->animations.size() < 1 || force) {
 		this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
 		this->animations["Respawn"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-respawning")->Clone();
-		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
 
 		if (this->flip) {
 			this->animations["Move"]->GetTransform()->Scale.y = -1;
 		}
-
-		this->animations["Die"]->GetTransform()->Scale.y = -1;
 	}
 }
 
@@ -57,9 +55,9 @@ void CrouchKoopas::FinalUpdate()
 			}
 		}
 
-		if (k->GetDestroyTimer().IsRunning()) {
-			k->GetLiveState() = KoopasLifeStates::DIE;
-		}
+		//if (k->GetDestroyTimer().IsRunning()) {
+		//	k->GetLiveState() = KoopasLifeStates::DIE;
+		//}
 
 		if (k->GetLiveState() == KoopasLifeStates::DIE) {
 			if (shared_ptr<Mario> m = k->GetHolder().lock()) {
@@ -135,6 +133,12 @@ void CrouchKoopas::StatusUpdate()
 						shared_ptr<Mario> m = dynamic_pointer_cast<Mario>(coll->Object);
 						k->SetFacing(m->GetFacing());
 						k->SetPower(make_shared<MovingShell>(k, flip));
+
+						if (coll->SAABBResult.Direction == Direction::Bottom && CGame::Time().TotalGameTime - createTime < 1000) {
+							//Dap rua
+							shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S200);
+							__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S200);
+						}
 					}
 					break;
 				}
@@ -143,13 +147,7 @@ void CrouchKoopas::StatusUpdate()
 					if (shared_ptr<Mario> m = k->GetHolder().lock()) {
 						float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 						if (damage > 0) {
-							k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
-							KP_DESTROY_DELAY = 3000;
-
-							if (!k->GetDestroyTimer().IsRunning()) {
-								k->GetDestroyTimer().Restart();
-								respawnTimer.Stop();
-							}
+							OnDeath(Vec2(jet.x * 0.1f, -0.6f));
 							break;
 						}						
 					}
@@ -165,13 +163,11 @@ void CrouchKoopas::StatusUpdate()
 					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
 						k->GetLiveState() = KoopasLifeStates::DIE;
-						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
-						KP_DESTROY_DELAY = 3000;
+						OnDeath(Vec2(jet.x * 0.1f, -0.6f));
 
-						if (!k->GetDestroyTimer().IsRunning()) {
-							k->GetDestroyTimer().Restart();
-							respawnTimer.Stop();
-						}
+						//Giet rua
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 						break;
 					}
 					continue;
@@ -181,11 +177,7 @@ void CrouchKoopas::StatusUpdate()
 
 		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
 		if (k->GetPosition().x < 0.3 - size.x || k->GetPosition().y < 0.3 - size.y || k->GetPosition().x > mapBound.x || k->GetPosition().y > mapBound.y) {
-			KP_DESTROY_DELAY = 100;
-			if (!k->GetDestroyTimer().IsRunning()) {
-				k->GetDestroyTimer().Restart();
-				respawnTimer.Stop();
-			}
+			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(k);
 		}
 	}
 }
@@ -202,7 +194,7 @@ void CrouchKoopas::Render()
 			if (flip)
 				ani->GetTransform()->Scale.y = -1;
 
-			ani->GetTransform()->Position = k->GetPosition() - cam;
+			ani->GetTransform()->Position = k->GetPosition() - cam + size / 2;
 			ani->Render();
 		}
 		return;
@@ -226,7 +218,7 @@ ObjectType CrouchKoopas::GetObjectType()
 float CrouchKoopas::GetDamageFor(GameObject& object, Direction direction)
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetLiveState() == KoopasLifeStates::DIE && k->GetDestroyTimer().Elapsed() > 5) return 0.0f;
+		if (k->GetLiveState() == KoopasLifeStates::DIE) return 0.0f;
 
 		if (MEntityType::IsEnemy(object.GetObjectType()) && k->GetHolder().lock()) {
 			return 999.0f;

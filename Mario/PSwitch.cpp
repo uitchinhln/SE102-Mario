@@ -105,7 +105,7 @@ void PSwitch::Render()
 
     Animation animation = !Pressed ? this->animations["Default"] : this->animations["Pressed"];
 
-    animation->GetTransform()->Position = GetPosition() - cam;
+    animation->GetTransform()->Position = GetPosition() - cam + size / 2;
     animation->Render();
 }
 

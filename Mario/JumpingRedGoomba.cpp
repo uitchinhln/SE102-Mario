@@ -3,6 +3,10 @@
 #include "SceneManager.h"
 #include "Mario.h"
 #include "Game.h"
+#include "RedGoombaExplodeFX.h"
+#include "EffectServer.h"
+#include "ScoreFX.h"
+#include "GameEvent.h"
 
 JumpingRedGoomba::JumpingRedGoomba(shared_ptr<RedGoomba> holder) : DefaultRedGoomba(holder)
 {
@@ -14,11 +18,7 @@ void JumpingRedGoomba::InitResource()
 {
 	if (animations.size() < 1) {
 		this->animations["Walk"] = AnimationManager::GetInstance()->Get("ani-red-para-goomba-walk")->Clone();
-		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-red-goomba-die")->Clone();
 		this->animations["Fly"] = AnimationManager::GetInstance()->Get("ani-red-para-goomba-fly")->Clone();
-		this->animations["Explode"] = AnimationManager::GetInstance()->Get("ani-red-para-goomba-idle")->Clone();
-
-		this->animations["Explode"]->GetTransform()->Scale.y = -1;
 	}
 }
 
@@ -26,7 +26,6 @@ void JumpingRedGoomba::Update()
 {
 	if (shared_ptr<RedGoomba> g = holder.lock()) {
 		Vec2 velocity = g->GetVelocity();
-		Stopwatch destroyTimer = g->GetDestroyTimer();
 
 		if (g->OnGround)
 		{
@@ -65,16 +64,12 @@ void JumpingRedGoomba::Update()
 			}
 		}
 
-		if (destroyTimer.IsRunning() && destroyTimer.Elapsed() >= GB_DESTROY_DELAY) {
-			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
-		}
 		DWORD dt = CGame::Time().ElapsedGameTime;
 
 		velocity.y += g->GetGravity() * (float)dt;
 		g->GetDistance() = velocity * (float)dt;
 
 		g->GetVelocity() = velocity;
-		g->GetDestroyTimer() = destroyTimer;
 	}
 }
 
@@ -88,7 +83,6 @@ void JumpingRedGoomba::StatusUpdate()
 		Vec2 velocity = g->GetVelocity();
 		Vec2 position = g->GetPosition();
 		Vec2 size = g->GetSize();
-		Stopwatch destroyTimer = g->GetDestroyTimer();
 		RedGoombaState state = g->GetState();
 
 		g->OnGround = false;
@@ -104,6 +98,10 @@ void JumpingRedGoomba::StatusUpdate()
 				if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 					if (coll->SAABBResult.Direction == Direction::Bottom) {
 						g->SetObjectState(make_shared<DefaultRedGoomba>(g));
+
+						//Dap dau boi mario
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(position, Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 					}
 				}
 
@@ -111,12 +109,13 @@ void JumpingRedGoomba::StatusUpdate()
 					float damage = coll->Object->GetDamageFor(*g, coll->SAABBResult.Direction);
 					if (damage > 0) {
 						state = RedGoombaState::EXPLODE;
-						velocity = Vec2(jet.x * 0.1f, -0.65f);
-						GB_DESTROY_DELAY = 3000;
 
-						if (!destroyTimer.IsRunning()) {
-							destroyTimer.Restart();
-						}
+						EffectServer::GetInstance()->SpawnEffect(make_shared<RedGoombaExplodeFX>(position, Vec2(jet.x * 0.1f, -0.65f)));
+						SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
+
+						//Giet boi vu khi cua mario
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(position, Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 					}
 				}
 			}
@@ -124,16 +123,12 @@ void JumpingRedGoomba::StatusUpdate()
 
 		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
 		if (position.x < 0.3 - size.x || position.y < 0.3 - size.y || position.x > mapBound.x || position.y > mapBound.y) {
-			GB_DESTROY_DELAY = 100;
-			if (!destroyTimer.IsRunning()) {
-				destroyTimer.Restart();
-			}
+			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
 		}
 
 		g->GetVelocity() = velocity;
 		g->GetPosition() = position;
 		g->GetSize() = size;
-		g->GetDestroyTimer() = destroyTimer;
 		g->GetState() = state;
 	}
 }
@@ -162,7 +157,7 @@ void JumpingRedGoomba::Render()
 			break;
 		}
 
-		animation->GetTransform()->Position = position - cam;
+		animation->GetTransform()->Position = position - cam + g->GetSize() / 2;
 		animation->Render();
 	}
 }

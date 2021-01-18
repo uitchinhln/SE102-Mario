@@ -9,5 +9,7 @@ public:
     virtual void InitResource(bool force = false) override;
 
     virtual void StatusUpdate() override;
+
+    virtual void OnDeath(Vec2 veloc) override;
 };
 

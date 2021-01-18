@@ -34,6 +34,10 @@ int CTileSet::GetFirstGID()
 void CTileSet::Draw(int gid, float x, float y, Transform& transform, D3DCOLOR overlay)
 {
 	if (gid < firstgid) return;
+
+	x += tileSize.x / 2;
+	y += tileSize.y / 2;
+
 	RECT r;
 	r.top = ((gid - firstgid) / columns) * tileSize.y;
 	r.left = ((gid - firstgid) % columns) * tileSize.x;

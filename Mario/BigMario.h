@@ -1,8 +1,8 @@
 #pragma once
-#include "MarioPowerUp.h"
+#include "MarioPower.h"
 
 class BigMario :
-    public MarioPowerUp
+    public MarioPower
 {
 public:
 	BigMario(shared_ptr<Mario> mario);

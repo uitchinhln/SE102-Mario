@@ -3,6 +3,8 @@
 #include "SceneManager.h"
 #include "AnimationManager.h"
 #include "Mario.h"
+#include "CardFX.h"
+#include "EffectServer.h"
 
 EndmapReward::EndmapReward()
 {
@@ -45,6 +47,7 @@ bool EndmapReward::HasCollideWith(DWORD id)
 
 void EndmapReward::FinalUpdate()
 {
+	active = true;
 	GameObject::FinalUpdate();
 	collisionCal->Clear();
 }
@@ -58,9 +61,23 @@ void EndmapReward::StatusUpdate()
 		this->holder = mario;
 		this->holder->SetLockController(true);
 		this->holder->SetFacing(1);
-		this->stateTimer.Stop();
 
-		Velocity.y = -FLY_UP_SPEED;
+		this->stateTimer.Stop();
+		Velocity = VECTOR_0;
+		Visible = false;
+
+		switch (state)
+		{
+		case EndmapRewardStates::MUSHROOM:
+			EffectServer::GetInstance()->SpawnEffect(make_shared<CardFX>(Position, Vec2(0, -FLY_UP_SPEED), CardType::MUSHROOM));
+			break;
+		case EndmapRewardStates::FLOWER:
+			EffectServer::GetInstance()->SpawnEffect(make_shared<CardFX>(Position, Vec2(0, -FLY_UP_SPEED), CardType::FLOWER));
+			break;
+		case EndmapRewardStates::STAR:
+			EffectServer::GetInstance()->SpawnEffect(make_shared<CardFX>(Position, Vec2(0, -FLY_UP_SPEED), CardType::STAR));
+			break;
+		}
 	}
 
 	if (this->holder != nullptr) {
@@ -77,7 +94,10 @@ void EndmapReward::StatusUpdate()
 
 void EndmapReward::Update()
 {
-	if (!stateTimer.IsRunning()) return;
+	if (!stateTimer.IsRunning()) {
+		active = false;
+		return;
+	}
 	if (stateTimer.Elapsed() > 330) {
 		this->state = EndmapRewardStates::STAR;
 		stateTimer.Restart();
@@ -112,7 +132,7 @@ void EndmapReward::Render()
 
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
-	ani->GetTransform()->Position = GetPosition() - cam;
+	ani->GetTransform()->Position = GetPosition() - cam + size / 2;
 	ani->Render();
 }
 

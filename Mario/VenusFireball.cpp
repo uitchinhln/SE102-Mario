@@ -91,7 +91,7 @@ void VenusFireball::Render()
 
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
-	this->animations["Default"]->GetTransform()->Position = GetPosition() - cam;
+	this->animations["Default"]->GetTransform()->Position = GetPosition() - cam + size / 2;
 	this->animations["Default"]->SetPlayScale(2.0f);
 	this->animations["Default"]->Render();
 }

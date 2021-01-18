@@ -29,6 +29,8 @@ public:
 protected:
 	bool flip = false;
 
+	long createTime;
+
 	Stopwatch respawnTimer;
 
 	long KP_RESPAWN_TIME = 8000;

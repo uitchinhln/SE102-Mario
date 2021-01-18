@@ -2,7 +2,7 @@
 #include "MEntityType.h"
 #include "AnimationManager.h"
 
-BigMario::BigMario(shared_ptr<Mario> mario) : MarioPowerUp(mario)
+BigMario::BigMario(shared_ptr<Mario> mario) : MarioPower(mario)
 {
 }
 

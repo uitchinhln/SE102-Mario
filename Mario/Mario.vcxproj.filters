@@ -85,9 +85,6 @@
     <Filter Include="MarioGame\Entity\LivingEntity\Goomba">
       <UniqueIdentifier>{24ad6102-646f-40d4-81f7-da8f69d4d463}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\Entity\LivingEntity\Mario\ProjectTile\Commons">
-      <UniqueIdentifier>{7ded88fc-d3ff-40da-98a3-651f996938cb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MarioGame\Entity\LivingEntity\Koopas">
       <UniqueIdentifier>{5d954810-e00b-417f-957c-c32689f2a3c8}</UniqueIdentifier>
     </Filter>
@@ -108,9 +105,6 @@
     </Filter>
     <Filter Include="MarioGame\HUD">
       <UniqueIdentifier>{3a6a3c5d-4090-46ad-90b5-58499190162d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Framework\Font">
-      <UniqueIdentifier>{4c44460e-8bde-4334-ba59-7a1a7468716a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\World\Map">
       <UniqueIdentifier>{8e3c9221-d0cf-4ac7-817b-629f525185a9}</UniqueIdentifier>
@@ -166,9 +160,6 @@
     <Filter Include="MarioGame\UI\Text">
       <UniqueIdentifier>{bde66aa8-9ef5-44e8-b5d6-e19e6f0e739b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\FX">
-      <UniqueIdentifier>{bade033b-056c-4b65-9491-2fa0ad49101a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\RapidJson">
       <UniqueIdentifier>{6ec863a4-254a-46af-925c-5fd95b4554e3}</UniqueIdentifier>
     </Filter>
@@ -180,6 +171,45 @@
     </Filter>
     <Filter Include="MarioGame\Entity\TriggerEntity\Portal">
       <UniqueIdentifier>{08c2b594-c8ae-4150-8047-7c9b621a0d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects">
+      <UniqueIdentifier>{bade033b-056c-4b65-9491-2fa0ad49101a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\EnemyEffects">
+      <UniqueIdentifier>{792193bf-86a3-4d7e-881e-7191627e11b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\EnemyEffects\HitFX">
+      <UniqueIdentifier>{d32bbf3d-52a1-4cc8-bc67-916e0748f9f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\EnemyEffects\GoombaFX">
+      <UniqueIdentifier>{c5b783fb-69bf-4f9a-86cd-822cff146f4e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\EnemyEffects\KoopasFX">
+      <UniqueIdentifier>{1b3f0be5-8eb6-41e3-8a8d-7fc455836c4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\EnemyEffects\RedGoombaFX">
+      <UniqueIdentifier>{95a89211-7fbc-42e7-9ba3-8c9b12ad3073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\TriggerEffects">
+      <UniqueIdentifier>{5d9273a7-e043-49da-b5eb-87b9047cead0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\TriggerEffects\RewardFX">
+      <UniqueIdentifier>{8ab4c480-8f7a-47d4-8bac-b6e9f030bdd0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\TriggerEffects\ScoreFX">
+      <UniqueIdentifier>{373d321a-38b0-4645-97bb-f0746c9c954a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\TriggerEffects\CoinFX">
+      <UniqueIdentifier>{a54b555a-96a7-43b2-8f86-824491b4cc50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\TriggerEffects\BrickDebrisFX">
+      <UniqueIdentifier>{a74914ce-0a78-4bc6-a340-8837d84e514e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Utils">
+      <UniqueIdentifier>{dffa7f31-e014-4a6e-b58c-96d64a3f3362}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Event">
+      <UniqueIdentifier>{6bf6e75f-3e71-4fcc-a67c-ccdcc3da1438}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -309,9 +339,6 @@
     <ClCompile Include="MarioFireBall.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Mario\ProjectTile</Filter>
     </ClCompile>
-    <ClCompile Include="MarioPowerUp.cpp">
-      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
-    </ClCompile>
     <ClCompile Include="AttackablePower.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
     </ClCompile>
@@ -432,9 +459,6 @@
     <ClCompile Include="UIComponents.cpp">
       <Filter>MarioGame\UI</Filter>
     </ClCompile>
-    <ClCompile Include="QuestionCoin.cpp">
-      <Filter>MarioGame\Entity\TriggerEntity\QuestionBlock</Filter>
-    </ClCompile>
     <ClCompile Include="VoidBlock.cpp">
       <Filter>MarioGame\Entity\MapBlock</Filter>
     </ClCompile>
@@ -458,6 +482,60 @@
     </ClCompile>
     <ClCompile Include="EndPortal.cpp">
       <Filter>MarioGame\Entity\TriggerEntity\Portal</Filter>
+    </ClCompile>
+    <ClCompile Include="GoombaDieFX.cpp">
+      <Filter>MarioGame\Effects\EnemyEffects\GoombaFX</Filter>
+    </ClCompile>
+    <ClCompile Include="GoombaExplodeFX.cpp">
+      <Filter>MarioGame\Effects\EnemyEffects\GoombaFX</Filter>
+    </ClCompile>
+    <ClCompile Include="KoopasDieFX.cpp">
+      <Filter>MarioGame\Effects\EnemyEffects\KoopasFX</Filter>
+    </ClCompile>
+    <ClCompile Include="RedGoombaDieFX.cpp">
+      <Filter>MarioGame\Effects\EnemyEffects\RedGoombaFX</Filter>
+    </ClCompile>
+    <ClCompile Include="RedGoombaExplodeFX.cpp">
+      <Filter>MarioGame\Effects\EnemyEffects\RedGoombaFX</Filter>
+    </ClCompile>
+    <ClCompile Include="HitStarFX.cpp">
+      <Filter>MarioGame\Effects\EnemyEffects\HitFX</Filter>
+    </ClCompile>
+    <ClCompile Include="SmokeSpotFX.cpp">
+      <Filter>MarioGame\Effects\EnemyEffects\HitFX</Filter>
+    </ClCompile>
+    <ClCompile Include="CardFX.cpp">
+      <Filter>MarioGame\Effects\TriggerEffects\RewardFX</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreFX.cpp">
+      <Filter>MarioGame\Effects\TriggerEffects\ScoreFX</Filter>
+    </ClCompile>
+    <ClCompile Include="EffectServer.cpp">
+      <Filter>MarioGame\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="IEffect.cpp">
+      <Filter>MarioGame\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="Particle.cpp">
+      <Filter>MarioGame\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteParticle.cpp">
+      <Filter>MarioGame\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinFX.cpp">
+      <Filter>MarioGame\Effects\TriggerEffects\CoinFX</Filter>
+    </ClCompile>
+    <ClCompile Include="BrickDebrisFX.cpp">
+      <Filter>MarioGame\Effects\TriggerEffects\BrickDebrisFX</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioUtils.cpp">
+      <Filter>MarioGame\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioPower.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEvent.cpp">
+      <Filter>MarioGame\Event</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -581,9 +659,6 @@
     <ClInclude Include="MarioFireBall.h">
       <Filter>MarioGame\Entity\LivingEntity\Mario\ProjectTile</Filter>
     </ClInclude>
-    <ClInclude Include="MarioPowerUp.h">
-      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
-    </ClInclude>
     <ClInclude Include="AttackablePower.h">
       <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
     </ClInclude>
@@ -703,9 +778,6 @@
     </ClInclude>
     <ClInclude Include="UIComponents.h">
       <Filter>MarioGame\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="QuestionCoin.h">
-      <Filter>MarioGame\Entity\TriggerEntity\QuestionBlock</Filter>
     </ClInclude>
     <ClInclude Include="VoidBlock.h">
       <Filter>MarioGame\Entity\MapBlock</Filter>
@@ -835,6 +907,60 @@
     </ClInclude>
     <ClInclude Include="BeginPortal.h">
       <Filter>MarioGame\Entity\TriggerEntity\Portal</Filter>
+    </ClInclude>
+    <ClInclude Include="GoombaDieFX.h">
+      <Filter>MarioGame\Effects\EnemyEffects\GoombaFX</Filter>
+    </ClInclude>
+    <ClInclude Include="GoombaExplodeFX.h">
+      <Filter>MarioGame\Effects\EnemyEffects\GoombaFX</Filter>
+    </ClInclude>
+    <ClInclude Include="KoopasDieFX.h">
+      <Filter>MarioGame\Effects\EnemyEffects\KoopasFX</Filter>
+    </ClInclude>
+    <ClInclude Include="RedGoombaDieFX.h">
+      <Filter>MarioGame\Effects\EnemyEffects\RedGoombaFX</Filter>
+    </ClInclude>
+    <ClInclude Include="RedGoombaExplodeFX.h">
+      <Filter>MarioGame\Effects\EnemyEffects\RedGoombaFX</Filter>
+    </ClInclude>
+    <ClInclude Include="HitStarFX.h">
+      <Filter>MarioGame\Effects\EnemyEffects\HitFX</Filter>
+    </ClInclude>
+    <ClInclude Include="SmokeSpotFX.h">
+      <Filter>MarioGame\Effects\EnemyEffects\HitFX</Filter>
+    </ClInclude>
+    <ClInclude Include="CardFX.h">
+      <Filter>MarioGame\Effects\TriggerEffects\RewardFX</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreFX.h">
+      <Filter>MarioGame\Effects\TriggerEffects\ScoreFX</Filter>
+    </ClInclude>
+    <ClInclude Include="EffectServer.h">
+      <Filter>MarioGame\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="IEffect.h">
+      <Filter>MarioGame\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="Particle.h">
+      <Filter>MarioGame\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteParticle.h">
+      <Filter>MarioGame\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinFX.h">
+      <Filter>MarioGame\Effects\TriggerEffects\CoinFX</Filter>
+    </ClInclude>
+    <ClInclude Include="BrickDebrisFX.h">
+      <Filter>MarioGame\Effects\TriggerEffects\BrickDebrisFX</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioUtils.h">
+      <Filter>MarioGame\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioPower.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEvent.h">
+      <Filter>MarioGame\Event</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

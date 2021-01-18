@@ -34,6 +34,8 @@ public:
 
 	virtual float GetDamageFor(GameObject& object, Direction direction);
 
+	virtual void OnDeath(Vec2 veloc);
+
 	~DefaultKoopas();
 
 protected:
@@ -43,7 +45,6 @@ protected:
 
 	float KP_GRAVITY = 0.002f;
 	float KP_SPEED = 0.14f;
-	long KP_DESTROY_DELAY = 3000;
 
 	Vec2 size = Vec2(45, 45);
 	RectF hitbox;

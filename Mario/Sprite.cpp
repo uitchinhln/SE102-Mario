@@ -20,10 +20,5 @@ void CSprite::Draw(float x, float y, Transform& transform, D3DCOLOR overlay)
 	r.right = this->left + this->width;
 	r.bottom = this->top + this->height;
 
-	D3DXVECTOR3 pv = D3DXVECTOR3(
-		(transform.Scale.x * pivot.x < 0 ? 0 : pivot.x) * abs(transform.Scale.x),
-		(transform.Scale.y * pivot.y < 0 ? 0 : pivot.y) * abs(transform.Scale.y),
-		0);
-
-	CGame::GetInstance()->GetGraphic().Draw(x, y, pv, this->texture, r, transform, overlay);
+	CGame::GetInstance()->GetGraphic().Draw(x, y, pivot, this->texture, r, transform, overlay);
 }

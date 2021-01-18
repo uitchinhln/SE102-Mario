@@ -1,6 +1,5 @@
 #pragma once
 #include "DefaultKoopas.h"
-#include "StopWatch.h"
 
 class MovingShell : 
 	public DefaultKoopas

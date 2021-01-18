@@ -10,11 +10,6 @@ Koopas::Koopas()
 	this->SetPosition(Vec2(0, 0));
 }
 
-Stopwatch& Koopas::GetDestroyTimer()
-{
-	return destroyTimer;
-}
-
 KoopasLifeStates& Koopas::GetLiveState()
 {
 	return state;

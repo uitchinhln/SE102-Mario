@@ -53,12 +53,14 @@ void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 t
 	x += viewport.left;
 	y += viewport.top;
 
-	float spriteW = x + r.right - r.left;
-	float spriteH = y + r.bottom - r.top;
+	x = ceil(x);
+	y = ceil(y);
 
-	if (x > viewport.right || y > viewport.bottom || spriteW < viewport.left || spriteH < viewport.top) return;
+	pivot.x = (pivot.x == 0 ? (r.right - r.left) / 2 : pivot.x) * abs(transform.Scale.x);
+	pivot.y = (pivot.y == 0 ? (r.bottom - r.top) / 2 : pivot.y) * abs(transform.Scale.y);
 
 	D3DXVECTOR3 p(x, y, 0);
+	//D3DXVECTOR3 p(x + (r.right - r.left) / 2, y + (r.bottom - r.top) / 2, 0);
 
 	if (transform.Rotation == 0 && transform.Scale == Vec2(1.0f, 1.0f)) {
 		spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
@@ -68,7 +70,8 @@ void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 t
 		D3DXMATRIX oldMatrix, newMatrix;
 		spriteHandler->GetTransform(&oldMatrix);
 
-		Vec2 transformCenter = Vec2(x + (r.right - r.left) / 2, y + (r.bottom - r.top) / 2);
+		//Vec2 transformCenter = Vec2(x + (r.right - r.left) / 2, y + (r.bottom - r.top) / 2);
+		Vec2 transformCenter = Vec2(x, y);
 
 		D3DXMatrixTransformation2D(&newMatrix, &transformCenter, 0, &transform.Scale,
 			&transformCenter, transform.Rotation, &VECTOR_0);

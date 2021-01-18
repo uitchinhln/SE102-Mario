@@ -25,7 +25,8 @@ void EndPortal::Update()
             mario->GetPosition().y -= 0.1 * CGame::Time().ElapsedGameTime;
         }
     }
-    else {
+
+    if (direction == Direction::Left || direction == Direction::Right) {
 
     }
 

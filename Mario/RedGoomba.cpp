@@ -18,11 +18,6 @@ Vec2& RedGoomba::GetSize()
 	return this->size;
 }
 
-Stopwatch& RedGoomba::GetDestroyTimer()
-{
-	return this->destroyTimer;
-}
-
 void RedGoomba::SetObjectState(shared_ptr<DefaultRedGoomba> objectState)
 {
 	this->objectState = objectState;
@@ -91,10 +86,10 @@ bool RedGoomba::IsGetThrough(GameObject& object, Direction direction)
 
 float RedGoomba::GetDamageFor(GameObject& object, Direction direction)
 {
-	if ((state == RedGoombaState::WALK || destroyTimer.Elapsed() <= 5) && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
+	if (state == RedGoombaState::WALK && MEntityType::IsMario(object.GetObjectType()) && direction != Direction::Top) {
 		return 1.0f;
 	}
-	if ((state == RedGoombaState::WALK || destroyTimer.Elapsed() <= 5) && MEntityType::IsMarioWeapon(object.GetObjectType())) {
+	if (state == RedGoombaState::WALK && MEntityType::IsMarioWeapon(object.GetObjectType())) {
 		return 1.0f;
 	}
 	return 0.0f;

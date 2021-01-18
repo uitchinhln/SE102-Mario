@@ -1,7 +1,6 @@
 #pragma once
 #include "GameObject.h"
 #include "DefaultKoopas.h"
-#include "StopWatch.h"
 
 class Mario;
 
@@ -16,8 +15,6 @@ class Koopas :
 {
 public:
 	Koopas();
-	
-	virtual Stopwatch& GetDestroyTimer();
 
 	virtual KoopasLifeStates& GetLiveState();
 
@@ -61,10 +58,6 @@ protected:
 	shared_ptr<DefaultKoopas> power;
 
 	KoopasLifeStates state;
-
-	Stopwatch destroyTimer;
-
-	float KP_DESTROY_DELAY = 500;
 
 public:
 

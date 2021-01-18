@@ -3,12 +3,17 @@
 #include "RedGoomba.h"
 #include "SceneManager.h"
 #include "Game.h"
+#include "EffectServer.h"
+#include "RedGoombaDieFX.h"
+#include "RedGoombaExplodeFX.h"
+#include "ScoreFX.h"
+#include "GameEvent.h"
 
 DefaultRedGoomba::DefaultRedGoomba(shared_ptr<RedGoomba> holder)
 {
 	this->holder = holder;
+	this->createTime = CGame::Time().TotalGameTime;
 
-	holder->GetDestroyTimer().Stop();
 	holder->GetState() = RedGoombaState::WALK;
 
 	DWORD dt = CGame::Time().ElapsedGameTime;
@@ -24,10 +29,6 @@ void DefaultRedGoomba::InitResource()
 {
 	if (animations.size() < 1) {
 		this->animations["Walk"] = AnimationManager::GetInstance()->Get("ani-red-goomba-walk")->Clone();
-		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-red-goomba-die")->Clone();
-		this->animations["Explode"] = AnimationManager::GetInstance()->Get("ani-red-goomba-idle")->Clone();
-
-		this->animations["Explode"]->GetTransform()->Scale.y = -1;
 	}
 }
 
@@ -63,7 +64,6 @@ void DefaultRedGoomba::StatusUpdate()
 		Vec2 velocity = g->GetVelocity();
 		Vec2 position = g->GetPosition();
 		Vec2 size = g->GetSize();
-		Stopwatch destroyTimer = g->GetDestroyTimer();
 		RedGoombaState state = g->GetState();
 
 		g->OnGround = false;
@@ -79,16 +79,19 @@ void DefaultRedGoomba::StatusUpdate()
 				if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 					if (coll->SAABBResult.Direction == Direction::Bottom) {
 						state = RedGoombaState::DIE;
-						velocity = VECTOR_0;
-						g->GetGravity() = 0;
 
 						position.y += size.y;
 						size.y = 27;
 						position.y -= size.y;
 
-						if (!destroyTimer.IsRunning()) {
-							destroyTimer.Restart();
-						}
+						EffectServer::GetInstance()->SpawnEffect(make_shared<RedGoombaDieFX>(position));
+						SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
+
+						//Giet boi mario
+						Score score = CGame::Time().TotalGameTime - createTime < 1000 ? Score::S200 : Score::S100;
+
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(g->GetPosition(), score);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, score);
 					}
 				}
 
@@ -96,12 +99,13 @@ void DefaultRedGoomba::StatusUpdate()
 					float damage = coll->Object->GetDamageFor(*g, coll->SAABBResult.Direction);
 					if (damage > 0) {
 						state = RedGoombaState::EXPLODE;
-						velocity = Vec2(jet.x * 0.1f, -0.65f);
-						GB_DESTROY_DELAY = 3000;
 
-						if (!destroyTimer.IsRunning()) {
-							destroyTimer.Restart();
-						}
+						EffectServer::GetInstance()->SpawnEffect(make_shared<RedGoombaExplodeFX>(position, Vec2(jet.x * 0.1f, -0.65f)));
+						SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
+
+						//Giet boi vu khi cua mario
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(g->GetPosition(), Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 					}
 				}
 			}
@@ -109,16 +113,12 @@ void DefaultRedGoomba::StatusUpdate()
 
 		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
 		if (position.x < 0.3 - size.x || position.y < 0.3 - size.y || position.x > mapBound.x || position.y > mapBound.y) {
-			GB_DESTROY_DELAY = 100;
-			if (!destroyTimer.IsRunning()) {
-				destroyTimer.Restart();
-			}
+			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
 		}
 
 		g->GetVelocity() = velocity;
 		g->GetPosition() = position;
 		g->GetSize() = size;
-		g->GetDestroyTimer() = destroyTimer;
 		g->GetState() = state;
 	}
 }
@@ -127,18 +127,12 @@ void DefaultRedGoomba::Update()
 {
 	if (shared_ptr<RedGoomba> g = holder.lock()) {
 		Vec2 velocity = g->GetVelocity();
-		Stopwatch destroyTimer = g->GetDestroyTimer();
-
-		if (destroyTimer.IsRunning() && destroyTimer.Elapsed() >= GB_DESTROY_DELAY) {
-			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
-		}
 		DWORD dt = CGame::Time().ElapsedGameTime;
 
 		velocity.y += g->GetGravity() * (float)dt;
 		g->GetDistance() = velocity * (float)dt;
 
 		g->GetVelocity() = velocity;
-		g->GetDestroyTimer() = destroyTimer;
 	}
 }
 
@@ -165,19 +159,7 @@ void DefaultRedGoomba::Render()
 
 		Animation animation = this->animations["Walk"];
 
-		switch (state)
-		{
-		case RedGoombaState::DIE:
-			animation = this->animations["Die"];
-			break;
-		case RedGoombaState::EXPLODE:
-			animation = this->animations["Explode"];
-			break;
-		default:
-			break;
-		}
-
-		animation->GetTransform()->Position = position - cam;
+		animation->GetTransform()->Position = position - cam + g->GetSize() / 2;
 		animation->Render();
 	}
 }

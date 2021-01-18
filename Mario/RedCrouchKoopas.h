@@ -12,5 +12,7 @@ public:
     virtual void StatusUpdate() override;
 
     virtual void FinalUpdate() override;
+
+    virtual void OnDeath(Vec2 veloc) override;
 };
 

@@ -8,10 +8,10 @@
 class GameObject;
 class Mario;
 
-class MarioPowerUp
+class MarioPower
 {
 public:
-	MarioPowerUp(shared_ptr<Mario> mario);
+	MarioPower(shared_ptr<Mario> mario);
 
 	virtual void InitResource(bool force = false);
 
@@ -47,7 +47,7 @@ public:
 
 	virtual ObjectType GetMarioType() = 0;
 
-	~MarioPowerUp();
+	~MarioPower();
 
 protected:
 	weak_ptr<Mario> mario;

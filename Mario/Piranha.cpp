@@ -4,6 +4,10 @@
 #include "SceneManager.h"
 #include "Game.h"
 #include "Mario.h"
+#include "SmokeSpotFX.h"
+#include "EffectServer.h"
+#include "ScoreFX.h"
+#include "GameEvent.h"
 
 Piranha::Piranha()
 {
@@ -68,7 +72,12 @@ void Piranha::StatusUpdate()
 			if (MEntityType::IsMarioWeapon(coll->Object->GetObjectType())) {
 				float damage = coll->Object->GetDamageFor(*this, coll->SAABBResult.Direction);
 				if (damage > 0) {
+					EffectServer::GetInstance()->SpawnEffect(make_shared<SmokeSpotFX>(Position));
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+
+					//Giet boi vu khi cua mario
+					shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S100);
+					__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 					break;
 				}
 			}
@@ -155,7 +164,7 @@ void Piranha::Render()
 
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
-	animation->GetTransform()->Position = Position - cam;
+	animation->GetTransform()->Position = Position - cam + size / 2;
 	animation->Render();
 }
 

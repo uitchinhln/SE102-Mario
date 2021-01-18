@@ -5,13 +5,14 @@
 #include "Game.h"
 #include "SceneManager.h"
 #include "CrouchKoopas.h"
+#include "IEffect.h"
+#include "ScoreFX.h"
+#include "GameEvent.h"
 
 JumpingKoopas::JumpingKoopas(shared_ptr<Koopas> koopas) : DefaultKoopas()
 {
 	this->koopas = koopas; 
 	this->KP_SPEED = 0.12f;
-	
-	koopas->GetDestroyTimer().Stop();
 
 	koopas->GetLiveState() = KoopasLifeStates::ALIVE;
 
@@ -27,9 +28,6 @@ void JumpingKoopas::InitResource(bool force)
 {
 	if (this->animations.size() < 1 || force) {
 		this->animations["Move"] = AnimationManager::GetInstance()->Get("ani-green-koopa-paratroopa-fly")->Clone();
-		this->animations["Die"] = AnimationManager::GetInstance()->Get("ani-green-koopa-troopa-crouch")->Clone();
-
-		this->animations["Die"]->GetTransform()->Scale.y = -1;
 	}
 }
 
@@ -41,9 +39,6 @@ void JumpingKoopas::FinalUpdate()
 void JumpingKoopas::Update()
 {
 	if (shared_ptr<Koopas> k = koopas.lock()) {
-		if (k->GetDestroyTimer().IsRunning() && k->GetDestroyTimer().Elapsed() >= KP_DESTROY_DELAY) {
-			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(k);
-		}
 		DWORD dt = CGame::Time().ElapsedGameTime;
 
 		k->GetVelocity().y += k->GetGravity() * (float)dt;
@@ -60,12 +55,11 @@ void JumpingKoopas::StatusUpdate()
 
 		if (collisionCal->HasOverlapped()) {
 			k->GetLiveState() = KoopasLifeStates::DIE;
-			k->SetVelocity(Vec2(0 * 0.1f, -0.6f));
-			KP_DESTROY_DELAY = 3000;
+			OnDeath(Vec2(0 * 0.1f, -0.6f));
 
-			if (!k->GetDestroyTimer().IsRunning()) {
-				k->GetDestroyTimer().Restart();
-			}
+			//Giet rua
+			shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+			__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 			return;
 		}
 
@@ -90,6 +84,10 @@ void JumpingKoopas::StatusUpdate()
 				if (MEntityType::IsMario(coll->Object->GetObjectType())) {
 					if (coll->SAABBResult.Direction == Direction::Bottom) {
 						k->SetPower(make_shared<DefaultKoopas>(k));
+
+						//Dap rua
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 						return;
 					}
 				}
@@ -103,12 +101,11 @@ void JumpingKoopas::StatusUpdate()
 					float damage = coll->Object->GetDamageFor(*k, coll->SAABBResult.Direction);
 					if (damage > 0) {
 						k->GetLiveState() = KoopasLifeStates::DIE;
-						k->SetVelocity(Vec2(jet.x * 0.1f, -0.6f));
-						KP_DESTROY_DELAY = 3000;
+						OnDeath(Vec2(jet.x * 0.1f, -0.6f));
 
-						if (!k->GetDestroyTimer().IsRunning()) {
-							k->GetDestroyTimer().Restart();
-						}
+						//Giet rua
+						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 					}
 				}
 			}
@@ -116,10 +113,7 @@ void JumpingKoopas::StatusUpdate()
 
 		Vec2 mapBound = SceneManager::GetInstance()->GetActiveScene()->GetGameMap()->GetBound();
 		if (k->GetPosition().x < 0.3 - size.x || k->GetPosition().y < 0.3 - size.y || k->GetPosition().x > mapBound.x || k->GetPosition().y > mapBound.y) {
-			KP_DESTROY_DELAY = 100;
-			if (!k->GetDestroyTimer().IsRunning()) {
-				k->GetDestroyTimer().Restart();
-			}
+			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(k);
 		}
 	}
 }
@@ -132,12 +126,8 @@ void JumpingKoopas::Render()
 
 		Animation ani = this->animations["Move"];
 
-		if (k->GetLiveState() == KoopasLifeStates::DIE) {
-			ani = this->animations["Die"];
-		}
-
 		ani->GetTransform()->Scale.x = (float)-k->GetFacing();
-		ani->GetTransform()->Position = k->GetPosition() - cam;
+		ani->GetTransform()->Position = k->GetPosition() - cam + size / 2;
 		ani->Render();
 	}
 }

@@ -1,9 +1,9 @@
 #pragma once
-#include "MarioPowerUp.h"
+#include "MarioPower.h"
 #include "StopWatch.h"
 
 class AttackablePower :
-    public MarioPowerUp
+    public MarioPower
 {
 public:
     AttackablePower(shared_ptr<Mario> mario);

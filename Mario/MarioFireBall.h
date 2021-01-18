@@ -23,6 +23,8 @@ public:
 
 	virtual void Update() override;
 
+	virtual void StatusUpdate() override;
+
 	virtual void FinalUpdate() override;
 
 	virtual void Render() override;

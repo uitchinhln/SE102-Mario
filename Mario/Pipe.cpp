@@ -38,27 +38,27 @@ void Pipe::Render()
     switch (direction)
     {
     case Direction::Left:
-        head->Draw(renderPos.x, renderPos.y, trans);
+        head->Draw(renderPos.x + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans);
         for (int i = renderPos.x + lengthOfPiece; i < renderPos.x + size.x - 1; i += lengthOfPiece) {
-            body->Draw(i, renderPos.y, trans);
+            body->Draw(i + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans);
         }
         break;
     case Direction::Top:
-        head->Draw(renderPos.x, renderPos.y, trans);
+        head->Draw(renderPos.x + verticalPeiceSize.x / 2, renderPos.y + verticalPeiceSize.y / 2, trans);
         for (int i = renderPos.y + lengthOfPiece; i < renderPos.y + size.y - 1; i += lengthOfPiece) {
-            body->Draw(renderPos.x, i, trans);
+            body->Draw(renderPos.x + verticalPeiceSize.x / 2, i + verticalPeiceSize.y / 2, trans);
         }
         break;
     case Direction::Right:
-        head->Draw(renderPos.x + size.x - lengthOfPiece, renderPos.y, trans);
+        head->Draw(renderPos.x + size.x - lengthOfPiece + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans);
         for (int i = renderPos.x; i < renderPos.x + size.x - lengthOfPiece - 1; i += lengthOfPiece) {
-            body->Draw(i, renderPos.y, trans);
+            body->Draw(i + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans);
         }
         break;
     case Direction::Bottom:
-        head->Draw(renderPos.x, renderPos.y + size.y - lengthOfPiece, trans);
+        head->Draw(renderPos.x + verticalPeiceSize.x / 2, renderPos.y + size.y - lengthOfPiece + verticalPeiceSize.y / 2, trans);
         for (int i = renderPos.y; i < renderPos.y + size.y - lengthOfPiece - 1; i += lengthOfPiece) {
-            body->Draw(renderPos.x, i, trans);
+            body->Draw(renderPos.x + verticalPeiceSize.x / 2, i + verticalPeiceSize.y / 2, trans);
         }
         break;
     }

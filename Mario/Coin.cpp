@@ -3,6 +3,8 @@
 #include "Game.h"
 #include "AnimationManager.h"
 #include "SceneManager.h"
+#include "EffectServer.h"
+#include "BrickDebrisFX.h"
 
 Coin::Coin()
 {
@@ -51,12 +53,15 @@ void Coin::StatusUpdate()
 			if (state == CoinState::BRICK) {
 				if (MEntityType::IsMario(coll->Object->GetObjectType()) && coll->SAABBResult.Direction == Direction::Top) {
 					if (coll->Object->GetObjectType() == MEntityType::SmallMario) continue;
+					EffectServer::GetInstance()->SpawnEffect(make_shared<BrickDebrisFX>(Position));
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 				}
 				if (coll->Object->GetObjectType() == MEntityType::KoopasImposter && ToVector(coll->SAABBResult.Direction).x != 0) {
+					EffectServer::GetInstance()->SpawnEffect(make_shared<BrickDebrisFX>(Position));
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 				}
 				if (coll->Object->GetObjectType() == MEntityType::MarioTailed) {
+					EffectServer::GetInstance()->SpawnEffect(make_shared<BrickDebrisFX>(Position));
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 				}
 			}
@@ -103,7 +108,7 @@ void Coin::Render()
 
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
-	ani->GetTransform()->Position = Position - cam;
+	ani->GetTransform()->Position = Position - cam + size / 2;
 	ani->Render();
 }
 

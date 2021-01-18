@@ -3,19 +3,19 @@
 	<!--	Texture Misc  	-->
 	<Textures gameObjectId="0" textureId="tex-misc">
 
-        <Animation aniId="ani-goal-mushroom" frameTime="100" name = "MUSHROOM">
+        <Animation aniId="ani-goal-mushroom" frameTime="50" name = "MUSHROOM">
             <Sprite id="spr-goal-mushroom-0" left="5" top="7" width="16" height="16"/>
             <Sprite id="spr-goal-mushroom-1" left="67" top="29" width="10" height="15"/>
             <Sprite id="spr-goal-mushroom-2" left="111" top="28" width="1" height="16"/>
             <Sprite id="spr-goal-mushroom-1" left="67" top="29" width="10" height="15"/>
         </Animation>
-        <Animation aniId="ani-goal-flower" frameTime="100" name = "FLOWER">
+        <Animation aniId="ani-goal-flower" frameTime="50" name = "FLOWER">
             <Sprite id="spr-goal-flower-0" left="25" top="28" width="16" height="16"/>
             <Sprite id="spr-goal-flower-1" left="80" top="29" width="10" height="16"/>
             <Sprite id="spr-goal-mushroom-2" left="111" top="28" width="1" height="16"/>
             <Sprite id="spr-goal-flower-1" left="80" top="29" width="10" height="16"/>
         </Animation>
-        <Animation aniId="ani-goal-star" frameTime="100" name = "STAR">
+        <Animation aniId="ani-goal-star" frameTime="50" name = "STAR">
             <Sprite id="spr-goal-star-0" left="45" top="27" width="16" height="16"/>
             <Sprite id="spr-goal-star-1" left="95" top="28" width="10" height="16"/>
             <Sprite id="spr-goal-mushroom-2" left="111" top="28" width="1" height="16"/>
@@ -28,6 +28,15 @@
 			<Sprite id="spr-coin-1" left="311" top="101"  width="1" height="14"/>
 			<Sprite id="spr-coin-2" left="321" top="101"  width="4" height="14"/>
 			<Sprite id="spr-coin-3" left="334" top="100"  width="14" height="16"/>
+			<Sprite id="spr-coin-4" left="357" top="100"  width="6" height="16"/>
+			<Sprite id="spr-coin-5" left="372" top="100"  width="10" height="16"/>
+		</Animation>
+        
+		<!-- COIN OBTAINED -->
+		<Animation aniId="ani-coin-obtained" frameTime="100">
+			<Sprite id="spr-coin-0" left="294" top="101"  width="8" height="14"/>
+			<Sprite id="spr-coin-1" left="311" top="101"  width="1" height="14"/>
+			<Sprite id="spr-coin-2" left="321" top="101"  width="4" height="14"/>
 			<Sprite id="spr-coin-4" left="357" top="100"  width="6" height="16"/>
 			<Sprite id="spr-coin-5" left="372" top="100"  width="10" height="16"/>
 		</Animation>

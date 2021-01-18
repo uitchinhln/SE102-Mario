@@ -114,7 +114,7 @@ void RaccoonLeaf::Render()
 	Animation animation = this->animations["Default"];
 
 	animation->GetTransform()->Scale.x = -facing;
-	animation->GetTransform()->Position = GetPosition() - cam;
+	animation->GetTransform()->Position = GetPosition() - cam + size / 2;
 	animation->Render();
 }
 

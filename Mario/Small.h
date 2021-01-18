@@ -1,7 +1,7 @@
 #pragma once
-#include "MarioPowerUp.h"
+#include "MarioPower.h"
 class Small :
-	public MarioPowerUp
+	public MarioPower
 {
 public:
 	Small(shared_ptr<Mario> mario);

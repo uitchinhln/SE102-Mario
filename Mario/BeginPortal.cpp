@@ -74,8 +74,7 @@ void BeginPortal::Update()
                 }
             }
         }
-        else {
-
+        if (direction == Direction::Left || direction == Direction::Right) {
         }
     }
 }

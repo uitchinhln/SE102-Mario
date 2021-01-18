@@ -1,12 +1,13 @@
 #include "PlayScene.h"
 #include "Game.h"
-#include "MarioPowerUp.h"
+#include "MarioPower.h"
 #include "Small.h"
 #include "BigMario.h"
 #include "FireMario.h"
 #include "SceneManager.h"
 #include "RaccoonMario.h"
 #include "Events.h"
+#include "EffectServer.h"
 
 #include "Goomba.h"
 #include "Koopas.h"
@@ -167,6 +168,7 @@ void PlayScene::Update()
 
 	camera->Update();
 	hud->Update();
+	EffectServer::GetInstance()->Update();
 	//auto finish = std::chrono::high_resolution_clock::now();
 	//DebugOut(L"Update: static: %d\tmoving: %d\t%d\n", objectList.size(), objectList.size(), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
@@ -191,6 +193,8 @@ void PlayScene::Render()
 		if (obj->Visible && obj->IsActive()) obj->Render();
 		obj->RenderTestBox();
 	}
+
+	EffectServer::GetInstance()->Render();
 
 	CGame::GetInstance()->GetGraphic().SetViewport(hud);
 

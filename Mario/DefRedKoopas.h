@@ -16,6 +16,8 @@ public:
 
 	virtual ObjectType GetObjectType() override;
 
+	virtual void OnDeath(Vec2 veloc) override;
+
 	~DefRedKoopas();
 
 protected:

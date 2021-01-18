@@ -8,6 +8,9 @@
 #include "RaccoonLeaf.h"
 #include "PSwitch.h"
 #include "Mario.h"
+#include "CoinFX.h"
+#include "EffectServer.h"
+#include "GameEvent.h"
 
 QuestionBlock::QuestionBlock()
 {
@@ -47,7 +50,8 @@ void QuestionBlock::Hit()
 	DebugOut(L"Reward: %s\n", ToLPCWSTR(reward.ToString()));
 
 	if (reward == MEntityType::QuestionCoin) {
-		//SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(RedMushroom::CreateRedMushroom(Position));
+		shared_ptr<IEffect> effect = make_shared<CoinFX>(Position - Vec2(0, 48), Score::S100);
+		__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
 	}
 	else if (reward == MEntityType::GreenMushroom) {
 		SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(GreenMushroom::CreateGreenMushroom(Position));
@@ -151,7 +155,7 @@ void QuestionBlock::Render()
 
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
-	ani->GetTransform()->Position = GetPosition() - cam;
+	ani->GetTransform()->Position = GetPosition() - cam + size / 2;
 	ani->Render();
 }
 

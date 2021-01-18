@@ -24,6 +24,9 @@ public:
 protected:
 	Vec2 size;
 
+	Vec2 verticalPeiceSize = Vec2(96, 48);
+	Vec2 horizontalPeiceSize = Vec2(48, 96);
+
 	int length;
 
 	float lengthOfPiece;

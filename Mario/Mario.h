@@ -1,8 +1,10 @@
 #pragma once
 #include "Utils.h"
 #include "GameObject.h"
-#include "MarioPowerUp.h"
+#include "MarioPower.h"
 #include "RayCast.h"
+#include "MarioUtils.h"
+#include "IEffect.h"
 
 enum class MovingStates {
 	IDLE,
@@ -59,7 +61,7 @@ protected:
 
 	WarpStates warpState = WarpStates::NONE;
 
-	shared_ptr<MarioPowerUp> powerUp;
+	shared_ptr<MarioPower> power;
 
 	weak_ptr<GameObject> inhand;
 
@@ -79,7 +81,7 @@ protected:
 public:
 	Mario();
 
-	virtual void SetPowerUp(shared_ptr<MarioPowerUp> powerUp);
+	virtual void SetPowerUp(shared_ptr<MarioPower> power);
 
 	virtual void InitResource() override;
 
@@ -160,6 +162,8 @@ public:
 	virtual void OnKeyUp(int key);
 
 	virtual void OnKeyDown(int key);
+
+	virtual void OnGetBonus(const char* source, shared_ptr<IEffect>& effect, Score score);
 
 	bool IsGetThrough(GameObject& object, Direction direction) override;
 
