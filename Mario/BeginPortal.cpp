@@ -15,7 +15,7 @@ void BeginPortal::Update()
         KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
 
         if (direction == Direction::Top && keyboard.IsKeyDown(DIK_DOWN)) {
-            SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetLocking(true);
+            SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetFreeze(true);
             mario->SetWarpState(WarpStates::VERTICAL);
             mario->GetDistance() = VECTOR_0;
 
@@ -25,7 +25,7 @@ void BeginPortal::Update()
         }
 
         if (direction == Direction::Bottom && keyboard.IsKeyDown(DIK_UP)) {
-            SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetLocking(true);
+            SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetFreeze(true);
             mario->SetWarpState(WarpStates::VERTICAL);
             mario->GetDistance() = VECTOR_0;
 
@@ -54,7 +54,7 @@ void BeginPortal::Update()
                     }
 
                     SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetActiveBound(cameraBoundId);
-                    SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetLocking(false);
+                    SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetFreeze(false);
                 }
             }
             else {
@@ -70,7 +70,7 @@ void BeginPortal::Update()
                     }
 
                     SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetActiveBound(cameraBoundId);
-                    SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetLocking(false);
+                    SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetFreeze(false);
                 }
             }
         }

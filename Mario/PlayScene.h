@@ -30,6 +30,8 @@ public:
 
 	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
 
+	virtual void SetSceneContentPath(string path) override;
+
 	virtual void MapReadEvent(MapProperties& props);
 
 	~PlayScene();

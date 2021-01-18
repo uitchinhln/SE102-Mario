@@ -30,44 +30,73 @@ void Camera::SetTracking(weak_ptr<GameObject> target)
 	this->target = target;
 }
 
-void Camera::Update()
+void Camera::ShakeUpdate()
 {
-	if (locking) return;
+	if (shakeTimer.IsRunning()) {
+		if (shakeTimer.Elapsed() < shakeDuration) {
+			Position.x += rand() % 14;
+			Position.x -= rand() % 10;
+
+			Position.y += rand() % 14;
+			Position.y -= rand() % 10;
+		}
+		else {
+			shakeTimer.Stop();
+		}
+	}
+}
+
+void Camera::TrackingUpdate()
+{
+	if (locking || mode != CameraMode::TRACKING) return;
 	if (shared_ptr<GameObject> obj = target.lock()) {
 		RectF targetBound = obj->GetHitBox();
+		float avgY = (targetBound.top + targetBound.bottom - this->d3dvp.Height) / 2;
 
-		Position.x = targetBound.left - this->d3dvp.Width / 2;
-		Position.y = targetBound.top - this->d3dvp.Height / 2;
-
-		if (shakeTimer.IsRunning()) {
-			if (shakeTimer.Elapsed() < shakeDuration) {
-				Position.x += rand() % 14;
-				Position.x -= rand() % 10;
-
-				Position.y += rand() % 14;
-				Position.y -= rand() % 10;
-			}
-			else {
-				shakeTimer.Stop();
-			}
-		}
-		
-		Vec2 camSize = GetCamSize();
-		RectF camBound = GetBoundingBox();
-		RectF camLimit = bounds.at(activeBound);
-
-		if (camBound.left < camLimit.left) Position.x = camLimit.left;
-		if (camBound.top < camLimit.top) Position.y = camLimit.top;
-		if (camBound.right > camLimit.right) Position.x = camLimit.right - camSize.x;
-		if (camBound.bottom > camLimit.bottom) Position.y = camLimit.bottom - camSize.y;
+		Position.x = (targetBound.left + targetBound.right - this->d3dvp.Width) / 2;
+		Position.y = min(avgY + this->d3dvp.Height / 4, max(Position.y, avgY - this->d3dvp.Height / 4));		
 	}
+}
+
+void Camera::AutoScrollUpdate()
+{
+	if (locking || mode != CameraMode::AUTOSCROLL) return;
+
+}
+
+void Camera::Update()
+{
+	TrackingUpdate();
+	AutoScrollUpdate();
+	ShakeUpdate();
+
+	Vec2 camSize = GetCamSize();
+	RectF camBound = GetBoundingBox();
+	RectF camLimit = activeBound;
+
+	if (reset == 1) {
+		RectF originalBound = bounds.at(activeId);
+		if (camBound.left >= originalBound.left && camBound.right <= originalBound.right
+			&& camBound.top >= originalBound.top && camBound.bottom <= originalBound.bottom)
+		{
+			camLimit = activeBound = originalBound;
+			reset = 2;
+			DebugOut(L"Camera resetted\n");
+		}
+	}
+
+	if (camBound.left < camLimit.left) Position.x = camLimit.left;
+	if (camBound.top < camLimit.top) Position.y = camLimit.top;
+	if (camBound.right > camLimit.right) Position.x = camLimit.right - camSize.x;
+	if (camBound.bottom > camLimit.bottom) Position.y = camLimit.bottom - camSize.y;
 }
 
 void Camera::AddBound(int id, float left, float top, float right, float bottom)
 {
 	this->bounds[id] = RectF(left, top, right, bottom);
-	if (bounds.find(activeBound) == bounds.end()) {
-		activeBound = id;
+	if (bounds.find(activeId) == bounds.end()) {
+		activeId = id;
+		activeBound = RectF(left, top, right, bottom);
 	}
 }
 
@@ -79,24 +108,60 @@ void Camera::Shake(int duration)
 
 RectF Camera::GetActiveBound()
 {
-	return bounds.at(activeBound);
+	return bounds.at(activeId);
 }
 
 void Camera::SetActiveBound(int id)
 {
 	if (bounds.find(id) != bounds.end()) {
-		activeBound = id;
+		activeId = id;
+		activeBound = bounds.at(id);
 	}
 }
 
-bool Camera::IsLocking()
+void Camera::SetBoundingEdge(Direction edge, float value)
+{
+	reset = 0;
+	switch (edge)
+	{
+	case Direction::Left:
+		activeBound.left = value;
+		break;
+	case Direction::Top:
+		activeBound.top = value;
+		break;
+	case Direction::Right:
+		activeBound.right = value;
+		break;
+	case Direction::Bottom:
+		activeBound.bottom = value;
+		break;
+	}
+}
+
+void Camera::ResetBoundingEdge()
+{
+	if (!reset) reset = 1;
+}
+
+bool Camera::IsFreeze()
 {
 	return locking;
 }
 
-void Camera::SetLocking(bool value)
+void Camera::SetFreeze(bool value)
 {
 	this->locking = value;
+}
+
+CameraMode Camera::GetCameraMode()
+{
+	return this->mode;
+}
+
+void Camera::SetCameraMode(CameraMode mode)
+{
+	this->mode = mode;
 }
 
 Camera::~Camera()

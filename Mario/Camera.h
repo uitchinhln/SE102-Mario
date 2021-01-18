@@ -3,8 +3,14 @@
 #include "Transform.h"
 #include "Viewport.h"
 #include "Stopwatch.h"
+#include "Direction.h"
 
 class GameObject;
+
+enum class CameraMode {
+	TRACKING,
+	AUTOSCROLL
+};
 
 class Camera : 
 	public Viewport
@@ -13,7 +19,13 @@ protected:
 	weak_ptr<GameObject> target;
 
 	unordered_map<int, RectF> bounds;
-	int activeBound = 0;
+	int activeId = 0;
+	RectF activeBound;
+	int reset = 0;
+
+	bool autoBound = true;
+
+	CameraMode mode = CameraMode::TRACKING;
 
 	Stopwatch shakeTimer;
 	int shakeDuration = 0;
@@ -31,6 +43,12 @@ public:
 
 	virtual void SetTracking(weak_ptr<GameObject> target);
 
+	virtual void ShakeUpdate();
+
+	virtual void TrackingUpdate();
+
+	virtual void AutoScrollUpdate();
+
 	virtual void Update();
 
 	virtual void AddBound(int id, float left, float top, float right, float bottom);
@@ -41,9 +59,17 @@ public:
 
 	virtual void SetActiveBound(int id);
 
-	virtual bool IsLocking();
+	virtual void SetBoundingEdge(Direction edge, float value);
 
-	virtual void SetLocking(bool value);
+	virtual void ResetBoundingEdge();
+
+	virtual bool IsFreeze();
+
+	virtual void SetFreeze(bool value);
+
+	virtual CameraMode GetCameraMode();
+	
+	virtual void SetCameraMode(CameraMode mode);
 
 	~Camera();
 };

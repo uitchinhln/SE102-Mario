@@ -313,6 +313,27 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	}
 }
 
+void PlayScene::SetSceneContentPath(string path)
+{
+	TiXmlDocument doc(path.c_str());
+
+	if (!doc.LoadFile()) {
+		DebugOut(L"Get scene data failed. File: %s\n", ToLPCWSTR(path));
+		return;
+	}
+	DebugOut(L"Get scene data success. File: %s\n", ToLPCWSTR(path));
+
+	/*TiXmlElement* root = doc.RootElement();
+
+	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
+
+	this->gameMap = CGameMap::FromTMX(mapPath);*/
+
+	doc.Clear();
+
+	this->dataPath = path;
+}
+
 void PlayScene::MapReadEvent(MapProperties& props)
 {
 	int cellW = props.GetInt("CellWidth");

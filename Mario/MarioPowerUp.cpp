@@ -76,6 +76,7 @@ void MarioPowerUp::StatusUpdate()
 				if (jet.y < 0) {
 					m->SetOnGround(true);
 					m->SetJumpingState(JumpingStates::IDLE);
+					SceneManager::GetInstance()->GetActiveScene()->GetCamera()->ResetBoundingEdge();
 				}
 				else {
 					switch (m->GetJumpingState())
