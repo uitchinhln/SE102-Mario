@@ -3,89 +3,142 @@
 #include "Text.h"
 #include "Mario.h"
 #include "SceneManager.h"
+#include "HudElement.h"
 
-Hud::Hud(Vec2 pos, Vec2 size) : Viewport(pos, size)
+
+Hud::Hud(string tmxPath, Vec2 pos, Vec2 size) : Viewport(pos, size)
 {
-	auto sprManager = SpriteManager::GetInstance();
-	panel = sprManager->Get("spr-hud-0");
+	coin = new Text();
+	coin->SetFont(CGame::GetInstance()->DefaultFont);
 
-	cards.push_back(ItemCard{ ItemCardType::Empty });
-	cards.push_back(ItemCard{ ItemCardType::Empty });
-	cards.push_back(ItemCard{ ItemCardType::Empty });
-
-	cardVs[(int)ItemCardType::Empty] = sprManager->Get("spr-empty-card-0");
-	cardVs[(int)ItemCardType::Mushroom] = sprManager->Get("spr-super-mushroom-card-0");
-	cardVs[(int)ItemCardType::Fireflower] = sprManager->Get("spr-fire-flower-card-0");
-	cardVs[(int)ItemCardType::Superstar] = sprManager->Get("spr-star-man-card-0");
+	timer = new Text();
+	timer->SetFont(CGame::GetInstance()->DefaultFont);
 
 	world = new Text();
-	life = new Text();
+	world->SetFont(CGame::GetInstance()->DefaultFont);
+
+	live = new Text();
+	live->SetFont(CGame::GetInstance()->DefaultFont);
+
 	score = new Text();
-	coin = new Text();
-	timer = new Text();
+	score->SetFont(CGame::GetInstance()->DefaultFont);
 
-	auto font = CGame::GetInstance()->DefaultFont;
-	world->SetFont(font);
-	life->SetFont(font);
-	score->SetFont(font);
-	coin->SetFont(font);
-	timer->SetFont(font);
+	data = SceneManager::GetInstance()->GetPlayer<Mario>()->GetPlayerData();
 
-	powerMeter = new PowerMeter();
+	pmeter = new PMeter();
 
-
-	world->SetContent("1");
-	life->SetContent("4");
-	score->SetContent("0002340");
-	coin->SetContent("11");
-	timer->SetContent("000");
-
-	// Organize layout
-	world->Position = Vec2(110, 24);
-	life->Position = Vec2(110 - 4, 48);
-	score->Position = Vec2(150, 48);
-
-	coin->SetAlignment(TextAlignment::Right);
-	coin->Position = Vec2(448, 24);
-	timer->SetAlignment(TextAlignment::Right);
-	timer->Position = Vec2(448, 48);
-
-	powerMeter->Position = Vec2(150, 20);
+	this->LoadFromTmx(tmxPath);
 }
 
 void Hud::Update()
 {
-	if (!player) {
-		player = SceneManager::GetInstance()->GetPlayer<Mario>();
-	}
+	panel.Update();
+	cards.Update();
 
-	powerMeter->SetLevel(player->GetPowerMeter());
-	powerMeter->Update();
+	pmeter->Update();
+
+	long time = data->RemainingTime / 1000;
+	timer->SetContent(to_string(time));
+
+	coin->SetContent(to_string(data->Coins));
+
+	world->SetContent(to_string(data->World));
+
+	live->SetContent(to_string(data->Lives));
+
+	string txtScore = to_string(data->Score);
+	txtScore.insert(0, 7 - txtScore.size(), '0');
+	score->SetContent(txtScore);
 }
 
 void Hud::Render()
 {
-	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));
+	CGame::GetInstance()->GetGraphic().Clear(background);
 
-	Transform trans;
-	panel->Draw(0, 0, trans);
+	panel.Render();
+	cards.Render();
 
-	//for (int i = cards.size() - 1; i >= 0; --i)
-	//{
-	//	int x = config.screenWidth - cardVisuals[i]->GetSpriteWidth() * (cards.size() - i);
-	//	int y = config.screenHeight - config.hudOffset;
-	//	DrawCard(cards[i], x - 32, y);
-	//}
+	pmeter->Render();
 
-	world->Render();
-	life->Render();
-	score->Render();
 	coin->Render();
 	timer->Render();
-
-	powerMeter->Render();
+	world->Render();
+	live->Render();
+	score->Render();
 }
 
-void Hud::DrawCard(ItemCard& card, int x, int y)
+
+void Hud::LoadFromTmx(string tmxPath)
 {
+	TiXmlDocument doc(tmxPath.c_str());
+
+	if (!doc.LoadFile()) {
+		DebugOut(L"Cannot load hud config file.\n");
+		return;
+	}
+
+	TiXmlElement* root = doc.RootElement();
+
+	if (root->Attribute("backgroundcolor")) {
+		string hexColor = root->Attribute("backgroundcolor");
+		hexColor.replace(0, 1, "");
+		unsigned int hex = stoul(hexColor, nullptr, 16);
+		int a = (hex >> 24) & 255 | 255 & (hexColor.length() <= 6 ? 0xff : 0x00);
+		background = D3DCOLOR_ARGB(a, (hex >> 16) & 255, (hex >> 8) & 255, hex & 255);
+	}
+
+	for (TiXmlElement* group = root->FirstChildElement("objectgroup"); group != nullptr; group = group->NextSiblingElement("objectgroup"))
+	{
+		for (TiXmlElement* node = group->FirstChildElement("object"); node != nullptr; node = node->NextSiblingElement("object"))
+		{
+			Vec2 fixPos;
+			Vec2 size = VECTOR_0;
+			node->QueryFloatAttribute("x", &fixPos.x);
+			node->QueryFloatAttribute("y", &fixPos.y);
+			node->QueryFloatAttribute("width", &size.x);
+			node->QueryFloatAttribute("height", &size.y);
+
+			if (!node->Attribute("type")) continue;
+
+			if (strcmp(node->Attribute("type"), HudElement::HudPanel.ToString().c_str()) == 0) {
+				panel.Position = fixPos;
+				panel.Size = size;
+				continue;
+			}
+			if (strcmp(node->Attribute("type"), HudElement::CardSlot.ToString().c_str()) == 0) {
+				cards.Add(fixPos, size);
+				continue;
+			}
+			if (strcmp(node->Attribute("type"), HudElement::Wallet.ToString().c_str()) == 0) {
+				coin->Position = fixPos;
+				coin->Size = size;
+				continue;
+			}
+			if (strcmp(node->Attribute("type"), HudElement::RemainingTime.ToString().c_str()) == 0) {
+				timer->Position = fixPos;
+				timer->Size = size;
+				continue;
+			}
+			if (strcmp(node->Attribute("type"), HudElement::WorldLabel.ToString().c_str()) == 0) {
+				world->Position = fixPos;
+				world->Size = size;
+				continue;
+			}
+			if (strcmp(node->Attribute("type"), HudElement::Lives.ToString().c_str()) == 0) {
+				live->Position = fixPos;
+				live->Size = size;
+				continue;
+			}
+			if (strcmp(node->Attribute("type"), HudElement::PMeter.ToString().c_str()) == 0) {
+				pmeter->Position = fixPos;
+				pmeter->Size = size;
+				continue;
+			}
+			if (strcmp(node->Attribute("type"), HudElement::Score.ToString().c_str()) == 0) {
+				score->Position = fixPos;
+				score->Size = size;
+				continue;
+			}
+		}
+	}
 }

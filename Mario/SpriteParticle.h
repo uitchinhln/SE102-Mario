@@ -9,9 +9,9 @@ public:
 	Transform Transform;
 
 public:
-	virtual void Render() override;
+	virtual void Render(D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255)) override;
 
-	virtual void Render(int runTime, int totalTime) override;
+	virtual void Render(int runTime, int totalTime, D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255)) override;
 
 	virtual bool HasResource() override;
 };

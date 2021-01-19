@@ -16,6 +16,7 @@ Spawner::Spawner()
 {
 	spawnTimer.Reset();
 	spawnTimer.Stop();
+	this->SetCollidibility(false);
 }
 
 shared_ptr<GameObject> Spawner::GetEntity()
@@ -115,12 +116,10 @@ bool Spawner::HasCollideWith(DWORD id)
 
 void Spawner::FinalUpdate()
 {
-	this->active = true;
 }
 
 void Spawner::Update()
 {
-	this->active = false;
 	if (!autoSpawn) return;
 	Spawn();
 }

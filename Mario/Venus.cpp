@@ -27,7 +27,8 @@ void Venus::Reset()
 {
 	this->shootTimer.Restart();
 	this->movementTimer.Restart();
-	canCollision = true;
+	//canCollision = true;
+	collidable = true;
 
 	state = VenusState::Reveal;
 
@@ -58,7 +59,8 @@ void Venus::InitResource()
 
 void Venus::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
-	if (!canCollision) return;
+	//if (!canCollision) return;
+	if (!collidable) return;
 	vector<shared_ptr<GameObject>> objs;
 	for (shared_ptr<GameObject> o : *coObj) {
 		if (MEntityType::IsMario(o->GetObjectType()) || MEntityType::IsMarioWeapon(o->GetObjectType())) {
@@ -86,7 +88,8 @@ void Venus::PositionLateUpdate()
 
 void Venus::StatusUpdate()
 {
-	if (!canCollision) return;
+	//if (!canCollision) return;
+	if (!collidable) return;
 	vector<shared_ptr<CollisionResult>> coResult = GetCollisionCalc()->GetLastResults();
 
 	if (coResult.size() != 0) {
@@ -100,7 +103,7 @@ void Venus::StatusUpdate()
 
 					//Giet boi vu khi cua mario
 					shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S100);
-					__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+					__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 					break;
 				}
 			}
@@ -126,7 +129,7 @@ void Venus::MovingUpdate()
 				movementTimer.Restart();
 				OnRevealed();
 			}
-			canCollision = true;
+			collidable = true;
 		}
 		break;
 		case 1:
@@ -148,7 +151,7 @@ void Venus::MovingUpdate()
 				movementTimer.Restart();
 				TrackPlayerPosition();
 				OnHidden();
-				canCollision = false;
+				collidable = false;
 			}
 		}
 		break;

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Textures>
 	<Textures textureId="tex-ui">
-        <Sprite id="spr-font-0" left="32" top="24"  width="8" height="8"/>
-        <Sprite id="spr-font-1" left="54" top="24"  width="6" height="8"/>
-        <Sprite id="spr-font-2" left="71" top="24"  width="8" height="8"/>
-        <Sprite id="spr-font-3" left="90" top="24"  width="8" height="8"/>
-        <Sprite id="spr-font-4" left="108" top="24"  width="8" height="8"/>
-        <Sprite id="spr-font-5" left="127" top="24"  width="8" height="8"/>
-        <Sprite id="spr-font-6" left="145" top="24"  width="8" height="8"/>
-        <Sprite id="spr-font-7" left="162" top="24"  width="8" height="8"/>
-        <Sprite id="spr-font-8" left="179" top="24"  width="8" height="8"/>
-        <Sprite id="spr-font-9" left="197" top="24"  width="8" height="8"/>
+        <Sprite id="spr-font-0" left="32" top="24"  width="8" height="7"/>
+        <Sprite id="spr-font-1" left="53" top="24"  width="8" height="7"/>
+        <Sprite id="spr-font-2" left="71" top="24"  width="8" height="7"/>
+        <Sprite id="spr-font-3" left="90" top="24"  width="8" height="7"/>
+        <Sprite id="spr-font-4" left="108" top="24"  width="8" height="7"/>
+        <Sprite id="spr-font-5" left="127" top="24"  width="8" height="7"/>
+        <Sprite id="spr-font-6" left="145" top="24"  width="8" height="7"/>
+        <Sprite id="spr-font-7" left="162" top="24"  width="8" height="7"/>
+        <Sprite id="spr-font-8" left="179" top="24"  width="8" height="7"/>
+        <Sprite id="spr-font-9" left="197" top="24"  width="8" height="7"/>
         <Sprite id="spr-font-A" left="215" top="24"  width="8" height="8"/>
         <Sprite id="spr-font-B" left="234" top="24"  width="8" height="8"/>
         <Sprite id="spr-font-C" left="32" top="39"  width="8" height="8"/>
@@ -53,8 +53,8 @@
         <Sprite id="spr-m-tag-0" left="15" top="160"  width="18" height="9"/>
         <Sprite id="spr-p-icon-0" left="72" top="161"  width="16" height="9"/>
         <Sprite id="spr-p-icon-1" left="100" top="161"  width="16" height="9"/>
-        <Sprite id="spr-arrow-0" left="64" top="161" width="9" height="9"/>
-        <Sprite id="spr-arrow-1" left="91" top="161" width="9" height="9"/>
+        <Sprite id="spr-arrow-0" left="64" top="161" width="8" height="9"/>
+        <Sprite id="spr-arrow-1" left="91" top="161" width="8" height="9"/>
         <Sprite id="spr-empty-card-0" left="140" top="158"  width="24" height="29"/>
         <Sprite id="spr-super-mushroom-card-0" left="171" top="158"  width="24" height="29"/>
         <Sprite id="spr-fire-flower-card-0" left="202" top="158"  width="24" height="29"/>

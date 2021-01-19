@@ -15,6 +15,7 @@ private:
 protected:
 	bool active = true;
 
+	bool collidable = true;
 
 	int facing = 1;
 	int renderOrder = 1000;
@@ -53,6 +54,10 @@ public:
 	virtual bool IsActive();
 
 	virtual void SetActive(bool);
+
+	virtual bool Collidable();
+
+	virtual void SetCollidibility(bool);
 
 	virtual float& GetGravity();
 

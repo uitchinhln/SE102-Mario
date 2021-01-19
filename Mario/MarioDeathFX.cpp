@@ -19,7 +19,18 @@ void MarioDeathFX::Update()
 		playtimeLeft -= CGame::Time().ElapsedGameTime;
 	}
 	else {
-		IEffect::Update();
+		Active = false;
+
+		playtimeLeft -= CGame::Time().ElapsedGameTime;
+		if (playtimeLeft <= 0) return;
+
+		for each (Particle * particle in particles)
+		{
+			if (particle == NULL) continue;
+
+			particle->Update();
+			Active = true;
+		}
 	}
 }
 

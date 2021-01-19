@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="16" height="3" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#000000" nextlayerid="5" nextobjectid="13">
+ <objectgroup id="2" name="Object Layer 1">
+  <object id="1" type="HudPanel" x="10" y="6" width="459" height="90"/>
+  <object id="2" type="CardSlot" x="505" y="6" width="72" height="87"/>
+  <object id="3" type="CardSlot" x="582" y="6" width="72" height="87"/>
+  <object id="4" type="CardSlot" x="659" y="6" width="72" height="87"/>
+  <object id="5" type="Wallet" x="410" y="29" width="48" height="21"/>
+  <object id="7" type="RemainingTime" x="386.205" y="53" width="72" height="21"/>
+  <object id="8" type="WorldLabel" x="125" y="29" width="24" height="21"/>
+  <object id="9" type="Lives" x="125" y="53" width="24" height="21"/>
+  <object id="11" type="PMeter" x="174" y="29" width="186.666" height="21"/>
+  <object id="12" type="Score" x="174" y="53" width="169" height="21"/>
+ </objectgroup>
+ <imagelayer id="4" name="Image Layer 1" offsetx="10" offsety="6">
+  <image source="../Textures/hud_dialog.png" width="460" height="90"/>
+ </imagelayer>
+</map>

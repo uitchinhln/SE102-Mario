@@ -152,6 +152,8 @@
     <ClCompile Include="BrickDebrisFX.cpp" />
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="CardFX.cpp" />
+    <ClCompile Include="CardSet.cpp" />
+    <ClCompile Include="CardSlot.cpp" />
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinFX.cpp" />
     <ClCompile Include="CrouchKoopas.cpp" />
@@ -171,6 +173,8 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GrowUpFX.cpp" />
     <ClCompile Include="Hud.cpp" />
+    <ClCompile Include="HudElement.cpp" />
+    <ClCompile Include="HudPanel.cpp" />
     <ClCompile Include="IEffect.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
     <ClCompile Include="IntroScene.cpp" />
@@ -213,9 +217,10 @@
     <ClCompile Include="Particle.cpp" />
     <ClCompile Include="Pipe.cpp" />
     <ClCompile Include="Piranha.cpp" />
+    <ClCompile Include="PlayerData.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="PMeter.cpp" />
     <ClCompile Include="Portal.cpp" />
-    <ClCompile Include="PowerMeter.cpp" />
     <ClCompile Include="PSwitch.cpp" />
     <ClCompile Include="QuestionBlock.cpp" />
     <ClCompile Include="RaccoonLeaf.cpp" />
@@ -267,6 +272,8 @@
     <ClInclude Include="BrickDebrisFX.h" />
     <ClInclude Include="Card.h" />
     <ClInclude Include="CardFX.h" />
+    <ClInclude Include="CardSet.h" />
+    <ClInclude Include="CardSlot.h" />
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinFX.h" />
     <ClInclude Include="CrouchKoopas.h" />
@@ -286,6 +293,8 @@
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GrowUpFX.h" />
     <ClInclude Include="Hud.h" />
+    <ClInclude Include="HudElement.h" />
+    <ClInclude Include="HudPanel.h" />
     <ClInclude Include="IEffect.h" />
     <ClInclude Include="IEnviroment.h" />
     <ClInclude Include="IntroScene.h" />
@@ -328,9 +337,10 @@
     <ClInclude Include="Particle.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Piranha.h" />
+    <ClInclude Include="PlayerData.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="PMeter.h" />
     <ClInclude Include="Portal.h" />
-    <ClInclude Include="PowerMeter.h" />
     <ClInclude Include="PSwitch.h" />
     <ClInclude Include="QuestionBlock.h" />
     <ClInclude Include="RaccoonLeaf.h" />

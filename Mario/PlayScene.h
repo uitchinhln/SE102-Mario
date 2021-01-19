@@ -42,15 +42,17 @@ protected:
 
 	shared_ptr<Hud> hud;
 
-	virtual void HookEvent();
-
-	virtual void UnhookEvent();
+	shared_ptr<PlayerData> data;
 
 	Vec2 camPos = Vec2(0, 0);
 	Vec2 camSize = Vec2(769, 579);
 
 	Vec2 hudPos = Vec2(0, 579);
 	Vec2 hudSize = Vec2(769, 142);
+
+	virtual void HookEvent();
+
+	virtual void UnhookEvent();
 
 private:
 	shared_ptr<Mario> mario;

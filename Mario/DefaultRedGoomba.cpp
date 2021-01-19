@@ -91,7 +91,7 @@ void DefaultRedGoomba::StatusUpdate()
 						Score score = CGame::Time().TotalGameTime - createTime < 1000 ? Score::S200 : Score::S100;
 
 						shared_ptr<IEffect> effect = make_shared<ScoreFX>(g->GetPosition(), score);
-						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, score);
+						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, score);
 					}
 				}
 
@@ -105,7 +105,7 @@ void DefaultRedGoomba::StatusUpdate()
 
 						//Giet boi vu khi cua mario
 						shared_ptr<IEffect> effect = make_shared<ScoreFX>(g->GetPosition(), Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 					}
 				}
 			}

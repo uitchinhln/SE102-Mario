@@ -75,7 +75,7 @@ void Goomba::StatusUpdate()
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 
 					shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S100);
-					__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+					__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 				}
 			}
 
@@ -88,7 +88,7 @@ void Goomba::StatusUpdate()
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 
 					shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S100);
-					__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+					__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 				}
 			}
 		}

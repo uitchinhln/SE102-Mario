@@ -42,7 +42,7 @@ void RedCrouchKoopas::StatusUpdate()
 
 				//Giet rua
 				shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
-				__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+				__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 			}
 			return;
 		}
@@ -72,7 +72,7 @@ void RedCrouchKoopas::StatusUpdate()
 						if (coll->SAABBResult.Direction == Direction::Bottom && CGame::Time().TotalGameTime - createTime < 1000) {
 							//Dap rua
 							shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S200);
-							__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S200);
+							__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S200);
 						}
 					}
 					break;
@@ -102,7 +102,7 @@ void RedCrouchKoopas::StatusUpdate()
 
 						//Giet rua
 						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 						break;
 					}
 					continue;

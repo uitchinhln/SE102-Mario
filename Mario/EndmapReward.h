@@ -2,14 +2,9 @@
 #include "GameObject.h"
 #include "StopWatch.h"
 #include "ObjectType.h"
+#include "PlayerData.h"
 
 class Mario;
-
-enum class EndmapRewardStates {
-    MUSHROOM,
-    FLOWER,
-    STAR
-};
 
 class EndmapReward :
     public GameObject
@@ -50,7 +45,7 @@ protected:
 
 	shared_ptr<Mario> holder;
 
-	EndmapRewardStates state;
+	CardType state;
 
 	Stopwatch stateTimer;
 

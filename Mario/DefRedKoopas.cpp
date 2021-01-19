@@ -128,7 +128,7 @@ void DefRedKoopas::StatusUpdate()
 
 			//Giet rua
 			shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
-			__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+			__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 			return;
 		}
 
@@ -151,7 +151,7 @@ void DefRedKoopas::StatusUpdate()
 
 						//Dap rua
 						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 						return;
 					}
 				}
@@ -169,7 +169,7 @@ void DefRedKoopas::StatusUpdate()
 
 						//Giet rua
 						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 					}
 				}
 			}

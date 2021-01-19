@@ -104,6 +104,11 @@ void AttackablePower::Render()
 			selectedAnimation = m->GetWarpState() == WarpStates::HORIZONTAL ? animations["TeleHor"] : animations["TeleVer"];
 		}
 
+		D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255);
+		if (m->Invulnerable() > 0 && (m->Invulnerable() / 50) % 2) {
+			overlay = D3DCOLOR_ARGB(127, 255, 255, 255);
+		}
+
 		if (selectedAnimation == nullptr) return;
 		selectedAnimation->SetPlayScale(max(0.4f, min(abs(m->GetVelocity().x) / MARIO_WALK_SPEED, 4)) * 1.5f);
 		selectedAnimation->GetTransform()->Scale = Vec2((float)m->GetFacing(), 1);

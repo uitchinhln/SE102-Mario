@@ -217,6 +217,16 @@ void GameObject::SetActive(bool value)
 	}
 }
 
+bool GameObject::Collidable()
+{
+	return this->collidable;
+}
+
+void GameObject::SetCollidibility(bool value)
+{
+	this->collidable = value;
+}
+
 GameObject::~GameObject()
 {
 }

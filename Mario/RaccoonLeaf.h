@@ -29,6 +29,8 @@ public:
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
+	~RaccoonLeaf();
+
 	virtual void OnLostCamera() override;
 
 	static shared_ptr<RaccoonLeaf> CreateRaccoonLeaf(Vec2 pos);

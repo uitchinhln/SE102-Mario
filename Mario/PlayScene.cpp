@@ -51,16 +51,26 @@ void PlayScene::Load()
 	TiXmlElement* cameraConfig = root->FirstChildElement("Camera");
 
 	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
+	string hudPath = root->FirstChildElement("Hud")->Attribute("path");
 
 	this->mario = SceneManager::GetInstance()->GetPlayer<Mario>();
 	this->mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
 	this->mario->SetPowerUp(make_shared<Small>(mario));
 
+	this->data = mario->GetPlayerData();
+	this->data->RemainingTime = 300000;
+
 	this->camera = make_shared<Camera>(camPos, camSize);
 	this->camera->SetTracking(mario);
 
+	this->hud = make_shared<Hud>(hudPath, hudPos, hudSize);
+
+	this->gameMap = CGameMap::FromTMX(mapPath);
+	this->gameMap->SetCamera(camera);
+
+
 	float left = 0, top = 0, bottom = 0, right = 0;
-	int startId = 0, id = 0; 
+	int startId = 0, id = 0;
 
 	cameraConfig->QueryIntAttribute("start", &startId);
 	for (TiXmlElement* node = cameraConfig->FirstChildElement("Boundary"); node != nullptr; node = node->NextSiblingElement("Boundary"))
@@ -73,11 +83,6 @@ void PlayScene::Load()
 		camera->AddBound(id, left, top, right, bottom);
 	}
 	camera->SetActiveBound(startId);
-
-	this->hud = make_shared<Hud>(hudPos, hudSize);
-
-	this->gameMap = CGameMap::FromTMX(mapPath);
-	this->gameMap->SetCamera(camera);
 
 	doc.Clear();
 }
@@ -98,6 +103,7 @@ void PlayScene::Unload()
 void PlayScene::Update()
 {
 	//auto start = std::chrono::high_resolution_clock::now();	
+	
 	RectF camBox = camera->GetBoundingBox();
 
 	objectList.clear();
@@ -166,16 +172,20 @@ void PlayScene::Update()
 	
 	RemoveDespawnedObjects();
 
+	this->data->RemainingTime -= CGame::Time().ElapsedGameTime;
+
 	camera->Update();
 	hud->Update();
 	EffectServer::GetInstance()->Update();
+
 	//auto finish = std::chrono::high_resolution_clock::now();
-	//DebugOut(L"Update: static: %d\tmoving: %d\t%d\n", objectList.size(), objectList.size(), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
+	//DebugOut(L"Update: objects: %d\t%d\n", objectList.size(), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 void PlayScene::Render()
 {
 	//auto start = std::chrono::high_resolution_clock::now();
+
 	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));	
 	CGame::GetInstance()->GetGraphic().SetViewport(camera);
 
@@ -199,8 +209,9 @@ void PlayScene::Render()
 	CGame::GetInstance()->GetGraphic().SetViewport(hud);
 
 	hud->Render();
+
 	//auto finish = std::chrono::high_resolution_clock::now();
-	//DebugOut(L"Render: static: %d\tmoving: %d\t%d\n", objectList.size(), objectList.size(), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
+	//DebugOut(L"Render: objects: %d\t%d\n", objectList.size(), std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 void PlayScene::SpawnEntity(shared_ptr<GameObject> entity)
@@ -326,12 +337,6 @@ void PlayScene::SetSceneContentPath(string path)
 		return;
 	}
 	DebugOut(L"Get scene data success. File: %s\n", ToLPCWSTR(path));
-
-	/*TiXmlElement* root = doc.RootElement();
-
-	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
-
-	this->gameMap = CGameMap::FromTMX(mapPath);*/
 
 	doc.Clear();
 

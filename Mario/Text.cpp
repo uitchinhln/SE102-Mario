@@ -3,66 +3,65 @@
 Text::Text()
 {
 	font = nullptr;
-	spacing = -3;
-	alignment = TextAlignment::Left;
+	spacing = 3;
+	alignment = TextAlignment::Right;
+}
+
+void Text::Update()
+{
 }
 
 void Text::Render()
 {
 	if (font == nullptr) return;
 
-	int start = 0, end = 0, step = 0;
-	switch (alignment)
-	{
-	case TextAlignment::Left:
-		start = 0, end = text.length() - 1, step = 1;
-		break;
-	case TextAlignment::Right:
-		start = text.length() - 1, end = 0, step = -1;
-		break;
-	}
+	float textWidth = 0;
 
-	int x = 0;
-	for (int i = start; (step > 0 ? i <= end : i >= end); i += step)
+	for each (char letter in content)
 	{
-		char ch = text.at(i);
-
-		if (ch == ' ')
-		{
-			x += font->GetSpaceWidth() * (alignment == TextAlignment::Left ? 1 : -1);
+		if (letter == ' ') {
+			textWidth += spacing;
 			continue;
 		}
+		textWidth += font->GetChar(letter)->width;
+	}
 
-		Sprite charSprite = font->GetChar(ch);
+	float begin = Position.x;
+	float end = min(Position.x + Size.x, Position.x + textWidth);
 
-		if (charSprite == nullptr) continue;
+	if (alignment == TextAlignment::Right) {
+		begin = max(Position.x, Position.x + Size.x - textWidth);
+		end = Position.x + Size.x;
+	}
 
-		auto piv = (alignment == TextAlignment::Left ? 0 : charSprite->width);
+	float currentX = begin;
 
-		float oldpv = charSprite->pivot.x;
-		charSprite->pivot.x = piv;
-		charSprite->Draw(Position.x + x, Position.y, Transform());
-		charSprite->pivot.x = oldpv;
+	for each (char letter in content)
+	{
+		if (letter == ' ') {
+			currentX += spacing;
+			continue;
+		}
+		
+		Sprite c = font->GetChar(letter);
 
-		auto charStep = 0;
-		if (alignment == TextAlignment::Left)
-			charStep = (charSprite->width + spacing);
-		else if (alignment == TextAlignment::Right && i > end)
-			charStep = -(charSprite->width + spacing);
+		if (currentX + c->width > end) break;
 
-		x += charStep;
+		c->Draw(currentX + c->width / 2, Position.y + Size.y - c->height / 2, trans);
+
+		currentX += c->width;
 	}
 }
 
 void Text::SetContent(string text)
 {
-	this->text = text;
+	this->content = text;
 	for (auto c : text) c = toupper(c);
 }
 
 string Text::GetContent()
 {
-    return this->text;
+    return this->content;
 }
 
 void Text::SetSpacing(int spacing)
@@ -72,6 +71,8 @@ void Text::SetSpacing(int spacing)
 
 void Text::SetAlignment(TextAlignment alignment)
 {
+	if (this->alignment == alignment) return;
+
 	this->alignment = alignment;
 }
 

@@ -23,7 +23,7 @@ vector<shared_ptr<CollisionResult>> CollisionCalculator::CalcPotentialCollisions
 		//auto start = std::chrono::high_resolution_clock::now();
 		for each (shared_ptr<GameObject> coO in (*objects))
 		{		
-			if (!coO->IsActive() || sp->GetID() == coO->GetID()) continue;
+			if (!coO->IsActive() || !coO->Collidable() || sp->GetID() == coO->GetID()) continue;
 
 			RectF cpR = coO->GetHitBox();
 			Vec2 cpD = coO->GetDistance();

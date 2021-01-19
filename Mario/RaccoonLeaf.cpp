@@ -60,7 +60,7 @@ void RaccoonLeaf::Update()
 	switch (movingStep)
 	{
 	case 0:
-		if (Position.y + size.y + 144.0f <= rootPos.y) {
+		if (Position.y + size.y + 194.0f <= rootPos.y) {
 			Position.y = rootPos.y - size.y - 144.0f;
 			Velocity.y = 0;
 			movingStep = 1;
@@ -77,7 +77,7 @@ void RaccoonLeaf::Update()
 		this->renderOrder = 1501;
 
 		if (abs(Position.x - rootPos.x) >= LEAF_REVEAL_DISTANCE) {
-			facing = -facing;
+			facing = Position.x < rootPos.x ? 1 : -1;
 		}
 
 		Velocity.x = LEAF_REVEAL_FORCE * dt * facing;
@@ -133,9 +133,18 @@ float RaccoonLeaf::GetDamageFor(GameObject& object, Direction direction)
 	return 0.0f;
 }
 
+RaccoonLeaf::~RaccoonLeaf()
+{
+	DebugOut(L"Huy RaccoonLeaf\n");
+}
+
 void RaccoonLeaf::OnLostCamera()
 {
-	SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+	RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
+	cam.top = 0;
+
+	if (!collisionCal->AABB(cam, GetHitBox()))
+		SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 }
 
 shared_ptr<RaccoonLeaf> RaccoonLeaf::CreateRaccoonLeaf(Vec2 pos)

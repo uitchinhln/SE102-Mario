@@ -10,7 +10,7 @@ void Particle::Update()
 	Position += Velocity * dt;
 }
 
-void Particle::Render()
+void Particle::Render(D3DCOLOR overlay)
 {
 	if (Animations.size() < 1) return;
 	
@@ -19,10 +19,10 @@ void Particle::Render()
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 	ani->GetTransform()->Position = Position - cam + Size / 2;
-	ani->Render();
+	ani->Render(overlay);
 }
 
-void Particle::Render(int runTime, int totalTime)
+void Particle::Render(int runTime, int totalTime, D3DCOLOR overlay)
 {
 	if (Animations.size() < 1) return;
 
@@ -31,7 +31,7 @@ void Particle::Render(int runTime, int totalTime)
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 	ani->GetTransform()->Position = Position - cam + Size / 2;
-	ani->Render(runTime, totalTime);
+	ani->Render(runTime, totalTime, overlay);
 }
 
 RectF Particle::GetBoundingBox()

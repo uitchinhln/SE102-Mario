@@ -15,6 +15,7 @@ class Text :
 public:
 	Text();
 
+	virtual void Update() override;
 	virtual void Render() override;
 
 	virtual void SetContent(string text);
@@ -24,11 +25,18 @@ public:
 	virtual void SetAlignment(TextAlignment alignment);
 
 	virtual void SetFont(Font* font);
+
 protected:
 	int renderOrder;
-	string text;
+
+	string content;
+
 	int spacing;
+
 	Font* font;
+
 	TextAlignment alignment;
+
+	Transform trans;
 };
 

@@ -9,7 +9,7 @@ Portal::Portal()
 
 void Portal::Update()
 {
-	active = false;
+	collidable = false;
 	hasMario = CollisionCalculator::CommonAABB(hitbox, mario->GetHitBox());
 }
 
@@ -39,7 +39,6 @@ void Portal::StatusUpdate()
 
 void Portal::FinalUpdate()
 {
-	active = true;
 }
 
 bool Portal::HasCollideWith(DWORD id)

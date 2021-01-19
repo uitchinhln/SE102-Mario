@@ -1,11 +1,6 @@
 #pragma once
 #include "IEffect.h"
-
-enum class CardType {
-    FLOWER,
-    MUSHROOM,
-    STAR
-};
+#include "PlayerData.h"
 
 class CardFX :
     public IEffect

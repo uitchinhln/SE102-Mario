@@ -103,9 +103,11 @@ void FireMario::OnDamaged(float damage)
 
 		if (damage >= 2) {
 			m->SetPowerUp(make_shared<Small>(m));
+			m->SetInvulnerable(INVULNERABLE_TIME);
 		}
 		else if (damage >= 1) {
 			m->SetPowerUp(make_shared<BigMario>(m));
+			m->SetInvulnerable(INVULNERABLE_TIME);
 		}
 
 		m->GetPosition().x = fixPos.x;
@@ -118,7 +120,7 @@ void FireMario::OnPowerUp(ObjectType powerType)
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (powerType == MEntityType::FireFlower) {
 			shared_ptr<IEffect> effect = make_shared<ScoreFX>(m->GetPosition(), Score::S1000);
-			__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S1000);
+			__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S1000);
 			return;
 		}
 

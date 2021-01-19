@@ -9,7 +9,7 @@
 EndmapReward::EndmapReward()
 {
 	this->Gravity = 0;
-	this->state = EndmapRewardStates::MUSHROOM;
+	this->state = CardType::Mushroom;
 	stateTimer.Start();
 }
 
@@ -47,7 +47,6 @@ bool EndmapReward::HasCollideWith(DWORD id)
 
 void EndmapReward::FinalUpdate()
 {
-	active = true;
 	GameObject::FinalUpdate();
 	collisionCal->Clear();
 }
@@ -66,18 +65,7 @@ void EndmapReward::StatusUpdate()
 		Velocity = VECTOR_0;
 		Visible = false;
 
-		switch (state)
-		{
-		case EndmapRewardStates::MUSHROOM:
-			EffectServer::GetInstance()->SpawnEffect(make_shared<CardFX>(Position, Vec2(0, -FLY_UP_SPEED), CardType::MUSHROOM));
-			break;
-		case EndmapRewardStates::FLOWER:
-			EffectServer::GetInstance()->SpawnEffect(make_shared<CardFX>(Position, Vec2(0, -FLY_UP_SPEED), CardType::FLOWER));
-			break;
-		case EndmapRewardStates::STAR:
-			EffectServer::GetInstance()->SpawnEffect(make_shared<CardFX>(Position, Vec2(0, -FLY_UP_SPEED), CardType::STAR));
-			break;
-		}
+		EffectServer::GetInstance()->SpawnEffect(make_shared<CardFX>(Position, Vec2(0, -FLY_UP_SPEED), state));
 	}
 
 	if (this->holder != nullptr) {
@@ -95,18 +83,18 @@ void EndmapReward::StatusUpdate()
 void EndmapReward::Update()
 {
 	if (!stateTimer.IsRunning()) {
-		active = false;
+		collidable = false;
 		return;
 	}
 	if (stateTimer.Elapsed() > 330) {
-		this->state = EndmapRewardStates::STAR;
+		this->state = CardType::Star;
 		stateTimer.Restart();
 	}
 	else if (stateTimer.Elapsed() > 220) {
-		this->state = EndmapRewardStates::FLOWER;
+		this->state = CardType::Flower;
 	}
 	else if (stateTimer.Elapsed() > 110) {
-		this->state = EndmapRewardStates::MUSHROOM;
+		this->state = CardType::Mushroom;
 	}
 }
 
@@ -117,13 +105,13 @@ void EndmapReward::Render()
 	Animation ani = this->animations["MUSHROOM"];
 	switch (state)
 	{
-	case EndmapRewardStates::MUSHROOM:
+	case CardType::Mushroom:
 		ani = this->animations["MUSHROOM"];
 		break;
-	case EndmapRewardStates::FLOWER:
+	case CardType::Flower:
 		ani = this->animations["FLOWER"];
 		break;
-	case EndmapRewardStates::STAR:
+	case CardType::Star:
 		ani = this->animations["STAR"];
 		break;
 	default:

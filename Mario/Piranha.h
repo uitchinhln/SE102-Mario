@@ -57,7 +57,7 @@ protected:
 	Vec2 size = Vec2(16 * 3, 23 * 3);
 	Vec2 rootPos;
 
-	bool canCollision = true;
+	//bool canCollision = true;
 
 	PiranhaState state = PiranhaState::Reveal;
 

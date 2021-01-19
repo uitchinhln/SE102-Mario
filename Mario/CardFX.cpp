@@ -16,13 +16,13 @@ void CardFX::InitResource(Particle* particle)
 {
 	switch (type)
 	{
-	case CardType::FLOWER:
+	case CardType::Flower:
 		particle->Animations["Default"] = AnimationManager::GetInstance()->Get("ani-goal-flower")->Clone();
 		break;
-	case CardType::MUSHROOM:
+	case CardType::Mushroom:
 		particle->Animations["Default"] = AnimationManager::GetInstance()->Get("ani-goal-mushroom")->Clone();
 		break;
-	case CardType::STAR:
+	case CardType::Star:
 		particle->Animations["Default"] = AnimationManager::GetInstance()->Get("ani-goal-star")->Clone();
 		break;
 	}

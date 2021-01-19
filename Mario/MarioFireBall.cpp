@@ -87,6 +87,7 @@ void MarioFireBall::StatusUpdate()
 	for each (shared_ptr<CollisionResult> coll in coResult)
 	{
 		if (MEntityType::IsMario(coll->Object->GetObjectType())) continue;
+		if (coll->Object->GetObjectType() == MEntityType::VenusFireBall) continue;
 		if (MEntityType::IsEnemy(coll->Object->GetObjectType())) {
 			EffectServer::GetInstance()->SpawnEffect(make_shared<SmokeSpotFX>(Position + collisionCal->GetClampDistance()));
 			SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());

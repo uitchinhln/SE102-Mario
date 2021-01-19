@@ -64,7 +64,7 @@ protected:
 	Vec2 size = Vec2(16 * 3, 32 * 3);
 	Vec2 rootPos;
 
-	bool canCollision = true;
+	//bool canCollision = true;
 
 	VenusState state = VenusState::Reveal;
 

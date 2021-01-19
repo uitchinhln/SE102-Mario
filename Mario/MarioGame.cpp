@@ -28,7 +28,7 @@ void MarioGame::LoadResources()
 {
 	TiXmlDocument doc("Resource/GameData.xml");
 
-	SceneManager::GetInstance()->SetPlayer(make_shared<Mario>());
+	SceneManager::GetInstance()->SetPlayer(make_shared<Mario>(make_shared<PlayerData>()));
 
 	if (doc.LoadFile()) {
 		TiXmlElement* root = doc.RootElement();
@@ -51,6 +51,8 @@ void MarioGame::LoadResources()
 			AnimationManager::GetInstance()->ImportFromXml(node->Attribute("path"));
 		}
 
+		this->LoadDefaultFont();
+
 		TiXmlElement* scenes = root->FirstChildElement("GameContent")->FirstChildElement("Scenes");
 
 		for (TiXmlElement* node = scenes->FirstChildElement("Scene"); node != NULL; node = node->NextSiblingElement("Scene")) {
@@ -69,7 +71,6 @@ void MarioGame::LoadResources()
 		string startId = scenes->Attribute("start");
 		SceneManager::GetInstance()->ActiveScene(startId);
 
-		this->LoadDefaultFont();
 		doc.Clear();
 	}
 }

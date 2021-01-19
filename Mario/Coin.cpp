@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "EffectServer.h"
 #include "BrickDebrisFX.h"
+#include "GameEvent.h"
 
 Coin::Coin()
 {
@@ -48,6 +49,7 @@ void Coin::StatusUpdate()
 		{
 			if (state == CoinState::COIN && MEntityType::IsMario(coll->Object->GetObjectType())) {
 				SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+				__raise (*GameEvent::GetInstance()).PlayerCoinEvent(__FILE__, 1);
 			}
 
 			if (state == CoinState::BRICK) {

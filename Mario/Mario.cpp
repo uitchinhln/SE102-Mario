@@ -87,39 +87,51 @@ void Mario::OnKeyDown(int key)
 		Position.y = 1136;
 		break;
 	case DIK_V:
-		warpState = WarpStates::VERTICAL;
+		data->Cards.push_back(CardType::Flower);
 		break;
 	}
 
 }
 
-void Mario::OnGetBonus(const char* source, shared_ptr<IEffect>& effect, Score score)
+void Mario::OnGetScore(const char* source, shared_ptr<IEffect>& effect, Score score)
 {
 	EffectServer::GetInstance()->SpawnEffect(effect);
-	DebugOut(L"Get Bonus: %d from %s\n", score, ToLPCWSTR(source));
+	if (score == Score::S1UP) {
+		data->Lives += 1;
+	}
+	else {
+		data->Score += (int)score;
+	}
+}
+
+void Mario::OnGetCoin(const char* source, int value)
+{
+	data->Coins += value;
 }
 
 void Mario::OnDamaged(float damage)
 {
+	if (invulnerable > 0) return;
 	shared_ptr<MarioPower> p = power;
 	p->OnDamaged(damage);
 }
 
 void Mario::OnDeath()
 {
-	if (death) return;
+	collidable = false;
+	if (invulnerable > 0) return;
 	SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetFreeze(true);
 	EffectServer::GetInstance()->SpawnEffect(make_shared<MarioDeathFX>(Position));
 	this->Visible = false;
 	this->SetLockController(true);
-	this->death = true;
+	this->invulnerable = 9999999;
 }
 
 void Mario::OnPowerUp(ObjectType powerType)
 {
 	if (powerType == MEntityType::GreenMushroom) {
 		shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S1UP);
-		__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S1UP);
+		__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S1UP);
 	}
 	else {
 		shared_ptr<MarioPower> p = power;
@@ -127,7 +139,7 @@ void Mario::OnPowerUp(ObjectType powerType)
 	}
 }
 
-Mario::Mario() : GameObject()
+Mario::Mario(shared_ptr<PlayerData> data) : GameObject()
 {
 	this->Distance = Vec2(0, 0);
 	this->Position = Vec2(100, 1200);
@@ -137,7 +149,13 @@ Mario::Mario() : GameObject()
 	this->renderOrder = 1001;
 	this->raycaster = make_shared<RayCast>();
 	this->freezeTimer.Stop();
+	this->data = data;
 	HookEvent();
+}
+
+shared_ptr<PlayerData> Mario::GetPlayerData()
+{
+	return data;
 }
 
 void Mario::SetPowerUp(shared_ptr<MarioPower> power)
@@ -154,6 +172,7 @@ void Mario::SetPowerUp(shared_ptr<MarioPower> power)
 	this->power = power;
 
 	if (cur == next) return;
+	if (freezeTimer.IsRunning()) return;
 
 	if (cur == MEntityType::SmallMario) {
 		EffectServer::GetInstance()->SpawnEffect(make_shared<GrowUpFX>(Position, shared_from_this()));
@@ -385,6 +404,8 @@ void Mario::Update()
 		CGame::GetInstance()->SetTimeScale(1.0f);
 		Visible = true;
 	}
+	invulnerable -= CGame::Time().ElapsedGameTime;
+	//collidable = invulnerable <= 0;
 
 	if (!controllable) return;
 	shared_ptr<MarioPower> p = power;
@@ -535,6 +556,16 @@ void Mario::SetOnGround(bool value)
 	onGround = value;
 }
 
+long Mario::Invulnerable()
+{
+	return this->invulnerable;
+}
+
+void Mario::SetInvulnerable(long value)
+{
+	this->invulnerable = value;
+}
+
 Vec2& Mario::GetDistance()
 {
 	return Distance;
@@ -604,12 +635,14 @@ void Mario::HookEvent()
 {
 	__hook(&Events::KeyDownEvent, Events::GetInstance(), &Mario::OnKeyDown);
 	__hook(&Events::KeyUpEvent, Events::GetInstance(), &Mario::OnKeyUp);
-	__hook(&GameEvent::PlayerBonusEvent, GameEvent::GetInstance(), &Mario::OnGetBonus);
+	__hook(&GameEvent::PlayerScoreEvent, GameEvent::GetInstance(), &Mario::OnGetScore);
+	__hook(&GameEvent::PlayerCoinEvent, GameEvent::GetInstance(), &Mario::OnGetCoin);
 }
 
 void Mario::UnHookEvent()
 {
 	__unhook(&Events::KeyDownEvent, Events::GetInstance(), &Mario::OnKeyDown);
 	__unhook(&Events::KeyUpEvent, Events::GetInstance(), &Mario::OnKeyUp);
-	__unhook(&GameEvent::PlayerBonusEvent, GameEvent::GetInstance(), &Mario::OnGetBonus);
+	__unhook(&GameEvent::PlayerScoreEvent, GameEvent::GetInstance(), &Mario::OnGetScore);
+	__unhook(&GameEvent::PlayerCoinEvent, GameEvent::GetInstance(), &Mario::OnGetCoin);
 }

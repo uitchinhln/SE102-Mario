@@ -1,47 +1,36 @@
 #pragma once
 #include "Utils.h"
 #include "Viewport.h"
-#include "PowerMeter.h"
 #include "Mario.h"
 #include "Text.h"
-
-enum class ItemCardType
-{
-	Empty,
-	Mushroom,
-	Fireflower,
-	Superstar
-};
-
-
-struct ItemCard
-{
-	ItemCardType item;
-};
+#include "HudPanel.h"
+#include "CardSet.h"
+#include "PMeter.h"
 
 class Hud : 
 	public Viewport
 {
+protected:
+	void LoadFromTmx(string tmxPath);
+
+
 public:
-	Hud(Vec2 pos, Vec2 size);
+	Hud(string tmxPath, Vec2 pos, Vec2 size);
 
 	virtual void Update();
 
 	virtual void Render();
 
 protected:
-	shared_ptr<Mario> player;
+	shared_ptr<PlayerData> data;
 
-	void DrawCard(ItemCard& card, int x, int y);
-	Sprite panel;
-	vector<ItemCard> cards;
-	Sprite cardVs[4];
+	D3DCOLOR background;
 
-	Text* world, * life, * score, * coin, * timer;
-	PowerMeter* powerMeter;
+	HudPanel panel;
+	CardSet cards;
 
-	int blinkTimer;
-	bool blinkLastCard;
-	ItemCardType lastCard;
+	PMeter* pmeter;
+
+	Text* world, * live, * score, * coin, * timer;
 };
 

@@ -47,7 +47,8 @@ void QuestionBlock::Hit()
 
 	if (reward == MEntityType::QuestionCoin) {
 		shared_ptr<IEffect> effect = make_shared<CoinFX>(Position - Vec2(0, 48), Score::S100);
-		__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+		__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
+		__raise (*GameEvent::GetInstance()).PlayerCoinEvent(__FILE__, 1);
 	}
 }
 

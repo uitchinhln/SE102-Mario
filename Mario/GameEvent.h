@@ -10,7 +10,8 @@ class GameEvent
 	GameEvent();
 
 public:
-	__event void PlayerBonusEvent(const char* source, shared_ptr<IEffect>& effect, Score score);
+	__event void PlayerScoreEvent(const char* source, shared_ptr<IEffect>& effect, Score score);
+	__event void PlayerCoinEvent(const char* source, int value);
 
 	static GameEvent* GetInstance();
 };

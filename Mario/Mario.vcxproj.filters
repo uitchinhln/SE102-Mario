@@ -103,9 +103,6 @@
     <Filter Include="MarioGame\Entity\MapBlock">
       <UniqueIdentifier>{9fb81cf2-9c3b-4dfb-b4cb-5d459266f672}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\HUD">
-      <UniqueIdentifier>{3a6a3c5d-4090-46ad-90b5-58499190162d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Framework\World\Map">
       <UniqueIdentifier>{8e3c9221-d0cf-4ac7-817b-629f525185a9}</UniqueIdentifier>
     </Filter>
@@ -156,9 +153,6 @@
     </Filter>
     <Filter Include="MarioGame\UI">
       <UniqueIdentifier>{e7e8789c-ffa8-4820-b6e9-859764038a47}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="MarioGame\UI\Text">
-      <UniqueIdentifier>{bde66aa8-9ef5-44e8-b5d6-e19e6f0e739b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Framework\RapidJson">
       <UniqueIdentifier>{6ec863a4-254a-46af-925c-5fd95b4554e3}</UniqueIdentifier>
@@ -225,6 +219,21 @@
     </Filter>
     <Filter Include="MarioGame\Effects\MarioEffects\TransformFX">
       <UniqueIdentifier>{c4567535-a4f7-454f-95c2-f7d2b324567a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\UI\Components">
+      <UniqueIdentifier>{2fc39594-bb20-403b-b2da-e6524d51fb5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\UI\Components\Text">
+      <UniqueIdentifier>{bde66aa8-9ef5-44e8-b5d6-e19e6f0e739b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\UI\Dialogs">
+      <UniqueIdentifier>{231f6802-85af-451d-b35d-e2ccd10ce46a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\UI\Dialogs\HUD">
+      <UniqueIdentifier>{3a6a3c5d-4090-46ad-90b5-58499190162d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\UI\Components\HudComponents">
+      <UniqueIdentifier>{8dfb432e-f2a3-4aba-8457-14a5d84ae78b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -397,7 +406,7 @@
       <Filter>MarioGame\Entity\MapBlock</Filter>
     </ClCompile>
     <ClCompile Include="Hud.cpp">
-      <Filter>MarioGame\HUD</Filter>
+      <Filter>MarioGame\UI\Dialogs\HUD</Filter>
     </ClCompile>
     <ClCompile Include="Viewport.cpp">
       <Filter>Framework\Graphic</Filter>
@@ -462,17 +471,11 @@
     <ClCompile Include="GreenMushroom.cpp">
       <Filter>MarioGame\Entity\Items</Filter>
     </ClCompile>
-    <ClCompile Include="PowerMeter.cpp">
-      <Filter>MarioGame\HUD</Filter>
-    </ClCompile>
     <ClCompile Include="Font.cpp">
-      <Filter>MarioGame\UI\Text</Filter>
+      <Filter>MarioGame\UI\Components\Text</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">
-      <Filter>MarioGame\UI\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="UIComponents.cpp">
-      <Filter>MarioGame\UI</Filter>
+      <Filter>MarioGame\UI\Components\Text</Filter>
     </ClCompile>
     <ClCompile Include="VoidBlock.cpp">
       <Filter>MarioGame\Entity\MapBlock</Filter>
@@ -566,6 +569,27 @@
     </ClCompile>
     <ClCompile Include="MarioFX.cpp">
       <Filter>MarioGame\Effects\MarioEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="UIComponents.cpp">
+      <Filter>MarioGame\UI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="HudElement.cpp">
+      <Filter>MarioGame\UI\Dialogs\HUD</Filter>
+    </ClCompile>
+    <ClCompile Include="HudPanel.cpp">
+      <Filter>MarioGame\UI\Components\HudComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="CardSlot.cpp">
+      <Filter>MarioGame\UI\Components\HudComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerData.cpp">
+      <Filter>MarioGame</Filter>
+    </ClCompile>
+    <ClCompile Include="CardSet.cpp">
+      <Filter>MarioGame\UI\Components\HudComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PMeter.cpp">
+      <Filter>MarioGame\UI\Components\HudComponents</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -732,7 +756,7 @@
       <Filter>MarioGame\Entity\MapBlock</Filter>
     </ClInclude>
     <ClInclude Include="Hud.h">
-      <Filter>MarioGame\HUD</Filter>
+      <Filter>MarioGame\UI\Dialogs\HUD</Filter>
     </ClInclude>
     <ClInclude Include="Viewport.h">
       <Filter>Framework\Graphic</Filter>
@@ -797,17 +821,11 @@
     <ClInclude Include="GreenMushroom.h">
       <Filter>MarioGame\Entity\Items</Filter>
     </ClInclude>
-    <ClInclude Include="PowerMeter.h">
-      <Filter>MarioGame\HUD</Filter>
-    </ClInclude>
     <ClInclude Include="Text.h">
-      <Filter>MarioGame\UI\Text</Filter>
+      <Filter>MarioGame\UI\Components\Text</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
-      <Filter>MarioGame\UI\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="UIComponents.h">
-      <Filter>MarioGame\UI</Filter>
+      <Filter>MarioGame\UI\Components\Text</Filter>
     </ClInclude>
     <ClInclude Include="VoidBlock.h">
       <Filter>MarioGame\Entity\MapBlock</Filter>
@@ -1006,6 +1024,27 @@
     </ClInclude>
     <ClInclude Include="MarioFX.h">
       <Filter>MarioGame\Effects\MarioEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="UIComponents.h">
+      <Filter>MarioGame\UI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="HudElement.h">
+      <Filter>MarioGame\UI\Dialogs\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="HudPanel.h">
+      <Filter>MarioGame\UI\Components\HudComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="CardSlot.h">
+      <Filter>MarioGame\UI\Components\HudComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerData.h">
+      <Filter>MarioGame</Filter>
+    </ClInclude>
+    <ClInclude Include="CardSet.h">
+      <Filter>MarioGame\UI\Components\HudComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PMeter.h">
+      <Filter>MarioGame\UI\Components\HudComponents</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

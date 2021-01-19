@@ -38,7 +38,13 @@ void MarioFX::Render()
         if (!particle->HasResource()) {
             InitResource(particle);
         }
+
+        D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255);
+        if (mario->Invulnerable() > 0 && (timer.Elapsed() / 50) % 2) {
+            overlay = D3DCOLOR_ARGB(127, 255, 255, 255);
+        }
+
         particle->Animations.begin()->second->GetTransform()->Scale = Vec2((float)mario->GetFacing(), 1);
-        particle->Render(timer.Elapsed(), playtimeLeft);
+        particle->Render(timer.Elapsed(), playtimeLeft, overlay);
     }
 }

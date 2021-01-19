@@ -6,6 +6,9 @@
 #include "MarioUtils.h"
 #include "IEffect.h"
 #include "StopWatch.h"
+#include "PlayerData.h"
+
+#define INVULNERABLE_TIME 2000
 
 enum class MovingStates {
 	IDLE,
@@ -37,14 +40,13 @@ class Mario :
 private:
 
 protected:
-#pragma region Physic Data
 	bool controllable = true;
 
 	bool sliding = false;
 
 	bool onGround = true;
 
-	bool death = false;
+	long invulnerable = 0;
 
 	long freezeTime = 0;
 
@@ -74,19 +76,16 @@ protected:
 
 	shared_ptr<RayCast> raycaster;
 
+	shared_ptr<PlayerData> data;
+
 	virtual void HookEvent();
 
 	virtual void UnHookEvent();
-#pragma endregion
-
-#pragma region Account Data
-	int lives = 4;
-
-	
-#pragma endregion
 
 public:
-	Mario();
+	Mario(shared_ptr<PlayerData> data);
+
+	virtual shared_ptr<PlayerData> GetPlayerData();
 
 	virtual void SetPowerUp(shared_ptr<MarioPower> power);
 
@@ -146,6 +145,10 @@ public:
 
 	virtual void SetOnGround(bool value);
 
+	virtual long Invulnerable();
+
+	virtual void SetInvulnerable(long value);
+
 	virtual Vec2& GetDistance() override;
 
 	virtual Vec2& GetAccelerate();
@@ -176,7 +179,9 @@ public:
 
 	virtual void OnKeyDown(int key);
 
-	virtual void OnGetBonus(const char* source, shared_ptr<IEffect>& effect, Score score);
+	virtual void OnGetScore(const char* source, shared_ptr<IEffect>& effect, Score score);
+
+	virtual void OnGetCoin(const char* source, int value);
 
 	virtual void OnDeath();
 

@@ -101,7 +101,7 @@ void JumpingRedGoomba::StatusUpdate()
 
 						//Dap dau boi mario
 						shared_ptr<IEffect> effect = make_shared<ScoreFX>(position, Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 					}
 				}
 
@@ -115,7 +115,7 @@ void JumpingRedGoomba::StatusUpdate()
 
 						//Giet boi vu khi cua mario
 						shared_ptr<IEffect> effect = make_shared<ScoreFX>(position, Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerBonusEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
 					}
 				}
 			}

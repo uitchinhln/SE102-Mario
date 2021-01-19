@@ -36,7 +36,7 @@
             <Animation id="ani-menu" path="Resource/Animations/IntroAnim.xml"/>
         </Animations>
     </Resources>
-    <GameContent>       
+    <GameContent>
         <Scenes start="demo0">
             <Scene id="demo0" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
             <Scene id="demo01" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>

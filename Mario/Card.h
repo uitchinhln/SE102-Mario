@@ -2,7 +2,7 @@
 
 
 
-class Card
+class CardType
 {
 };
 

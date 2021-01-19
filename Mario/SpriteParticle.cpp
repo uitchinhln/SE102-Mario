@@ -1,7 +1,7 @@
 #include "SpriteParticle.h"
 #include "SceneManager.h"
 
-void SpriteParticle::Render()
+void SpriteParticle::Render(D3DCOLOR overlay)
 {
 	if (Sprites.size() < 1) return;
 
@@ -12,12 +12,12 @@ void SpriteParticle::Render()
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 	Vec2 renderPos = Position - cam + Size / 2;
 
-	sprite->Draw(renderPos.x, renderPos.y, this->Transform);
+	sprite->Draw(renderPos.x, renderPos.y, this->Transform, overlay);
 }
 
-void SpriteParticle::Render(int runTime, int totalTime)
+void SpriteParticle::Render(int runTime, int totalTime, D3DCOLOR overlay)
 {
-	this->Render();
+	this->Render(overlay);
 }
 
 bool SpriteParticle::HasResource()
