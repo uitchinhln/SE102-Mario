@@ -75,17 +75,13 @@ protected:
 
 	shared_ptr<RayCast> raycaster;
 
-	shared_ptr<PlayerData> data;
-
 public:
 	RectF MovingBound;
 
 public:
-	Mario(shared_ptr<PlayerData> data);
+	Mario();
 
 	virtual void Reset() override;
-
-	virtual shared_ptr<PlayerData> GetPlayerData();
 
 	virtual void SetPowerUp(shared_ptr<MarioPower> power);
 
@@ -184,10 +180,6 @@ public:
 	virtual void OnKeyUp(int key);
 
 	virtual void OnKeyDown(int key);
-
-	virtual void OnGetScore(const char* source, shared_ptr<IEffect>& effect, Score score);
-
-	virtual void OnGetCoin(const char* source, int value);
 
 	virtual void OnDeath();
 

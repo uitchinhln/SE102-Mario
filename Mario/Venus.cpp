@@ -9,6 +9,7 @@
 #include "EffectServer.h"
 #include "ScoreFX.h"
 #include "GameEvent.h"
+#include "MarioGame.h"
 
 Venus::Venus()
 {
@@ -101,9 +102,7 @@ void Venus::StatusUpdate()
 					EffectServer::GetInstance()->SpawnEffect(make_shared<SmokeSpotFX>(Position));
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 
-					//Giet boi vu khi cua mario
-					shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S100);
-					__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
+					__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, GetPosition(), GetObjectType());
 					break;
 				}
 			}
@@ -175,7 +174,7 @@ void Venus::Update()
 {
 	MovingUpdate();
 
-	shared_ptr<Mario> player = SceneManager::GetInstance()->GetPlayer<Mario>();
+	shared_ptr<Mario> player = MarioGame::GetInstance()->GetMario();
 	Vec2 marioPos = player->GetPosition();
 
 	if (movementState <= 1) {
@@ -286,7 +285,7 @@ void Venus::OnGetInCamera()
 
 void Venus::TrackPlayerPosition()
 {
-	shared_ptr<Mario> player = SceneManager::GetInstance()->GetPlayer<Mario>();
+	shared_ptr<Mario> player = MarioGame::GetInstance()->GetMario();
 	if (!player) return;
 
 	Vec2 marioPos = player->GetPosition();

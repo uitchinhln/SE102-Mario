@@ -18,6 +18,7 @@
 #include "GrowUpFX.h"
 #include "ShrinkDownFX.h"
 #include "TransformFX.h"
+#include "MarioGame.h"
 
 void Mario::OnKeyUp(int key)
 {
@@ -47,7 +48,7 @@ void Mario::OnKeyDown(int key)
 	
 	// Change mario power
 	Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
-	shared_ptr<Mario> thiss = SceneManager::GetInstance()->GetPlayer<Mario>();
+	shared_ptr<Mario> thiss = MarioGame::GetInstance()->GetMario();
 
 	switch (key)
 	{
@@ -87,27 +88,8 @@ void Mario::OnKeyDown(int key)
 		Position.x = 7900;
 		Position.y = 1136;
 		break;
-	case DIK_V:
-		data->Cards.push_back(CardType::Star);
-		break;
 	}
 
-}
-
-void Mario::OnGetScore(const char* source, shared_ptr<IEffect>& effect, Score score)
-{
-	EffectServer::GetInstance()->SpawnEffect(effect);
-	if (score == Score::S1UP) {
-		data->Lives += 1;
-	}
-	else {
-		data->Score += (int)score;
-	}
-}
-
-void Mario::OnGetCoin(const char* source, int value)
-{
-	data->Coins += value;
 }
 
 void Mario::OnDamaged(float damage)
@@ -127,14 +109,13 @@ void Mario::OnDeath()
 	this->SetLockController(true);
 	this->invulnerable = 9999999;
 
-	__raise (*GameEvent::GetInstance()).PlaySceneLoseEvent(__FILE__);
+	__raise (*GameEvent::GetInstance()).PlaySceneEndEvent(__FILE__, SceneResult::LOSE, CardType::EMPTY);
 }
 
 void Mario::OnPowerUp(ObjectType powerType)
 {
 	if (powerType == MEntityType::GreenMushroom) {
-		shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S1UP);
-		__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S1UP);
+		__raise (*GameEvent::GetInstance()).PlayerLifeChangeEvent(__FILE__, Position);
 	}
 	else {
 		shared_ptr<MarioPower> p = power;
@@ -142,7 +123,7 @@ void Mario::OnPowerUp(ObjectType powerType)
 	}
 }
 
-Mario::Mario(shared_ptr<PlayerData> data) : GameObject()
+Mario::Mario() : GameObject()
 {
 	this->Distance = Vec2(0, 0);
 	this->Position = Vec2(100, 1200);
@@ -152,7 +133,6 @@ Mario::Mario(shared_ptr<PlayerData> data) : GameObject()
 	this->renderOrder = 1001;
 	this->raycaster = make_shared<RayCast>();
 	this->freezeTimer.Stop();
-	this->data = data;
 }
 
 void Mario::Reset()
@@ -180,11 +160,6 @@ void Mario::Reset()
 	renderOrder = 1001;
 }
 
-shared_ptr<PlayerData> Mario::GetPlayerData()
-{
-	return data;
-}
-
 void Mario::SetPowerUp(shared_ptr<MarioPower> power)
 {
 	if (power == nullptr) return;
@@ -196,10 +171,10 @@ void Mario::SetPowerUp(shared_ptr<MarioPower> power)
 	ObjectType cur = this->power->GetMarioType();
 	ObjectType next = power->GetMarioType();
 
-	shared_ptr<Mario> thiss = SceneManager::GetInstance()->GetPlayer<Mario>();
+	shared_ptr<Mario> thiss = MarioGame::GetInstance()->GetMario();
 
 	this->power = power;
-	this->data->Power = next;
+	MarioGame::GetInstance()->GetPlayerData()->Power = next;
 
 	if (cur == next) return;
 	if (freezeTimer.IsRunning()) return;
@@ -388,14 +363,10 @@ void Mario::HookEvent()
 {
 	//__hook(&Events::KeyDownEvent, Events::GetInstance(), &Mario::OnKeyDown);
 	//__hook(&Events::KeyUpEvent, Events::GetInstance(), &Mario::OnKeyUp);
-	__hook(&GameEvent::PlayerScoreEvent, GameEvent::GetInstance(), &Mario::OnGetScore);
-	__hook(&GameEvent::PlayerCoinEvent, GameEvent::GetInstance(), &Mario::OnGetCoin);
 }
 
 void Mario::UnHookEvent()
 {
 	//__unhook(&Events::KeyDownEvent, Events::GetInstance(), &Mario::OnKeyDown);
 	//__unhook(&Events::KeyUpEvent, Events::GetInstance(), &Mario::OnKeyUp);
-	__unhook(&GameEvent::PlayerScoreEvent, GameEvent::GetInstance(), &Mario::OnGetScore);
-	__unhook(&GameEvent::PlayerCoinEvent, GameEvent::GetInstance(), &Mario::OnGetCoin);
 }

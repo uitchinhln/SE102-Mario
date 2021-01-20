@@ -87,11 +87,7 @@ void DefaultRedGoomba::StatusUpdate()
 						EffectServer::GetInstance()->SpawnEffect(make_shared<RedGoombaDieFX>(position));
 						SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
 
-						//Giet boi mario
-						Score score = CGame::Time().TotalGameTime - createTime < 1000 ? Score::S200 : Score::S100;
-
-						shared_ptr<IEffect> effect = make_shared<ScoreFX>(g->GetPosition(), score);
-						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, score);
+						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO, position, g->GetObjectType());
 					}
 				}
 
@@ -103,9 +99,7 @@ void DefaultRedGoomba::StatusUpdate()
 						EffectServer::GetInstance()->SpawnEffect(make_shared<RedGoombaExplodeFX>(position, Vec2(jet.x * 0.1f, -0.65f)));
 						SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
 
-						//Giet boi vu khi cua mario
-						shared_ptr<IEffect> effect = make_shared<ScoreFX>(g->GetPosition(), Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, position, g->GetObjectType());
 					}
 				}
 			}

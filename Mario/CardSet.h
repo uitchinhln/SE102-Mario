@@ -8,7 +8,6 @@ class CardSet :
 {
 protected:
     vector<CardSlot*> cards;
-    shared_ptr<PlayerData> data;
 
 public:
 

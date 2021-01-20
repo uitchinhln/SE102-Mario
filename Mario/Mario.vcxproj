@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AchievementProcessor.cpp" />
     <ClCompile Include="AttackablePower.cpp" />
     <ClCompile Include="BeginPortal.cpp" />
     <ClCompile Include="BigMario.cpp" />
@@ -161,7 +162,9 @@
     <ClCompile Include="EffectServer.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
     <ClCompile Include="EndPortal.cpp" />
+    <ClCompile Include="FightProcessor.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="GameEnum.cpp" />
     <ClCompile Include="GameEvent.cpp" />
     <ClCompile Include="GhostBlock.cpp" />
     <ClCompile Include="Goomba.cpp" />
@@ -274,6 +277,7 @@
     <ClCompile Include="WorldScene.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AchievementProcessor.h" />
     <ClInclude Include="AttackablePower.h" />
     <ClInclude Include="BeginPortal.h" />
     <ClInclude Include="BigMario.h" />
@@ -291,7 +295,9 @@
     <ClInclude Include="EffectServer.h" />
     <ClInclude Include="EndmapReward.h" />
     <ClInclude Include="EndPortal.h" />
+    <ClInclude Include="FightProcessor.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="GameEnum.h" />
     <ClInclude Include="GameEvent.h" />
     <ClInclude Include="GhostBlock.h" />
     <ClInclude Include="Goomba.h" />

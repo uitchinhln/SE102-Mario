@@ -13,7 +13,7 @@ void Font::Import(vector<FontSprite> fontSprites)
 
 Sprite Font::GetChar(char c)
 {
-    if (dictionary.find(c) == dictionary.end()) return nullptr;
+    if (dictionary.find(c) == dictionary.end()) return dictionary.at('0');
     return dictionary.at(c);
 }
 

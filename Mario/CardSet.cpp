@@ -1,13 +1,11 @@
 #include "CardSet.h"
 #include "SceneManager.h"
 #include "Mario.h"
+#include "MarioGame.h"
 
 void CardSet::Init()
 {
-	if (data == nullptr) {
-		data = SceneManager::GetInstance()->GetPlayer<Mario>()->GetPlayerData();
-	};
-	if (data == nullptr) return;
+	shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
 
 	sort(cards.begin(), cards.end(), [](CardSlot* a, CardSlot* b) {
 		if (a->Position.x == b->Position.x) {
@@ -31,7 +29,7 @@ void CardSet::Init()
 
 void CardSet::Add(Vec2 pos, Vec2 size)
 {
-	CardSlot* cardSlot = new CardSlot(CardType::Empty);
+	CardSlot* cardSlot = new CardSlot(CardType::EMPTY);
 	cardSlot->Position = pos;
 	cardSlot->Size = size;
 
@@ -40,10 +38,7 @@ void CardSet::Add(Vec2 pos, Vec2 size)
 
 void CardSet::Update()
 {
-	if (data == nullptr) {
-		data = SceneManager::GetInstance()->GetPlayer<Mario>()->GetPlayerData();
-	};
-	if (data == nullptr) return;
+	shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
 
 	int i = 0;
 

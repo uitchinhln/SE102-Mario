@@ -45,8 +45,6 @@ protected:
 
 	float timescale = 1.0f;
 
-private:
-
 	static GameTime gameTime;
 
 	Stopwatch gameTimer = Stopwatch(TimeMode::SYSTEM_TIME);

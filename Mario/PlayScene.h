@@ -36,31 +36,14 @@ public:
 
 	virtual void OnKeyUp(int key) override;
 
-	virtual void OnPlaySceneFinish(const char* source, CardType reward);
-
-	virtual void OnPlaySceneLose(const char* source);
-
 	~PlayScene();
 protected:
 	vector<shared_ptr<GameObject>> objectList;
 
 	Grid* grid;
 
-	shared_ptr<Hud> hud;
-
-	shared_ptr<PlayerData> data;
-
 	Vec2 camPos = Vec2(0, 0);
 	Vec2 camSize = Vec2(769, 579);
-
-	Vec2 hudPos = Vec2(0, 579);
-	Vec2 hudSize = Vec2(769, 142);
-
-	Stopwatch finishEffectTimer{ TimeMode::SYSTEM_TIME };
-
-	Stopwatch resetTimer{ TimeMode::SYSTEM_TIME };
-
-	Stopwatch loseTimer{ TimeMode::SYSTEM_TIME };
 
 	virtual void HookEvent();
 

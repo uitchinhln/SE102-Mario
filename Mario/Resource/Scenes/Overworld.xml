@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <SceneContent>
 	<TmxMap path="Resource/Map/Overworld/overworld-1-map.tmx"/>
-    <Hud path="Resource/Scenes/HUD.tmx"/>
     <Camera start="0">
         <Boundary id="0" left="0" top="0" right="769" bottom="579"/>
     </Camera>

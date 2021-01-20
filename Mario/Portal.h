@@ -39,8 +39,6 @@ protected:
     RectF hitbox;
     Vec2 size;
 
-    shared_ptr<Mario> mario;
-
     bool hasMario = false;
 
     Direction direction = Direction::Bottom;

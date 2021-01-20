@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "AnimationManager.h"
 #include "Mario.h"
+#include "MarioGame.h"
 
 RedMushroom::RedMushroom()
 {
@@ -77,7 +78,7 @@ void RedMushroom::Update()
         break;
     case 1:
         this->GetGravity() = MUSHROOM_GRAVITY;
-        player = SceneManager::GetInstance()->GetPlayer<Mario>();
+        player = MarioGame::GetInstance()->GetMario();
         Velocity.x = MUSHROOM_SPEED * (player->GetPosition().x < Position.x ? 1 : -1);
         renderOrder = 1501;
         movingStep = 2;

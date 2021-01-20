@@ -18,14 +18,12 @@ void WorldScene::Unload()
 void WorldScene::Update()
 {
 	camera->Update();
-	hud->Update();
 	tinyMario->Update();
 }
 
 void WorldScene::Render()
 {
 	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));
-	CGame::GetInstance()->GetGraphic().SetViewport(camera);
 
 	gameMap->Render();
 
@@ -46,10 +44,6 @@ void WorldScene::Render()
 	}
 
 	EffectServer::GetInstance()->Render();
-
-	CGame::GetInstance()->GetGraphic().SetViewport(hud);
-
-	hud->Render();
 }
 
 void WorldScene::SetSceneContentPath(string path)
@@ -68,18 +62,12 @@ void WorldScene::SetSceneContentPath(string path)
 	TiXmlElement* cameraConfig = root->FirstChildElement("Camera");
 
 	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
-	string hudPath = root->FirstChildElement("Hud")->Attribute("path");
 
 	this->tinyMario = make_shared<TinyMario>();
 	this->tinyMario->HookEvent();
 
-	this->data = tinyMario->GetPlayerData();
-	this->data->RemainingTime = 0;
-
 	this->camera = make_shared<Camera>(camPos, camSize);
 	this->camera->SetTracking(tinyMario);
-
-	this->hud = make_shared<Hud>(hudPath, hudPos, hudSize);
 
 	this->gameMap = CGameMap::FromTMX(mapPath);
 	this->gameMap->SetCamera(camera);

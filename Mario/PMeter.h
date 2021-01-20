@@ -12,8 +12,6 @@ protected:
 
     int level;
 
-    shared_ptr<Mario> mario;
-
 public:
     PMeter();
 

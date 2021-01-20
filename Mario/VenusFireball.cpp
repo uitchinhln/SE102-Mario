@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "Vec2Utils.h"
 #include "Mario.h"
+#include "MarioGame.h"
 
 VenusFireball::VenusFireball()
 {
@@ -23,7 +24,7 @@ void VenusFireball::Reset(RectF hitbox, int facing)
 {
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
-	shared_ptr<Mario> player = SceneManager::GetInstance()->GetPlayer<Mario>();
+	shared_ptr<Mario> player = MarioGame::GetInstance()->GetMario();
 	Vec2 marioPos = player->GetPosition();
 
 	this->Position.x = hitbox.left + size.x / 2;

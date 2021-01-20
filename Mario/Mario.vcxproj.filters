@@ -256,6 +256,12 @@
     <Filter Include="MarioGame\UI\MainUI">
       <UniqueIdentifier>{d462387a-8691-49cd-8038-749a246cd727}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Enum">
+      <UniqueIdentifier>{13e2fca6-c326-4502-b378-c120292a401a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Processor">
+      <UniqueIdentifier>{5f41fb0b-7be9-4e3d-9539-9465cb0991c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -639,7 +645,18 @@
     <ClCompile Include="PlaySceneLoad.cpp">
       <Filter>MarioGame\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="MainUI.cpp" />
+    <ClCompile Include="MainUI.cpp">
+      <Filter>MarioGame\UI\MainUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEnum.cpp">
+      <Filter>MarioGame\Enum</Filter>
+    </ClCompile>
+    <ClCompile Include="AchievementProcessor.cpp">
+      <Filter>MarioGame\Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="FightProcessor.cpp">
+      <Filter>MarioGame\Processor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -1110,6 +1127,17 @@
     <ClInclude Include="TinyMario.h">
       <Filter>MarioGame\Entity\OverworldEntities\TinyMario</Filter>
     </ClInclude>
-    <ClInclude Include="MainUI.h" />
+    <ClInclude Include="MainUI.h">
+      <Filter>MarioGame\UI\MainUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEnum.h">
+      <Filter>MarioGame\Enum</Filter>
+    </ClInclude>
+    <ClInclude Include="AchievementProcessor.h">
+      <Filter>MarioGame\Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="FightProcessor.h">
+      <Filter>MarioGame\Processor</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

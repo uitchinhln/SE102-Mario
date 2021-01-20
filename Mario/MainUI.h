@@ -7,17 +7,15 @@ public:
 	MainUI();
 
 	virtual void Update();
-
 	virtual void Render();
+
+	virtual void CreateHUD(TiXmlElement* node);
 
 protected:
 
-	shared_ptr<Camera> camera;
-	Vec2 camPos, camSize;
-
 	shared_ptr<Hud> hud;
-	Vec2 hudPos, hudSize;
 
-
+	shared_ptr<Viewport> fullView;
+	shared_ptr<Viewport> worldView;
 };
 

@@ -1,16 +1,16 @@
 #include "Portal.h"
 #include "SceneManager.h"
 #include "Mario.h"
+#include "MarioGame.h"
 
 Portal::Portal()
 {
-	this->mario = SceneManager::GetInstance()->GetPlayer<Mario>();
 }
 
 void Portal::Update()
 {
 	collidable = false;
-	hasMario = CollisionCalculator::CommonAABB(hitbox, mario->GetHitBox());
+	hasMario = CollisionCalculator::CommonAABB(hitbox, MarioGame::GetInstance()->GetMario()->GetHitBox());
 }
 
 void Portal::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)

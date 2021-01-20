@@ -25,7 +25,6 @@ public:
 	virtual void SetSceneContentPath(string path) override;
 
 
-
 	virtual void OnObjectLoad(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
 
 	virtual void OnKeyDown(int key) override;
@@ -33,16 +32,8 @@ public:
 	virtual void OnKeyUp(int key) override;
 
 protected:
-
-	shared_ptr<Hud> hud;
-
-	shared_ptr<PlayerData> data;
-
 	Vec2 camPos = Vec2(1, 1);
 	Vec2 camSize = Vec2(769, 579);
-
-	Vec2 hudPos = Vec2(0, 577);
-	Vec2 hudSize = Vec2(769, 142);
 
 	EffectServer backgroundAnimations;
 

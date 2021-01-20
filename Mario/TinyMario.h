@@ -9,8 +9,6 @@ class TinyMario :
     public GameObject
 {
 protected:
-    shared_ptr<PlayerData> data;
-
     shared_ptr<Graph> graph;
 
     Vec2 size;
@@ -66,8 +64,6 @@ public:
     virtual shared_ptr<Graph> GetGraph();
 
     virtual void AddNode(shared_ptr<MapGate> node);
-
-    virtual shared_ptr<PlayerData> GetPlayerData();
 
 
     virtual void HookEvent();

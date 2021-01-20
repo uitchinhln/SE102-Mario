@@ -2,12 +2,15 @@
 #include "MEntityType.h"
 #include "Mario.h"
 #include "Game.h"
+#include "MarioGame.h"
 
 void EndPortal::Update()
 {
     Portal::Update();
 
     if (!hasMario) return;
+    shared_ptr<Mario> mario = MarioGame::GetInstance()->GetMario();
+
     mario->GetDistance() = VECTOR_0;
     mario->SetVelocity(VECTOR_0);
 

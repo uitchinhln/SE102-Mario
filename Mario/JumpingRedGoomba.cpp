@@ -7,6 +7,7 @@
 #include "EffectServer.h"
 #include "ScoreFX.h"
 #include "GameEvent.h"
+#include "MarioGame.h"
 
 JumpingRedGoomba::JumpingRedGoomba(shared_ptr<RedGoomba> holder) : DefaultRedGoomba(holder)
 {
@@ -30,7 +31,7 @@ void JumpingRedGoomba::Update()
 		if (g->OnGround)
 		{
 			int direction = 1;
-			shared_ptr<Mario> player = SceneManager::GetInstance()->GetPlayer<Mario>();
+			shared_ptr<Mario> player = MarioGame::GetInstance()->GetMario();
 
 			switch (jumpStep)
 			{
@@ -99,9 +100,7 @@ void JumpingRedGoomba::StatusUpdate()
 					if (coll->SAABBResult.Direction == Direction::Bottom) {
 						g->SetObjectState(make_shared<DefaultRedGoomba>(g));
 
-						//Dap dau boi mario
-						shared_ptr<IEffect> effect = make_shared<ScoreFX>(position, Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO, position, g->GetObjectType());
 					}
 				}
 
@@ -113,9 +112,7 @@ void JumpingRedGoomba::StatusUpdate()
 						EffectServer::GetInstance()->SpawnEffect(make_shared<RedGoombaExplodeFX>(position, Vec2(jet.x * 0.1f, -0.65f)));
 						SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
 
-						//Giet boi vu khi cua mario
-						shared_ptr<IEffect> effect = make_shared<ScoreFX>(position, Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, position, g->GetObjectType());
 					}
 				}
 			}

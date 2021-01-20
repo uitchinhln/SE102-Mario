@@ -11,6 +11,7 @@
 #include "Coin.h"
 #include "SceneManager.h"
 #include "Mario.h"
+#include "MarioGame.h"
 
 Spawner::Spawner()
 {
@@ -66,7 +67,7 @@ void Spawner::Spawn()
 	}
 	if (entities.size() == spawnLimit) return;
 
-	shared_ptr<Mario> mario = SceneManager::GetInstance()->GetPlayer<Mario>();
+	shared_ptr<Mario> mario = MarioGame::GetInstance()->GetMario();
 	shared_ptr<GameObject> obj = GetEntity();
 	
 	if (mario->GetPosition().x < Position.x) {

@@ -3,12 +3,15 @@
 #include "Mario.h"
 #include "Game.h"
 #include "SceneManager.h"
+#include "MarioGame.h"
 
 void BeginPortal::Update()
 {
     Portal::Update();
 
     if (!hasMario) return;
+    shared_ptr<Mario> mario = MarioGame::GetInstance()->GetMario();
+
     WarpStates warpState = mario->GetWarpState();
 
     if (warpState == WarpStates::NONE) {

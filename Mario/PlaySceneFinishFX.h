@@ -1,8 +1,7 @@
 #pragma once
 #include "IEffect.h"
 #include "Text.h"
-
-enum class CardType;
+#include "GameEnum.h"
 
 class PlaySceneFinishFX :
     public IEffect

@@ -9,9 +9,6 @@ protected:
 	string id;
 	string dataPath = "";
 
-	bool pauseGameUpdate = false;
-	bool pauseGameRender = false;
-
 	shared_ptr<Camera> camera;
 	shared_ptr<CGameMap> gameMap;
 
@@ -38,12 +35,6 @@ public:
 
 	virtual void OnKeyDown(int key);
 	virtual void OnKeyUp(int key);
-
-	virtual bool IsGameUpdatePaused();
-	virtual void SetGamePauseUpdate(bool value);
-
-	virtual bool IsGameRenderPaused();
-	virtual void SetPauseGameRender(bool value);
 
 	virtual shared_ptr<Camera> GetCamera();
 	virtual shared_ptr<CGameMap> GetGameMap();

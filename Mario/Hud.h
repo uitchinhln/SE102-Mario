@@ -22,8 +22,6 @@ public:
 	virtual void Render();
 
 protected:
-	shared_ptr<PlayerData> data;
-
 	D3DCOLOR background;
 
 	HudPanel panel;

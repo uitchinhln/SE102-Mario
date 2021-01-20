@@ -11,6 +11,7 @@
 #include "CoinFX.h"
 #include "EffectServer.h"
 #include "GameEvent.h"
+#include "MarioGame.h"
 
 QuestionBlock::QuestionBlock()
 {
@@ -46,9 +47,8 @@ void QuestionBlock::Hit()
 	this->state = QuestionBlockStates::Bouncing;
 
 	if (reward == MEntityType::QuestionCoin) {
-		shared_ptr<IEffect> effect = make_shared<CoinFX>(Position - Vec2(0, 48), Score::S100);
-		__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
-		__raise (*GameEvent::GetInstance()).PlayerCoinEvent(__FILE__, 1);
+		__raise (*GameEvent::GetInstance()).PlayerScoreChangeEvent(__FILE__, Score::S100, Position, ScoreSource::QUESTION_BLOCK);
+		__raise (*GameEvent::GetInstance()).PlayerCoinChangeEvent(__FILE__, 1);
 	}
 }
 
@@ -95,7 +95,7 @@ void QuestionBlock::StatusUpdate()
 
 		if (reward == MEntityType::QuestionCoin) return;
 
-		shared_ptr<Mario> mario = SceneManager::GetInstance()->GetPlayer<Mario>();
+		shared_ptr<Mario> mario = MarioGame::GetInstance()->GetMario();
 
 		if (reward == MEntityType::PSwitch) {
 			SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(PSwitch::CreatePSwitch(Position));

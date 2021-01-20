@@ -170,8 +170,7 @@ void RaccoonMario::OnPowerUp(ObjectType powerType)
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (powerType == MEntityType::RaccoonLeaf) {
-			shared_ptr<IEffect> effect = make_shared<ScoreFX>(m->GetPosition(), Score::S1000);
-			__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S1000);
+			__raise (*GameEvent::GetInstance()).PlayerScoreChangeEvent(__FILE__, Score::S1000, m->GetPosition(), ScoreSource::POWERUP);
 			return;
 		}
 

@@ -4,6 +4,7 @@
 #include "Mario.h"
 #include "SceneManager.h"
 #include "HudElement.h"
+#include "MarioGame.h"
 
 
 Hud::Hud(string tmxPath, Vec2 pos, Vec2 size) : Viewport(pos, size)
@@ -23,8 +24,6 @@ Hud::Hud(string tmxPath, Vec2 pos, Vec2 size) : Viewport(pos, size)
 	score = new Text();
 	score->SetFont(CGame::GetInstance()->DefaultFont);
 
-	data = SceneManager::GetInstance()->GetPlayer<Mario>()->GetPlayerData();
-
 	pmeter = new PMeter();
 
 	this->LoadFromTmx(tmxPath);
@@ -32,25 +31,27 @@ Hud::Hud(string tmxPath, Vec2 pos, Vec2 size) : Viewport(pos, size)
 
 void Hud::Update()
 {
+	shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
+
 	panel.Update();
 	cards.Update();
 
 	pmeter->Update();
 
-	long time = data->RemainingTime / 1000;
+	long time = max(0, data->RemainingTime / 1000);
 	string txtTime = to_string(time);
 	if (txtTime.length() < 3) {
 		txtTime.insert(0, 3 - txtTime.size(), '0');
 	}
 	timer->SetContent(txtTime);
 
-	coin->SetContent(to_string(data->Coins));
+	coin->SetContent(to_string(max(0, data->Coins)));
 
-	world->SetContent(to_string(data->World));
+	world->SetContent(to_string(max(0, data->World)));
 
-	live->SetContent(to_string(data->Lives));
+	live->SetContent(to_string(max(0, data->Lives)));
 
-	string txtScore = to_string(data->Score);
+	string txtScore = to_string(max(0, data->Score));
 	if (txtScore.length() < 7) {
 		txtScore.insert(0, 7 - txtScore.size(), '0');
 	}

@@ -3,10 +3,19 @@
 #include "TextureManager.h"
 #include "SpriteManager.h"
 #include "SceneManager.h"
-#include "PlayScene.h"
+
+#include "MainUI.h"
+
 #include "Mario.h"
 #include "Small.h"
+
+#include "PlayScene.h"
 #include "WorldScene.h"
+
+#include "FightProcessor.h"
+#include "AchievementProcessor.h"
+
+MarioGame* MarioGame::__instance = nullptr;
 
 void MarioGame::LoadDefaultFont()
 {
@@ -23,6 +32,9 @@ void MarioGame::LoadDefaultFont()
 
 MarioGame::MarioGame() : CGame(new CGameProperties())
 {
+	__instance = this;
+
+	this->main = new MainUI();	
 	this->LoadResources();
 }
 
@@ -30,10 +42,14 @@ void MarioGame::LoadResources()
 {
 	TiXmlDocument doc("Resource/GameData.xml");
 
-	shared_ptr<Mario> mario = make_shared<Mario>(make_shared<PlayerData>());
-	SceneManager::GetInstance()->SetPlayer(mario);
+	mario = make_shared<Mario>();
 	mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
 	mario->SetPowerUp(make_shared<Small>(mario));
+
+	playerdata = make_shared<PlayerData>();
+
+	fightProc = new FightProcessor(playerdata);
+	achievementProc = new AchievementProcessor(playerdata);
 
 	if (doc.LoadFile()) {
 		TiXmlElement* root = doc.RootElement();
@@ -60,6 +76,8 @@ void MarioGame::LoadResources()
 
 		TiXmlElement* scenes = root->FirstChildElement("GameContent")->FirstChildElement("Scenes");
 
+		this->main->CreateHUD(root->FirstChildElement("GameContent")->FirstChildElement("Hud"));
+
 		for (TiXmlElement* node = scenes->FirstChildElement("Scene"); node != NULL; node = node->NextSiblingElement("Scene")) {
 			string id = node->Attribute("id");
 			string type = node->Attribute("type");
@@ -79,7 +97,6 @@ void MarioGame::LoadResources()
 				SceneManager::GetInstance()->AddScene(id, scene);
 			}
 		}
-
 		string startId = scenes->Attribute("start");
 		SceneManager::GetInstance()->ActiveScene(startId);
 
@@ -89,12 +106,38 @@ void MarioGame::LoadResources()
 
 void MarioGame::Update()
 {
-	SceneManager::GetInstance()->Update();
+	playerdata->RemainingTime -= gameTime.ElapsedGameTime;
+	main->Update();
 }
 
 void MarioGame::Draw()
 {
-	SceneManager::GetInstance()->Render();
+	main->Render();
+}
+
+shared_ptr<PlayerData> MarioGame::GetPlayerData()
+{
+	return playerdata;
+}
+
+shared_ptr<Mario> MarioGame::GetMario()
+{
+	return mario;
+}
+
+FightProcessor* MarioGame::GetFightProcessor()
+{
+	return fightProc;
+}
+
+AchievementProcessor* MarioGame::GetAchievementProcessor()
+{
+	return achievementProc;
+}
+
+MarioGame* MarioGame::GetInstance()
+{
+	return __instance;
 }
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)

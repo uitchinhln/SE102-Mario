@@ -4,25 +4,27 @@
 #include "GameObject.h"
 #include "SceneManager.h"
 
-Camera::Camera() : Viewport(VECTOR_0, VECTOR_0)
+Camera::Camera()
 {
 	this->Position = VECTOR_0;
 	shakeTimer.Reset();
 	shakeTimer.Stop();
 }
 
-Camera::Camera(Vec2 pos, Vec2 size) : Viewport(pos, size)
+Camera::Camera(Vec2 pos, Vec2 size)
 {
+	this->Position = pos;
+	this->size = size;
 }
 
 Vec2 Camera::GetCamSize()
 {
-	return Vec2((float)this->d3dvp.Width, (float)this->d3dvp.Height);
+	return size;
 }
 
 RectF Camera::GetBoundingBox()
 {
-	return RectF(Position.x, Position.y, Position.x + this->d3dvp.Width, Position.y + this->d3dvp.Height);
+	return RectF(Position.x, Position.y, Position.x + size.x, Position.y + size.y);
 }
 
 void Camera::SetTracking(weak_ptr<GameObject> target)
@@ -52,10 +54,10 @@ void Camera::TrackingUpdate()
 
 	if (shared_ptr<GameObject> obj = target.lock()) {
 		RectF targetBound = obj->GetHitBox();
-		float avgY = (targetBound.top + targetBound.bottom - this->d3dvp.Height) / 2;
+		float avgY = (targetBound.top + targetBound.bottom - size.y) / 2;
 
-		Position.x = (targetBound.left - this->d3dvp.Width / 2);
-		Position.y = min(avgY + this->d3dvp.Height / 4, max(Position.y, avgY - this->d3dvp.Height / 4));
+		Position.x = (targetBound.left - size.x / 2);
+		Position.y = min(avgY + size.y / 4, max(Position.y, avgY - size.y / 4));
 
 		Vec2 camSize = GetCamSize();
 		RectF camBound = GetBoundingBox();

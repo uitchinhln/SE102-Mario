@@ -12,19 +12,12 @@ class SceneManager
 
 	string activeSceneID;
 
-	shared_ptr<GameObject> player;
-
 public:
 	void AddScene(string id, shared_ptr<CScene> scene);
 
 	bool ActiveScene(string id);
 
 	shared_ptr<CScene> GetActiveScene();
-
-	template<class T>
-	shared_ptr<T> GetPlayer();
-
-	void SetPlayer(shared_ptr<GameObject> player);
 
 	void Update();
 	
@@ -37,9 +30,3 @@ public:
 	static SceneManager* GetInstance();
 	~SceneManager();
 };
-
-template<class T>
-inline shared_ptr<T> SceneManager::GetPlayer()
-{
-	return dynamic_pointer_cast<T>(player);
-}

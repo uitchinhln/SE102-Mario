@@ -30,11 +30,6 @@ shared_ptr<CScene> SceneManager::GetActiveScene()
 	return scenes.at(activeSceneID);
 }
 
-void SceneManager::SetPlayer(shared_ptr<GameObject> player)
-{
-	this->player = player;
-}
-
 void SceneManager::Update()
 {
 	GetActiveScene()->Update();

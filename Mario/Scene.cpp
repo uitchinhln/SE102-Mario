@@ -60,26 +60,6 @@ void CScene::OnKeyUp(int key)
 {
 }
 
-bool CScene::IsGameUpdatePaused()
-{
-	return pauseGameUpdate;
-}
-
-void CScene::SetGamePauseUpdate(bool value)
-{
-	this->pauseGameUpdate = value;
-}
-
-bool CScene::IsGameRenderPaused()
-{
-	return pauseGameRender;
-}
-
-void CScene::SetPauseGameRender(bool value)
-{
-	this->pauseGameRender = value;
-}
-
 shared_ptr<Camera> CScene::GetCamera()
 {
 	return camera;

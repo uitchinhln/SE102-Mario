@@ -1,19 +1,37 @@
 #include "MainUI.h"
+#include "SceneManager.h"
+#include "MarioGame.h"
 
 MainUI::MainUI()
 {
-	camPos = Vec2(0, 0);
-	camSize = Vec2(769, 579);
-
-	hudPos = Vec2(0, 579);
-	hudSize = Vec2(769, 142);
-	this->camera = make_shared<Camera>(camPos, camSize);
+	worldView = make_shared<Viewport>(Vec2(0, 0), Vec2(769, 579));
+	fullView = make_shared<Viewport>(Vec2(0, 0), Vec2(769, 721));
 }
 
 void MainUI::Update()
 {
+	SceneManager::GetInstance()->GetActiveScene()->Update();
+	hud->Update();
 }
 
 void MainUI::Render()
 {
+	MarioGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));
+
+	MarioGame::GetInstance()->GetGraphic().SetViewport(worldView);
+	SceneManager::GetInstance()->GetActiveScene()->Render();
+
+	MarioGame::GetInstance()->GetGraphic().SetViewport(hud);
+	hud->Render();
+}
+
+void MainUI::CreateHUD(TiXmlElement* node)
+{
+	Vec2 pos;
+	string path = node->Attribute("path");
+
+	node->QueryFloatAttribute("left", &pos.x);
+	node->QueryFloatAttribute("top", &pos.y);
+
+	hud = make_shared<Hud>(path, pos, Vec2(769, 142));
 }

@@ -4,6 +4,7 @@
 #include "MEntityType.h"
 #include "Mario.h"
 #include "SceneManager.h"
+#include "MarioGame.h"
 
 RaccoonLeaf::RaccoonLeaf()
 {
@@ -27,7 +28,7 @@ void RaccoonLeaf::InitResource()
 void RaccoonLeaf::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	vector<shared_ptr<GameObject>> objs;
-	objs.push_back(SceneManager::GetInstance()->GetPlayer<Mario>());
+	objs.push_back(MarioGame::GetInstance()->GetMario());
 
 	GetCollisionCalc()->CalcPotentialCollisions(&objs, false);
 }

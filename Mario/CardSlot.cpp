@@ -25,7 +25,7 @@ void CardSlot::SetCard(CardType type, long flickDuration, long delay)
 
 void CardSlot::SetAndAutoFlick(CardType type, long flickDuration, long delay)
 {
-	if (this->cardType != type && type != CardType::Empty) {
+	if (this->cardType != type && type != CardType::EMPTY) {
 		this->SetCard(type, flickDuration, delay);
 	}
 	else {
@@ -62,16 +62,16 @@ void CardSlot::Render()
 
 	switch (cardType)
 	{
-	case CardType::Empty:
+	case CardType::EMPTY:
 		sprite = sprites["EMPTY"];
 		break;
-	case CardType::Mushroom:
+	case CardType::MUSHROOM:
 		sprite = sprites["MUSHROOM"];
 		break;
-	case CardType::Star:
+	case CardType::STAR:
 		sprite = sprites["STAR"];
 		break;
-	case CardType::Flower:
+	case CardType::FLOWER:
 		sprite = sprites["FLOWER"];
 		break;
 	}

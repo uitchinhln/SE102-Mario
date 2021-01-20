@@ -49,7 +49,7 @@ void Coin::StatusUpdate()
 		{
 			if (state == CoinState::COIN && MEntityType::IsMario(coll->Object->GetObjectType())) {
 				SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
-				__raise (*GameEvent::GetInstance()).PlayerCoinEvent(__FILE__, 1);
+				__raise (*GameEvent::GetInstance()).PlayerCoinChangeEvent(__FILE__, 1);
 			}
 
 			if (state == CoinState::BRICK) {

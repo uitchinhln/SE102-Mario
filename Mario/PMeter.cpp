@@ -3,10 +3,10 @@
 #include "SceneManager.h"
 #include "Mario.h"
 #include "Game.h"
+#include "MarioGame.h"
 
 PMeter::PMeter()
 {
-	this->mario = SceneManager::GetInstance()->GetPlayer<Mario>();
 }
 
 void PMeter::InitResource()
@@ -21,7 +21,7 @@ void PMeter::InitResource()
 
 void PMeter::Update()
 {
-	level = (int) mario->GetPowerMeter();
+	level = (int) MarioGame::GetInstance()->GetMario()->GetPowerMeter();
 	level = min(7, max(0, level));
 }
 

@@ -1,6 +1,6 @@
 #pragma once
 #include "IEffect.h"
-#include "MarioUtils.h"
+#include "GameEnum.h"
 
 class CSprite;
 

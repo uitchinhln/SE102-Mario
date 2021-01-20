@@ -6,11 +6,12 @@
 #include "CardFX.h"
 #include "EffectServer.h"
 #include "GameEvent.h"
+#include "MarioGame.h"
 
 EndmapReward::EndmapReward()
 {
 	this->Gravity = 0;
-	this->state = CardType::Mushroom;
+	this->state = CardType::MUSHROOM;
 	stateTimer.Start();
 }
 
@@ -26,7 +27,7 @@ void EndmapReward::InitResource()
 void EndmapReward::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 	vector<shared_ptr<GameObject>> mro;
-	mro.push_back(SceneManager::GetInstance()->GetPlayer<Mario>());
+	mro.push_back(MarioGame::GetInstance()->GetMario());
 
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
 
@@ -56,9 +57,12 @@ void EndmapReward::StatusUpdate()
 {
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
 	if (collisionCal->GetLastResults().size() > 0) {
-		shared_ptr<Mario> mario = SceneManager::GetInstance()->GetPlayer<Mario>();
+		shared_ptr<Mario> mario = MarioGame::GetInstance()->GetMario();
 
 		this->holder = mario;
+		this->holder->SetSkid(0);
+		this->holder->SetKickCountDown(-1);
+		this->holder->SetCollidibility(false);
 		this->holder->SetLockController(true);
 		this->holder->SetFacing(1);
 		this->holder->MovingBound.right += 70;
@@ -90,7 +94,7 @@ void EndmapReward::StatusUpdate()
 		}
 	}
 	if (step == 2) {
-		__raise (*GameEvent::GetInstance()).PlaySceneFinishEvent(__FILE__, state);
+		__raise (*GameEvent::GetInstance()).PlaySceneEndEvent(__FILE__, SceneResult::WIN, state);
 		step = 3;
 	}
 }
@@ -102,14 +106,14 @@ void EndmapReward::Update()
 		return;
 	}
 	if (stateTimer.Elapsed() > 330) {
-		this->state = CardType::Star;
+		this->state = CardType::STAR;
 		stateTimer.Restart();
 	}
 	else if (stateTimer.Elapsed() > 220) {
-		this->state = CardType::Flower;
+		this->state = CardType::FLOWER;
 	}
 	else if (stateTimer.Elapsed() > 110) {
-		this->state = CardType::Mushroom;
+		this->state = CardType::MUSHROOM;
 	}
 }
 
@@ -120,13 +124,13 @@ void EndmapReward::Render()
 	Animation ani = this->animations["MUSHROOM"];
 	switch (state)
 	{
-	case CardType::Mushroom:
+	case CardType::MUSHROOM:
 		ani = this->animations["MUSHROOM"];
 		break;
-	case CardType::Flower:
+	case CardType::FLOWER:
 		ani = this->animations["FLOWER"];
 		break;
-	case CardType::Star:
+	case CardType::STAR:
 		ani = this->animations["STAR"];
 		break;
 	default:

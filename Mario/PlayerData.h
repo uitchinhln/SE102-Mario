@@ -1,12 +1,6 @@
 #pragma once
 #include "MEntityType.h"
-
-enum class CardType {
-	Empty,
-	Mushroom,
-	Star,
-	Flower
-};
+#include "GameEnum.h"
 
 class PlayerData
 {

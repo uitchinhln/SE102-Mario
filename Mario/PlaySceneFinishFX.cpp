@@ -21,16 +21,16 @@ PlaySceneFinishFX::PlaySceneFinishFX(Vec2 position, CardType card) : IEffect(pos
 
 	switch (card)
 	{
-	case CardType::Empty:
+	case CardType::EMPTY:
 		this->card = SpriteManager::GetInstance()->Get("spr-empty-card-0");
 		break;
-	case CardType::Mushroom:
+	case CardType::MUSHROOM:
 		this->card = SpriteManager::GetInstance()->Get("spr-super-mushroom-card-0");
 		break;
-	case CardType::Flower:
+	case CardType::FLOWER:
 		this->card = SpriteManager::GetInstance()->Get("spr-fire-flower-card-0");
 		break;
-	case CardType::Star:
+	case CardType::STAR:
 		this->card = SpriteManager::GetInstance()->Get("spr-star-man-card-0");
 		break;
 	}

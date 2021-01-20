@@ -74,8 +74,7 @@ void Goomba::StatusUpdate()
 					EffectServer::GetInstance()->SpawnEffect(make_shared<GoombaDieFX>(Position));
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 
-					shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S100);
-					__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
+					__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO, Position, GetObjectType());
 				}
 			}
 
@@ -87,8 +86,7 @@ void Goomba::StatusUpdate()
 					EffectServer::GetInstance()->SpawnEffect(make_shared<GoombaExplodeFX>(Position, Vec2(jet.x * 0.1f, -0.65f)));
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 
-					shared_ptr<IEffect> effect = make_shared<ScoreFX>(Position, Score::S100);
-					__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
+					__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, Position, GetObjectType());
 				}
 			}
 		}

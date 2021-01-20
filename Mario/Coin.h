@@ -2,11 +2,7 @@
 #include "GameObject.h"
 #include "MapProperties.h"
 #include "StopWatch.h"
-
-enum class CoinState {
-	COIN,
-	BRICK
-};
+#include "GameEnum.h"
 
 class Coin :
     public GameObject,

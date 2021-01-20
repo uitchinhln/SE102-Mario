@@ -8,10 +8,10 @@
 #include "Vec2Utils.h"
 #include <dinput.h>
 #include "Game.h"
+#include "MarioGame.h"
 
 TinyMario::TinyMario()
 {
-    data = SceneManager::GetInstance()->GetPlayer<Mario>()->GetPlayerData();
     graph = make_shared<Graph>();
     Position = Vec2(0, 0);
     size = Vec2(48, 48);
@@ -21,6 +21,8 @@ TinyMario::TinyMario()
 void TinyMario::InitResource()
 {
     if (animations.size() < 1 || resourceChange) {
+        shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
+
         if (data->Power == MEntityType::SmallMario) {
             animations["Default"] = AnimationManager::GetInstance()->Get("ani-small-mario-map")->Clone();
         }
@@ -38,6 +40,8 @@ void TinyMario::InitResource()
 
 void TinyMario::Update()
 {
+    shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
+
     if (currentPower != data->Power) {
         currentPower = data->Power;
         resourceChange = true;
@@ -81,6 +85,8 @@ shared_ptr<Graph> TinyMario::GetGraph()
 
 void TinyMario::AddNode(shared_ptr<MapGate> node)
 {
+    shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
+
     graph->AddNode(node);
     if (data->Node < 0 && node->IsStart()) {
         data->Node = currentStation = node->GetNodeId();
@@ -88,23 +94,18 @@ void TinyMario::AddNode(shared_ptr<MapGate> node)
     }
 }
 
-shared_ptr<PlayerData> TinyMario::GetPlayerData()
-{
-    return data;
-}
-
 void TinyMario::HookEvent()
 {
     //__hook(&Events::KeyDownEvent, Events::GetInstance(), &TinyMario::OnKeyDown);
-    __hook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneFinish);
-    __hook(&GameEvent::PlaySceneLoseEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneLose);
+    //__hook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneFinish);
+    //__hook(&GameEvent::PlaySceneLoseEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneLose);
 }
 
 void TinyMario::UnhookEvent()
 {
     //__unhook(&Events::KeyDownEvent, Events::GetInstance(), &TinyMario::OnKeyDown);
-    __unhook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneFinish);
-    __unhook(&GameEvent::PlaySceneLoseEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneLose);
+    //__unhook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneFinish);
+    //__unhook(&GameEvent::PlaySceneLoseEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneLose);
 }
 
 void TinyMario::OnKeyDown(int key)
@@ -126,6 +127,8 @@ void TinyMario::OnKeyDown(int key)
         break;
     case DIK_W:
         if (moveStep == 0) {
+            shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
+
             data->World = graph->GetNode(currentStation)->GetWorldNumber();
             graph->GetNode(discoverStation = currentStation)->Discover();
         }
@@ -133,6 +136,8 @@ void TinyMario::OnKeyDown(int key)
     }
 
     if (direction != Direction::None && moveStep == 0) {
+        shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
+
         shared_ptr<MapGate> current = graph->GetNode(currentStation);
         unordered_map<Direction, int> adjacentList = current->GetAdjacentList();
 
@@ -154,14 +159,15 @@ void TinyMario::OnKeyUp(int key)
 
 void TinyMario::OnPlaySceneFinish(const char* source, CardType reward)
 {
+    shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
     data->Node = discoverStation;
     graph->GetNode(discoverStation)->SetFinished(true);
 }
 
 void TinyMario::OnPlaySceneLose(const char* source)
 {
+    shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
     moveStep = 1;
     targetPosition = graph->GetNode(data->Node)->GetPosition();
     targetStation = data->Node;
-    data->World = graph->GetNode(data->Node)->GetWorldNumber();
 }

@@ -1,7 +1,6 @@
 #pragma once
 #include "Utils.h"
 #include "Transform.h"
-#include "Viewport.h"
 #include "Stopwatch.h"
 #include "Direction.h"
 
@@ -12,11 +11,12 @@ enum class CameraMode {
 	AUTOSCROLL
 };
 
-class Camera : 
-	public Viewport
+class Camera
 {
 protected:
 	weak_ptr<GameObject> target;
+
+	Vec2 size;
 
 	unordered_map<int, RectF> bounds;
 	int activeId = 0;

@@ -71,8 +71,7 @@ void DefaultKoopas::StatusUpdate()
 			OnDeath(Vec2(0 * 0.1f, -0.6f));
 
 			//Giet rua
-			shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
-			__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
+			__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::SOLID_BLOCK, k->GetPosition(), k->GetObjectType());
 			return;
 		}
 
@@ -92,8 +91,7 @@ void DefaultKoopas::StatusUpdate()
 						k->SetPower(make_shared<CrouchKoopas>(k));
 
 						//Dap rua
-						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO, k->GetPosition(), k->GetObjectType());
 						return;
 					}
 				}
@@ -109,9 +107,7 @@ void DefaultKoopas::StatusUpdate()
 						k->GetLiveState() = KoopasLifeStates::DIE;
 						OnDeath(Vec2(jet.x * 0.1f, -0.6f));
 
-						//Giet rua
-						shared_ptr<IEffect> effect = make_shared<ScoreFX>(k->GetPosition(), Score::S100);
-						__raise (*GameEvent::GetInstance()).PlayerScoreEvent(__FILE__, effect, Score::S100);
+						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, k->GetPosition(), k->GetObjectType());
 					}					
 				}
 			}
