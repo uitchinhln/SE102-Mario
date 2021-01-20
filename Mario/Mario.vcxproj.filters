@@ -510,9 +510,6 @@
     <ClCompile Include="PSwitch.cpp">
       <Filter>MarioGame\Entity\Items</Filter>
     </ClCompile>
-    <ClCompile Include="Card.cpp">
-      <Filter>MarioGame\Entity\Items</Filter>
-    </ClCompile>
     <ClCompile Include="Grid.cpp">
       <Filter>Framework\World\Map\Partitioning\Grid</Filter>
     </ClCompile>
@@ -897,9 +894,6 @@
       <Filter>MarioGame\Entity\MapBlock</Filter>
     </ClInclude>
     <ClInclude Include="PSwitch.h">
-      <Filter>MarioGame\Entity\Items</Filter>
-    </ClInclude>
-    <ClInclude Include="Card.h">
       <Filter>MarioGame\Entity\Items</Filter>
     </ClInclude>
     <ClInclude Include="rapidjson\allocators.h">

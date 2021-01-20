@@ -273,9 +273,9 @@ void Mario::Update()
 	}
 }
 
-void Mario::Render()
+void Mario::Render(D3DCOLOR overlay)
 {
-	power->Render();
+	power->Render(overlay);
 }
 
 shared_ptr<RayCast> Mario::GetRayCaster()

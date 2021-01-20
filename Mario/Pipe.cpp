@@ -29,7 +29,7 @@ float Pipe::GetDamageFor(GameObject& object, Direction direction)
     return 0.0f;
 }
 
-void Pipe::Render()
+void Pipe::Render(D3DCOLOR overlay)
 {
     if (!head || !body) return;
     Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
@@ -38,27 +38,27 @@ void Pipe::Render()
     switch (direction)
     {
     case Direction::Left:
-        head->Draw(renderPos.x + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans);
+        head->Draw(renderPos.x + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans, overlay);
         for (int i = renderPos.x + lengthOfPiece; i < renderPos.x + size.x - 1; i += lengthOfPiece) {
-            body->Draw(i + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans);
+            body->Draw(i + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans, overlay);
         }
         break;
     case Direction::Top:
-        head->Draw(renderPos.x + verticalPeiceSize.x / 2, renderPos.y + verticalPeiceSize.y / 2, trans);
+        head->Draw(renderPos.x + verticalPeiceSize.x / 2, renderPos.y + verticalPeiceSize.y / 2, trans, overlay);
         for (int i = renderPos.y + lengthOfPiece; i < renderPos.y + size.y - 1; i += lengthOfPiece) {
-            body->Draw(renderPos.x + verticalPeiceSize.x / 2, i + verticalPeiceSize.y / 2, trans);
+            body->Draw(renderPos.x + verticalPeiceSize.x / 2, i + verticalPeiceSize.y / 2, trans, overlay);
         }
         break;
     case Direction::Right:
-        head->Draw(renderPos.x + size.x - lengthOfPiece + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans);
+        head->Draw(renderPos.x + size.x - lengthOfPiece + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans, overlay);
         for (int i = renderPos.x; i < renderPos.x + size.x - lengthOfPiece - 1; i += lengthOfPiece) {
-            body->Draw(i + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans);
+            body->Draw(i + horizontalPeiceSize.x / 2, renderPos.y + horizontalPeiceSize.y / 2, trans, overlay);
         }
         break;
     case Direction::Bottom:
-        head->Draw(renderPos.x + verticalPeiceSize.x / 2, renderPos.y + size.y - lengthOfPiece + verticalPeiceSize.y / 2, trans);
+        head->Draw(renderPos.x + verticalPeiceSize.x / 2, renderPos.y + size.y - lengthOfPiece + verticalPeiceSize.y / 2, trans, overlay);
         for (int i = renderPos.y; i < renderPos.y + size.y - lengthOfPiece - 1; i += lengthOfPiece) {
-            body->Draw(renderPos.x + verticalPeiceSize.x / 2, i + verticalPeiceSize.y / 2, trans);
+            body->Draw(renderPos.x + verticalPeiceSize.x / 2, i + verticalPeiceSize.y / 2, trans, overlay);
         }
         break;
     }

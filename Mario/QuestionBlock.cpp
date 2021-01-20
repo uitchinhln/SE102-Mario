@@ -147,7 +147,7 @@ void QuestionBlock::Update()
 	}
 }
 
-void QuestionBlock::Render()
+void QuestionBlock::Render(D3DCOLOR overlay)
 {
 	InitResource();
 
@@ -160,7 +160,7 @@ void QuestionBlock::Render()
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 	ani->GetTransform()->Position = GetPosition() - cam + size / 2;
-	ani->Render();
+	ani->Render(overlay);
 }
 
 ObjectType QuestionBlock::GetObjectType()

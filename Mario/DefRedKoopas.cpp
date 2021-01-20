@@ -164,7 +164,12 @@ void DefRedKoopas::StatusUpdate()
 						k->GetLiveState() = KoopasLifeStates::DIE;
 						OnDeath(Vec2(jet.x * 0.1f, -0.6f));
 
-						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, k->GetPosition(), k->GetObjectType());
+						if (coll->Object->GetObjectType() == MEntityType::VoidBlock) {
+							__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::SPACE, k->GetPosition(), k->GetObjectType());
+						}
+						else {
+							__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, k->GetPosition(), k->GetObjectType());
+						}
 					}
 				}
 			}

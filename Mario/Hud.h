@@ -19,7 +19,7 @@ public:
 
 	virtual void Update();
 
-	virtual void Render();
+	virtual void Render(D3DCOLOR overlay);
 
 protected:
 	D3DCOLOR background;

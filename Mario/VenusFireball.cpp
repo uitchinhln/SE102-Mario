@@ -86,7 +86,7 @@ void VenusFireball::FinalUpdate()
 	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
 }
 
-void VenusFireball::Render()
+void VenusFireball::Render(D3DCOLOR overlay)
 {
 	InitResource();
 
@@ -94,7 +94,7 @@ void VenusFireball::Render()
 
 	this->animations["Default"]->GetTransform()->Position = GetPosition() - cam + size / 2;
 	this->animations["Default"]->SetPlayScale(2.0f);
-	this->animations["Default"]->Render();
+	this->animations["Default"]->Render(overlay);
 }
 
 ObjectType VenusFireball::GetObjectType()

@@ -101,7 +101,7 @@ void RaccoonLeaf::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void RaccoonLeaf::Render()
+void RaccoonLeaf::Render(D3DCOLOR overlay)
 {
 	InitResource();
 
@@ -111,7 +111,7 @@ void RaccoonLeaf::Render()
 
 	animation->GetTransform()->Scale.x = -facing;
 	animation->GetTransform()->Position = GetPosition() - cam + size / 2;
-	animation->Render();
+	animation->Render(overlay);
 }
 
 ObjectType RaccoonLeaf::GetObjectType()

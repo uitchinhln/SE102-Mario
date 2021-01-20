@@ -65,12 +65,12 @@ void TinyMario::Update()
     }
 }
 
-void TinyMario::Render()
+void TinyMario::Render(D3DCOLOR overlay)
 {
     InitResource();
     Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
     animations["Default"]->GetTransform()->Position = Position - cam + size / 2;
-    animations["Default"]->Render();
+    animations["Default"]->Render(overlay);
 }
 
 RectF TinyMario::GetHitBox()

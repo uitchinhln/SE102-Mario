@@ -12,8 +12,8 @@ void HudPanel::Update()
 {
 }
 
-void HudPanel::Render()
+void HudPanel::Render(D3DCOLOR overlay)
 {
 	InitResource();
-	sprites["Default"]->Draw(Position.x + Size.x / 2, Position.y + Size.y / 2, trans);
+	sprites["Default"]->Draw(Position.x + Size.x / 2, Position.y + Size.y / 2, trans, overlay);
 }

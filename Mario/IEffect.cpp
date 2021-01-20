@@ -51,7 +51,7 @@ void IEffect::Update()
     }
 }
 
-void IEffect::Render()
+void IEffect::Render(D3DCOLOR overlay)
 {
     for each (Particle * particle in particles)
     {
@@ -59,7 +59,7 @@ void IEffect::Render()
         if (!particle->HasResource()) {
             InitResource(particle);
         }
-        particle->Render();
+        particle->Render(overlay);
     }
 }
 

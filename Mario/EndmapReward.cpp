@@ -117,7 +117,7 @@ void EndmapReward::Update()
 	}
 }
 
-void EndmapReward::Render()
+void EndmapReward::Render(D3DCOLOR overlay)
 {
 	InitResource();
 
@@ -140,7 +140,7 @@ void EndmapReward::Render()
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 	ani->GetTransform()->Position = GetPosition() - cam + size / 2;
-	ani->Render();
+	ani->Render(overlay);
 }
 
 ObjectType EndmapReward::GetObjectType()

@@ -71,9 +71,9 @@ void Koopas::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void Koopas::Render()
+void Koopas::Render(D3DCOLOR overlay)
 {
-	power->Render();
+	power->Render(overlay);
 }
 
 ObjectType Koopas::GetObjectType()

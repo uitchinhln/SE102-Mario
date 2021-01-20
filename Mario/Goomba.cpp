@@ -86,7 +86,12 @@ void Goomba::StatusUpdate()
 					EffectServer::GetInstance()->SpawnEffect(make_shared<GoombaExplodeFX>(Position, Vec2(jet.x * 0.1f, -0.65f)));
 					SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
 
-					__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, Position, GetObjectType());
+					if (coll->Object->GetObjectType() == MEntityType::VoidBlock) {
+						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::SPACE, Position, GetObjectType());
+					}
+					else {
+						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, Position, GetObjectType());
+					}
 				}
 			}
 		}
@@ -108,7 +113,7 @@ void Goomba::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void Goomba::Render()
+void Goomba::Render(D3DCOLOR overlay)
 {
 	InitResource();
 
@@ -117,7 +122,7 @@ void Goomba::Render()
 	Animation animation = this->animations["Walk"];
 
 	animation->GetTransform()->Position = GetPosition() - cam + size / 2;
-	animation->Render();
+	animation->Render(overlay);
 }
 
 ObjectType Goomba::GetObjectType()

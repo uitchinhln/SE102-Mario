@@ -92,7 +92,7 @@ void Coin::FinalUpdate()
 {
 }
 
-void Coin::Render()
+void Coin::Render(D3DCOLOR overlay)
 {
 	InitResource();
 
@@ -111,7 +111,7 @@ void Coin::Render()
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 	ani->GetTransform()->Position = Position - cam + size / 2;
-	ani->Render();
+	ani->Render(overlay);
 }
 
 ObjectType Coin::GetObjectType()

@@ -33,7 +33,7 @@ void SmokeSpotFX::Update()
     }
 }
 
-void SmokeSpotFX::Render()
+void SmokeSpotFX::Render(D3DCOLOR overlay)
 {
     for each (Particle * particle in particles)
     {
@@ -41,7 +41,7 @@ void SmokeSpotFX::Render()
         if (particle->Animations.size() < 1) {
             InitResource(particle);
         }
-        particle->Render(runTime, playtimeLeft);
+        particle->Render(runTime, playtimeLeft, overlay);
     }
 }
 

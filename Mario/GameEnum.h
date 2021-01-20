@@ -45,3 +45,9 @@ enum class Score
 	S8000 = 8000,
 	S1UP = 1
 };
+
+enum class GameState {
+	CREATED,
+	INTRO,
+
+};

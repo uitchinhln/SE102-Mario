@@ -19,7 +19,7 @@ public:
 public:
 	CSprite(string id, int left, int top, int width, int height, int xPivot, int yPivot, LPDIRECT3DTEXTURE9 texture);
 
-	virtual void Draw(float x, float y, Transform& transform, D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
+	virtual void Draw(float x, float y, Transform& transform, D3DCOLOR overlay);
 };
 
 typedef CSprite* Sprite;

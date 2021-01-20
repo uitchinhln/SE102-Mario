@@ -32,7 +32,7 @@ void HitStarFX::Update()
     }
 }
 
-void HitStarFX::Render()
+void HitStarFX::Render(D3DCOLOR overlay)
 {
     for each (Particle * particle in particles)
     {
@@ -40,7 +40,7 @@ void HitStarFX::Render()
         if (particle->Animations.size() < 1) {
             InitResource(particle);
         }
-        particle->Render(runTime, playtimeLeft);
+        particle->Render(runTime, playtimeLeft, overlay);
     }
 }
 

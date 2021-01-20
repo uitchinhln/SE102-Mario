@@ -25,7 +25,7 @@ void PMeter::Update()
 	level = min(7, max(0, level));
 }
 
-void PMeter::Render()
+void PMeter::Render(D3DCOLOR overlay)
 {
 	InitResource();
 	float begin = Position.x;
@@ -34,19 +34,19 @@ void PMeter::Render()
 	for (int i = 1; i < 7; i++)
 	{
 		if (i > level) {
-			sprites["ArrowOff"]->Draw(begin + width / 2, Position.y + Size.y / 2, trans);
+			sprites["ArrowOff"]->Draw(begin + width / 2, Position.y + Size.y / 2, trans, overlay);
 		}
 		else {
-			sprites["ArrowOn"]->Draw(begin + width / 2, Position.y + Size.y / 2, trans);
+			sprites["ArrowOn"]->Draw(begin + width / 2, Position.y + Size.y / 2, trans, overlay);
 		}
 		begin += width;
 	}
 
 	width = sprites["PowerOn"]->width;
 	if (level == 7 && (CGame::Time().TotalGameTime / 50) % 2) {
-		sprites["PowerOn"]->Draw(begin + width / 2, Position.y + Size.y / 2, trans);
+		sprites["PowerOn"]->Draw(begin + width / 2, Position.y + Size.y / 2, trans, overlay);
 	}
 	else {
-		sprites["PowerOff"]->Draw(begin + width / 2, Position.y + Size.y / 2, trans);
+		sprites["PowerOff"]->Draw(begin + width / 2, Position.y + Size.y / 2, trans, overlay);
 	}
 }

@@ -22,11 +22,11 @@ void EffectServer::Update()
 		}), effects.end());
 }
 
-void EffectServer::Render()
+void EffectServer::Render(D3DCOLOR overlay)
 {
 	for each (shared_ptr<IEffect> fx in effects)
 	{
-		fx->Render();
+		fx->Render(overlay);
 	}
 }
 

@@ -23,7 +23,7 @@ public:
 
 	virtual void FinalUpdate();
 
-	virtual void Render();
+	virtual void Render(D3DCOLOR overlay);
 
 	virtual ObjectType GetObjectType();
 

@@ -21,7 +21,7 @@ public:
 
 	void Update();
 	
-	void Render();
+	void Render(D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	void OnKeyDown(int key);
 

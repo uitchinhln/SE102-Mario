@@ -30,7 +30,7 @@ void MarioFX::Update()
     Active = true;
 }
 
-void MarioFX::Render()
+void MarioFX::Render(D3DCOLOR overlay)
 {
     for each (Particle * particle in particles)
     {
@@ -39,7 +39,6 @@ void MarioFX::Render()
             InitResource(particle);
         }
 
-        D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255);
         if (mario->Invulnerable() > 0 && (timer.Elapsed() / 50) % 2) {
             overlay = D3DCOLOR_ARGB(127, 255, 255, 255);
         }

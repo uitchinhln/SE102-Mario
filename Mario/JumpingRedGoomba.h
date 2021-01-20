@@ -14,7 +14,7 @@ public:
 
 	virtual void StatusUpdate() override;
 
-	virtual void Render() override;
+	virtual void Render(D3DCOLOR overlay) override;
 
 protected:
 	float KOOPAS_JUMP_FORCE = 0.55f;

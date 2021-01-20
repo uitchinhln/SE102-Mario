@@ -153,7 +153,7 @@ void Piranha::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void Piranha::Render()
+void Piranha::Render(D3DCOLOR overlay)
 {
 	InitResource();
 	Animation animation;
@@ -168,7 +168,7 @@ void Piranha::Render()
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 	animation->GetTransform()->Position = Position - cam + size / 2;
-	animation->Render();
+	animation->Render(overlay);
 }
 
 ObjectType Piranha::GetObjectType()

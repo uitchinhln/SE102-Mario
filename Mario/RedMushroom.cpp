@@ -98,7 +98,7 @@ void RedMushroom::FinalUpdate()
     collisionCal->Clear();
 }
 
-void RedMushroom::Render()
+void RedMushroom::Render(D3DCOLOR overlay)
 {
     InitResource();
 
@@ -107,7 +107,7 @@ void RedMushroom::Render()
     Animation animation = this->animations["Default"];
 
     animation->GetTransform()->Position = GetPosition() - cam + size / 2;
-    animation->Render();
+    animation->Render(overlay);
 }
 
 ObjectType RedMushroom::GetObjectType()

@@ -177,8 +177,12 @@ void CrouchKoopas::StatusUpdate()
 						k->GetLiveState() = KoopasLifeStates::DIE;
 						OnDeath(Vec2(jet.x * 0.1f, -0.6f));
 
-						//Giet rua
-						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, k->GetPosition(), k->GetObjectType());
+						if (coll->Object->GetObjectType() == MEntityType::VoidBlock) {
+							__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::SPACE, k->GetPosition(), k->GetObjectType());
+						}
+						else {
+							__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, k->GetPosition(), k->GetObjectType());
+						}
 						break;
 					}
 					continue;
@@ -193,7 +197,7 @@ void CrouchKoopas::StatusUpdate()
 	}
 }
 
-void CrouchKoopas::Render()
+void CrouchKoopas::Render(D3DCOLOR overlay)
 {
 	InitResource();
 	if (respawnTimer.IsRunning() && KP_RESPAWN_TIME - respawnTimer.Elapsed() <= 3000) {
@@ -206,14 +210,14 @@ void CrouchKoopas::Render()
 				ani->GetTransform()->Scale.y = -1;
 
 			ani->GetTransform()->Position = k->GetPosition() - cam + size / 2;
-			ani->Render();
+			ani->Render(overlay);
 		}
 		return;
 	}
 	if (this->flip) {
 		this->animations["Move"]->GetTransform()->Scale.y = -1;
 	}
-	DefaultKoopas::Render();
+	DefaultKoopas::Render(overlay);
 }
 
 ObjectType CrouchKoopas::GetObjectType()

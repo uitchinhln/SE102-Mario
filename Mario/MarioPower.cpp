@@ -435,7 +435,7 @@ void MarioPower::MoveAnimation()
 	}
 }
 
-void MarioPower::Render()
+void MarioPower::Render(D3DCOLOR overlay)
 {
 	this->InitResource();
 
@@ -451,7 +451,6 @@ void MarioPower::Render()
 			selectedAnimation = m->GetWarpState() == WarpStates::HORIZONTAL ? animations["TeleHor"] : animations["TeleVer"];
 		}
 
-		D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255);
 		if (m->Invulnerable() > 0 && (m->Invulnerable() / 50) % 2) {
 			overlay = D3DCOLOR_ARGB(127, 255, 255, 255);
 		}

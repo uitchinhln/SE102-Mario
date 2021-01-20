@@ -135,6 +135,16 @@ AchievementProcessor* MarioGame::GetAchievementProcessor()
 	return achievementProc;
 }
 
+GameState MarioGame::GetGameState()
+{
+	return state;
+}
+
+void MarioGame::SetGameState(GameState value)
+{
+	this->state = value;
+}
+
 MarioGame* MarioGame::GetInstance()
 {
 	return __instance;

@@ -149,7 +149,6 @@
     <ClCompile Include="BeginPortal.cpp" />
     <ClCompile Include="BigMario.cpp" />
     <ClCompile Include="BrickDebrisFX.cpp" />
-    <ClCompile Include="Card.cpp" />
     <ClCompile Include="CardFX.cpp" />
     <ClCompile Include="CardSet.cpp" />
     <ClCompile Include="CardSlot.cpp" />
@@ -282,7 +281,6 @@
     <ClInclude Include="BeginPortal.h" />
     <ClInclude Include="BigMario.h" />
     <ClInclude Include="BrickDebrisFX.h" />
-    <ClInclude Include="Card.h" />
     <ClInclude Include="CardFX.h" />
     <ClInclude Include="CardSet.h" />
     <ClInclude Include="CardSlot.h" />

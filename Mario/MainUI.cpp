@@ -19,10 +19,18 @@ void MainUI::Render()
 	MarioGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));
 
 	MarioGame::GetInstance()->GetGraphic().SetViewport(worldView);
-	SceneManager::GetInstance()->GetActiveScene()->Render();
+	SceneManager::GetInstance()->GetActiveScene()->Render(D3DCOLOR_ARGB(255, 255, 255, 255));
 
 	MarioGame::GetInstance()->GetGraphic().SetViewport(hud);
-	hud->Render();
+	hud->Render(D3DCOLOR_ARGB(255, 255, 255, 255));
+}
+
+void MainUI::GameBeginUpdate()
+{
+}
+
+void MainUI::GameBeginRender()
+{
 }
 
 void MainUI::CreateHUD(TiXmlElement* node)

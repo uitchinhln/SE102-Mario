@@ -112,7 +112,12 @@ void JumpingRedGoomba::StatusUpdate()
 						EffectServer::GetInstance()->SpawnEffect(make_shared<RedGoombaExplodeFX>(position, Vec2(jet.x * 0.1f, -0.65f)));
 						SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(g);
 
-						__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, position, g->GetObjectType());
+						if (coll->Object->GetObjectType() == MEntityType::VoidBlock) {
+							__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::SPACE, g->GetPosition(), g->GetObjectType());
+						}
+						else {
+							__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, g->GetPosition(), g->GetObjectType());
+						}
 					}
 				}
 			}
@@ -130,7 +135,7 @@ void JumpingRedGoomba::StatusUpdate()
 	}
 }
 
-void JumpingRedGoomba::Render()
+void JumpingRedGoomba::Render(D3DCOLOR overlay)
 {
 	if (shared_ptr<RedGoomba> g = holder.lock()) {
 		InitResource();
@@ -155,6 +160,6 @@ void JumpingRedGoomba::Render()
 		}
 
 		animation->GetTransform()->Position = position - cam + g->GetSize() / 2;
-		animation->Render();
+		animation->Render(overlay);
 	}
 }

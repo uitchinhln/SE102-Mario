@@ -55,7 +55,7 @@ void CardSlot::Update()
 	}
 }
 
-void CardSlot::Render()
+void CardSlot::Render(D3DCOLOR overlay)
 {
 	InitResource();
 	Sprite sprite = sprites["EMPTY"];
@@ -83,5 +83,5 @@ void CardSlot::Render()
 	}
 
 	Vec2 pos = Position + Size / 2;
-	sprite->Draw(pos.x, pos.y, trans);
+	sprite->Draw(pos.x, pos.y, trans, overlay);
 }

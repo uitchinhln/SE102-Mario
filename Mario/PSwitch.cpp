@@ -97,7 +97,7 @@ void PSwitch::FinalUpdate()
     collisionCal->Clear();
 }
 
-void PSwitch::Render()
+void PSwitch::Render(D3DCOLOR overlay)
 {
     InitResource();
 
@@ -106,7 +106,7 @@ void PSwitch::Render()
     Animation animation = !Pressed ? this->animations["Default"] : this->animations["Pressed"];
 
     animation->GetTransform()->Position = GetPosition() - cam + size / 2;
-    animation->Render();
+    animation->Render(overlay);
 }
 
 ObjectType PSwitch::GetObjectType()

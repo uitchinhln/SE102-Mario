@@ -109,14 +109,14 @@ void MarioFireBall::FinalUpdate()
 	//collisionCal->Clear();
 }
 
-void MarioFireBall::Render()
+void MarioFireBall::Render(D3DCOLOR overlay)
 {
 	InitResource();
 
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 	this->animations["Default"]->GetTransform()->Position = GetPosition() - cam + size / 2;
-	this->animations["Default"]->Render();
+	this->animations["Default"]->Render(overlay);
 }
 
 ObjectType MarioFireBall::GetObjectType()

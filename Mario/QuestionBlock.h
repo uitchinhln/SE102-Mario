@@ -42,7 +42,7 @@ public:
 
 	virtual void Update() override;
 
-	virtual void Render() override;
+	virtual void Render(D3DCOLOR overlay) override;
 
 	virtual ObjectType GetObjectType() override;
 

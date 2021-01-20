@@ -43,12 +43,12 @@ void PlaySceneFinishFX::Update()
 	if (playtimeLeft < 0) Active = false;
 }
 
-void PlaySceneFinishFX::Render()
+void PlaySceneFinishFX::Render(D3DCOLOR overlay)
 {
-	line1.Render();
+	line1.Render(overlay);
 
 	if (line2Delay < 0) {
-		line2.Render();
-		card->Draw(540 + card->width / 2, 140 + card->height / 2, trans);
+		line2.Render(overlay);
+		card->Draw(540 + card->width / 2, 140 + card->height / 2, trans, overlay);
 	}
 }

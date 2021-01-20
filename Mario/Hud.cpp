@@ -58,20 +58,20 @@ void Hud::Update()
 	score->SetContent(txtScore);
 }
 
-void Hud::Render()
+void Hud::Render(D3DCOLOR overlay)
 {
 	CGame::GetInstance()->GetGraphic().Clear(background);
 
-	panel.Render();
-	cards.Render();
+	panel.Render(overlay);
+	cards.Render(overlay);
 
-	pmeter->Render();
+	pmeter->Render(overlay);
 
-	coin->Render();
-	timer->Render();
-	world->Render();
-	live->Render();
-	score->Render();
+	coin->Render(overlay);
+	timer->Render(overlay);
+	world->Render(overlay);
+	live->Render(overlay);
+	score->Render(overlay);
 }
 
 

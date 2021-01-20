@@ -31,7 +31,7 @@ void CoinFX::Update()
 	}
 }
 
-void CoinFX::Render()
+void CoinFX::Render(D3DCOLOR overlay)
 {
 	if (animation == nullptr) {
 		animation = AnimationManager::GetInstance()->Get("ani-coin-obtained")->Clone();
@@ -41,6 +41,6 @@ void CoinFX::Render()
 	Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 
 	animation->GetTransform()->Position = Position - cam + size / 2;
-	animation->Render();
+	animation->Render(overlay);
 }
 

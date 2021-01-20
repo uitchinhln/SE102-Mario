@@ -1,6 +1,8 @@
 #pragma once
 #include "Camera.h"
 #include "Hud.h"
+#include "GameEnum.h"
+
 class MainUI
 {
 public:
@@ -8,6 +10,9 @@ public:
 
 	virtual void Update();
 	virtual void Render();
+
+	virtual void GameBeginUpdate();
+	virtual void GameBeginRender();
 
 	virtual void CreateHUD(TiXmlElement* node);
 

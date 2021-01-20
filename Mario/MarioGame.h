@@ -1,5 +1,6 @@
 #pragma once
 #include "Game.h";
+#include "GameEnum.h"
 
 class MainUI;
 class PlayerData;
@@ -24,6 +25,8 @@ protected:
 	FightProcessor* fightProc;
 	AchievementProcessor* achievementProc;
 
+	GameState state = GameState::CREATED;
+
 public:
 	MarioGame();
 
@@ -38,6 +41,10 @@ public:
 	FightProcessor* GetFightProcessor();
 
 	AchievementProcessor* GetAchievementProcessor();
+
+	GameState GetGameState();
+
+	void SetGameState(GameState value);
 
 	static MarioGame* GetInstance();
 };

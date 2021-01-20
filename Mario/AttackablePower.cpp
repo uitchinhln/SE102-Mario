@@ -78,7 +78,7 @@ void AttackablePower::Update()
 	MarioPower::Update();
 }
 
-void AttackablePower::Render()
+void AttackablePower::Render(D3DCOLOR overlay)
 {
 	this->InitResource();
 
@@ -92,7 +92,7 @@ void AttackablePower::Render()
 			selectedAnimation = animations["Attack"];
 			selectedAnimation->GetTransform()->Scale = Vec2((float)m->GetFacing(), 1);
 			selectedAnimation->GetTransform()->Position = m->GetPosition() - cam + sizeFixed / 2;
-			selectedAnimation->Render(attackTimer.Elapsed(), MARIO_ATTACK_DURATION);
+			selectedAnimation->Render(attackTimer.Elapsed(), MARIO_ATTACK_DURATION, overlay);
 			return;
 		}
 
@@ -104,7 +104,6 @@ void AttackablePower::Render()
 			selectedAnimation = m->GetWarpState() == WarpStates::HORIZONTAL ? animations["TeleHor"] : animations["TeleVer"];
 		}
 
-		D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255);
 		if (m->Invulnerable() > 0 && (m->Invulnerable() / 50) % 2) {
 			overlay = D3DCOLOR_ARGB(127, 255, 255, 255);
 		}
@@ -113,6 +112,6 @@ void AttackablePower::Render()
 		selectedAnimation->SetPlayScale(max(0.4f, min(abs(m->GetVelocity().x) / MARIO_WALK_SPEED, 4)) * 1.5f);
 		selectedAnimation->GetTransform()->Scale = Vec2((float)m->GetFacing(), 1);
 		selectedAnimation->GetTransform()->Position = m->GetPosition() - cam + sizeFixed / 2;;
-		selectedAnimation->Render();
+		selectedAnimation->Render(overlay);
 	}
 }

@@ -59,15 +59,15 @@ bool MapGate::HasCollideWith(DWORD id)
 	return false;
 }
 
-void MapGate::Render()
+void MapGate::Render(D3DCOLOR overlay)
 {
 	if (sprites.size() == 2) {
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
 		if (!finish) {
-			this->sprites["Uncheck"]->Draw(Position.x - cam.x + size.x / 2, Position.y - cam.y + size.y / 2, trans);
+			this->sprites["Uncheck"]->Draw(Position.x - cam.x + size.x / 2, Position.y - cam.y + size.y / 2, trans, overlay);
 		}
 		else {
-			this->sprites["Checked"]->Draw(Position.x - cam.x + size.x / 2, Position.y - cam.y + size.y / 2, trans);
+			this->sprites["Checked"]->Draw(Position.x - cam.x + size.x / 2, Position.y - cam.y + size.y / 2, trans, overlay);
 		}
 	}
 }

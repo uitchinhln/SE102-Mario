@@ -211,7 +211,7 @@ void Venus::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void Venus::Render()
+void Venus::Render(D3DCOLOR overlay)
 {
 	InitResource();
 	Animation animation;
@@ -232,7 +232,7 @@ void Venus::Render()
 
 	animation->GetTransform()->Scale.x = -facing;
 	animation->GetTransform()->Position = Position - cam + size / 2;
-	animation->Render();
+	animation->Render(overlay);
 }
 
 ObjectType Venus::GetObjectType()

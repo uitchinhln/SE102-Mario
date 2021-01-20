@@ -11,7 +11,7 @@ void Text::Update()
 {
 }
 
-void Text::Render()
+void Text::Render(D3DCOLOR overlay)
 {
 	if (font == nullptr) return;
 
@@ -48,7 +48,7 @@ void Text::Render()
 
 		if (currentX + c->width > end) break;
 
-		c->Draw(currentX + c->width / 2, Position.y + Size.y - c->height / 2, trans);
+		c->Draw(currentX + c->width / 2, Position.y + Size.y - c->height / 2, trans, overlay);
 
 		currentX += c->width + spacing;
 	}

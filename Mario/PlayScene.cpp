@@ -152,11 +152,11 @@ void PlayScene::Update()
 	EffectServer::GetInstance()->Update();
 }
 
-void PlayScene::Render()
+void PlayScene::Render(D3DCOLOR overlay)
 {
 	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));	
 
-	gameMap->Render();
+	gameMap->Render(overlay);
 	vector<shared_ptr<GameObject>> renderObjects;
 	renderObjects.insert(renderObjects.end(), objectList.begin(), objectList.end());
 	renderObjects.push_back(mario);
@@ -167,11 +167,11 @@ void PlayScene::Render()
 
 	for each (shared_ptr<GameObject> obj in renderObjects)
 	{
-		if (obj->Visible && obj->IsActive()) obj->Render();
+		if (obj->Visible && obj->IsActive()) obj->Render(overlay);
 		obj->RenderTestBox();
 	}
 
-	EffectServer::GetInstance()->Render();
+	EffectServer::GetInstance()->Render(overlay);
 }
 
 void PlayScene::SpawnEntity(shared_ptr<GameObject> entity)

@@ -28,7 +28,7 @@ void CGameMap::Update()
 {
 }
 
-void CGameMap::Render()
+void CGameMap::Render(D3DCOLOR overlay)
 {
 	//auto start = std::chrono::high_resolution_clock::now();
 	CGame::GetInstance()->GetGraphic().Clear(backgroundColor);
@@ -62,7 +62,7 @@ void CGameMap::Render()
 				int x = i * tileWidth - camPos.x;
 				int y = j * tileHeight - camPos.y;
 
-				tileSet->Draw(id, x, y, trans);
+				tileSet->Draw(id, x, y, trans, overlay);
 			}
 		}
 	}

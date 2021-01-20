@@ -95,7 +95,7 @@ public:
 
 	virtual void FinalUpdate();
 
-	virtual void Render() = 0;
+	virtual void Render(D3DCOLOR overlay) = 0;
 
 	virtual void RenderTestBox();
 

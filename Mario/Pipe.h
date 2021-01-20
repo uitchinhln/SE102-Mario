@@ -17,7 +17,7 @@ public:
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
-	virtual void Render() override;
+	virtual void Render(D3DCOLOR overlay) override;
 
 	static shared_ptr<Pipe> CreatePipe(Vec2 pos, Vec2 size, MapProperties& props);
 

@@ -21,13 +21,13 @@ void WorldScene::Update()
 	tinyMario->Update();
 }
 
-void WorldScene::Render()
+void WorldScene::Render(D3DCOLOR overlay)
 {
 	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));
 
-	gameMap->Render();
+	gameMap->Render(overlay);
 
-	backgroundAnimations.Render();
+	backgroundAnimations.Render(overlay);
 
 	//Object render
 	vector<shared_ptr<GameObject>> renders;
@@ -40,10 +40,10 @@ void WorldScene::Render()
 
 	for each (shared_ptr<GameObject> var in renders)
 	{
-		if (var->IsActive() && var->Visible) var->Render();
+		if (var->IsActive() && var->Visible) var->Render(overlay);
 	}
 
-	EffectServer::GetInstance()->Render();
+	EffectServer::GetInstance()->Render(overlay);
 }
 
 void WorldScene::SetSceneContentPath(string path)

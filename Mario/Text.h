@@ -16,7 +16,7 @@ public:
 	Text();
 
 	virtual void Update() override;
-	virtual void Render() override;
+	virtual void Render(D3DCOLOR overlay) override;
 
 	virtual void SetContent(string text);
 	virtual string GetContent();
