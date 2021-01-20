@@ -7,14 +7,12 @@
 
 void WorldScene::Load()
 {
-	HookEvent();
-	tinyMario->HookEvent();
 }
 
 void WorldScene::Unload()
 {
-	UnhookEvent();
-	tinyMario->UnhookEvent();
+	//UnhookEvent();
+	//tinyMario->UnhookEvent();
 }
 
 void WorldScene::Update()
@@ -73,6 +71,7 @@ void WorldScene::SetSceneContentPath(string path)
 	string hudPath = root->FirstChildElement("Hud")->Attribute("path");
 
 	this->tinyMario = make_shared<TinyMario>();
+	this->tinyMario->HookEvent();
 
 	this->data = tinyMario->GetPlayerData();
 	this->data->RemainingTime = 0;
@@ -101,7 +100,6 @@ void WorldScene::SetSceneContentPath(string path)
 	camera->SetActiveBound(startId);
 
 	doc.Clear();
-	UnhookEvent();
 }
 
 void WorldScene::OnObjectLoad(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props)
@@ -120,10 +118,14 @@ void WorldScene::OnObjectLoad(const char* type, Vec2 fixedPos, Vec2 size, MapPro
 
 void WorldScene::OnKeyDown(int key)
 {
+	if (!tinyMario) return;
+	tinyMario->OnKeyDown(key);
 }
 
 void WorldScene::OnKeyUp(int key)
 {
+	if (!tinyMario) return;
+	tinyMario->OnKeyUp(key);
 }
 
 void WorldScene::HookEvent()

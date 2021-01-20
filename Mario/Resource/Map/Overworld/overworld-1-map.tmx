@@ -230,6 +230,7 @@
     <property name="scene" value="world-1-1"/>
     <property name="sprite_checked" value="spr-M-0"/>
     <property name="sprite_uncheck" value="spr-gate-1"/>
+    <property name="world_number" type="int" value="1"/>
    </properties>
    <point/>
   </object>
@@ -311,6 +312,7 @@
     <property name="scene" value="world-1-4"/>
     <property name="sprite_checked" value="spr-M-0"/>
     <property name="sprite_uncheck" value="spr-gate-4"/>
+    <property name="world_number" type="int" value="4"/>
    </properties>
    <point/>
   </object>

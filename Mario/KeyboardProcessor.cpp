@@ -70,6 +70,7 @@ void KeyboardProcessor::InitKeyboard(HWND hWnd)
 	DebugOut(L"[INFO] Keyboard has been initialized successfully\n");
 }
 
+
 void KeyboardProcessor::ProcessKeyboard()
 {
 	HRESULT hr;
@@ -107,14 +108,18 @@ void KeyboardProcessor::ProcessKeyboard()
 	// Scan through all buffered events, check if the key is pressed or released
 	for (DWORD i = 0; i < dwElements; i++)
 	{
-		int KeyCode = keyEvents[i].dwOfs;
-		int KeyState = keyEvents[i].dwData;
-		if ((KeyState & 0x80) > 0)
-			__raise (*Events::GetInstance()).KeyDownEvent(KeyCode);
-			//SceneManager::GetInstance()->OnKeyDown(KeyCode);
-		else
-			__raise (*Events::GetInstance()).KeyUpEvent(KeyCode);
-			//SceneManager::GetInstance()->OnkeyUp(KeyCode);
+		try {
+			int KeyCode = keyEvents[i].dwOfs;
+			int KeyState = keyEvents[i].dwData;
+			if ((KeyState & 0x80) > 0)
+				//__raise (*Events::GetInstance()).KeyDownEvent(KeyCode);
+				SceneManager::GetInstance()->OnKeyDown(KeyCode);
+			else
+				//__raise (*Events::GetInstance()).KeyUpEvent(KeyCode);
+				SceneManager::GetInstance()->OnkeyUp(KeyCode);
+		}
+		catch (...) {
+		}
 	}
 }
 

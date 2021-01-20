@@ -3,8 +3,7 @@
 #include "Transform.h"
 #include "AnimationFrame.h"
 
-class CAnimation :
-	public enable_shared_from_this<CAnimation>
+class CAnimation 
 {
 	DWORD lastFrameTime;
 	int currentFrame;
@@ -18,7 +17,7 @@ class CAnimation :
 
 public:
 	CAnimation(int defaultFrameTime = 100);
-	CAnimation(shared_ptr<CAnimation> origin);
+	CAnimation(CAnimation* origin);
 
 	virtual Transform* GetTransform() { return this->transform; }
 

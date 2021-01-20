@@ -9,8 +9,8 @@ class Events
 	Events();
 
 public:
-	__event void KeyUpEvent(int keyCode);
-	__event void KeyDownEvent(int keyCode);
+	//__event void KeyUpEvent(int keyCode);
+	//__event void KeyDownEvent(int keyCode);
 	__event void ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& properties);
 	__event void MapReadEvent(MapProperties& properties);
 

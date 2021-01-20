@@ -30,11 +30,15 @@ public:
 
 	virtual void MapReadEvent(MapProperties& props);
 
+
+
 	virtual void OnKeyDown(int key) override;
 
 	virtual void OnKeyUp(int key) override;
 
 	virtual void OnPlaySceneFinish(const char* source, CardType reward);
+
+	virtual void OnPlaySceneLose(const char* source);
 
 	~PlayScene();
 protected:
@@ -52,8 +56,11 @@ protected:
 	Vec2 hudPos = Vec2(0, 579);
 	Vec2 hudSize = Vec2(769, 142);
 
-	bool finish = false;
-	long finishEffectTimer = 0;
+	Stopwatch finishEffectTimer{ TimeMode::SYSTEM_TIME };
+
+	Stopwatch resetTimer{ TimeMode::SYSTEM_TIME };
+
+	Stopwatch loseTimer{ TimeMode::SYSTEM_TIME };
 
 	virtual void HookEvent();
 

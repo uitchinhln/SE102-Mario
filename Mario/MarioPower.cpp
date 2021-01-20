@@ -502,5 +502,5 @@ shared_ptr<Mario> MarioPower::GetMario()
 
 MarioPower::~MarioPower()
 {
-	//DebugOut(L"Huy mario power\n");
+	DebugOut(L"Huy mario power\n");
 }

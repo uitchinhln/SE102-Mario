@@ -6,8 +6,7 @@
 
 [event_receiver(native)]
 class TinyMario :
-    public GameObject,
-    public enable_shared_from_this<TinyMario>
+    public GameObject
 {
 protected:
     shared_ptr<PlayerData> data;
@@ -21,6 +20,8 @@ protected:
     int moveStep = 0;
 
     int targetStation = 0;
+
+    int discoverStation = 0;
 
     Vec2 targetPosition = VECTOR_0;
 
@@ -75,6 +76,10 @@ public:
 
     virtual void OnKeyDown(int key);
 
+    virtual void OnKeyUp(int key);
+
     virtual void OnPlaySceneFinish(const char* source, CardType reward);
+
+    virtual void OnPlaySceneLose(const char* source);
 };
 

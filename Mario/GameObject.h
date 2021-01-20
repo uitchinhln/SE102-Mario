@@ -45,6 +45,8 @@ public:
 public:
 	GameObject();
 
+	virtual void Reset();
+
 	DWORD GetID();
 
 	int GetRenderOrder();

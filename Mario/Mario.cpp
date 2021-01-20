@@ -47,26 +47,27 @@ void Mario::OnKeyDown(int key)
 	
 	// Change mario power
 	Vec2 fixPos = Vec2(GetHitBox().left, GetHitBox().bottom);
+	shared_ptr<Mario> thiss = SceneManager::GetInstance()->GetPlayer<Mario>();
 
 	switch (key)
 	{
 	case DIK_1:
-		SetPowerUp(make_shared<Small>(shared_from_this()));
+		SetPowerUp(make_shared<Small>(thiss));
 		Position.x = fixPos.x;
 		Position.y = fixPos.y - (GetHitBox().bottom - GetHitBox().top);
 		break;
 	case DIK_2:
-		SetPowerUp(make_shared<BigMario>(shared_from_this()));
+		SetPowerUp(make_shared<BigMario>(thiss));
 		Position.x = fixPos.x;
 		Position.y = fixPos.y - (GetHitBox().bottom - GetHitBox().top);
 		break;
 	case DIK_3:
-		SetPowerUp(make_shared<FireMario>(shared_from_this()));
+		SetPowerUp(make_shared<FireMario>(thiss));
 		Position.x = fixPos.x;
 		Position.y = fixPos.y - (GetHitBox().bottom - GetHitBox().top);
 		break;
 	case DIK_4:
-		SetPowerUp(make_shared<RaccoonMario>(shared_from_this()));
+		SetPowerUp(make_shared<RaccoonMario>(thiss));
 		Position.x = fixPos.x;
 		Position.y = fixPos.y - (GetHitBox().bottom - GetHitBox().top);
 		break;
@@ -125,6 +126,8 @@ void Mario::OnDeath()
 	this->Visible = false;
 	this->SetLockController(true);
 	this->invulnerable = 9999999;
+
+	__raise (*GameEvent::GetInstance()).PlaySceneLoseEvent(__FILE__);
 }
 
 void Mario::OnPowerUp(ObjectType powerType)
@@ -152,6 +155,31 @@ Mario::Mario(shared_ptr<PlayerData> data) : GameObject()
 	this->data = data;
 }
 
+void Mario::Reset()
+{
+	GameObject::Reset();
+	controllable = true;
+	sliding = false;
+	onGround = true;
+	invulnerable = 0;
+	freezeTime = 0;
+	freezeTimer.Stop();
+	freezeTimer.Reset();
+	drag = 0;
+	skid = 0;
+	kickCountDown = 0;
+	jumpBeginPos = 0;
+	powerMeter = 0;
+	accelerate = VECTOR_0;
+	movingState = MovingStates::IDLE;
+	jumpingState = JumpingStates::IDLE;
+	warpState = WarpStates::NONE;
+	inhand.reset();
+	raycaster->Clear();
+	Gravity = 0.00093f;
+	renderOrder = 1001;
+}
+
 shared_ptr<PlayerData> Mario::GetPlayerData()
 {
 	return data;
@@ -168,6 +196,8 @@ void Mario::SetPowerUp(shared_ptr<MarioPower> power)
 	ObjectType cur = this->power->GetMarioType();
 	ObjectType next = power->GetMarioType();
 
+	shared_ptr<Mario> thiss = SceneManager::GetInstance()->GetPlayer<Mario>();
+
 	this->power = power;
 	this->data->Power = next;
 
@@ -175,15 +205,15 @@ void Mario::SetPowerUp(shared_ptr<MarioPower> power)
 	if (freezeTimer.IsRunning()) return;
 
 	if (cur == MEntityType::SmallMario && next == MEntityType::BigMario) {
-		EffectServer::GetInstance()->SpawnEffect(make_shared<GrowUpFX>(Position, shared_from_this()));
+		EffectServer::GetInstance()->SpawnEffect(make_shared<GrowUpFX>(Position, thiss));
 		freezeTime = 1440;
 	}
 	else if (cur == MEntityType::BigMario && next == MEntityType::SmallMario) {
-		EffectServer::GetInstance()->SpawnEffect(make_shared<ShrinkDownFX>(Position, shared_from_this()));
+		EffectServer::GetInstance()->SpawnEffect(make_shared<ShrinkDownFX>(Position, thiss));
 		freezeTime = 1620;
 	}
 	else {
-		EffectServer::GetInstance()->SpawnEffect(make_shared<TransformFX>(Position, shared_from_this()));
+		EffectServer::GetInstance()->SpawnEffect(make_shared<TransformFX>(Position, thiss));
 		freezeTime = 600;
 	}
 
@@ -356,16 +386,16 @@ float Mario::GetDamageFor(GameObject& object, Direction direction)
 
 void Mario::HookEvent()
 {
-	__hook(&Events::KeyDownEvent, Events::GetInstance(), &Mario::OnKeyDown);
-	__hook(&Events::KeyUpEvent, Events::GetInstance(), &Mario::OnKeyUp);
+	//__hook(&Events::KeyDownEvent, Events::GetInstance(), &Mario::OnKeyDown);
+	//__hook(&Events::KeyUpEvent, Events::GetInstance(), &Mario::OnKeyUp);
 	__hook(&GameEvent::PlayerScoreEvent, GameEvent::GetInstance(), &Mario::OnGetScore);
 	__hook(&GameEvent::PlayerCoinEvent, GameEvent::GetInstance(), &Mario::OnGetCoin);
 }
 
 void Mario::UnHookEvent()
 {
-	__unhook(&Events::KeyDownEvent, Events::GetInstance(), &Mario::OnKeyDown);
-	__unhook(&Events::KeyUpEvent, Events::GetInstance(), &Mario::OnKeyUp);
+	//__unhook(&Events::KeyDownEvent, Events::GetInstance(), &Mario::OnKeyDown);
+	//__unhook(&Events::KeyUpEvent, Events::GetInstance(), &Mario::OnKeyUp);
 	__unhook(&GameEvent::PlayerScoreEvent, GameEvent::GetInstance(), &Mario::OnGetScore);
 	__unhook(&GameEvent::PlayerCoinEvent, GameEvent::GetInstance(), &Mario::OnGetCoin);
 }

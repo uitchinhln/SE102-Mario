@@ -95,19 +95,20 @@ shared_ptr<PlayerData> TinyMario::GetPlayerData()
 
 void TinyMario::HookEvent()
 {
-    __hook(&Events::KeyDownEvent, Events::GetInstance(), &TinyMario::OnKeyDown);
+    //__hook(&Events::KeyDownEvent, Events::GetInstance(), &TinyMario::OnKeyDown);
     __hook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneFinish);
+    __hook(&GameEvent::PlaySceneLoseEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneLose);
 }
 
 void TinyMario::UnhookEvent()
 {
-    __unhook(&Events::KeyDownEvent, Events::GetInstance(), &TinyMario::OnKeyDown);
+    //__unhook(&Events::KeyDownEvent, Events::GetInstance(), &TinyMario::OnKeyDown);
     __unhook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneFinish);
+    __unhook(&GameEvent::PlaySceneLoseEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneLose);
 }
 
 void TinyMario::OnKeyDown(int key)
 {
-    DebugOut(L"Hooking\n");
     Direction direction = Direction::None;
     switch (key)
     {
@@ -125,7 +126,8 @@ void TinyMario::OnKeyDown(int key)
         break;
     case DIK_W:
         if (moveStep == 0) {
-            graph->GetNode(currentStation)->Discover();
+            data->World = graph->GetNode(currentStation)->GetWorldNumber();
+            graph->GetNode(discoverStation = currentStation)->Discover();
         }
         break;
     }
@@ -146,6 +148,20 @@ void TinyMario::OnKeyDown(int key)
     }
 }
 
+void TinyMario::OnKeyUp(int key)
+{
+}
+
 void TinyMario::OnPlaySceneFinish(const char* source, CardType reward)
 {
+    data->Node = discoverStation;
+    graph->GetNode(discoverStation)->SetFinished(true);
+}
+
+void TinyMario::OnPlaySceneLose(const char* source)
+{
+    moveStep = 1;
+    targetPosition = graph->GetNode(data->Node)->GetPosition();
+    targetStation = data->Node;
+    data->World = graph->GetNode(data->Node)->GetWorldNumber();
 }

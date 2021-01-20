@@ -253,6 +253,9 @@
     <Filter Include="MarioGame\Entity\OverworldEntities\Graph">
       <UniqueIdentifier>{536489c5-678a-4f77-af2f-059b63deb1da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\UI\MainUI">
+      <UniqueIdentifier>{d462387a-8691-49cd-8038-749a246cd727}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -633,6 +636,10 @@
     <ClCompile Include="MarioProperties.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Mario</Filter>
     </ClCompile>
+    <ClCompile Include="PlaySceneLoad.cpp">
+      <Filter>MarioGame\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MainUI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -1103,5 +1110,6 @@
     <ClInclude Include="TinyMario.h">
       <Filter>MarioGame\Entity\OverworldEntities\TinyMario</Filter>
     </ClInclude>
+    <ClInclude Include="MainUI.h" />
   </ItemGroup>
 </Project>

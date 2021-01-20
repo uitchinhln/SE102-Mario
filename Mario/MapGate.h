@@ -24,6 +24,10 @@ protected:
 
 	bool start = false;
 
+	bool finish = false;
+
+	int worldNumber = 0;
+
 public:
 	MapGate(int nodeId, string sceneID, string uncheck, string checked);
 
@@ -61,7 +65,13 @@ public:
 
 	virtual void Discover();
 
+
+	virtual bool IsFinished();
+	virtual void SetFinished(bool value);
+
 	
+	virtual int GetWorldNumber();
+
 	virtual bool IsStart();
 
 	virtual int GetNodeId();

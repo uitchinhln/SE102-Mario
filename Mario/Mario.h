@@ -34,8 +34,7 @@ enum class WarpStates {
 
 [event_receiver(native)]
 class Mario : 
-	public GameObject,
-	public enable_shared_from_this<Mario>
+	public GameObject
 {
 private:
 
@@ -83,6 +82,8 @@ public:
 
 public:
 	Mario(shared_ptr<PlayerData> data);
+
+	virtual void Reset() override;
 
 	virtual shared_ptr<PlayerData> GetPlayerData();
 

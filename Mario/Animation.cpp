@@ -13,7 +13,7 @@ CAnimation::CAnimation(int defaultFrameTime)
 	this->frames.clear();
 }
 
-CAnimation::CAnimation(shared_ptr<CAnimation> origin) : CAnimation(origin->defaultFrameTime)
+CAnimation::CAnimation(CAnimation* origin) : CAnimation(origin->defaultFrameTime)
 {
 	this->transform->Position = origin->transform->Position;
 	this->transform->Scale = origin->transform->Scale;
@@ -64,7 +64,7 @@ void CAnimation::Render(int runTime, int totalTime, D3DCOLOR overlay)
 
 shared_ptr<CAnimation> CAnimation::Clone()
 {
-	return make_shared<CAnimation>(shared_from_this());
+	return make_shared<CAnimation>(this);
 }
 
 CAnimation::~CAnimation()

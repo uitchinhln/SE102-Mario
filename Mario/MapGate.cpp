@@ -63,7 +63,12 @@ void MapGate::Render()
 {
 	if (sprites.size() == 2) {
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;
-		this->sprites["Uncheck"]->Draw(Position.x - cam.x + size.x / 2, Position.y - cam.y + size.y / 2, trans);
+		if (!finish) {
+			this->sprites["Uncheck"]->Draw(Position.x - cam.x + size.x / 2, Position.y - cam.y + size.y / 2, trans);
+		}
+		else {
+			this->sprites["Checked"]->Draw(Position.x - cam.x + size.x / 2, Position.y - cam.y + size.y / 2, trans);
+		}
 	}
 }
 
@@ -89,8 +94,23 @@ bool MapGate::CanTravel(shared_ptr<MapGate> currentStation, shared_ptr<PlayerDat
 
 void MapGate::Discover()
 {
-	if (sceneID.empty()) return;
+	if (sceneID.empty() || finish) return;
 	SceneManager::GetInstance()->ActiveScene(sceneID);
+}
+
+bool MapGate::IsFinished()
+{
+	return finish;
+}
+
+void MapGate::SetFinished(bool value)
+{
+	this->finish = value;
+}
+
+int MapGate::GetWorldNumber()
+{
+	return this->worldNumber;
 }
 
 bool MapGate::IsStart()
@@ -129,6 +149,7 @@ shared_ptr<MapGate> MapGate::CreateMapGate(Vec2 pos, MapProperties props)
 	gate->size = Vec2(48, 48);
 	gate->Position = pos;
 	gate->start = props.GetBool("Start", false);
+	gate->worldNumber = props.GetInt("world_number", 0);
 
 	vector<string> adjacents = split(adjacent_list, ",");
 	for (int i = 0; i < adjacents.size(); i++)

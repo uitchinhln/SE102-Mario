@@ -42,6 +42,12 @@ void PlayScene::Load()
 {
 	HookEvent();
 
+	this->mario = SceneManager::GetInstance()->GetPlayer<Mario>();
+	this->mario->HookEvent();
+
+	this->data = mario->GetPlayerData();
+	this->data->RemainingTime = 300000;
+
 	TiXmlDocument doc(this->dataPath.c_str());
 
 	if (!doc.LoadFile()) {
@@ -54,12 +60,6 @@ void PlayScene::Load()
 
 	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
 	string hudPath = root->FirstChildElement("Hud")->Attribute("path");
-
-	this->mario = SceneManager::GetInstance()->GetPlayer<Mario>();
-	this->mario->HookEvent();
-
-	this->data = mario->GetPlayerData();
-	this->data->RemainingTime = 300000;
 
 	this->camera = make_shared<Camera>(camPos, camSize);
 	this->camera->SetTracking(mario);
@@ -95,8 +95,15 @@ void PlayScene::Unload()
 	UnhookEvent();
 	this->mario->UnHookEvent();
 
-	this->finish = false;
-	this->finishEffectTimer = 0;
+	this->finishEffectTimer.Stop();
+	this->finishEffectTimer.Reset();
+
+	this->loseTimer.Stop();
+	this->loseTimer.Reset();
+
+	this->resetTimer.Stop();
+	this->resetTimer.Reset();
+
 	this->pauseGameUpdate = false;
 	this->pauseGameRender = false;
 	this->objectList.clear();
@@ -121,7 +128,7 @@ void PlayScene::Update()
 	camera->Update();
 	hud->Update();
 
-	if (!pauseGameUpdate && !finish) {
+	if (!pauseGameUpdate && !finishEffectTimer.IsRunning() && !loseTimer.IsRunning()) {
 		objectList.clear();
 		grid->GetByCamera(this->camera, this->objects, objectList);
 		objectList.insert(objectList.end(), objectsWithoutGrid.begin(), objectsWithoutGrid.end());
@@ -194,10 +201,9 @@ void PlayScene::Update()
 		this->data->RemainingTime -= CGame::Time().ElapsedGameTime;
 	}
 
-	if (finish) {
-		finishEffectTimer += CGame::Time().ElapsedGameTime;
+	if (finishEffectTimer.IsRunning() && !resetTimer.IsRunning()) {
 
-		if (finishEffectTimer > 2000) {
+		if (finishEffectTimer.Elapsed() > 2000) {
 			if (data->RemainingTime > 0) {
 				int a = CGame::Time().ElapsedGameTime / 4;
 
@@ -206,27 +212,27 @@ void PlayScene::Update()
 				
 				if (data->RemainingTime <= 0) {
 					data->RemainingTime = 0;
-					finishEffectTimer = 100000;
+					resetTimer.Start();
 				};
 			}
-			else {
-				if (finishEffectTimer > 101000) {
-					mario->SetLockController(false);
-					mario->SetVelocity(VECTOR_0);
-					mario->GetDistance() = VECTOR_0;
-					mario->ClearInhand();
-					mario->Visible = true;
-					mario->SetCollidibility(true);
-					mario->SetActive(true);
-					data->Power = mario->GetObjectType();
-
-					if (data->Cards.size() >= 3) data->Cards.clear();
-
-					SceneManager::GetInstance()->ActiveScene("overworld");
-					return;
-				}
-			}
 		}
+	}
+
+	if (loseTimer.IsRunning() && !resetTimer.IsRunning()) {
+		if (loseTimer.Elapsed() >= 2000) {
+			resetTimer.Start();
+		}
+	}
+
+	if (resetTimer.IsRunning() && resetTimer.Elapsed() > 1000) {
+		mario->Reset();
+
+		data->Power = mario->GetObjectType();
+
+		if (data->Cards.size() >= 3) data->Cards.clear();
+
+		SceneManager::GetInstance()->ActiveScene("overworld");
+		return;
 	}
 
 	EffectServer::GetInstance()->Update();
@@ -311,84 +317,16 @@ void PlayScene::OnKeyUp(int key)
 
 void PlayScene::OnPlaySceneFinish(const char* source, CardType reward)
 {
-	finish = true;
+	finishEffectTimer.Start();
 	data->Cards.push_back(reward);
 	EffectServer::GetInstance()->SpawnEffect(make_shared<PlaySceneFinishFX>(Vec2(100, 100), reward));
 }
 
-void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props)
+void PlayScene::OnPlaySceneLose(const char* source)
 {
-	//Player Spawn Point
-	if (strcmp(type, "SpawnPoint") == 0) {
-		RectF marioBox = mario->GetHitBox();
-		mario->SetPosition(fixedPos - Vec2(0, marioBox.bottom - marioBox.top ));
-	}
-
-	//GameObjects
-	if (strcmp(type, MEntityType::Goomba.ToString().c_str()) == 0) {
-		SpawnEntity(Goomba::CreateGoomba(fixedPos), props);
-	}
-	if (strcmp(type, MEntityType::RedGoomba.ToString().c_str()) == 0) {
-		SpawnEntity(RedGoomba::CreateRedGoomba(fixedPos), props);
-	}
-	if (strcmp(type, MEntityType::Koopas.ToString().c_str()) == 0) {
-		SpawnEntity(Koopas::CreateKoopas(fixedPos), props);
-	}
-	if (strcmp(type, MEntityType::KoopasJumping.ToString().c_str()) == 0) {
-		shared_ptr<Koopas> kp = Koopas::CreateKoopas(fixedPos);
-		kp->SetPower(make_shared<JumpingKoopas>(kp));
-		SpawnEntity(kp, props);
-	}
-	if (strcmp(type, MEntityType::RedKoopas.ToString().c_str()) == 0) {
-		shared_ptr<Koopas> kp = Koopas::CreateKoopas(fixedPos);
-		kp->SetPower(make_shared<DefRedKoopas>(kp));
-		SpawnEntity(kp, props);
-	}
-	if (strcmp(type, MEntityType::Venus.ToString().c_str()) == 0) {
-		SpawnEntity(Venus::CreateVenus(fixedPos), props);
-	}
-	if (strcmp(type, MEntityType::RedVenus.ToString().c_str()) == 0) {
-		SpawnEntity(RedVenus::CreateRedVenus(fixedPos), props);
-	}
-	if (strcmp(type, MEntityType::Piranha.ToString().c_str()) == 0) {
-		SpawnEntity(Piranha::CreatePiranha(fixedPos), props);
-	}
-	if (strcmp(type, MEntityType::EndmapReward.ToString().c_str()) == 0) {
-		SpawnEntity(EndmapReward::CreateEndmapReward(fixedPos), props);
-	}
-	if (strcmp(type, MEntityType::QuestionBlock.ToString().c_str()) == 0) {
-		SpawnEntity(QuestionBlock::CreateQuestionBlock(fixedPos, props), props);
-	}
-	if (strcmp(type, MEntityType::Spawner.ToString().c_str()) == 0) {
-		SpawnEntity(Spawner::CreateSpawner(fixedPos, props), props);
-	}
-	if (strcmp(type, MEntityType::Pipe.ToString().c_str()) == 0) {
-		SpawnEntity(Pipe::CreatePipe(fixedPos, size, props), props);
-	}
-	if (strcmp(type, MEntityType::Coin.ToString().c_str()) == 0) {
-		SpawnEntity(Coin::CreateCoin(fixedPos, CoinState::COIN), props);
-	}
-	if (strcmp(type, MEntityType::Brick.ToString().c_str()) == 0) {
-		SpawnEntity(Coin::CreateCoin(fixedPos, CoinState::BRICK), props);
-	}
-
-	//MapObjects
-	if (strcmp(type, MEntityType::BeginPortal.ToString().c_str()) == 0) {
-		SpawnEntity(BeginPortal::CreatePortal(fixedPos, size, props), props);
-	}
-	if (strcmp(type, MEntityType::EndPortal.ToString().c_str()) == 0) {
-		SpawnEntity(EndPortal::CreatePortal(fixedPos, size, props), props);
-	}
-	if (strcmp(type, MEntityType::SolidBlock.ToString().c_str()) == 0) {
-		SpawnEntity(SolidBlock::CreateSolidBlock(fixedPos, size), props);
-	}
-	if (strcmp(type, MEntityType::GhostBlock.ToString().c_str()) == 0) {
-		SpawnEntity(GhostBlock::CreateGhostBlock(fixedPos, size), props);
-	}
-	if (strcmp(type, MEntityType::VoidBlock.ToString().c_str()) == 0) {
-		SpawnEntity(VoidBlock::CreateVoidBlock(fixedPos, size), props);
-	}
+	loseTimer.Start();
 }
+
 
 void PlayScene::SetSceneContentPath(string path)
 {
@@ -425,6 +363,7 @@ void PlayScene::HookEvent()
 	__hook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
 	__hook(&Events::MapReadEvent, Events::GetInstance(), &PlayScene::MapReadEvent);
 	__hook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &PlayScene::OnPlaySceneFinish);
+	__hook(&GameEvent::PlaySceneLoseEvent, GameEvent::GetInstance(), &PlayScene::OnPlaySceneLose);
 }
 
 void PlayScene::UnhookEvent()
@@ -432,4 +371,5 @@ void PlayScene::UnhookEvent()
 	__unhook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
 	__unhook(&Events::MapReadEvent, Events::GetInstance(), &PlayScene::MapReadEvent);
 	__unhook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &PlayScene::OnPlaySceneFinish);
+	__unhook(&GameEvent::PlaySceneLoseEvent, GameEvent::GetInstance(), &PlayScene::OnPlaySceneLose);
 }

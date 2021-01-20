@@ -15,6 +15,7 @@ public:
 	__event void PlayerScoreEvent(const char* source, shared_ptr<IEffect>& effect, Score score);
 	__event void PlayerCoinEvent(const char* source, int value);
 	__event void PlaySceneFinishEvent(const char* source, CardType reward);
+	__event void PlaySceneLoseEvent(const char* source);
 
 	static GameEvent* GetInstance();
 };

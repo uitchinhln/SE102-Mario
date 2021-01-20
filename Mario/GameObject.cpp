@@ -10,6 +10,29 @@ GameObject::GameObject()
 	InitResource();
 }
 
+void GameObject::Reset()
+{
+	active = true;
+
+	collidable = true;
+
+	facing = 1;
+	renderOrder = 1000;
+
+	Gravity = 0;
+
+	Position = VECTOR_0;
+
+	Velocity = VECTOR_0;
+
+	Distance = VECTOR_0;
+	UpdatedDistance = VECTOR_0;
+
+	Visible = true;
+
+	GetInCamera = false;
+}
+
 DWORD GameObject::GetID()
 {
 	return id;

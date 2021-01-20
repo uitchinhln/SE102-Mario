@@ -181,6 +181,7 @@
     <ClCompile Include="JumpingRedGoomba.cpp" />
     <ClCompile Include="Koopas.cpp" />
     <ClCompile Include="KoopasDieFX.cpp" />
+    <ClCompile Include="MainUI.cpp" />
     <ClCompile Include="MapBlock.cpp" />
     <ClCompile Include="MapGate.cpp" />
     <ClCompile Include="MapProperties.cpp" />
@@ -222,6 +223,7 @@
     <ClCompile Include="PlayerData.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="PlaySceneFinishFX.cpp" />
+    <ClCompile Include="PlaySceneLoad.cpp" />
     <ClCompile Include="PMeter.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="PSwitch.cpp" />
@@ -309,6 +311,7 @@
     <ClInclude Include="JumpingRedGoomba.h" />
     <ClInclude Include="Koopas.h" />
     <ClInclude Include="KoopasDieFX.h" />
+    <ClInclude Include="MainUI.h" />
     <ClInclude Include="MapBlock.h" />
     <ClInclude Include="MapGate.h" />
     <ClInclude Include="MapProperties.h" />
