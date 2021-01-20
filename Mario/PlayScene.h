@@ -24,15 +24,17 @@ public:
 
 	virtual vector<shared_ptr<GameObject>> GetUpdatingObjects() override;
 
-	virtual void OnKeyDown(int key) override;
-
-	virtual void OnKeyUp(int key) override;
-
 	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
 
 	virtual void SetSceneContentPath(string path) override;
 
 	virtual void MapReadEvent(MapProperties& props);
+
+	virtual void OnKeyDown(int key) override;
+
+	virtual void OnKeyUp(int key) override;
+
+	virtual void OnPlaySceneFinish(const char* source, CardType reward);
 
 	~PlayScene();
 protected:
@@ -49,6 +51,9 @@ protected:
 
 	Vec2 hudPos = Vec2(0, 579);
 	Vec2 hudSize = Vec2(769, 142);
+
+	bool finish = false;
+	long finishEffectTimer = 0;
 
 	virtual void HookEvent();
 

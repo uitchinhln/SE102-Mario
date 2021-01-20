@@ -12,6 +12,8 @@ protected:
 
 public:
 
+    virtual void Init();
+
     virtual void Add(Vec2 pos, Vec2 size);
 
     virtual void Update() override;

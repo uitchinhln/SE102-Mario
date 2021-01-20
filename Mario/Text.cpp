@@ -3,7 +3,7 @@
 Text::Text()
 {
 	font = nullptr;
-	spacing = 3;
+	spacing = 0;
 	alignment = TextAlignment::Right;
 }
 
@@ -20,9 +20,10 @@ void Text::Render()
 	for each (char letter in content)
 	{
 		if (letter == ' ') {
-			textWidth += spacing;
+			textWidth += font->GetSpaceWidth();
 			continue;
 		}
+		textWidth += spacing;
 		textWidth += font->GetChar(letter)->width;
 	}
 
@@ -39,7 +40,7 @@ void Text::Render()
 	for each (char letter in content)
 	{
 		if (letter == ' ') {
-			currentX += spacing;
+			currentX += font->GetSpaceWidth();
 			continue;
 		}
 		
@@ -49,7 +50,7 @@ void Text::Render()
 
 		c->Draw(currentX + c->width / 2, Position.y + Size.y - c->height / 2, trans);
 
-		currentX += c->width;
+		currentX += c->width + spacing;
 	}
 }
 

@@ -12,7 +12,9 @@ PlayerData::PlayerData()
 
 	RemainingTime = 0;
 
-	World = 1;
+	World = 0;
+
+	Node = -1;
 
 	PMeter = 0;
 }

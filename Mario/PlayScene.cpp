@@ -7,6 +7,7 @@
 #include "SceneManager.h"
 #include "RaccoonMario.h"
 #include "Events.h"
+#include "GameEvent.h"
 #include "EffectServer.h"
 
 #include "Goomba.h"
@@ -33,6 +34,7 @@
 #include "EndPortal.h"
 
 #include "rapidjson/document.h"
+#include "PlaySceneFinishFX.h"
 
 using namespace rapidjson;
 
@@ -54,8 +56,7 @@ void PlayScene::Load()
 	string hudPath = root->FirstChildElement("Hud")->Attribute("path");
 
 	this->mario = SceneManager::GetInstance()->GetPlayer<Mario>();
-	this->mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
-	this->mario->SetPowerUp(make_shared<Small>(mario));
+	this->mario->HookEvent();
 
 	this->data = mario->GetPlayerData();
 	this->data->RemainingTime = 300000;
@@ -68,6 +69,8 @@ void PlayScene::Load()
 	this->gameMap = CGameMap::FromTMX(mapPath);
 	this->gameMap->SetCamera(camera);
 
+	Vec2 mapBound = gameMap->GetBound();
+	this->mario->MovingBound = RectF(0, -mapBound.y, mapBound.x, mapBound.y);
 
 	float left = 0, top = 0, bottom = 0, right = 0;
 	int startId = 0, id = 0;
@@ -90,14 +93,23 @@ void PlayScene::Load()
 void PlayScene::Unload()
 {
 	UnhookEvent();
-	objectList.clear();
-	if (grid)
-		grid->ClearAll();
-	objects.clear();
-	objectsWithoutGrid.clear();
-	camera.reset();
-	hud.reset();
-	gameMap.reset();
+	this->mario->UnHookEvent();
+
+	this->finish = false;
+	this->finishEffectTimer = 0;
+	this->pauseGameUpdate = false;
+	this->pauseGameRender = false;
+	this->objectList.clear();
+	this->objects.clear();
+	this->objectsWithoutGrid.clear();
+
+	if (grid) grid->ClearAll();
+
+	this->camera.reset();
+	this->hud.reset();
+	this->gameMap.reset();
+
+	EffectServer::GetInstance()->Clear();
 }
 
 void PlayScene::Update()
@@ -106,76 +118,117 @@ void PlayScene::Update()
 	
 	RectF camBox = camera->GetBoundingBox();
 
-	objectList.clear();
-	grid->GetByCamera(this->camera, this->objects, objectList);
-	objectList.insert(objectList.end(), objectsWithoutGrid.begin(), objectsWithoutGrid.end());
-
-	gameMap->Update();
-
-	mario->Update();
-
-	for (shared_ptr<GameObject> obj : objectList) {
-		obj->Update();
-	}
-
-	vector<shared_ptr<GameObject>> objs;
-	objs.clear();
-	objs.insert(objs.end(), objectList.begin(), objectList.end());
-	mario->CollisionUpdate(&objs);	
-
-	#pragma region CollisionUpdate
-	objs.push_back(this->mario);
-	for (shared_ptr<GameObject> obj : objectList) {
-		obj->CollisionUpdate(&objs);
-	}
-
-	mario->CollisionDoubleFilter();
-	for (shared_ptr<GameObject> obj : objectList) {
-		obj->CollisionDoubleFilter();
-	}
-
-	mario->PositionUpdate();
-	for (shared_ptr<GameObject> obj : objectList) {
-		obj->PositionUpdate();
-	}
-
-	mario->RestoreCollision();
-	for (shared_ptr<GameObject> obj : objectList) {
-		obj->RestoreCollision();
-	}
-
-	mario->PositionLateUpdate();
-	for (shared_ptr<GameObject> obj : objectList) {
-		obj->PositionLateUpdate();
-	}
-	#pragma endregion
-
-	mario->StatusUpdate();
-	for (shared_ptr<GameObject> obj : objectList) {
-		obj->StatusUpdate();
-	}
-
-	mario->FinalUpdate();
-	for (shared_ptr<GameObject> obj : objectList) {
-		obj->FinalUpdate();
-
-		RectF objBox = obj->GetHitBox();
-		if (!CollisionCalculator::CommonAABB(camBox, objBox)) {
-			if (obj->GetInCamera) obj->OnLostCamera();
-			obj->GetInCamera = false;
-		}
-		else {
-			if (!obj->GetInCamera) obj->OnGetInCamera();
-			obj->GetInCamera = true;
-		}
-	}
-	
-	RemoveDespawnedObjects();
-
-	this->data->RemainingTime -= CGame::Time().ElapsedGameTime;
-
 	camera->Update();
 	hud->Update();
+
+	if (!pauseGameUpdate && !finish) {
+		objectList.clear();
+		grid->GetByCamera(this->camera, this->objects, objectList);
+		objectList.insert(objectList.end(), objectsWithoutGrid.begin(), objectsWithoutGrid.end());
+
+		gameMap->Update();
+
+		mario->Update();
+
+		for (shared_ptr<GameObject> obj : objectList) {
+			obj->Update();
+		}
+
+		vector<shared_ptr<GameObject>> objs;
+		objs.clear();
+		objs.insert(objs.end(), objectList.begin(), objectList.end());
+
+		mario->CollisionUpdate(&objs);
+
+		#pragma region CollisionUpdate
+
+		objs.push_back(this->mario);
+		for (shared_ptr<GameObject> obj : objectList) {
+			obj->CollisionUpdate(&objs);
+		}
+
+		mario->CollisionDoubleFilter();
+		for (shared_ptr<GameObject> obj : objectList) {
+			obj->CollisionDoubleFilter();
+		}
+
+		mario->PositionUpdate();
+		for (shared_ptr<GameObject> obj : objectList) {
+			obj->PositionUpdate();
+		}
+
+		mario->RestoreCollision();
+		for (shared_ptr<GameObject> obj : objectList) {
+			obj->RestoreCollision();
+		}
+
+		mario->PositionLateUpdate();
+		for (shared_ptr<GameObject> obj : objectList) {
+			obj->PositionLateUpdate();
+		}
+
+		#pragma endregion
+
+		mario->StatusUpdate();
+		for (shared_ptr<GameObject> obj : objectList) {
+			obj->StatusUpdate();
+		}
+
+		mario->FinalUpdate();
+		for (shared_ptr<GameObject> obj : objectList) {
+			obj->FinalUpdate();
+
+			RectF objBox = obj->GetHitBox();
+			if (!CollisionCalculator::CommonAABB(camBox, objBox)) {
+				if (obj->GetInCamera) obj->OnLostCamera();
+				obj->GetInCamera = false;
+			}
+			else {
+				if (!obj->GetInCamera) obj->OnGetInCamera();
+				obj->GetInCamera = true;
+			}
+		}
+
+		RemoveDespawnedObjects();
+
+		this->data->RemainingTime -= CGame::Time().ElapsedGameTime;
+	}
+
+	if (finish) {
+		finishEffectTimer += CGame::Time().ElapsedGameTime;
+
+		if (finishEffectTimer > 2000) {
+			if (data->RemainingTime > 0) {
+				int a = CGame::Time().ElapsedGameTime / 4;
+
+				data->RemainingTime -= 1000 * a;
+				data->Score += 50 * a;
+				
+				if (data->RemainingTime <= 0) {
+					data->RemainingTime = 0;
+					finishEffectTimer = 100000;
+				};
+			}
+			else {
+				if (finishEffectTimer > 101000) {
+					mario->SetLockController(false);
+					mario->SetVelocity(VECTOR_0);
+					mario->GetDistance() = VECTOR_0;
+					mario->ClearInhand();
+					mario->Visible = true;
+					mario->SetCollidibility(true);
+					mario->SetActive(true);
+					data->Power = mario->GetObjectType();
+
+					if (data->Cards.size() >= 3) data->Cards.clear();
+
+					SceneManager::GetInstance()->ActiveScene("overworld");
+					return;
+				}
+			}
+		}
+	}
+
 	EffectServer::GetInstance()->Update();
 
 	//auto finish = std::chrono::high_resolution_clock::now();
@@ -189,19 +242,21 @@ void PlayScene::Render()
 	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));	
 	CGame::GetInstance()->GetGraphic().SetViewport(camera);
 
-	gameMap->Render();
-	vector<shared_ptr<GameObject>> renderObjects;
-	renderObjects.insert(renderObjects.end(), objectList.begin(), objectList.end());
-	renderObjects.push_back(mario);
+	if (!pauseGameRender) {
+		gameMap->Render();
+		vector<shared_ptr<GameObject>> renderObjects;
+		renderObjects.insert(renderObjects.end(), objectList.begin(), objectList.end());
+		renderObjects.push_back(mario);
 
-	sort(renderObjects.begin(), renderObjects.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
-		return a->GetRenderOrder() < b->GetRenderOrder();
-	});
+		sort(renderObjects.begin(), renderObjects.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
+			return a->GetRenderOrder() < b->GetRenderOrder();
+			});
 
-	for each (shared_ptr<GameObject> obj in renderObjects)
-	{
-		if (obj->Visible && obj->IsActive()) obj->Render();
-		obj->RenderTestBox();
+		for each (shared_ptr<GameObject> obj in renderObjects)
+		{
+			if (obj->Visible && obj->IsActive()) obj->Render();
+			obj->RenderTestBox();
+		}
 	}
 
 	EffectServer::GetInstance()->Render();
@@ -254,12 +309,19 @@ void PlayScene::OnKeyUp(int key)
 	mario->OnKeyUp(key);
 }
 
+void PlayScene::OnPlaySceneFinish(const char* source, CardType reward)
+{
+	finish = true;
+	data->Cards.push_back(reward);
+	EffectServer::GetInstance()->SpawnEffect(make_shared<PlaySceneFinishFX>(Vec2(100, 100), reward));
+}
+
 void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props)
 {
 	//Player Spawn Point
 	if (strcmp(type, "SpawnPoint") == 0) {
 		RectF marioBox = mario->GetHitBox();
-		mario->SetPosition(fixedPos - Vec2(0, marioBox.bottom - marioBox.top));
+		mario->SetPosition(fixedPos - Vec2(0, marioBox.bottom - marioBox.top ));
 	}
 
 	//GameObjects
@@ -362,10 +424,12 @@ void PlayScene::HookEvent()
 {
 	__hook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
 	__hook(&Events::MapReadEvent, Events::GetInstance(), &PlayScene::MapReadEvent);
+	__hook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &PlayScene::OnPlaySceneFinish);
 }
 
 void PlayScene::UnhookEvent()
 {
 	__unhook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
 	__unhook(&Events::MapReadEvent, Events::GetInstance(), &PlayScene::MapReadEvent);
+	__unhook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &PlayScene::OnPlaySceneFinish);
 }

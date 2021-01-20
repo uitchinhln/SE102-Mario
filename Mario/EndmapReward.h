@@ -47,6 +47,8 @@ protected:
 
 	CardType state;
 
+	int step = 0;
+
 	Stopwatch stateTimer;
 
 	float FLY_UP_SPEED = 0.27f;

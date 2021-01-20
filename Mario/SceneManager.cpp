@@ -12,6 +12,10 @@ bool SceneManager::ActiveScene(string id)
 {
 	if (scenes.find(id) == scenes.end()) return false;
 
+	if (GetActiveScene() != nullptr) {
+		GetActiveScene()->Unload();
+	}
+	
 	activeSceneID = id;
 	auto start = std::chrono::high_resolution_clock::now();
 	GetActiveScene()->Load();

@@ -235,6 +235,24 @@
     <Filter Include="MarioGame\UI\Components\HudComponents">
       <UniqueIdentifier>{8dfb432e-f2a3-4aba-8457-14a5d84ae78b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Effects\TriggerEffects\PlaySceneFinish">
+      <UniqueIdentifier>{f5307416-02db-4a6d-ad66-9720115ed53f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\OverworldEffects">
+      <UniqueIdentifier>{38e20642-a057-4614-a8c8-38a89e9144fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\OverworldEntities">
+      <UniqueIdentifier>{3c589522-bf48-46b6-bc89-2d6057122c2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\OverworldEntities\Gate">
+      <UniqueIdentifier>{5815910d-f460-4db8-a24e-2b66ed3491d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\OverworldEntities\TinyMario">
+      <UniqueIdentifier>{850348b1-4a9b-44e8-ade7-43fb515635de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\OverworldEntities\Graph">
+      <UniqueIdentifier>{536489c5-678a-4f77-af2f-059b63deb1da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -590,6 +608,30 @@
     </ClCompile>
     <ClCompile Include="PMeter.cpp">
       <Filter>MarioGame\UI\Components\HudComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySceneFinishFX.cpp">
+      <Filter>MarioGame\Effects\TriggerEffects\PlaySceneFinish</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeFX.cpp">
+      <Filter>MarioGame\Effects\OverworldEffects</Filter>
+    </ClCompile>
+    <ClCompile Include="MapGate.cpp">
+      <Filter>MarioGame\Entity\OverworldEntities\Gate</Filter>
+    </ClCompile>
+    <ClCompile Include="Graph.cpp">
+      <Filter>MarioGame\Entity\OverworldEntities\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyMario.cpp">
+      <Filter>MarioGame\Entity\OverworldEntities\TinyMario</Filter>
+    </ClCompile>
+    <ClCompile Include="TinyMarioOverride.cpp">
+      <Filter>MarioGame\Entity\OverworldEntities\TinyMario</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioRaycast.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioProperties.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1045,6 +1087,21 @@
     </ClInclude>
     <ClInclude Include="PMeter.h">
       <Filter>MarioGame\UI\Components\HudComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaySceneFinishFX.h">
+      <Filter>MarioGame\Effects\TriggerEffects\PlaySceneFinish</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeFX.h">
+      <Filter>MarioGame\Effects\OverworldEffects</Filter>
+    </ClInclude>
+    <ClInclude Include="MapGate.h">
+      <Filter>MarioGame\Entity\OverworldEntities\Gate</Filter>
+    </ClInclude>
+    <ClInclude Include="Graph.h">
+      <Filter>MarioGame\Entity\OverworldEntities\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="TinyMario.h">
+      <Filter>MarioGame\Entity\OverworldEntities\TinyMario</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

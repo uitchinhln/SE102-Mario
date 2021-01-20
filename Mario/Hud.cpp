@@ -38,7 +38,11 @@ void Hud::Update()
 	pmeter->Update();
 
 	long time = data->RemainingTime / 1000;
-	timer->SetContent(to_string(time));
+	string txtTime = to_string(time);
+	if (txtTime.length() < 3) {
+		txtTime.insert(0, 3 - txtTime.size(), '0');
+	}
+	timer->SetContent(txtTime);
 
 	coin->SetContent(to_string(data->Coins));
 
@@ -47,7 +51,9 @@ void Hud::Update()
 	live->SetContent(to_string(data->Lives));
 
 	string txtScore = to_string(data->Score);
-	txtScore.insert(0, 7 - txtScore.size(), '0');
+	if (txtScore.length() < 7) {
+		txtScore.insert(0, 7 - txtScore.size(), '0');
+	}
 	score->SetContent(txtScore);
 }
 
@@ -107,6 +113,7 @@ void Hud::LoadFromTmx(string tmxPath)
 			}
 			if (strcmp(node->Attribute("type"), HudElement::CardSlot.ToString().c_str()) == 0) {
 				cards.Add(fixPos, size);
+				cards.Init();
 				continue;
 			}
 			if (strcmp(node->Attribute("type"), HudElement::Wallet.ToString().c_str()) == 0) {

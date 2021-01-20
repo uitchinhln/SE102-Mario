@@ -51,6 +51,10 @@ const ObjectType MEntityType::Brick = ObjectType::CreateObjectType(10012, "Brick
 const ObjectType MEntityType::BeginPortal = ObjectType::CreateObjectType(20011, "BeginPortal");
 const ObjectType MEntityType::EndPortal = ObjectType::CreateObjectType(20012, "EndPortal");
 
+const ObjectType MEntityType::TinyMario = ObjectType::CreateObjectType(30001, "TinyMario");
+const ObjectType MEntityType::Tree = ObjectType::CreateObjectType(30002, "Tree");
+const ObjectType MEntityType::Node = ObjectType::CreateObjectType(30003, "Node");
+
 bool MEntityType::IsTile(ObjectType type)
 {
     bool normalTile = type == DEFAULT_TILE_ID;

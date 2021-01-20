@@ -5,6 +5,7 @@
 #include "Mario.h"
 #include "CardFX.h"
 #include "EffectServer.h"
+#include "GameEvent.h"
 
 EndmapReward::EndmapReward()
 {
@@ -60,10 +61,13 @@ void EndmapReward::StatusUpdate()
 		this->holder = mario;
 		this->holder->SetLockController(true);
 		this->holder->SetFacing(1);
+		this->holder->MovingBound.right += 70;
 
 		this->stateTimer.Stop();
 		Velocity = VECTOR_0;
 		Visible = false;
+
+		step = 1;
 
 		EffectServer::GetInstance()->SpawnEffect(make_shared<CardFX>(Position, Vec2(0, -FLY_UP_SPEED), state));
 	}
@@ -77,6 +81,17 @@ void EndmapReward::StatusUpdate()
 			holder->SetVelocity(Vec2(0, FLY_UP_SPEED * 2));
 			holder->SetJumpingState(JumpingStates::FALLING);
 		}
+	}
+
+	if (step == 1) {
+		if (!collisionCal->AABB(holder->GetHitBox(), SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox())) {
+			holder->Visible = false;
+			step = 2;
+		}
+	}
+	if (step == 2) {
+		__raise (*GameEvent::GetInstance()).PlaySceneFinishEvent(__FILE__, state);
+		step = 3;
 	}
 }
 

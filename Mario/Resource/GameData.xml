@@ -37,25 +37,9 @@
         </Animations>
     </Resources>
     <GameContent>
-        <Scenes start="demo0">
-            <Scene id="demo0" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo01" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo02" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo03" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo04" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo05" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo06" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo07" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo0a" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo0xxas" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo0a" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo0asx" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo0afvd" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo0sdfv" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo0sfdv" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demo0asdc" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demasdcaso0" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
-            <Scene id="demascaso0" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
+        <Scenes start="overworld">
+            <Scene id="overworld" type="WorldScene" path="Resource/Scenes/Overworld.xml"/>
+            <Scene id="world-1-1" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>
         </Scenes>
     </GameContent>
 </Game>

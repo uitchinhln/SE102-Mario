@@ -54,7 +54,7 @@ void Camera::TrackingUpdate()
 		RectF targetBound = obj->GetHitBox();
 		float avgY = (targetBound.top + targetBound.bottom - this->d3dvp.Height) / 2;
 
-		Position.x = (targetBound.left + targetBound.right - this->d3dvp.Width) / 2;
+		Position.x = (targetBound.left - this->d3dvp.Width / 2);
 		Position.y = min(avgY + this->d3dvp.Height / 4, max(Position.y, avgY - this->d3dvp.Height / 4));
 
 		Vec2 camSize = GetCamSize();

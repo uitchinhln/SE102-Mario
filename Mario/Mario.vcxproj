@@ -89,10 +89,8 @@
       <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_UNICODE;UNICODE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>false</ConformanceMode>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <DisableSpecificWarnings>4005;4996;4244;4018;4305;4101;4715;4067; 26495;</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -169,6 +167,7 @@
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="GoombaDieFX.cpp" />
     <ClCompile Include="GoombaExplodeFX.cpp" />
+    <ClCompile Include="Graph.cpp" />
     <ClCompile Include="GreenMushroom.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GrowUpFX.cpp" />
@@ -183,10 +182,13 @@
     <ClCompile Include="Koopas.cpp" />
     <ClCompile Include="KoopasDieFX.cpp" />
     <ClCompile Include="MapBlock.cpp" />
+    <ClCompile Include="MapGate.cpp" />
     <ClCompile Include="MapProperties.cpp" />
     <ClCompile Include="MarioDeathFX.cpp" />
     <ClCompile Include="MarioFireBall.cpp" />
     <ClCompile Include="MarioFX.cpp" />
+    <ClCompile Include="MarioProperties.cpp" />
+    <ClCompile Include="MarioRaycast.cpp" />
     <ClCompile Include="MarioTailed.cpp" />
     <ClCompile Include="HitStarFX.cpp" />
     <ClCompile Include="MarioUtils.cpp" />
@@ -219,6 +221,7 @@
     <ClCompile Include="Piranha.cpp" />
     <ClCompile Include="PlayerData.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="PlaySceneFinishFX.cpp" />
     <ClCompile Include="PMeter.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="PSwitch.cpp" />
@@ -250,12 +253,15 @@
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="GameTime.cpp" />
+    <ClCompile Include="TinyMario.cpp" />
+    <ClCompile Include="TinyMarioOverride.cpp" />
     <ClCompile Include="TinyXML\tinystr.cpp" />
     <ClCompile Include="TinyXML\tinyxml.cpp" />
     <ClCompile Include="TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TransformFX.cpp" />
+    <ClCompile Include="TreeFX.cpp" />
     <ClCompile Include="UIComponents.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vec2Utils.cpp" />
@@ -289,6 +295,7 @@
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="GoombaDieFX.h" />
     <ClInclude Include="GoombaExplodeFX.h" />
+    <ClInclude Include="Graph.h" />
     <ClInclude Include="GreenMushroom.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GrowUpFX.h" />
@@ -303,6 +310,7 @@
     <ClInclude Include="Koopas.h" />
     <ClInclude Include="KoopasDieFX.h" />
     <ClInclude Include="MapBlock.h" />
+    <ClInclude Include="MapGate.h" />
     <ClInclude Include="MapProperties.h" />
     <ClInclude Include="MarioDeathFX.h" />
     <ClInclude Include="MarioFireBall.h" />
@@ -339,6 +347,7 @@
     <ClInclude Include="Piranha.h" />
     <ClInclude Include="PlayerData.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="PlaySceneFinishFX.h" />
     <ClInclude Include="PMeter.h" />
     <ClInclude Include="Portal.h" />
     <ClInclude Include="PSwitch.h" />
@@ -405,10 +414,12 @@
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="GameTime.h" />
+    <ClInclude Include="TinyMario.h" />
     <ClInclude Include="TinyXML\tinystr.h" />
     <ClInclude Include="TinyXML\tinyxml.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TransformFX.h" />
+    <ClInclude Include="TreeFX.h" />
     <ClInclude Include="UIComponents.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vec2Utils.h" />

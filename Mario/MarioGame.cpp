@@ -5,6 +5,8 @@
 #include "SceneManager.h"
 #include "PlayScene.h"
 #include "Mario.h"
+#include "Small.h"
+#include "WorldScene.h"
 
 void MarioGame::LoadDefaultFont()
 {
@@ -28,7 +30,10 @@ void MarioGame::LoadResources()
 {
 	TiXmlDocument doc("Resource/GameData.xml");
 
-	SceneManager::GetInstance()->SetPlayer(make_shared<Mario>(make_shared<PlayerData>()));
+	shared_ptr<Mario> mario = make_shared<Mario>(make_shared<PlayerData>());
+	SceneManager::GetInstance()->SetPlayer(mario);
+	mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
+	mario->SetPowerUp(make_shared<Small>(mario));
 
 	if (doc.LoadFile()) {
 		TiXmlElement* root = doc.RootElement();
@@ -60,8 +65,15 @@ void MarioGame::LoadResources()
 			string type = node->Attribute("type");
 			string path = node->Attribute("path");
 
-			if (type == "PlayScene") {
+			if (type.compare("PlayScene") == 0) {
 				shared_ptr<PlayScene> scene = make_shared<PlayScene>();
+				scene->SetSceneContentPath(path);
+
+				SceneManager::GetInstance()->AddScene(id, scene);
+			}
+
+			if (type.compare("WorldScene") == 0) {
+				shared_ptr<WorldScene> scene = make_shared<WorldScene>();
 				scene->SetSceneContentPath(path);
 
 				SceneManager::GetInstance()->AddScene(id, scene);
@@ -84,7 +96,6 @@ void MarioGame::Draw()
 {
 	SceneManager::GetInstance()->Render();
 }
-
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {

@@ -25,12 +25,12 @@ void CardSlot::SetCard(CardType type, long flickDuration, long delay)
 
 void CardSlot::SetAndAutoFlick(CardType type, long flickDuration, long delay)
 {
-	if (type == this->cardType) return;
-	if (type == CardType::Empty) {
-		this->SetCard(type);
-		return;
+	if (this->cardType != type && type != CardType::Empty) {
+		this->SetCard(type, flickDuration, delay);
 	}
-	this->SetCard(type, flickDuration, delay);
+	else {
+		this->cardType = type;
+	}
 }
 
 void CardSlot::InitResource()

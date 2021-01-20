@@ -37,6 +37,11 @@ void EffectServer::SpawnEffect(shared_ptr<IEffect> effect)
 	}
 }
 
+void EffectServer::Clear()
+{
+	this->effects.clear();
+}
+
 EffectServer* EffectServer::GetInstance()
 {
 	if (__instance == nullptr) {

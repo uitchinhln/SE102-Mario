@@ -6,18 +6,20 @@ class EffectServer
 {
 private:
 	static EffectServer* __instance;
-	EffectServer();
 
 protected:
 	vector<shared_ptr<IEffect>> effects;
 
 public:
+	EffectServer();
 
 	void Update();
 
 	void Render();
 
 	void SpawnEffect(shared_ptr<IEffect> effect);
+
+	void Clear();
 
 	static EffectServer* GetInstance();
 };

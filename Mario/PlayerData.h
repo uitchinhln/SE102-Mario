@@ -23,6 +23,8 @@ public:
 
 	int World;
 
+	int Node;
+
 	int RemainingTime;
 
 	float PMeter;

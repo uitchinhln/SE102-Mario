@@ -78,9 +78,8 @@ protected:
 
 	shared_ptr<PlayerData> data;
 
-	virtual void HookEvent();
-
-	virtual void UnHookEvent();
+public:
+	RectF MovingBound;
 
 public:
 	Mario(shared_ptr<PlayerData> data);
@@ -172,6 +171,12 @@ public:
 	bool IsGetThrough(GameObject& object, Direction direction) override;
 
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
+
+
+
+	virtual void HookEvent();
+
+	virtual void UnHookEvent();
 
 
 

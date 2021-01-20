@@ -53,6 +53,10 @@ public:
 	static const ObjectType BeginPortal;
 	static const ObjectType EndPortal;
 
+	static const ObjectType TinyMario;
+	static const ObjectType Tree;
+	static const ObjectType Node;
+
 	static bool IsTile(ObjectType);
 
 	static bool IsMario(ObjectType);
