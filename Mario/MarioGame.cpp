@@ -81,6 +81,7 @@ void MarioGame::LoadResources()
 
 		this->main->CreateHUD(root->FirstChildElement("GameContent")->FirstChildElement("Hud"));
 
+		string startId = scenes->Attribute("start");
 		for (TiXmlElement* node = scenes->FirstChildElement("Scene"); node != NULL; node = node->NextSiblingElement("Scene")) {
 			string id = node->Attribute("id");
 			string type = node->Attribute("type");
@@ -91,6 +92,10 @@ void MarioGame::LoadResources()
 				scene->SetSceneContentPath(path);
 
 				SceneManager::GetInstance()->AddScene(id, scene);
+
+				if (startId.compare(id) == 0) {
+					state = GameState::WORLD_START;
+				}
 			}
 
 			if (type.compare("WorldScene") == 0) {
@@ -98,6 +103,10 @@ void MarioGame::LoadResources()
 				scene->SetSceneContentPath(path);
 
 				SceneManager::GetInstance()->AddScene(id, scene);
+
+				if (startId.compare(id) == 0) {
+					state = GameState::GAME_WORLDMAP;
+				}
 			}
 
 			if (type.compare("IntroScene") == 0) {
@@ -105,9 +114,12 @@ void MarioGame::LoadResources()
 				scene->SetSceneContentPath(path);
 
 				SceneManager::GetInstance()->AddScene(id, scene);
+
+				if (startId.compare(id) == 0) {
+					state = GameState::GAME_INTRO;
+				}
 			}
 		}
-		string startId = scenes->Attribute("start");
 		SceneManager::GetInstance()->ActiveScene(startId);
 
 		doc.Clear();
