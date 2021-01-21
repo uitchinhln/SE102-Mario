@@ -5,6 +5,7 @@
 
 class PlayerData;
 
+[event_receiver(native)]
 class FightProcessor
 {
 protected:
@@ -19,6 +20,6 @@ public:
 
 	void OnEnemyDamaged(const char* file, DamgeSource source, Vec2 Position, ObjectType& victimType);
 
-	void OnPlaySceneEnd(const char* file, SceneResult result, CardType reward);
+	void OnPlaySceneClear(const char* file, SceneResult result);
 };
 

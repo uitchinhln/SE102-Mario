@@ -45,7 +45,7 @@ void CardSet::Update()
 	for each (CardSlot * var in cards)
 	{
 		if (i < data->Cards.size()) {
-			var->SetAndAutoFlick(data->Cards[i], 2500, 800);
+			var->SetAndAutoFlick(data->Cards[i], 2500, 500);
 		}
 		var->Update();
 		i++;

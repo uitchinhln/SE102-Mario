@@ -821,7 +821,7 @@
   </object>
   <object id="329" type="BeginPortal" x="6953.25" y="1392" width="14" height="107.333">
    <properties>
-    <property name="CameraBoundary" type="int" value="0"/>
+    <property name="CameraRegion" type="int" value="0"/>
     <property name="DestinationX" type="float" value="6954.67"/>
     <property name="DestinationY" type="float" value="1152"/>
     <property name="Direction" type="int" value="2"/>
@@ -830,7 +830,7 @@
   </object>
   <object id="330" type="BeginPortal" x="6760" y="474.5" width="17" height="100.5">
    <properties>
-    <property name="CameraBoundary" type="int" value="1"/>
+    <property name="CameraRegion" type="int" value="1"/>
     <property name="DestinationX" type="float" value="6284.33"/>
     <property name="DestinationY" type="float" value="1392"/>
     <property name="Direction" type="int" value="1"/>

@@ -56,7 +56,7 @@ void EndmapReward::FinalUpdate()
 void EndmapReward::StatusUpdate()
 {
 	shared_ptr<CollisionCalculator> collisionCal = GetCollisionCalc();
-	if (collisionCal->GetLastResults().size() > 0) {
+	if (collisionCal->GetLastResults().size() > 0 && step == 0) {
 		shared_ptr<Mario> mario = MarioGame::GetInstance()->GetMario();
 
 		this->holder = mario;
@@ -71,9 +71,10 @@ void EndmapReward::StatusUpdate()
 		Velocity = VECTOR_0;
 		Visible = false;
 
-		step = 1;
+		__raise (*GameEvent::GetInstance()).PlaySceneClearEvent(__FILE__, SceneResult::WIN);
 
 		EffectServer::GetInstance()->SpawnEffect(make_shared<CardFX>(Position, Vec2(0, -FLY_UP_SPEED), state));
+		step = 1;
 	}
 
 	if (this->holder != nullptr) {

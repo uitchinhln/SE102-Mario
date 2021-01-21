@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SceneContent>
+	<TmxMap path="Resource/Map/Intro/intro-map.tmx"/>
+    <Camera start="0">
+        <Region id="0" left="0" top="0" right="769" bottom="721">
+        	<CameraMode mode="Tracking"/>
+        </Region>
+    </Camera>
+</SceneContent>

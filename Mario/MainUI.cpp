@@ -1,36 +1,88 @@
 #include "MainUI.h"
 #include "SceneManager.h"
 #include "MarioGame.h"
+#include "GameEvent.h"
+#include "RectangleInFX.h"
+#include "FadeFX.h"
 
 MainUI::MainUI()
 {
 	worldView = make_shared<Viewport>(Vec2(0, 0), Vec2(769, 579));
 	fullView = make_shared<Viewport>(Vec2(0, 0), Vec2(769, 721));
+
+	fullViewEffect = new EffectServer();
+	worldViewEffect = new EffectServer();
+	hudViewEffect = new EffectServer();
+
+	timer.Stop();
+	timer.Reset();
+
+	__hook(&GameEvent::PlaySceneEndEvent, GameEvent::GetInstance(), &MainUI::OnPlaySceneEnd);
 }
 
 void MainUI::Update()
 {
-	SceneManager::GetInstance()->GetActiveScene()->Update();
+	GameState state = MarioGame::GetInstance()->GetGameState();
+
+	switch (state)
+	{
+	case GameState::GAME_START:
+		GameStartUpdate();
+		break;
+	case GameState::GAME_INTRO:
+		GameIntroUpdate();
+		break;
+	case GameState::GAME_MENU:
+		GameMenuUpdate();
+		break;
+	case GameState::GAME_WORLDMAP:
+		GameWorldMapUpdate();
+		break;
+	case GameState::GAME_OVER:
+		GameOverUpdate();
+		break;
+	case GameState::WORLD_START:
+	case GameState::WORLD_RUN:
+	case GameState::WORLD_LOSE:
+	case GameState::WORLD_WIN:
+		GamePlayUpdate(state);
+		break;
+	}
+
 	hud->Update();
+	worldViewEffect->Update();
+	hudViewEffect->Update();
+	fullViewEffect->Update();
 }
 
 void MainUI::Render()
 {
-	MarioGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));
+	GameState state = MarioGame::GetInstance()->GetGameState();
 
-	MarioGame::GetInstance()->GetGraphic().SetViewport(worldView);
-	SceneManager::GetInstance()->GetActiveScene()->Render(D3DCOLOR_ARGB(255, 255, 255, 255));
-
-	MarioGame::GetInstance()->GetGraphic().SetViewport(hud);
-	hud->Render(D3DCOLOR_ARGB(255, 255, 255, 255));
-}
-
-void MainUI::GameBeginUpdate()
-{
-}
-
-void MainUI::GameBeginRender()
-{
+	switch (state)
+	{
+	case GameState::GAME_START:
+		GameStartRender();
+		break;
+	case GameState::GAME_INTRO:
+		GameIntroRender();
+		break;
+	case GameState::GAME_MENU:
+		GameMenuRender();
+		break;
+	case GameState::GAME_WORLDMAP:
+		GameWorldMapRender();
+		break;
+	case GameState::GAME_OVER:
+		GameOverRender();
+		break;
+	case GameState::WORLD_START:
+	case GameState::WORLD_RUN:
+	case GameState::WORLD_LOSE:
+	case GameState::WORLD_WIN:
+		GamePlayRender(state);
+		break;
+	}
 }
 
 void MainUI::CreateHUD(TiXmlElement* node)
@@ -42,4 +94,49 @@ void MainUI::CreateHUD(TiXmlElement* node)
 	node->QueryFloatAttribute("top", &pos.y);
 
 	hud = make_shared<Hud>(path, pos, Vec2(769, 142));
+}
+
+void MainUI::OnSceneChange(const char* file, SceneType type)
+{
+
+}
+
+void MainUI::OnGameStateChange(const char* file, GameState current, GameState next)
+{
+	step = 0;
+	timer.Stop();
+	timer.Reset();
+}
+
+void MainUI::OnPrePlaySceneBegin(int nodeId, const char* sceneId, int worldId)
+{
+	worldViewEffect->SpawnEffect(make_shared<RectangleInFX>(worldView->GetScissorRect(), 500, Vec2(24, 24), [nodeId, sceneId, worldId](long playedTime) {
+		__raise (*GameEvent::GetInstance()).PlaySceneBeginEvent(__FILE__, nodeId, sceneId, worldId);
+		SceneManager::GetInstance()->ActiveScene(sceneId);
+		MarioGame::GetInstance()->SetGameState(GameState::WORLD_START);
+		MarioGame::GetInstance()->GetPlayerData()->World = worldId;
+		}));
+	hudViewEffect->SpawnEffect(make_shared<FadeFX>(worldView->GetScissorRect(), 800, [nodeId, sceneId, worldId](long playedTime) {
+		}));
+}
+
+void MainUI::OnPlaySceneEnd(const char* file, SceneResult result, CardType reward)
+{
+	if (result == SceneResult::WIN) {
+		this->reward = reward;
+		MarioGame::GetInstance()->SetGameState(GameState::WORLD_WIN);
+	}
+	else {
+		MarioGame::GetInstance()->SetGameState(GameState::WORLD_LOSE);
+	}
+}
+
+void MainUI::OnKeyUp(int keycode)
+{
+	SceneManager::GetInstance()->OnkeyUp(keycode);
+}
+
+void MainUI::OnKeyDown(int keycode)
+{
+	SceneManager::GetInstance()->OnKeyDown(keycode);
 }

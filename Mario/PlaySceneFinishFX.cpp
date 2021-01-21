@@ -3,7 +3,7 @@
 #include "SpriteManager.h"
 #include "PlayerData.h"
 
-PlaySceneFinishFX::PlaySceneFinishFX(Vec2 position, CardType card) : IEffect(position, 5000)
+PlaySceneFinishFX::PlaySceneFinishFX(Vec2 position, long playTime, CardType card) : IEffect(position, playTime)
 {
 	line1.SetFont(CGame::GetInstance()->DefaultFont);
 	line1.Position = Vec2(190, 80);

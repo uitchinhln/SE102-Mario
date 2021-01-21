@@ -12,6 +12,8 @@
 #include "SceneManager.h"
 #include "Mario.h"
 #include "MarioGame.h"
+#include "FlyingRedKoopas.h"
+#include "BoomerangBrother.h"
 
 Spawner::Spawner()
 {
@@ -41,11 +43,19 @@ shared_ptr<GameObject> Spawner::GetEntity()
 		kp->SetPower(make_shared<DefRedKoopas>(kp));
 		return (kp);
 	}
+	if (type.compare(MEntityType::RedKoopasFlying.ToString()) == 0) {
+		shared_ptr<Koopas> kp = Koopas::CreateKoopas(Position);
+		kp->SetPower(make_shared<FlyingRedKoopas>(kp, Position, props.GetFloat("Range", 196.0f)));
+		return (kp);
+	}
 	if (type.compare(MEntityType::Venus.ToString()) == 0) {
 		return (Venus::CreateVenus(Position));
 	}
 	if (type.compare(MEntityType::RedVenus.ToString()) == 0) {
 		return (RedVenus::CreateRedVenus(Position));
+	}
+	if (type.compare(MEntityType::BoomerangBrother.ToString()) == 0) {
+		return (BoomerangBrother::CreateBoomerangBrother(Position, props));
 	}
 	if (type.compare(MEntityType::Piranha.ToString()) == 0) {
 		return (Piranha::CreatePiranha(Position));
@@ -164,6 +174,7 @@ shared_ptr<Spawner> Spawner::CreateSpawner(Vec2 fixedPos, MapProperties properti
 	spawner->type = properties.GetText("EntityType", "Goomba");
 	spawner->spawnLimit = properties.GetInt("SpawnLimit", 1);
 	spawner->respawnLimit += spawner->spawnLimit;
+	spawner->props = properties;
 
 	return spawner;
 }

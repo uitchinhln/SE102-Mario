@@ -45,6 +45,8 @@ protected:
 
 	bool onGround = true;
 
+	bool cameraLimit = true;
+
 	long invulnerable = 0;
 
 	long freezeTime = 0;
@@ -83,84 +85,69 @@ public:
 
 	virtual void Reset() override;
 
-	virtual void SetPowerUp(shared_ptr<MarioPower> power);
-
 	virtual void InitResource() override;
 
-	virtual void OverlapUpdate();
+	virtual void SetPowerUp(shared_ptr<MarioPower> power);
 
+	virtual void OverlapUpdate();
 	virtual void OverlapUpdateOriginal();
 
-	virtual void StatusUpdate() override;
-
+	virtual void Update() override;
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;
-
 	virtual void PositionUpdate() override;
-
+	virtual void StatusUpdate() override;
 	virtual void FinalUpdate() override;
 
-	virtual void Update() override;
 
 	virtual void Render(D3DCOLOR overlay) override;
 
 	virtual shared_ptr<RayCast> GetRayCaster();
 
-	virtual bool IsControllerLocked();
 
+	virtual bool IsControllerLocked();
 	virtual void SetLockController(bool value = true);
 
 	virtual void DropShell();
-
 	virtual void ClearInhand();
-
 	virtual void SetInhand(shared_ptr<GameObject> object);
-
 	virtual shared_ptr<GameObject> GetInhand();
 
 	virtual float& GetDrag();
-
 	virtual void SetDrag(float drag);
 
 	virtual int& GetSkid();
-
 	virtual void SetSkid(int skid);
 
 	virtual int& GetKickCountDown();
-
 	virtual void SetKickCountDown(int duration);
 
 	virtual float& GetJumpBeginPosition();
-
 	virtual void SetJumpBeginPosition(float value);
 
 	virtual float& GetPowerMeter();
-
 	virtual void SetPowerMeter(float value);
 	
 	virtual bool IsOnGround();
-
 	virtual void SetOnGround(bool value);
 
-	virtual long Invulnerable();
+	virtual bool IsLimitByCamera();
+	virtual void SetLimitByCamera(bool value);
 
+	virtual long Invulnerable();
 	virtual void SetInvulnerable(long value);
 
 	virtual Vec2& GetDistance() override;
-
 	virtual Vec2& GetAccelerate();
 
 	virtual RectF GetHitBox() override;
 
 	virtual MovingStates& GetMovingState();
-
 	virtual void SetMovingState(MovingStates state);
 
 	virtual JumpingStates& GetJumpingState();
-
 	virtual void SetJumpingState(JumpingStates state);
 
 	virtual WarpStates& GetWarpState();
-
 	virtual void SetWarpState(WarpStates state);
 
 	virtual ObjectType GetObjectType();
@@ -170,11 +157,8 @@ public:
 	virtual float GetDamageFor(GameObject& object, Direction direction) override;
 
 
-
 	virtual void HookEvent();
-
 	virtual void UnHookEvent();
-
 
 
 	virtual void OnKeyUp(int key);

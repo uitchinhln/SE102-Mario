@@ -30,6 +30,12 @@ shared_ptr<CScene> SceneManager::GetActiveScene()
 	return scenes.at(activeSceneID);
 }
 
+shared_ptr<CScene> SceneManager::GetScene(string id)
+{
+	if (scenes.find(id) == scenes.end()) return nullptr;
+	return scenes.at(id);
+}
+
 void SceneManager::Update()
 {
 	GetActiveScene()->Update();

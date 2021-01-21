@@ -24,6 +24,8 @@ public:
 
 	virtual void SetSceneContentPath(string path) override;
 
+	virtual ObjectType GetSceneType() override;
+
 
 	virtual void OnObjectLoad(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
 
@@ -32,7 +34,6 @@ public:
 	virtual void OnKeyUp(int key) override;
 
 protected:
-	Vec2 camPos = Vec2(1, 1);
 	Vec2 camSize = Vec2(769, 579);
 
 	EffectServer backgroundAnimations;

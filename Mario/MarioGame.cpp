@@ -14,6 +14,7 @@
 
 #include "FightProcessor.h"
 #include "AchievementProcessor.h"
+#include "IntroScene.h"
 
 MarioGame* MarioGame::__instance = nullptr;
 
@@ -35,7 +36,6 @@ MarioGame::MarioGame() : CGame(new CGameProperties())
 	__instance = this;
 
 	this->main = new MainUI();	
-	this->LoadResources();
 }
 
 void MarioGame::LoadResources()
@@ -45,6 +45,9 @@ void MarioGame::LoadResources()
 	mario = make_shared<Mario>();
 	mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
 	mario->SetPowerUp(make_shared<Small>(mario));
+
+	this->tinyMario = make_shared<TinyMario>();
+	this->tinyMario->HookEvent();
 
 	playerdata = make_shared<PlayerData>();
 
@@ -96,6 +99,13 @@ void MarioGame::LoadResources()
 
 				SceneManager::GetInstance()->AddScene(id, scene);
 			}
+
+			if (type.compare("IntroScene") == 0) {
+				shared_ptr<IntroScene> scene = make_shared<IntroScene>();
+				scene->SetSceneContentPath(path);
+
+				SceneManager::GetInstance()->AddScene(id, scene);
+			}
 		}
 		string startId = scenes->Attribute("start");
 		SceneManager::GetInstance()->ActiveScene(startId);
@@ -106,13 +116,22 @@ void MarioGame::LoadResources()
 
 void MarioGame::Update()
 {
-	playerdata->RemainingTime -= gameTime.ElapsedGameTime;
 	main->Update();
 }
 
 void MarioGame::Draw()
 {
 	main->Render();
+}
+
+void MarioGame::OnKeyUp(int key)
+{
+	main->OnKeyUp(key);
+}
+
+void MarioGame::OnKeyDown(int key)
+{
+	main->OnKeyDown(key);
 }
 
 shared_ptr<PlayerData> MarioGame::GetPlayerData()
@@ -123,6 +142,11 @@ shared_ptr<PlayerData> MarioGame::GetPlayerData()
 shared_ptr<Mario> MarioGame::GetMario()
 {
 	return mario;
+}
+
+shared_ptr<TinyMario> MarioGame::GetTinyMario()
+{
+	return tinyMario;
 }
 
 FightProcessor* MarioGame::GetFightProcessor()
@@ -140,8 +164,16 @@ GameState MarioGame::GetGameState()
 	return state;
 }
 
+MainUI* MarioGame::GetMainUI()
+{
+	return main;
+}
+
 void MarioGame::SetGameState(GameState value)
 {
+	if (this->state != value) {
+		main->OnGameStateChange(__FILE__, this->state, value);
+	}
 	this->state = value;
 }
 
@@ -152,6 +184,8 @@ MarioGame* MarioGame::GetInstance()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
-	(new MarioGame())->Run();
+	MarioGame* game = new MarioGame();
+	game->LoadResources();
+	game->Run();
 	return 0;
 } 

@@ -47,7 +47,22 @@ enum class Score
 };
 
 enum class GameState {
-	CREATED,
-	INTRO,
+	GAME_START,
+	GAME_INTRO,
+	GAME_MENU,
+	GAME_WORLDMAP,
+	GAME_OVER,
+	WORLD_START,
+	WORLD_RUN,
+	WORLD_LOSE,
+	WORLD_WIN,
+	TRANSLATION
+};
 
+enum class SceneType {
+	INTRO,
+	MENU,
+	WORLDMAP,
+	PLAYSCENE,
+	GAMEOVER
 };

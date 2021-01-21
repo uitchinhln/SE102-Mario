@@ -5,6 +5,7 @@
 class MainUI;
 class PlayerData;
 class Mario;
+class TinyMario;
 class FightProcessor;
 class AchievementProcessor;
 
@@ -21,11 +22,12 @@ protected:
 	shared_ptr<PlayerData> playerdata;
 
 	shared_ptr<Mario> mario;
+	shared_ptr<TinyMario> tinyMario;
 
 	FightProcessor* fightProc;
 	AchievementProcessor* achievementProc;
 
-	GameState state = GameState::CREATED;
+	GameState state = GameState::GAME_START;
 
 public:
 	MarioGame();
@@ -33,16 +35,22 @@ public:
 	virtual void LoadResources() override;
 	virtual void Update() override;
 	virtual void Draw() override;
+	virtual void OnKeyUp(int key) override;
+	virtual void OnKeyDown(int key) override;
 
 	virtual shared_ptr<PlayerData> GetPlayerData();
 
 	virtual shared_ptr<Mario> GetMario();
+
+	virtual shared_ptr<TinyMario> GetTinyMario();
 
 	FightProcessor* GetFightProcessor();
 
 	AchievementProcessor* GetAchievementProcessor();
 
 	GameState GetGameState();
+
+	MainUI* GetMainUI();
 
 	void SetGameState(GameState value);
 

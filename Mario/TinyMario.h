@@ -74,8 +74,8 @@ public:
 
     virtual void OnKeyUp(int key);
 
-    virtual void OnPlaySceneFinish(const char* source, CardType reward);
+    virtual void OnPlaySceneBegin(const char* file, int nodeId, const char* sceneId, int worldId);
 
-    virtual void OnPlaySceneLose(const char* source);
+    virtual void OnPlaySceneEnd(const char* file, SceneResult result, CardType reward);
 };
 

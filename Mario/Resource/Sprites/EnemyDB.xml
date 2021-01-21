@@ -47,16 +47,16 @@
     <Sprite id="spr-red-koopa-paratroopa-fly-2" left="147" top="93"  width="16" height="27"/>
     <Sprite id="spr-boomerang-brother-move-0" left="33" top="171"  width="16" height="24"/>
     <Sprite id="spr-boomerang-brother-move-1" left="57" top="171"  width="16" height="24"/>
-    <Sprite id="spr-boomerang-brother-attack-0" left="80" top="171"  width="16" height="24"/>
-    <Sprite id="spr-boomerang-brother-attack-1" left="103" top="171"  width="16" height="24"/>
+    <Sprite id="spr-boomerang-brother-attack-0" left="74" top="167"  width="26" height="28" yPivot="16" xPivot="8"/>
+    <Sprite id="spr-boomerang-brother-attack-1" left="100" top="167"  width="26" height="28" yPivot="16" xPivot="8"/>
     <Sprite id="spr-hammer-brother-move-0" left="175" top="112"  width="16" height="24"/>
     <Sprite id="spr-hammer-brother-move-1" left="178" top="143"  width="16" height="24"/>
     <Sprite id="spr-hammer-brother-attack-0" left="179" top="173"  width="16" height="24"/>
     <Sprite id="spr-hammer-brother-attack-1" left="179" top="202"  width="16" height="24"/>
-    <Sprite id="spr-boomerang-spin-0" left="124" top="166"  width="15" height="16"/>
-    <Sprite id="spr-boomerang-spin-1" left="144" top="166"  width="16" height="15"/>
-    <Sprite id="spr-boomerang-spin-2" left="145" top="186"  width="16" height="15"/>
-    <Sprite id="spr-boomerang-spin-3" left="124" top="188"  width="15" height="16"/>
+    <Sprite id="spr-boomerang-spin-0" left="129" top="167"  width="15" height="16"/>
+    <Sprite id="spr-boomerang-spin-1" left="149" top="167"  width="16" height="15"/>
+    <Sprite id="spr-boomerang-spin-2" left="150" top="187"  width="16" height="15"/>
+    <Sprite id="spr-boomerang-spin-3" left="129" top="189"  width="15" height="16"/>
     <Sprite id="spr-hammer-0" left="203" top="121"  width="14" height="16"/>
     <Sprite id="spr-hammer-1" left="229" top="121"  width="16" height="14"/>
     <Sprite id="spr-hammer-2" left="229" top="149"  width="14" height="16"/>

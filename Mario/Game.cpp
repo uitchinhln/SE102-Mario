@@ -17,6 +17,14 @@ void CGame::Draw()
 {
 }
 
+void CGame::OnKeyUp(int key)
+{
+}
+
+void CGame::OnKeyDown(int key)
+{
+}
+
 void CGame::Render()
 {
 	//auto start = std::chrono::high_resolution_clock::now();

@@ -2,6 +2,8 @@
 <SceneContent>
 	<TmxMap path="Resource/Map/Overworld/overworld-1-map.tmx"/>
     <Camera start="0">
-        <Boundary id="0" left="0" top="0" right="769" bottom="579"/>
+        <Region id="0" left="0" top="0" right="769" bottom="579">
+        	<CameraMode mode="Tracking"/>
+        </Region>
     </Camera>
 </SceneContent>

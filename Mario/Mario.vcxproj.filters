@@ -262,6 +262,33 @@
     <Filter Include="MarioGame\Processor">
       <UniqueIdentifier>{5f41fb0b-7be9-4e3d-9539-9465cb0991c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Effects\FullScreenEffects">
+      <UniqueIdentifier>{99979ea3-a6d5-4b4c-8d15-4f715955d2e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\FullScreenEffects\RectangleIn">
+      <UniqueIdentifier>{04b34331-0417-4d6f-bb02-5adc5e1af9fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\FullScreenEffects\FadeFX">
+      <UniqueIdentifier>{9c281ac9-fce7-4dbf-8d35-bb999b9daec0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Scenes\Intro">
+      <UniqueIdentifier>{ef3d8a8c-e00c-4f62-a73d-d16455dd2e7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Scenes\PlayScene">
+      <UniqueIdentifier>{9d334822-933c-4785-a9fd-fa89d701ba32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Scenes\Overworld">
+      <UniqueIdentifier>{5a545748-e076-4a23-b23b-65c23a6313ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Boomerang Brother">
+      <UniqueIdentifier>{db696c95-d8ee-4b5a-8099-6ef483a13602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\EnemyEffects\BoomerangBrotherFX">
+      <UniqueIdentifier>{737c0e2f-5a93-4e85-9f34-9d3f0dab1419}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Scenes\Intro\Controller">
+      <UniqueIdentifier>{5087b77b-3ba3-49b7-bc0f-6bf2891e6f23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -363,9 +390,6 @@
     <ClCompile Include="DataTag.cpp">
       <Filter>Framework\DataTag</Filter>
     </ClCompile>
-    <ClCompile Include="PlayScene.cpp">
-      <Filter>MarioGame\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="MEntityType.cpp">
       <Filter>MarioGame\Entity</Filter>
     </ClCompile>
@@ -437,12 +461,6 @@
     </ClCompile>
     <ClCompile Include="Viewport.cpp">
       <Filter>Framework\Graphic</Filter>
-    </ClCompile>
-    <ClCompile Include="IntroScene.cpp">
-      <Filter>MarioGame\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="WorldScene.cpp">
-      <Filter>MarioGame\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Spawner.cpp">
       <Filter>MarioGame\Entity\TriggerEntity\Spawner</Filter>
@@ -639,9 +657,6 @@
     <ClCompile Include="MarioProperties.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Mario</Filter>
     </ClCompile>
-    <ClCompile Include="PlaySceneLoad.cpp">
-      <Filter>MarioGame\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="MainUI.cpp">
       <Filter>MarioGame\UI\MainUI</Filter>
     </ClCompile>
@@ -653,6 +668,63 @@
     </ClCompile>
     <ClCompile Include="FightProcessor.cpp">
       <Filter>MarioGame\Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="ICallbackEffect.cpp">
+      <Filter>MarioGame\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="MSceneType.cpp">
+      <Filter>MarioGame\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangleInFX.cpp">
+      <Filter>MarioGame\Effects\FullScreenEffects\RectangleIn</Filter>
+    </ClCompile>
+    <ClCompile Include="MainUIUpdate.cpp">
+      <Filter>MarioGame\UI\MainUI</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeFX.cpp">
+      <Filter>MarioGame\Effects\FullScreenEffects\FadeFX</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroScene.cpp">
+      <Filter>MarioGame\Scenes\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayScene.cpp">
+      <Filter>MarioGame\Scenes\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlaySceneLoad.cpp">
+      <Filter>MarioGame\Scenes\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldScene.cpp">
+      <Filter>MarioGame\Scenes\Overworld</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraRegion.cpp">
+      <Filter>Framework\World\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraRegionGetSet.cpp">
+      <Filter>Framework\World\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingPlatform.cpp">
+      <Filter>MarioGame\Entity\MapBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="FlyingRedKoopas.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates</Filter>
+    </ClCompile>
+    <ClCompile Include="BoomerangBrother.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Boomerang Brother</Filter>
+    </ClCompile>
+    <ClCompile Include="BoomerangBrotherDeathFX.cpp">
+      <Filter>MarioGame\Effects\EnemyEffects\BoomerangBrotherFX</Filter>
+    </ClCompile>
+    <ClCompile Include="Boomerang.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Boomerang Brother</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroOriginalUpdate.cpp">
+      <Filter>MarioGame\Scenes\Intro</Filter>
+    </ClCompile>
+    <ClCompile Include="MainUIRender.cpp">
+      <Filter>MarioGame\UI\MainUI</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroController.cpp">
+      <Filter>MarioGame\Scenes\Intro\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -749,9 +821,6 @@
     <ClInclude Include="DataTag.h">
       <Filter>Framework\DataTag</Filter>
     </ClInclude>
-    <ClInclude Include="PlayScene.h">
-      <Filter>MarioGame\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="MEntityType.h">
       <Filter>MarioGame\Entity</Filter>
     </ClInclude>
@@ -823,12 +892,6 @@
     </ClInclude>
     <ClInclude Include="Viewport.h">
       <Filter>Framework\Graphic</Filter>
-    </ClInclude>
-    <ClInclude Include="IntroScene.h">
-      <Filter>MarioGame\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="WorldScene.h">
-      <Filter>MarioGame\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Spawner.h">
       <Filter>MarioGame\Entity\TriggerEntity\Spawner</Filter>
@@ -1132,6 +1195,48 @@
     </ClInclude>
     <ClInclude Include="FightProcessor.h">
       <Filter>MarioGame\Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="ICallbackEffect.h">
+      <Filter>MarioGame\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="MSceneType.h">
+      <Filter>MarioGame\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleInFX.h">
+      <Filter>MarioGame\Effects\FullScreenEffects\RectangleIn</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeFX.h">
+      <Filter>MarioGame\Effects\FullScreenEffects\FadeFX</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroScene.h">
+      <Filter>MarioGame\Scenes\Intro</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayScene.h">
+      <Filter>MarioGame\Scenes\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldScene.h">
+      <Filter>MarioGame\Scenes\Overworld</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraRegion.h">
+      <Filter>Framework\World\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingPlatform.h">
+      <Filter>MarioGame\Entity\MapBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="FlyingRedKoopas.h">
+      <Filter>MarioGame\Entity\LivingEntity\Koopas\RedKoopasStates</Filter>
+    </ClInclude>
+    <ClInclude Include="BoomerangBrother.h">
+      <Filter>MarioGame\Entity\LivingEntity\Boomerang Brother</Filter>
+    </ClInclude>
+    <ClInclude Include="BoomerangBrotherDeathFX.h">
+      <Filter>MarioGame\Effects\EnemyEffects\BoomerangBrotherFX</Filter>
+    </ClInclude>
+    <ClInclude Include="Boomerang.h">
+      <Filter>MarioGame\Entity\LivingEntity\Boomerang Brother</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroController.h">
+      <Filter>MarioGame\Scenes\Intro\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

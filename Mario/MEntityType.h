@@ -25,11 +25,15 @@ public:
 	static const ObjectType RedKoopasPassenger;
 	static const ObjectType RedKoopasImposter;
 	static const ObjectType RedKoopasJumping;
+	static const ObjectType RedKoopasFlying;
 
 	static const ObjectType VenusFireBall;
 	static const ObjectType Venus;
 	static const ObjectType RedVenus;
 	static const ObjectType Piranha;
+
+	static const ObjectType BoomerangBrother;
+	static const ObjectType Boomerang;
 
 	static const ObjectType EndmapReward;
 	static const ObjectType QuestionBlock;
@@ -39,6 +43,7 @@ public:
 	static const ObjectType GhostBlock;
 	static const ObjectType VoidBlock;
 	static const ObjectType Pipe;
+	static const ObjectType MovingPlatform;
 
 	static const ObjectType RedMushroom;
 	static const ObjectType GreenMushroom;

@@ -98,7 +98,8 @@ void TinyMario::HookEvent()
 {
     //__hook(&Events::KeyDownEvent, Events::GetInstance(), &TinyMario::OnKeyDown);
     //__hook(&GameEvent::PlaySceneFinishEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneFinish);
-    //__hook(&GameEvent::PlaySceneLoseEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneLose);
+    __hook(&GameEvent::PlaySceneEndEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneEnd);
+    __hook(&GameEvent::PlaySceneBeginEvent, GameEvent::GetInstance(), &TinyMario::OnPlaySceneBegin);
 }
 
 void TinyMario::UnhookEvent()
@@ -125,12 +126,9 @@ void TinyMario::OnKeyDown(int key)
     case DIK_RIGHT:
         direction = Direction::Right;
         break;
-    case DIK_W:
+    case DIK_S:
         if (moveStep == 0) {
-            shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
-
-            data->World = graph->GetNode(currentStation)->GetWorldNumber();
-            graph->GetNode(discoverStation = currentStation)->Discover();
+            graph->GetNode(currentStation)->Discover();
         }
         break;
     }
@@ -143,10 +141,9 @@ void TinyMario::OnKeyDown(int key)
 
         if (adjacentList.find(direction) == adjacentList.end()) return;
 
-        shared_ptr<MapGate> next = graph->GetNode(adjacentList.at(direction));
-
-        if (next->CanTravel(current, data)) {
+        if (current->CanTravel(direction, data)) {
             moveStep = 1;
+            shared_ptr<MapGate> next = graph->GetNode(adjacentList.at(direction));
             targetPosition = next->GetPosition();
             targetStation = next->GetNodeId();
         }
@@ -157,17 +154,22 @@ void TinyMario::OnKeyUp(int key)
 {
 }
 
-void TinyMario::OnPlaySceneFinish(const char* source, CardType reward)
+void TinyMario::OnPlaySceneBegin(const char* file, int nodeId, const char* sceneId, int worldId)
 {
-    shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
-    data->Node = discoverStation;
-    graph->GetNode(discoverStation)->SetFinished(true);
+    discoverStation = nodeId;
 }
 
-void TinyMario::OnPlaySceneLose(const char* source)
+void TinyMario::OnPlaySceneEnd(const char* file, SceneResult result, CardType reward)
 {
     shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
-    moveStep = 1;
-    targetPosition = graph->GetNode(data->Node)->GetPosition();
-    targetStation = data->Node;
+    if (result == SceneResult::WIN) {
+        data->Node = discoverStation;
+        graph->GetNode(discoverStation)->SetFinished(true);
+    }
+    else {
+        moveStep = 1;
+        targetPosition = graph->GetNode(data->Node)->GetPosition();
+        targetStation = data->Node;
+        data->World = graph->GetNode(data->Node)->GetWorldNumber();
+    }
 }

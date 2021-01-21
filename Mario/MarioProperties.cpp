@@ -60,6 +60,16 @@ void Mario::SetOnGround(bool value)
 	onGround = value;
 }
 
+bool Mario::IsLimitByCamera()
+{
+	return cameraLimit;
+}
+
+void Mario::SetLimitByCamera(bool value)
+{
+	cameraLimit = value;
+}
+
 long Mario::Invulnerable()
 {
 	return this->invulnerable;

@@ -56,7 +56,7 @@ void BeginPortal::Update()
                         SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(passenger);
                     }
 
-                    SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetActiveBound(cameraBoundId);
+                    SceneManager::GetInstance()->GetActiveScene()->GetCamera()->ActiveRegion(cameraRegionId);
                     SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetFreeze(false);
                 }
             }
@@ -72,7 +72,7 @@ void BeginPortal::Update()
                         SceneManager::GetInstance()->GetActiveScene()->SpawnEntity(passenger);
                     }
 
-                    SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetActiveBound(cameraBoundId);
+                    SceneManager::GetInstance()->GetActiveScene()->GetCamera()->ActiveRegion(cameraRegionId);
                     SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetFreeze(false);
                 }
             }
@@ -112,7 +112,7 @@ shared_ptr<BeginPortal> BeginPortal::CreatePortal(Vec2 fixedPos, Vec2 size, MapP
     portal->Position = fixedPos;
     portal->hitbox = RectF(fixedPos.x, fixedPos.y, fixedPos.x + size.x, fixedPos.y + size.y);
 
-    portal->cameraBoundId = properties.GetInt("CameraBoundary", 1);
+    portal->cameraRegionId = properties.GetInt("CameraRegion", 1);
 
     portal->destination.x = properties.GetFloat("DestinationX", 0.0f);
     portal->destination.y = properties.GetFloat("DestinationY", 0.0f);

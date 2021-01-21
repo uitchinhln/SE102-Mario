@@ -17,6 +17,7 @@ protected:
 	string sceneID;
 
 	unordered_map<Direction, int> adjacentNodes;
+	unordered_map<Direction, bool> adjacentLocks;
 
 	Vec2 size;
 
@@ -61,7 +62,7 @@ public:
 	virtual ObjectType GetObjectType() override;
 
 
-	virtual bool CanTravel(shared_ptr<MapGate> currentStation, shared_ptr<PlayerData> data);
+	virtual bool CanTravel(Direction direction, shared_ptr<PlayerData> data);
 
 	virtual void Discover();
 
@@ -69,7 +70,6 @@ public:
 	virtual bool IsFinished();
 	virtual void SetFinished(bool value);
 
-	
 	virtual int GetWorldNumber();
 
 	virtual bool IsStart();

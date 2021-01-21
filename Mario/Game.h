@@ -14,6 +14,8 @@ public:
 	virtual void LoadResources();
 	virtual void Update();
 	virtual void Draw();
+	virtual void OnKeyUp(int key);
+	virtual void OnKeyDown(int key);
 
 	int Run();
 

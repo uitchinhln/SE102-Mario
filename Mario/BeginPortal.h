@@ -13,7 +13,7 @@ public:
     static shared_ptr<BeginPortal> CreatePortal(Vec2 fixedPos, Vec2 size, MapProperties properties);
 
 protected:
-    int cameraBoundId = 0;
+    int cameraRegionId = 0;
     Vec2 destination;
     Direction direction;
 };

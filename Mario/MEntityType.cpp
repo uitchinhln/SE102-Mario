@@ -21,6 +21,7 @@ const ObjectType MEntityType::RedKoopasCrouch = ObjectType::CreateObjectType(142
 const ObjectType MEntityType::RedKoopasPassenger = ObjectType::CreateObjectType(143, "RedKoopasPassenger");
 const ObjectType MEntityType::RedKoopasImposter = ObjectType::CreateObjectType(144, "RedKoopasImposter");
 const ObjectType MEntityType::RedKoopasJumping = ObjectType::CreateObjectType(145, "RedKoopasJumping");
+const ObjectType MEntityType::RedKoopasFlying = ObjectType::CreateObjectType(145, "RedKoopasFlying");
 
 const ObjectType MEntityType::Venus = ObjectType::CreateObjectType(161, "Venus");
 const ObjectType MEntityType::VenusFireBall = ObjectType::CreateObjectType(162, "VenusFireBall");
@@ -28,6 +29,9 @@ const ObjectType MEntityType::RedVenus = ObjectType::CreateObjectType(163, "RedV
 const ObjectType MEntityType::Piranha = ObjectType::CreateObjectType(164, "Piranha");
 
 const ObjectType MEntityType::RedGoomba = ObjectType::CreateObjectType(181, "RedGoomba");
+
+const ObjectType MEntityType::BoomerangBrother = ObjectType::CreateObjectType(201, "BoomerangBrother");
+const ObjectType MEntityType::Boomerang = ObjectType::CreateObjectType(202, "Boomerang");
 
 const ObjectType MEntityType::EndmapReward = ObjectType::CreateObjectType(1001, "EndmapReward");
 const ObjectType MEntityType::QuestionBlock = ObjectType::CreateObjectType(1002, "QuestionBlock");
@@ -37,6 +41,7 @@ const ObjectType MEntityType::SolidBlock = ObjectType::CreateObjectType(5001, "S
 const ObjectType MEntityType::GhostBlock = ObjectType::CreateObjectType(5002, "GhostBlock");
 const ObjectType MEntityType::VoidBlock = ObjectType::CreateObjectType(5003, "Void");
 const ObjectType MEntityType::Pipe = ObjectType::CreateObjectType(5004, "Pipe");
+const ObjectType MEntityType::MovingPlatform = ObjectType::CreateObjectType(5005, "MovingPlatform");
 
 const ObjectType MEntityType::RedMushroom = ObjectType::CreateObjectType(10001, "RedMushroom");
 const ObjectType MEntityType::GreenMushroom = ObjectType::CreateObjectType(10002, "GreenMushroom");
@@ -94,7 +99,8 @@ bool MEntityType::IsEnemy(ObjectType obj)
 	bool venus = obj == Venus || obj == VenusFireBall || obj == RedVenus;
     bool piranha = obj == Piranha;
     bool voidblock = obj == VoidBlock;
-    return goomba || redgoomba || koopas || redkoopas || venus || piranha || voidblock;
+    bool boomerangBrother = obj == Boomerang || obj == BoomerangBrother;
+    return goomba || redgoomba || koopas || redkoopas || venus || piranha || voidblock || boomerangBrother;
 }
 
 bool MEntityType::IsPowerUpItem(ObjectType obj)

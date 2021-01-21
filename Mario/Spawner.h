@@ -52,6 +52,8 @@ protected:
 	
 	vector<shared_ptr<GameObject>> entities;
 
+	MapProperties props;
+
 	string type = "Goomba";
 
 	int respawnLimit = 0;

@@ -11,7 +11,7 @@ FightProcessor::FightProcessor(shared_ptr<PlayerData> data)
 	this->data = data;
 
 	__hook(&GameEvent::EnemyDamagedEvent, GameEvent::GetInstance(), &FightProcessor::OnEnemyDamaged);
-	__hook(&GameEvent::PlaySceneEndEvent, GameEvent::GetInstance(), &FightProcessor::OnPlaySceneEnd);
+	__hook(&GameEvent::PlaySceneClearEvent, GameEvent::GetInstance(), &FightProcessor::OnPlaySceneClear);
 }
 
 void FightProcessor::OnEnemyDamaged(const char* file, DamgeSource source, Vec2 Position, ObjectType& victimType)
@@ -85,7 +85,7 @@ void FightProcessor::OnEnemyDamaged(const char* file, DamgeSource source, Vec2 P
 	}
 }
 
-void FightProcessor::OnPlaySceneEnd(const char* file, SceneResult result, CardType reward)
+void FightProcessor::OnPlaySceneClear(const char* file, SceneResult result)
 {
 	if (result == SceneResult::WIN) {
 		vector<shared_ptr<GameObject>> objects = SceneManager::GetInstance()->GetActiveScene()->GetUpdatingObjects();

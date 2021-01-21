@@ -19,6 +19,8 @@ public:
 
 	shared_ptr<CScene> GetActiveScene();
 
+	shared_ptr<CScene> GetScene(string id);
+
 	void Update();
 	
 	void Render(D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));

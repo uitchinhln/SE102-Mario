@@ -33,6 +33,6 @@ void AchievementProcessor::OnPlayerScoreChange(const char* file, Score score, Ve
 
 void AchievementProcessor::OnPlayerLifeChange(const char* file, Vec2 Position)
 {
-	data->Lives++;
+	data->Lives += 1;
 	EffectServer::GetInstance()->SpawnEffect(make_shared<ScoreFX>(Position + Vec2(0, 30), Score::S1UP));
 }

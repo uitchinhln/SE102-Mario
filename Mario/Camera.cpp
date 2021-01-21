@@ -11,9 +11,9 @@ Camera::Camera()
 	shakeTimer.Stop();
 }
 
-Camera::Camera(Vec2 pos, Vec2 size)
+Camera::Camera(Vec2 size)
 {
-	this->Position = pos;
+	this->Position = VECTOR_0;
 	this->size = size;
 }
 
@@ -50,7 +50,7 @@ void Camera::ShakeUpdate()
 
 void Camera::TrackingUpdate()
 {
-	if (locking || mode != CameraMode::TRACKING) return;
+	if (locking || regions[activeId]->GetCameraMode() != CameraMode::TRACKING) return;
 
 	if (shared_ptr<GameObject> obj = target.lock()) {
 		RectF targetBound = obj->GetHitBox();
@@ -64,7 +64,7 @@ void Camera::TrackingUpdate()
 		RectF camLimit = activeBound;
 
 		if (reset == 1) {
-			RectF originalBound = bounds.at(activeId);
+			RectF originalBound = regions[activeId]->GetBoundary();
 			if (camBound.left >= originalBound.left && camBound.right <= originalBound.right
 				&& camBound.top >= originalBound.top && camBound.bottom <= originalBound.bottom)
 			{
@@ -82,8 +82,31 @@ void Camera::TrackingUpdate()
 
 void Camera::AutoScrollUpdate()
 {
-	if (locking || mode != CameraMode::AUTOSCROLL) return;
+	if (locking || regions[activeId]->GetCameraMode() != CameraMode::AUTOSCROLL) return;
+	if (shared_ptr<GameObject> obj = target.lock()) {
 
+		CameraRegion* region = regions[activeId];
+		Position += region->GetVelocity() * CGame::Time().ElapsedGameTime;
+
+		Vec2 camSize = GetCamSize();
+		RectF camBound = GetBoundingBox();
+		RectF camLimit = activeBound;
+
+		if (reset == 1) {
+			RectF originalBound = regions[activeId]->GetBoundary();
+			if (camBound.left >= originalBound.left && camBound.right <= originalBound.right
+				&& camBound.top >= originalBound.top && camBound.bottom <= originalBound.bottom)
+			{
+				camLimit = activeBound = originalBound;
+				reset = 2;
+			}
+		}
+
+		if (camBound.left < camLimit.left) Position.x = camLimit.left;
+		if (camBound.top < camLimit.top) Position.y = camLimit.top;
+		if (camBound.right > camLimit.right) Position.x = camLimit.right - camSize.x;
+		if (camBound.bottom > camLimit.bottom) Position.y = camLimit.bottom - camSize.y;
+	}
 }
 
 void Camera::Update()
@@ -93,35 +116,32 @@ void Camera::Update()
 	ShakeUpdate();
 }
 
-void Camera::AddBound(int id, float left, float top, float right, float bottom)
-{
-	this->bounds[id] = RectF(left, top, right, bottom);
-	if (bounds.find(activeId) == bounds.end()) {
-		activeId = id;
-		activeBound = RectF(left, top, right, bottom);
-	}
-}
-
 void Camera::Shake(int duration)
 {
 	shakeDuration = duration;
 	shakeTimer.Start();
 }
 
-RectF Camera::GetActiveBound()
+RectF Camera::GetLimitBound()
 {
-	return bounds.at(activeId);
+	return RectF();
 }
 
-void Camera::SetActiveBound(int id)
+void Camera::ActiveRegion(int id)
 {
-	if (bounds.find(id) != bounds.end()) {
-		activeId = id;
-		activeBound = bounds.at(id);
+	if (regions.find(id) == regions.end() || regions.at(id) == nullptr) {
+		return;
 	}
+	activeId = id;
+	activeBound = regions.at(id)->GetBoundary();
 }
 
-void Camera::SetBoundingEdge(Direction edge, float value)
+CameraRegion* Camera::GetActiveRegion()
+{
+	return regions[activeId];
+}
+
+void Camera::SetLimitEdge(Direction edge, float value)
 {
 	reset = 0;
 	switch (edge)
@@ -141,7 +161,7 @@ void Camera::SetBoundingEdge(Direction edge, float value)
 	}
 }
 
-void Camera::ResetBoundingEdge()
+void Camera::ResetLimitEdge()
 {
 	if (!reset) reset = 1;
 }
@@ -156,17 +176,26 @@ void Camera::SetFreeze(bool value)
 	this->locking = value;
 }
 
-CameraMode Camera::GetCameraMode()
+void Camera::LoadFromTMX(TiXmlElement* config)
 {
-	return this->mode;
-}
+	int startId = 0;
 
-void Camera::SetCameraMode(CameraMode mode)
-{
-	this->mode = mode;
+	config->QueryIntAttribute("start", &startId);
+
+	for (TiXmlElement* node = config->FirstChildElement("Region"); node != nullptr; node = node->NextSiblingElement("Region"))
+	{
+		CameraRegion* region = new CameraRegion(node);
+		regions[region->GetID()] = region;
+	}
+
+	ActiveRegion(startId);
 }
 
 Camera::~Camera()
 {
+	for each (auto iter in regions)
+	{
+		delete iter.second;
+	}
 	DebugOut(L"Camera destroyed!!!");
 }

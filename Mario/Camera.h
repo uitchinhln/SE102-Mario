@@ -3,13 +3,9 @@
 #include "Transform.h"
 #include "Stopwatch.h"
 #include "Direction.h"
+#include "CameraRegion.h"
 
 class GameObject;
-
-enum class CameraMode {
-	TRACKING,
-	AUTOSCROLL
-};
 
 class Camera
 {
@@ -18,14 +14,11 @@ protected:
 
 	Vec2 size;
 
-	unordered_map<int, RectF> bounds;
+	unordered_map<int, CameraRegion*> regions;
 	int activeId = 0;
+
 	RectF activeBound;
 	int reset = 0;
-
-	bool autoBound = true;
-
-	CameraMode mode = CameraMode::TRACKING;
 
 	Stopwatch shakeTimer;
 	int shakeDuration = 0;
@@ -33,7 +26,7 @@ protected:
 	bool locking = false;
 public:
 	Camera();
-	Camera(Vec2 pos, Vec2 size);
+	Camera(Vec2 size);
 
 	Vec2 Position;
 
@@ -43,33 +36,26 @@ public:
 
 	virtual void SetTracking(weak_ptr<GameObject> target);
 
+	virtual void Shake(int duration);
 	virtual void ShakeUpdate();
 
 	virtual void TrackingUpdate();
-
 	virtual void AutoScrollUpdate();
 
 	virtual void Update();
 
-	virtual void AddBound(int id, float left, float top, float right, float bottom);
+	virtual RectF GetLimitBound();
 
-	virtual void Shake(int duration);
+	virtual void ActiveRegion(int id);
+	virtual CameraRegion* GetActiveRegion();
 
-	virtual RectF GetActiveBound();
-
-	virtual void SetActiveBound(int id);
-
-	virtual void SetBoundingEdge(Direction edge, float value);
-
-	virtual void ResetBoundingEdge();
+	virtual void SetLimitEdge(Direction edge, float value);
+	virtual void ResetLimitEdge();
 
 	virtual bool IsFreeze();
-
 	virtual void SetFreeze(bool value);
 
-	virtual CameraMode GetCameraMode();
-	
-	virtual void SetCameraMode(CameraMode mode);
+	virtual void LoadFromTMX(TiXmlElement* data);
 
 	~Camera();
 };

@@ -41,6 +41,8 @@ public:
 
 	virtual void SetSceneContentPath(string path);
 
+	virtual ObjectType GetSceneType() = 0;
+
 protected:
 	virtual void RemoveDespawnedObjects();
 };

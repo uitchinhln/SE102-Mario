@@ -24,11 +24,14 @@ public:
 
 	virtual vector<shared_ptr<GameObject>> GetUpdatingObjects() override;
 
-	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
-
 	virtual void SetSceneContentPath(string path) override;
 
+	virtual ObjectType GetSceneType() override;
+
+
 	virtual void MapReadEvent(MapProperties& props);
+
+	virtual void ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props);
 
 
 
@@ -42,7 +45,6 @@ protected:
 
 	Grid* grid;
 
-	Vec2 camPos = Vec2(0, 0);
 	Vec2 camSize = Vec2(769, 579);
 
 	virtual void HookEvent();

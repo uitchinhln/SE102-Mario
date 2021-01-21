@@ -80,9 +80,10 @@ void Mario::OnKeyDown(int key)
 		Position.y = 1150;
 		break;
 	case DIK_R:
-		Position.x = 6742;
-		Position.y = 370;
-		SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetBoundingEdge(Direction::Top, 0);
+		Position.x = 6010;
+		Position.y = 1030;
+		SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetLimitEdge(Direction::Top, 0);
+		SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position.x = 6010;
 		break;
 	case DIK_E:
 		Position.x = 7900;
@@ -212,10 +213,7 @@ void Mario::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	shared_ptr<MarioPower> p = power;
 	p->CollisionUpdate(coObj);
 	raycaster->SetInput(coObj);
-	//auto start = std::chrono::high_resolution_clock::now();
 	OverlapUpdateOriginal();
-	//auto finish = std::chrono::high_resolution_clock::now();
-	//DebugOut(L"Mario raycast: %d\n", std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
 }
 
 void Mario::PositionUpdate()
@@ -235,6 +233,34 @@ void Mario::PositionUpdate()
 		Position.x = max(limit.left - (hitbox.right - hitbox.left), min(Position.x, limit.right));
 		Position.y = min(Position.y, limit.bottom);
 		Velocity.x = 0;
+	}
+
+	if (cameraLimit) {
+		CameraRegion* region = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetActiveRegion();
+		RectF camBound = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();
+
+		RectF insideBound = region->GetInsideBoundary();
+		insideBound.left += camBound.left;
+		insideBound.top += camBound.top;
+		insideBound.right += camBound.right;
+		insideBound.bottom += camBound.bottom;
+
+		RectF targetBound = GetHitBox();
+		Vec2 targetPos = GetPosition();
+		Vec2 targetSize = Vec2(targetBound.right - targetBound.left, targetBound.bottom - targetBound.top);
+
+		if (targetBound.left < insideBound.left) {
+			Velocity.x = region->GetVelocity().x*2;
+			movingState = MovingStates::WALK;
+		};
+		if (targetBound.right > insideBound.right) {
+			Velocity.x = region->GetVelocity().x*2;
+			movingState = MovingStates::WALK;
+		};
+		if (targetBound.top < insideBound.top) targetPos.y = insideBound.top;
+		if (targetBound.bottom > insideBound.bottom) targetPos.y = insideBound.bottom - targetSize.y;
+
+		SetPosition(targetPos);
 	}
 }
 

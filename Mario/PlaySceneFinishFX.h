@@ -14,10 +14,10 @@ protected:
 
     Transform trans;
 
-    long line2Delay = 600;
+    long line2Delay = 700;
 
 public:
-    PlaySceneFinishFX(Vec2 position, CardType card);
+    PlaySceneFinishFX(Vec2 position, long playTime, CardType card);
 
     virtual void Update() override;
 

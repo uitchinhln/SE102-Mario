@@ -22,6 +22,9 @@
 
 #include "BeginPortal.h"
 #include "EndPortal.h"
+#include "MovingPlatform.h"
+#include "FlyingRedKoopas.h"
+#include "BoomerangBrother.h"
 
 void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props)
 {
@@ -29,6 +32,8 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	if (strcmp(type, "SpawnPoint") == 0) {
 		RectF marioBox = mario->GetHitBox();
 		mario->SetPosition(fixedPos - Vec2(0, marioBox.bottom - marioBox.top));
+		camera->Position.x = props.GetFloat("cameraX");
+		camera->Position.y = props.GetFloat("cameraY");
 	}
 
 	//GameObjects
@@ -51,6 +56,11 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 		kp->SetPower(make_shared<DefRedKoopas>(kp));
 		SpawnEntity(kp, props);
 	}
+	if (strcmp(type, MEntityType::RedKoopasFlying.ToString().c_str()) == 0) {
+		shared_ptr<Koopas> kp = Koopas::CreateKoopas(fixedPos);
+		kp->SetPower(make_shared<FlyingRedKoopas>(kp, fixedPos, props.GetFloat("Range", 196.0f)));
+		SpawnEntity(kp, props);
+	}
 	if (strcmp(type, MEntityType::Venus.ToString().c_str()) == 0) {
 		SpawnEntity(Venus::CreateVenus(fixedPos), props);
 	}
@@ -59,6 +69,9 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	}
 	if (strcmp(type, MEntityType::Piranha.ToString().c_str()) == 0) {
 		SpawnEntity(Piranha::CreatePiranha(fixedPos), props);
+	}
+	if (strcmp(type, MEntityType::BoomerangBrother.ToString().c_str()) == 0) {
+		SpawnEntity(BoomerangBrother::CreateBoomerangBrother(fixedPos, props), props);
 	}
 	if (strcmp(type, MEntityType::EndmapReward.ToString().c_str()) == 0) {
 		SpawnEntity(EndmapReward::CreateEndmapReward(fixedPos), props);
@@ -77,6 +90,9 @@ void PlayScene::ObjectLoadEvent(const char* type, Vec2 fixedPos, Vec2 size, MapP
 	}
 	if (strcmp(type, MEntityType::Brick.ToString().c_str()) == 0) {
 		SpawnEntity(Coin::CreateCoin(fixedPos, CoinState::BRICK), props);
+	}
+	if (strcmp(type, MEntityType::MovingPlatform.ToString().c_str()) == 0) {
+		SpawnEntity(MovingPlatform::CreateMovingPlatform(fixedPos, size, props), props);
 	}
 
 	//MapObjects

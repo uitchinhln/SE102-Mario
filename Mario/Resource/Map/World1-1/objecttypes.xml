@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objecttypes>
+ <objecttype name="MovingPlatform" color="#a0a0a4"/>
  <objecttype name="BigMario" color="#a0a0a4">
   <property name="height" type="float" default="81"/>
   <property name="width" type="float" default="45"/>

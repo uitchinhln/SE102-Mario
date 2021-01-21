@@ -1,6 +1,7 @@
 ﻿#include "KeyboardProcessor.h"
 #include "Events.h"
 #include "SceneManager.h"
+#include "Game.h"
 
 void KeyboardProcessor::InitKeyboard(HWND hWnd)
 {
@@ -113,10 +114,10 @@ void KeyboardProcessor::ProcessKeyboard()
 			int KeyState = keyEvents[i].dwData;
 			if ((KeyState & 0x80) > 0)
 				//__raise (*Events::GetInstance()).KeyDownEvent(KeyCode);
-				SceneManager::GetInstance()->OnKeyDown(KeyCode);
+				CGame::GetInstance()->OnKeyDown(KeyCode);
 			else
 				//__raise (*Events::GetInstance()).KeyUpEvent(KeyCode);
-				SceneManager::GetInstance()->OnkeyUp(KeyCode);
+				CGame::GetInstance()->OnKeyUp(KeyCode);
 		}
 		catch (...) {
 		}

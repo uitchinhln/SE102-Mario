@@ -2,6 +2,10 @@
 #include "MEntityType.h"
 #include "SceneManager.h"
 #include "PlayerData.h"
+#include "GameEvent.h"
+#include "MSceneType.h"
+#include "MarioGame.h"
+#include "MainUI.h"
 
 MapGate::MapGate(int nodeId, string sceneID, string uncheck, string checked)
 {
@@ -87,15 +91,17 @@ ObjectType MapGate::GetObjectType()
 	return MEntityType::Node;
 }
 
-bool MapGate::CanTravel(shared_ptr<MapGate> currentStation, shared_ptr<PlayerData> data)
+bool MapGate::CanTravel(Direction direction, shared_ptr<PlayerData> data)
 {
 	return true;
 }
 
 void MapGate::Discover()
 {
-	if (sceneID.empty() || finish) return;
-	SceneManager::GetInstance()->ActiveScene(sceneID);
+	if (sceneID.empty()) return;
+	if (finish) return;
+
+	MarioGame::GetInstance()->GetMainUI()->OnPrePlaySceneBegin(nodeId, sceneID.c_str(), worldNumber);
 }
 
 bool MapGate::IsFinished()

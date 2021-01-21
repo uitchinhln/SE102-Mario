@@ -77,7 +77,7 @@ bool RaccoonMario::MiniJumpDetect(bool forceX)
 				m->SetOnGround(false);
 				m->SetJumpBeginPosition(m->GetPosition().y); 
 
-				SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetBoundingEdge(Direction::Top, 0.0f);
+				SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetLimitEdge(Direction::Top, 0.0f);
 
 				if (!flyTimer.IsRunning()) {
 					flyTimer.Restart();

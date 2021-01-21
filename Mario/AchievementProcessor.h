@@ -4,6 +4,7 @@
 
 class PlayerData;
 
+[event_receiver(native)]
 class AchievementProcessor
 {
 protected:

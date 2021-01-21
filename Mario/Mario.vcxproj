@@ -148,7 +148,12 @@
     <ClCompile Include="AttackablePower.cpp" />
     <ClCompile Include="BeginPortal.cpp" />
     <ClCompile Include="BigMario.cpp" />
+    <ClCompile Include="Boomerang.cpp" />
+    <ClCompile Include="BoomerangBrother.cpp" />
+    <ClCompile Include="BoomerangBrotherDeathFX.cpp" />
     <ClCompile Include="BrickDebrisFX.cpp" />
+    <ClCompile Include="CameraRegion.cpp" />
+    <ClCompile Include="CameraRegionGetSet.cpp" />
     <ClCompile Include="CardFX.cpp" />
     <ClCompile Include="CardSet.cpp" />
     <ClCompile Include="CardSlot.cpp" />
@@ -161,7 +166,9 @@
     <ClCompile Include="EffectServer.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
     <ClCompile Include="EndPortal.cpp" />
+    <ClCompile Include="FadeFX.cpp" />
     <ClCompile Include="FightProcessor.cpp" />
+    <ClCompile Include="FlyingRedKoopas.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="GameEnum.cpp" />
     <ClCompile Include="GameEvent.cpp" />
@@ -176,14 +183,19 @@
     <ClCompile Include="Hud.cpp" />
     <ClCompile Include="HudElement.cpp" />
     <ClCompile Include="HudPanel.cpp" />
+    <ClCompile Include="ICallbackEffect.cpp" />
     <ClCompile Include="IEffect.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
+    <ClCompile Include="IntroController.cpp" />
+    <ClCompile Include="IntroOriginalUpdate.cpp" />
     <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="JumpingKoopas.cpp" />
     <ClCompile Include="JumpingRedGoomba.cpp" />
     <ClCompile Include="Koopas.cpp" />
     <ClCompile Include="KoopasDieFX.cpp" />
     <ClCompile Include="MainUI.cpp" />
+    <ClCompile Include="MainUIRender.cpp" />
+    <ClCompile Include="MainUIUpdate.cpp" />
     <ClCompile Include="MapBlock.cpp" />
     <ClCompile Include="MapGate.cpp" />
     <ClCompile Include="MapProperties.cpp" />
@@ -195,6 +207,7 @@
     <ClCompile Include="MarioTailed.cpp" />
     <ClCompile Include="HitStarFX.cpp" />
     <ClCompile Include="MarioUtils.cpp" />
+    <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="MovingShell.cpp" />
     <ClCompile Include="ObjectType.cpp" />
     <ClCompile Include="FireMario.cpp" />
@@ -233,6 +246,7 @@
     <ClCompile Include="RaccoonLeaf.cpp" />
     <ClCompile Include="RaccoonMario.cpp" />
     <ClCompile Include="RayCast.cpp" />
+    <ClCompile Include="RectangleInFX.cpp" />
     <ClCompile Include="RectF.cpp" />
     <ClCompile Include="RedCrouchKoopas.cpp" />
     <ClCompile Include="RedGoomba.cpp" />
@@ -243,6 +257,7 @@
     <ClCompile Include="RedVenus.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="MSceneType.cpp" />
     <ClCompile Include="ScoreFX.cpp" />
     <ClCompile Include="ShrinkDownFX.cpp" />
     <ClCompile Include="Small.cpp" />
@@ -280,7 +295,11 @@
     <ClInclude Include="AttackablePower.h" />
     <ClInclude Include="BeginPortal.h" />
     <ClInclude Include="BigMario.h" />
+    <ClInclude Include="Boomerang.h" />
+    <ClInclude Include="BoomerangBrother.h" />
+    <ClInclude Include="BoomerangBrotherDeathFX.h" />
     <ClInclude Include="BrickDebrisFX.h" />
+    <ClInclude Include="CameraRegion.h" />
     <ClInclude Include="CardFX.h" />
     <ClInclude Include="CardSet.h" />
     <ClInclude Include="CardSlot.h" />
@@ -293,7 +312,9 @@
     <ClInclude Include="EffectServer.h" />
     <ClInclude Include="EndmapReward.h" />
     <ClInclude Include="EndPortal.h" />
+    <ClInclude Include="FadeFX.h" />
     <ClInclude Include="FightProcessor.h" />
+    <ClInclude Include="FlyingRedKoopas.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="GameEnum.h" />
     <ClInclude Include="GameEvent.h" />
@@ -308,8 +329,10 @@
     <ClInclude Include="Hud.h" />
     <ClInclude Include="HudElement.h" />
     <ClInclude Include="HudPanel.h" />
+    <ClInclude Include="ICallbackEffect.h" />
     <ClInclude Include="IEffect.h" />
     <ClInclude Include="IEnviroment.h" />
+    <ClInclude Include="IntroController.h" />
     <ClInclude Include="IntroScene.h" />
     <ClInclude Include="JumpingKoopas.h" />
     <ClInclude Include="JumpingRedGoomba.h" />
@@ -325,6 +348,7 @@
     <ClInclude Include="MarioTailed.h" />
     <ClInclude Include="HitStarFX.h" />
     <ClInclude Include="MarioUtils.h" />
+    <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="MovingShell.h" />
     <ClInclude Include="ObjectType.h" />
     <ClInclude Include="FireMario.h" />
@@ -397,6 +421,7 @@
     <ClInclude Include="rapidjson\stringbuffer.h" />
     <ClInclude Include="rapidjson\writer.h" />
     <ClInclude Include="RayCast.h" />
+    <ClInclude Include="RectangleInFX.h" />
     <ClInclude Include="RectF.h" />
     <ClInclude Include="RedCrouchKoopas.h" />
     <ClInclude Include="RedGoomba.h" />
@@ -407,6 +432,7 @@
     <ClInclude Include="RedVenus.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="MSceneType.h" />
     <ClInclude Include="ScoreFX.h" />
     <ClInclude Include="ShrinkDownFX.h" />
     <ClInclude Include="Small.h" />

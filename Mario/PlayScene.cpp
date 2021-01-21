@@ -4,10 +4,12 @@
 #include "Events.h"
 #include "GameEvent.h"
 #include "EffectServer.h"
+#include "MSceneType.h"
 
 #include "rapidjson/document.h"
 #include "PlaySceneFinishFX.h"
 #include "MarioGame.h"
+#include "MarioDeathFX.h"
 
 using namespace rapidjson;
 
@@ -15,9 +17,13 @@ void PlayScene::Load()
 {
 	HookEvent();
 
+	__hook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
+	__hook(&Events::MapReadEvent, Events::GetInstance(), &PlayScene::MapReadEvent);
+
 	MarioGame::GetInstance()->GetPlayerData()->RemainingTime = 300000;
 
 	this->mario = MarioGame::GetInstance()->GetMario();
+	this->mario->Reset();
 	this->mario->HookEvent();
 
 	TiXmlDocument doc(this->dataPath.c_str());
@@ -27,15 +33,12 @@ void PlayScene::Load()
 		return;
 	}
 
-	float left = 0, top = 0, bottom = 0, right = 0;
-	int startId = 0, id = 0;
-
 	TiXmlElement* root = doc.RootElement();
-	TiXmlElement* cameraConfig = root->FirstChildElement("Camera");
 
 	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
 
-	this->camera = make_shared<Camera>(camPos, camSize);
+	this->camera = make_shared<Camera>(camSize);
+	this->camera->LoadFromTMX(root->FirstChildElement("Camera"));
 	this->camera->SetTracking(mario);
 
 	this->gameMap = CGameMap::FromTMX(mapPath);
@@ -44,20 +47,10 @@ void PlayScene::Load()
 	Vec2 mapBound = gameMap->GetBound();
 	this->mario->MovingBound = RectF(0, -mapBound.y, mapBound.x, mapBound.y);
 
-
-	cameraConfig->QueryIntAttribute("start", &startId);
-	for (TiXmlElement* node = cameraConfig->FirstChildElement("Boundary"); node != nullptr; node = node->NextSiblingElement("Boundary"))
-	{
-		node->QueryIntAttribute("id", &id);
-		node->QueryFloatAttribute("left", &left);
-		node->QueryFloatAttribute("top", &top);
-		node->QueryFloatAttribute("right", &right);
-		node->QueryFloatAttribute("bottom", &bottom);
-		camera->AddBound(id, left, top, right, bottom);
-	}
-	camera->SetActiveBound(startId);
-
 	doc.Clear();
+
+	__unhook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
+	__unhook(&Events::MapReadEvent, Events::GetInstance(), &PlayScene::MapReadEvent);
 }
 
 void PlayScene::Unload()
@@ -150,6 +143,10 @@ void PlayScene::Update()
 	RemoveDespawnedObjects();
 
 	EffectServer::GetInstance()->Update();
+
+	if (MarioGame::GetInstance()->GetPlayerData()->RemainingTime < 0) {
+		mario->OnDeath();
+	}
 }
 
 void PlayScene::Render(D3DCOLOR overlay)
@@ -230,6 +227,11 @@ void PlayScene::SetSceneContentPath(string path)
 	this->dataPath = path;
 }
 
+ObjectType PlayScene::GetSceneType()
+{
+	return MSceneType::PlayScene;
+}
+
 void PlayScene::MapReadEvent(MapProperties& props)
 {
 	int cellW = props.GetInt("CellWidth");
@@ -247,12 +249,8 @@ PlayScene::~PlayScene()
 
 void PlayScene::HookEvent()
 {
-	__hook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
-	__hook(&Events::MapReadEvent, Events::GetInstance(), &PlayScene::MapReadEvent);
 }
 
 void PlayScene::UnhookEvent()
 {
-	__unhook(&Events::ObjectLoadEvent, Events::GetInstance(), &PlayScene::ObjectLoadEvent);
-	__unhook(&Events::MapReadEvent, Events::GetInstance(), &PlayScene::MapReadEvent);
 }

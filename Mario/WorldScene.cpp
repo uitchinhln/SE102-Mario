@@ -4,6 +4,8 @@
 #include "Mario.h"
 #include "Game.h"
 #include "TreeFX.h"
+#include "MSceneType.h"
+#include "MarioGame.h"
 
 void WorldScene::Load()
 {
@@ -56,42 +58,40 @@ void WorldScene::SetSceneContentPath(string path)
 		return;
 	}
 
-	HookEvent();
+	__hook(&Events::ObjectLoadEvent, Events::GetInstance(), &WorldScene::OnObjectLoad);
 
 	TiXmlElement* root = doc.RootElement();
-	TiXmlElement* cameraConfig = root->FirstChildElement("Camera");
 
 	string mapPath = root->FirstChildElement("TmxMap")->Attribute("path");
 
-	this->tinyMario = make_shared<TinyMario>();
-	this->tinyMario->HookEvent();
+	this->tinyMario = MarioGame::GetInstance()->GetTinyMario();
 
-	this->camera = make_shared<Camera>(camPos, camSize);
+	this->camera = make_shared<Camera>(camSize);
+	this->camera->LoadFromTMX(root->FirstChildElement("Camera"));
 	this->camera->SetTracking(tinyMario);
 
 	this->gameMap = CGameMap::FromTMX(mapPath);
 	this->gameMap->SetCamera(camera);
 
-	float left = 0, top = 0, bottom = 0, right = 0;
-	int startId = 0, id = 0;
-
-	cameraConfig->QueryIntAttribute("start", &startId);
-	for (TiXmlElement* node = cameraConfig->FirstChildElement("Boundary"); node != nullptr; node = node->NextSiblingElement("Boundary"))
-	{
-		node->QueryIntAttribute("id", &id);
-		node->QueryFloatAttribute("left", &left);
-		node->QueryFloatAttribute("top", &top);
-		node->QueryFloatAttribute("right", &right);
-		node->QueryFloatAttribute("bottom", &bottom);
-		camera->AddBound(id, left, top, right, bottom);
-	}
-	camera->SetActiveBound(startId);
-
 	doc.Clear();
+
+	__unhook(&Events::ObjectLoadEvent, Events::GetInstance(), &WorldScene::OnObjectLoad);
+}
+
+ObjectType WorldScene::GetSceneType()
+{
+	return MSceneType::Overworld;
 }
 
 void WorldScene::OnObjectLoad(const char* type, Vec2 fixedPos, Vec2 size, MapProperties& props)
 {
+	if (strcmp(type, "SpawnPoint") == 0) {
+		RectF marioBox = tinyMario->GetHitBox();
+		tinyMario->SetPosition(fixedPos - Vec2(0, marioBox.bottom - marioBox.top));
+
+		camera->Position.x = props.GetFloat("cameraX");
+		camera->Position.y = props.GetFloat("cameraY");
+	}
 	if (strcmp(type, MEntityType::Tree.ToString().c_str()) == 0) {
 		backgroundAnimations.SpawnEffect(make_shared<TreeFX>(fixedPos));
 		return;
@@ -118,11 +118,8 @@ void WorldScene::OnKeyUp(int key)
 
 void WorldScene::HookEvent()
 {
-	__hook(&Events::ObjectLoadEvent, Events::GetInstance(), &WorldScene::OnObjectLoad);
-
 }
 
 void WorldScene::UnhookEvent()
 {
-	__unhook(&Events::ObjectLoadEvent, Events::GetInstance(), &WorldScene::OnObjectLoad);
 }
