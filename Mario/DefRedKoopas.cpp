@@ -10,6 +10,8 @@
 #include "EffectServer.h"
 #include "ScoreFX.h"
 #include "GameEvent.h"
+#include "MarioGame.h"
+#include "Mario.h"
 
 
 DefRedKoopas::DefRedKoopas(shared_ptr<Koopas> koopas)
@@ -169,6 +171,28 @@ void DefRedKoopas::StatusUpdate()
 						}
 						else {
 							__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::MARIO_WEAPON, k->GetPosition(), k->GetObjectType());
+						}
+					}
+				}
+
+				if (coll->Object->GetObjectType() == MEntityType::Brick && coll->SAABBResult.Direction == Direction::Top) {
+					shared_ptr<Mario> mario = MarioGame::GetInstance()->GetMario();
+					if (mario->GetObjectType() != MEntityType::SmallMario && coll->Object->HasCollideWith(mario->GetID())) {
+						shared_ptr<CollisionResult> _rs = coll->Object->GetCollisionCalc()->Get(mario->GetID());
+						if (_rs->SAABBResult.Direction == Direction::Top) {
+							k->SetPower(make_shared<RedCrouchKoopas>(k, true));
+							k->SetVelocity(Vec2(jet.x * 0.1f, -0.65f));
+						}
+					}
+				}
+
+				if (coll->Object->GetObjectType() == MEntityType::QuestionBlock && coll->SAABBResult.Direction == Direction::Top) {
+					shared_ptr<Mario> mario = MarioGame::GetInstance()->GetMario();
+					if (coll->Object->GetCollisionCalc()->Has(mario->GetID())) {
+						shared_ptr<CollisionResult> _rs = coll->Object->GetCollisionCalc()->Get(mario->GetID());
+						if (_rs->SAABBResult.Direction == Direction::Top) {
+							k->SetPower(make_shared<RedCrouchKoopas>(k, true));
+							k->SetVelocity(Vec2(jet.x * 0.1f, -0.65f));
 						}
 					}
 				}

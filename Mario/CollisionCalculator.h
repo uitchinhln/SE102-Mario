@@ -22,6 +22,7 @@ public:
 	virtual bool BroadPhase(RectF movingBounding, Vec2 distance, RectF staticBounding);
 	virtual SweptCollisionResult SweptAABB(RectF movingBounding, Vec2 distance, RectF staticBounding, bool debug = false);
 	virtual bool Has(DWORD id);
+	virtual shared_ptr<CollisionResult> Get(DWORD id);
 
 protected:	
 	weak_ptr<GameObject> object;

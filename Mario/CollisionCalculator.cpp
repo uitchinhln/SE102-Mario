@@ -310,3 +310,8 @@ bool CollisionCalculator::Has(DWORD id)
 {
 	return key_results.size() > 0 && key_results.find(id) != key_results.end();
 }
+
+shared_ptr<CollisionResult> CollisionCalculator::Get(DWORD id)
+{
+	return key_results.at(id);
+}

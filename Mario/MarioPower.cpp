@@ -128,7 +128,7 @@ void MarioPower::StatusUpdate()
 
 				float damage = coll->Object->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
-					DebugOut(L"Velocity: %f\t%f\t%f\n", m->GetVelocity().x, m->GetVelocity().y, coll->SAABBResult.TimeToCollide);
+					//DebugOut(L"Velocity: %f\t%f\t%f\n", m->GetVelocity().x, m->GetVelocity().y, coll->SAABBResult.TimeToCollide);
 					m->OnDamaged(damage);
 				}
 				else {

@@ -6,7 +6,7 @@ GameObject::GameObject()
 {
 	tags = make_shared<DataTag>("root");
 	id = __id++;
-	DebugOut(L"Create new game object with id = %d\n", id);
+	//DebugOut(L"Create new game object with id = %d\n", id);
 	InitResource();
 }
 

@@ -11,6 +11,7 @@
 #include "KoopasDieFX.h"
 #include "ScoreFX.h"
 #include "GameEvent.h"
+#include "MarioGame.h"
 
 RedCrouchKoopas::RedCrouchKoopas(shared_ptr<Koopas> koopas, bool flip) : CrouchKoopas(koopas, flip)
 {
@@ -106,6 +107,26 @@ void RedCrouchKoopas::StatusUpdate()
 						break;
 					}
 					continue;
+				}
+
+				if (coll->Object->GetObjectType() == MEntityType::Brick && coll->SAABBResult.Direction == Direction::Top) {
+					shared_ptr<Mario> mario = MarioGame::GetInstance()->GetMario();
+					if (mario->GetObjectType() != MEntityType::SmallMario && coll->Object->HasCollideWith(mario->GetID())) {
+						shared_ptr<CollisionResult> _rs = coll->Object->GetCollisionCalc()->Get(mario->GetID());
+						if (_rs->SAABBResult.Direction == Direction::Top) {
+							k->SetVelocity(Vec2(jet.x * 0.1f, -0.65f));
+						}
+					}
+				}
+
+				if (coll->Object->GetObjectType() == MEntityType::QuestionBlock && coll->SAABBResult.Direction == Direction::Top) {
+					shared_ptr<Mario> mario = MarioGame::GetInstance()->GetMario();
+					if (coll->Object->GetCollisionCalc()->Has(mario->GetID())) {
+						shared_ptr<CollisionResult> _rs = coll->Object->GetCollisionCalc()->Get(mario->GetID());
+						if (_rs->SAABBResult.Direction == Direction::Top) {
+							k->SetVelocity(Vec2(jet.x * 0.1f, -0.65f));
+						}
+					}
 				}
 			}
 		}
