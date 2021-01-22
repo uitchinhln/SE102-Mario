@@ -47,7 +47,7 @@ void Hud::Update()
 
 	coin->SetContent(to_string(max(0, data->Coins)));
 
-	world->SetContent(to_string(max(0, data->World)));
+	world->SetContent(to_string(max(1, data->World)));
 
 	live->SetContent(to_string(max(0, data->Lives)));
 

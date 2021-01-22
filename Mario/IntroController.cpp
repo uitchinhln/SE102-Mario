@@ -12,6 +12,11 @@
 
 IntroController* IntroController::__instance = nullptr;
 
+void IntroController::Reset()
+{
+	step = 0;
+}
+
 void IntroController::Update()
 {
 	if (step == 0) {

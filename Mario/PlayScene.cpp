@@ -57,6 +57,7 @@ void PlayScene::Unload()
 {
 	UnhookEvent();
 	this->mario->UnHookEvent();
+	this->mario->SetPowerMeter(0);
 
 	this->objectList.clear();
 	this->objects.clear();

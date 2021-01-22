@@ -91,7 +91,14 @@ void QuestionBlock::StatusUpdate()
 {
 	if (state == QuestionBlockStates::Gifting) {
 
-		state = QuestionBlockStates::Unavailable;
+		amount--;
+		
+		if (amount < 1) {
+			state = QuestionBlockStates::Unavailable;
+		}
+		else {
+			state = QuestionBlockStates::Available;
+		}
 
 		if (reward == MEntityType::QuestionCoin) return;
 
@@ -188,6 +195,7 @@ shared_ptr<QuestionBlock> QuestionBlock::CreateQuestionBlock(Vec2 fixedPos, MapP
 	shared_ptr<QuestionBlock> block = make_shared<QuestionBlock>();
 	block->SetCollisionCalculator(make_shared<CollisionCalculator>(block));
 	block->SetPosition(Vec2(fixedPos.x, fixedPos.y));
+	block->amount = props.GetInt("Amount", 1);
 	block->activeState = props.GetBool("AsBrick", false) ? QuestionBlockActiveStates::GlassBrick : QuestionBlockActiveStates::Question;
 
 	string rwType = props.GetText("HiddenItem", "QuestionCoin");

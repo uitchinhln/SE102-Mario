@@ -131,7 +131,7 @@ void BoomerangBrother::Update()
 		}
 	}
 
-	if (step == 0) {
+	if (step == 0 || step == 2) {
 		if (abs(Position.x - rootPos.x) < 3) {
 			if (rand() % 3 == 0) {
 				Velocity.y -= 0.5f;
@@ -146,10 +146,10 @@ void BoomerangBrother::Update()
 			}
 
 			timer.Restart();
-			step = 1;
+			step++;
 		}
 	}
-	else if (step == 1) {
+	else if (step == 1 || step == 3) {
 		if (timer.Elapsed() > 300) {
 			
 			if (state == BoomerangBrotherState::ATTACKING && GetInCamera) {
@@ -164,9 +164,18 @@ void BoomerangBrother::Update()
 				}
 			}
 
-			timer.Stop();
-			timer.Reset();
-			step = 0;
+			if (step == 3) {
+				if (timer.Elapsed() > 3000) {
+					timer.Stop();
+					timer.Reset();
+					step = 0;
+				}
+			}
+			else {
+				timer.Stop();
+				timer.Reset();
+				step = 2;
+			}
 		}
 	}
 

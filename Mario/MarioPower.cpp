@@ -37,7 +37,7 @@ void MarioPower::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
-		m->GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
+		m->GetCollisionCalc()->CalcPotentialCollisions(coObj, true);
 		//Raycast here
 	}
 }
@@ -128,6 +128,7 @@ void MarioPower::StatusUpdate()
 
 				float damage = coll->Object->GetDamageFor(*m, coll->SAABBResult.Direction);
 				if (damage > 0) {
+					DebugOut(L"Velocity: %f\t%f\t%f\n", m->GetVelocity().x, m->GetVelocity().y, coll->SAABBResult.TimeToCollide);
 					m->OnDamaged(damage);
 				}
 				else {

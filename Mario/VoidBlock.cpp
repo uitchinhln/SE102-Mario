@@ -28,6 +28,7 @@ float VoidBlock::GetDamageFor(GameObject& object, Direction direction)
 shared_ptr<VoidBlock> VoidBlock::CreateVoidBlock(Vec2 fixPos, Vec2 size)
 {
 	shared_ptr<VoidBlock> block = make_shared<VoidBlock>();
+	block->Reset();
 	block->SetPosition(Vec2(fixPos.x, fixPos.y));
 	block->size = size;
 	return block;

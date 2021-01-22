@@ -28,6 +28,7 @@ float SolidBlock::GetDamageFor(GameObject& object, Direction direction)
 shared_ptr<SolidBlock> SolidBlock::CreateSolidBlock(Vec2 fixedPos, Vec2 size)
 {
 	shared_ptr<SolidBlock> block = make_shared<SolidBlock>();
+	block->Reset();
 	block->SetPosition(Vec2(fixedPos.x, fixedPos.y));
 	block->size = size;
 	return block;

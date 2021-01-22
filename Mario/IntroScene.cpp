@@ -16,6 +16,8 @@ void IntroScene::Load()
 {
 	__hook(&Events::ObjectLoadEvent, Events::GetInstance(), &IntroScene::ObjectLoadEvent);
 
+	IntroController::GetInstance()->Reset();
+
 	TiXmlDocument doc(this->dataPath.c_str());
 
 	if (!doc.LoadFile()) {

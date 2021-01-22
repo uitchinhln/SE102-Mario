@@ -48,7 +48,9 @@ ObjectType Small::GetMarioType()
 void Small::OnDamaged(float damage)
 {
 	if (shared_ptr<Mario> m = mario.lock()) {
-		m->OnDeath();
+		if (damage > 0) {
+			m->OnDeath();
+		}
 	}
 }
 

@@ -14,6 +14,8 @@ private:
 	IntroScene* scene;
 
 public:
+	void Reset();
+
 	void Update();
 
 	void SetStep(int value);

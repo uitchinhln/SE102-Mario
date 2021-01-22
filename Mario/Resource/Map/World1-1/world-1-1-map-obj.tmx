@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="361">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="176" height="41" tilewidth="48" tileheight="48" infinite="0" backgroundcolor="#b5ebf2" nextlayerid="25" nextobjectid="362">
  <editorsettings>
   <chunksize width="8" height="8"/>
   <export target="world-1-1-map.xml" format="tmx"/>
@@ -810,7 +810,7 @@
    </properties>
    <point/>
   </object>
-  <object id="327" type="SpawnPoint" x="98" y="1245">
+  <object id="327" type="SpawnPoint" x="96" y="1151">
    <point/>
   </object>
   <object id="328" type="EndPortal" x="6284.33" y="1392" width="7.33333" height="96">

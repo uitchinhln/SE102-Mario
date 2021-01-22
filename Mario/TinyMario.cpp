@@ -54,9 +54,12 @@ void TinyMario::Update()
         Vec2 distance = Position - targetPosition;
         Vec2 direction = Vec2Utils::Normalize(distance);
 
-        Position -= direction * 0.5 * CGame::Time().ElapsedGameTime;
+        Position -= direction * 0.3 * CGame::Time().ElapsedGameTime;
 
-        if (abs(distance.x) < 3 && abs(distance.y) < 3) {
+		RectF targetHitBox = RectF(targetPosition.x + 23, targetPosition.y + 23, targetPosition.x + 25, targetPosition.y + 25);
+		RectF myHitBox = RectF(Position.x + 21, Position.y + 21, Position.x + 27, Position.y + 27);
+
+        if (CollisionCalculator::CommonAABB(myHitBox, targetHitBox)) {
             Position = targetPosition;
             currentStation = targetStation;
             moveStep = 0;

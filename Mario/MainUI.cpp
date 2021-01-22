@@ -4,6 +4,7 @@
 #include "GameEvent.h"
 #include "RectangleInFX.h"
 #include "FadeFX.h"
+#include "LifeDialog.h"
 
 MainUI::MainUI()
 {
@@ -119,6 +120,10 @@ void MainUI::OnSceneChange(const char* file, SceneType type)
 	switch (type)
 	{
 	case SceneType::INTRO:
+		fullViewEffect->SpawnEffect(make_shared<FadeFX>(fullView->GetScissorRect(), 1000, [](long playTime) {
+			SceneManager::GetInstance()->ActiveScene("intro");
+			MarioGame::GetInstance()->SetGameState(GameState::GAME_INTRO);
+			}));
 		break;
 	case SceneType::MENU:
 		break;
@@ -126,6 +131,7 @@ void MainUI::OnSceneChange(const char* file, SceneType type)
 		fullViewEffect->SpawnEffect(make_shared<FadeFX>(fullView->GetScissorRect(), 1000, [](long playTime) {
 			SceneManager::GetInstance()->ActiveScene("overworld");
 			MarioGame::GetInstance()->SetGameState(GameState::GAME_WORLDMAP);
+			MarioGame::GetInstance()->GetMainUI()->ActiveDialog(make_shared<LifeDialog>(2000));
 			}));
 		break;
 	case SceneType::PLAYSCENE:

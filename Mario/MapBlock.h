@@ -4,6 +4,8 @@ class MapBlock :
     public GameObject
 {
 public:
+	MapBlock();
+
     virtual void Update() override;
 
     virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;

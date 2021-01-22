@@ -90,6 +90,7 @@ public:
 	virtual void InitResource() override;
 
 	virtual void SetPowerUp(shared_ptr<MarioPower> power);
+	virtual void SetPowerUp(ObjectType power);
 
 	virtual void OverlapUpdate();
 	virtual void OverlapUpdateOriginal();

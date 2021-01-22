@@ -304,6 +304,12 @@
     <Filter Include="MarioGame\UI\Dialogs\MenuDialog">
       <UniqueIdentifier>{ca3f6f2e-6294-4013-b6ac-b28f1d984e10}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\UI\Dialogs\LifeDialog">
+      <UniqueIdentifier>{9012c4b7-d67a-4c9d-9e94-2a436c5e5bca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\UI\Dialogs\GameOverDialog">
+      <UniqueIdentifier>{e4622fb5-4122-49fb-bfc3-8c9733934351}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -759,6 +765,10 @@
     <ClCompile Include="MenuDialog.cpp">
       <Filter>MarioGame\UI\Dialogs\MenuDialog</Filter>
     </ClCompile>
+    <ClCompile Include="LifeDialog.cpp">
+      <Filter>MarioGame\UI\Dialogs\LifeDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverDialog.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -1289,5 +1299,9 @@
     <ClInclude Include="MenuDialog.h">
       <Filter>MarioGame\UI\Dialogs\MenuDialog</Filter>
     </ClInclude>
+    <ClInclude Include="LifeDialog.h">
+      <Filter>MarioGame\UI\Dialogs\LifeDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverDialog.h" />
   </ItemGroup>
 </Project>

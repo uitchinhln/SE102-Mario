@@ -5,6 +5,8 @@
 #include "RectangleInFX.h"
 #include "FadeFX.h"
 #include "PlaySceneFinishFX.h"
+#include "LifeDialog.h"
+#include "GameOverDialog.h"
 
 void MainUI::GameStartUpdate()
 {
@@ -14,6 +16,7 @@ void MainUI::GameStartUpdate()
 void MainUI::GameIntroUpdate()
 {
 	SceneManager::GetInstance()->Update();
+	MarioGame::GetInstance()->GetPlayerData()->Lives = 4;
 }
 
 void MainUI::GameMenuUpdate()
@@ -57,6 +60,12 @@ void MainUI::GamePlayUpdate(GameState state)
 				MarioGame::GetInstance()->SetGameState(GameState::GAME_WORLDMAP);
 				MarioGame::GetInstance()->GetPlayerData()->Power = MEntityType::SmallMario;
 				MarioGame::GetInstance()->GetPlayerData()->Lives -= 1;
+				if (MarioGame::GetInstance()->GetPlayerData()->Lives >= 0) {
+					MarioGame::GetInstance()->GetMainUI()->ActiveDialog(make_shared<LifeDialog>(2000));
+				}
+				else {
+					MarioGame::GetInstance()->GetMainUI()->ActiveDialog(make_shared<GameOverDialog>());
+				}
 				}));
 		}
 		else {

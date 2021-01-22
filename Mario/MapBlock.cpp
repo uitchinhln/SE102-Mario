@@ -1,5 +1,10 @@
 #include "MapBlock.h"
 
+MapBlock::MapBlock()
+{
+	Reset();
+}
+
 void MapBlock::Update()
 {
 }

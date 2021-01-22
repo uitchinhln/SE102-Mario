@@ -95,6 +95,7 @@ void Mario::OnKeyDown(int key)
 
 void Mario::OnDamaged(float damage)
 {
+	DebugOut(L"damage: %f\n", damage);
 	if (invulnerable > 0) return;
 	shared_ptr<MarioPower> p = power;
 	p->OnDamaged(damage);
@@ -159,6 +160,9 @@ void Mario::Reset()
 	raycaster->Clear();
 	Gravity = 0.00093f;
 	renderOrder = 1001;
+	power.reset();
+	SetPowerUp(MarioGame::GetInstance()->GetPlayerData()->Power);
+	collisionCal->Clear();
 }
 
 void Mario::SetPowerUp(shared_ptr<MarioPower> power)
@@ -196,6 +200,22 @@ void Mario::SetPowerUp(shared_ptr<MarioPower> power)
 	Visible = false;
 	freezeTimer.Restart();
 	CGame::GetInstance()->SetTimeScale(0.0f);
+}
+
+void Mario::SetPowerUp(ObjectType power)
+{
+	if (power == MEntityType::SmallMario) {
+		this->power = make_shared<Small>(MarioGame::GetInstance()->GetMario());
+	} 
+	else if (power == MEntityType::BigMario) {
+		this->power = make_shared<BigMario>(MarioGame::GetInstance()->GetMario());
+	} 
+	else if (power == MEntityType::RaccoonMario) {
+		this->power = make_shared<RaccoonMario>(MarioGame::GetInstance()->GetMario());
+	}
+	else if (power == MEntityType::FireMario) {
+		this->power = make_shared<FireMario>(MarioGame::GetInstance()->GetMario());
+	}
 }
 
 void Mario::InitResource()
