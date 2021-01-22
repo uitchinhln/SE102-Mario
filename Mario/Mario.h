@@ -77,6 +77,8 @@ protected:
 
 	shared_ptr<RayCast> raycaster;
 
+	BYTE keyState[255];
+
 public:
 	RectF MovingBound;
 

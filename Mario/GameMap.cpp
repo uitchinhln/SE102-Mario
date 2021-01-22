@@ -70,6 +70,11 @@ void CGameMap::Render(D3DCOLOR overlay)
 	//DebugOut(L"Render: \t%d\n", std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 }
 
+void CGameMap::SetBackgroundColor(D3DCOLOR color)
+{
+	this->backgroundColor = color;
+}
+
 shared_ptr<CGameMap> CGameMap::FromTMX(string filePath)
 {
 	TiXmlDocument doc(filePath.c_str());

@@ -22,6 +22,9 @@ public:
 	void Update() override;
 
 
+	void SetBackgroundColor(D3DCOLOR color);
+
+
 	void OriginalRender(D3DCOLOR overlay);
 
 	void Render(D3DCOLOR overlay) override;

@@ -20,6 +20,10 @@ public:
 
 	void SetScene(IntroScene* scene);
 
+	IntroScene* GetScene();
+
 	static IntroController* GetInstance();
+
+	Mario* mario1, *mario2;
 };
 

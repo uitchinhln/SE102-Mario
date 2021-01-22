@@ -160,9 +160,11 @@
     <ClCompile Include="Coin.cpp" />
     <ClCompile Include="CoinFX.cpp" />
     <ClCompile Include="CrouchKoopas.cpp" />
+    <ClCompile Include="CurtainFX.cpp" />
     <ClCompile Include="DefaultKoopas.cpp" />
     <ClCompile Include="DefaultRedGoomba.cpp" />
     <ClCompile Include="DefRedKoopas.cpp" />
+    <ClCompile Include="Dialog.cpp" />
     <ClCompile Include="EffectServer.cpp" />
     <ClCompile Include="EndmapReward.cpp" />
     <ClCompile Include="EndPortal.cpp" />
@@ -207,6 +209,7 @@
     <ClCompile Include="MarioTailed.cpp" />
     <ClCompile Include="HitStarFX.cpp" />
     <ClCompile Include="MarioUtils.cpp" />
+    <ClCompile Include="MenuDialog.cpp" />
     <ClCompile Include="MovingPlatform.cpp" />
     <ClCompile Include="MovingShell.cpp" />
     <ClCompile Include="ObjectType.cpp" />
@@ -270,6 +273,7 @@
     <ClCompile Include="StopWatch.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="ThreeFX.cpp" />
     <ClCompile Include="TileSet.cpp" />
     <ClCompile Include="GameTime.cpp" />
     <ClCompile Include="TinyMario.cpp" />
@@ -281,6 +285,8 @@
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TransformFX.cpp" />
     <ClCompile Include="TreeFX.cpp" />
+    <ClCompile Include="TreeLeft.cpp" />
+    <ClCompile Include="TreeRight.cpp" />
     <ClCompile Include="UIComponents.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Vec2Utils.cpp" />
@@ -306,9 +312,11 @@
     <ClInclude Include="Coin.h" />
     <ClInclude Include="CoinFX.h" />
     <ClInclude Include="CrouchKoopas.h" />
+    <ClInclude Include="CurtainFX.h" />
     <ClInclude Include="DefaultKoopas.h" />
     <ClInclude Include="DefaultRedGoomba.h" />
     <ClInclude Include="DefRedKoopas.h" />
+    <ClInclude Include="Dialog.h" />
     <ClInclude Include="EffectServer.h" />
     <ClInclude Include="EndmapReward.h" />
     <ClInclude Include="EndPortal.h" />
@@ -348,6 +356,7 @@
     <ClInclude Include="MarioTailed.h" />
     <ClInclude Include="HitStarFX.h" />
     <ClInclude Include="MarioUtils.h" />
+    <ClInclude Include="MenuDialog.h" />
     <ClInclude Include="MovingPlatform.h" />
     <ClInclude Include="MovingShell.h" />
     <ClInclude Include="ObjectType.h" />
@@ -445,6 +454,7 @@
     <ClInclude Include="StopWatch.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="ThreeFX.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="GameTime.h" />
     <ClInclude Include="TinyMario.h" />
@@ -453,6 +463,8 @@
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TransformFX.h" />
     <ClInclude Include="TreeFX.h" />
+    <ClInclude Include="TreeLeft.h" />
+    <ClInclude Include="TreeRight.h" />
     <ClInclude Include="UIComponents.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Vec2Utils.h" />

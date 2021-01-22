@@ -39,6 +39,8 @@ public:
 
 	virtual void Render(D3DCOLOR overlay);
 
+	virtual void SetBackgroundColor(D3DCOLOR color);
+
 	static shared_ptr<CGameMap> FromTMX(string filePath);
 	~CGameMap();
 };

@@ -49,6 +49,10 @@ void MainUI::Update()
 		break;
 	}
 
+	if (dialog != nullptr) {
+		dialog->Update();
+	}
+
 	hud->Update();
 	worldViewEffect->Update();
 	hudViewEffect->Update();
@@ -83,6 +87,10 @@ void MainUI::Render()
 		GamePlayRender(state);
 		break;
 	}
+
+	if (dialog != nullptr) {
+		dialog->Render(D3DCOLOR_ARGB(255, 255, 255, 255));
+	}
 }
 
 void MainUI::CreateHUD(TiXmlElement* node)
@@ -96,9 +104,37 @@ void MainUI::CreateHUD(TiXmlElement* node)
 	hud = make_shared<Hud>(path, pos, Vec2(769, 142));
 }
 
+void MainUI::ActiveDialog(shared_ptr<Dialog> dialog)
+{
+	this->dialog = dialog;
+}
+
+void MainUI::DeactiveDialog()
+{
+	this->dialog.reset();
+}
+
 void MainUI::OnSceneChange(const char* file, SceneType type)
 {
-
+	switch (type)
+	{
+	case SceneType::INTRO:
+		break;
+	case SceneType::MENU:
+		break;
+	case SceneType::WORLDMAP:
+		fullViewEffect->SpawnEffect(make_shared<FadeFX>(fullView->GetScissorRect(), 1000, [](long playTime) {
+			SceneManager::GetInstance()->ActiveScene("overworld");
+			MarioGame::GetInstance()->SetGameState(GameState::GAME_WORLDMAP);
+			}));
+		break;
+	case SceneType::PLAYSCENE:
+		break;
+	case SceneType::GAMEOVER:
+		break;
+	default:
+		break;
+	}
 }
 
 void MainUI::OnGameStateChange(const char* file, GameState current, GameState next)
@@ -133,10 +169,20 @@ void MainUI::OnPlaySceneEnd(const char* file, SceneResult result, CardType rewar
 
 void MainUI::OnKeyUp(int keycode)
 {
-	SceneManager::GetInstance()->OnkeyUp(keycode);
+	if (dialog != nullptr) {
+		dialog->OnKeyUp(keycode);
+	}
+	else {
+		SceneManager::GetInstance()->OnkeyUp(keycode);
+	}
 }
 
 void MainUI::OnKeyDown(int keycode)
 {
-	SceneManager::GetInstance()->OnKeyDown(keycode);
+	if (dialog != nullptr) {
+		dialog->OnKeyDown(keycode);
+	}
+	else {
+		SceneManager::GetInstance()->OnKeyDown(keycode);
+	}
 }

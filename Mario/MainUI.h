@@ -3,6 +3,7 @@
 #include "Hud.h"
 #include "GameEnum.h"
 #include "EffectServer.h"
+#include "Dialog.h"
 
 class PlaySceneFinishFX;
 
@@ -29,6 +30,10 @@ public:
 	void GameOverRender();
 
 	virtual void CreateHUD(TiXmlElement* node);
+
+	virtual void ActiveDialog(shared_ptr<Dialog> dialog);
+
+	virtual void DeactiveDialog();
 
 	void OnSceneChange(const char* file, SceneType type);
 
@@ -59,5 +64,7 @@ protected:
 
 	CardType reward = CardType::EMPTY;
 	shared_ptr<PlaySceneFinishFX> playsceneFinishFX;
+
+	shared_ptr<Dialog> dialog;
 };
 

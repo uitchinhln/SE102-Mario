@@ -10,6 +10,8 @@ protected:
 
     long playTime = 0;
 
+    bool called = false;
+
 public:
     ICallbackEffect(Vec2 pos, long playTime, function<void(long)> callback);
 

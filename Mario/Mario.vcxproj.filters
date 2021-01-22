@@ -289,6 +289,21 @@
     <Filter Include="MarioGame\Scenes\Intro\Controller">
       <UniqueIdentifier>{5087b77b-3ba3-49b7-bc0f-6bf2891e6f23}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Effects\IntroScreenEffects">
+      <UniqueIdentifier>{eb554604-4b37-43a9-b7cb-3a6bcf13c378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\IntroScreenEffects\CurtainFX">
+      <UniqueIdentifier>{6cffdc05-096d-4298-9b2f-27588bb438d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Effects\IntroScreenEffects\ThreeFX">
+      <UniqueIdentifier>{5f605f6f-3279-433e-8936-368b55649647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\MapBlock\Tree">
+      <UniqueIdentifier>{de2ce6b8-9bc8-4361-b8b0-756c8f602677}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\UI\Dialogs\MenuDialog">
+      <UniqueIdentifier>{ca3f6f2e-6294-4013-b6ac-b28f1d984e10}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -725,6 +740,24 @@
     </ClCompile>
     <ClCompile Include="IntroController.cpp">
       <Filter>MarioGame\Scenes\Intro\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="CurtainFX.cpp">
+      <Filter>MarioGame\Effects\IntroScreenEffects\CurtainFX</Filter>
+    </ClCompile>
+    <ClCompile Include="ThreeFX.cpp">
+      <Filter>MarioGame\Effects\IntroScreenEffects\ThreeFX</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeLeft.cpp">
+      <Filter>MarioGame\Entity\MapBlock\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="TreeRight.cpp">
+      <Filter>MarioGame\Entity\MapBlock\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog.cpp">
+      <Filter>MarioGame\UI\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="MenuDialog.cpp">
+      <Filter>MarioGame\UI\Dialogs\MenuDialog</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1237,6 +1270,24 @@
     </ClInclude>
     <ClInclude Include="IntroController.h">
       <Filter>MarioGame\Scenes\Intro\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="CurtainFX.h">
+      <Filter>MarioGame\Effects\IntroScreenEffects\CurtainFX</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreeFX.h">
+      <Filter>MarioGame\Effects\IntroScreenEffects\ThreeFX</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeLeft.h">
+      <Filter>MarioGame\Entity\MapBlock\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="TreeRight.h">
+      <Filter>MarioGame\Entity\MapBlock\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialog.h">
+      <Filter>MarioGame\UI\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuDialog.h">
+      <Filter>MarioGame\UI\Dialogs\MenuDialog</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
