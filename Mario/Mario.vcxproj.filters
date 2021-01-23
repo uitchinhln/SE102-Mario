@@ -79,9 +79,6 @@
     <Filter Include="MarioGame\Entity\LivingEntity\Mario\PowerUp">
       <UniqueIdentifier>{8fdccc8c-35ba-4469-92e5-f2dbe1a8bcf2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons">
-      <UniqueIdentifier>{fe600c92-34af-4ec1-8c42-94c7cad9c2b6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MarioGame\Entity\LivingEntity\Goomba">
       <UniqueIdentifier>{24ad6102-646f-40d4-81f7-da8f69d4d463}</UniqueIdentifier>
     </Filter>
@@ -310,6 +307,15 @@
     <Filter Include="MarioGame\UI\Dialogs\GameOverDialog">
       <UniqueIdentifier>{e4622fb5-4122-49fb-bfc3-8c9733934351}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Mario\Keyboard">
+      <UniqueIdentifier>{9ef5b5e3-5296-45c3-9ac1-89b8bb8afd54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Mario\Luigi">
+      <UniqueIdentifier>{853e8a6b-db5b-4766-8bf6-36c1d2b5fd1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MarioGame\Entity\LivingEntity\Mario\Commons">
+      <UniqueIdentifier>{fe600c92-34af-4ec1-8c42-94c7cad9c2b6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -436,7 +442,7 @@
       <Filter>MarioGame\Entity\LivingEntity\Mario\ProjectTile</Filter>
     </ClCompile>
     <ClCompile Include="AttackablePower.cpp">
-      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
+      <Filter>MarioGame\Entity\LivingEntity\Mario\Commons</Filter>
     </ClCompile>
     <ClCompile Include="Goomba.cpp">
       <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
@@ -613,7 +619,7 @@
       <Filter>MarioGame\Utils</Filter>
     </ClCompile>
     <ClCompile Include="MarioPower.cpp">
-      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
+      <Filter>MarioGame\Entity\LivingEntity\Mario\Commons</Filter>
     </ClCompile>
     <ClCompile Include="GameEvent.cpp">
       <Filter>MarioGame\Event</Filter>
@@ -768,7 +774,27 @@
     <ClCompile Include="LifeDialog.cpp">
       <Filter>MarioGame\UI\Dialogs\LifeDialog</Filter>
     </ClCompile>
-    <ClCompile Include="GameOverDialog.cpp" />
+    <ClCompile Include="GameOverDialog.cpp">
+      <Filter>MarioGame\UI\Dialogs\GameOverDialog</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioKeyboard.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="MarioKeyListen.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroMarioUpdate.cpp">
+      <Filter>MarioGame\Scenes\Intro\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroLuigiUpdate.cpp">
+      <Filter>MarioGame\Scenes\Intro\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="BigLuigi.cpp">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\Luigi</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroItemUpdate.cpp">
+      <Filter>MarioGame\Scenes\Intro\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -889,7 +915,7 @@
       <Filter>MarioGame\Entity\LivingEntity\Mario\ProjectTile</Filter>
     </ClInclude>
     <ClInclude Include="AttackablePower.h">
-      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
+      <Filter>MarioGame\Entity\LivingEntity\Mario\Commons</Filter>
     </ClInclude>
     <ClInclude Include="Goomba.h">
       <Filter>MarioGame\Entity\LivingEntity\Goomba</Filter>
@@ -1171,7 +1197,7 @@
       <Filter>MarioGame\Utils</Filter>
     </ClInclude>
     <ClInclude Include="MarioPower.h">
-      <Filter>MarioGame\Entity\LivingEntity\Mario\PowerUp\Commons</Filter>
+      <Filter>MarioGame\Entity\LivingEntity\Mario\Commons</Filter>
     </ClInclude>
     <ClInclude Include="GameEvent.h">
       <Filter>MarioGame\Event</Filter>
@@ -1302,6 +1328,14 @@
     <ClInclude Include="LifeDialog.h">
       <Filter>MarioGame\UI\Dialogs\LifeDialog</Filter>
     </ClInclude>
-    <ClInclude Include="GameOverDialog.h" />
+    <ClInclude Include="GameOverDialog.h">
+      <Filter>MarioGame\UI\Dialogs\GameOverDialog</Filter>
+    </ClInclude>
+    <ClInclude Include="MarioKeyboard.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="BigLuigi.h">
+      <Filter>MarioGame\Entity\LivingEntity\Mario\Luigi</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

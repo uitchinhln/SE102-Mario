@@ -14,6 +14,16 @@ AchievementProcessor::AchievementProcessor(shared_ptr<PlayerData> data)
 	__hook(&GameEvent::PlayerLifeChangeEvent, GameEvent::GetInstance(), &AchievementProcessor::OnPlayerLifeChange);
 }
 
+void AchievementProcessor::SetEnable(bool value)
+{
+	this->enable = value;
+}
+
+bool AchievementProcessor::IsEnable()
+{
+	return enable;
+}
+
 void AchievementProcessor::OnPlayerCoinChange(const char* file, int amount)
 {
 	data->Coins += amount;
@@ -21,6 +31,7 @@ void AchievementProcessor::OnPlayerCoinChange(const char* file, int amount)
 
 void AchievementProcessor::OnPlayerScoreChange(const char* file, Score score, Vec2 Position, ScoreSource reason)
 {
+	if (!enable) return;
 	data->Score += (int)score;
 
 	if (reason == ScoreSource::QUESTION_BLOCK) {
@@ -33,6 +44,7 @@ void AchievementProcessor::OnPlayerScoreChange(const char* file, Score score, Ve
 
 void AchievementProcessor::OnPlayerLifeChange(const char* file, Vec2 Position)
 {
+	if (!enable) return;
 	data->Lives += 1;
 	EffectServer::GetInstance()->SpawnEffect(make_shared<ScoreFX>(Position + Vec2(0, 30), Score::S1UP));
 }

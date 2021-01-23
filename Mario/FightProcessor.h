@@ -15,8 +15,14 @@ protected:
 
 	Score lastScore;
 
+	bool enable = true;
+
 public:
 	FightProcessor(shared_ptr<PlayerData> data);
+
+	void SetEnable(bool value);
+
+	bool IsEnable();
 
 	void OnEnemyDamaged(const char* file, DamgeSource source, Vec2 Position, ObjectType& victimType);
 

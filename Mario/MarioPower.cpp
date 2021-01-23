@@ -113,10 +113,10 @@ void MarioPower::StatusUpdate()
 
 			if (MEntityType::IsEnemy(coll->Object->GetObjectType())) {
 				if (coll->Object->GetObjectType() == MEntityType::KoopasCrouch && coll->SAABBResult.Direction != Direction::Top) {
-					KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+					
 					shared_ptr<Koopas> koopas = dynamic_pointer_cast<Koopas>(coll->Object);
 
-					if (keyboard.IsKeyDown(DIK_A) && !m->GetInhand()) {
+					if (m->GetKeyboard()->IsKeyDown(DIK_A) && !m->GetInhand()) {
 						m->SetInhand(koopas);
 						koopas->SetHolder(m);
 						continue;
@@ -134,7 +134,8 @@ void MarioPower::StatusUpdate()
 				else {
 					if (!coll->Object->IsGetThrough(*m, coll->SAABBResult.Direction) && coll->SAABBResult.Direction == Direction::Top) {
 						if (coll->Object->GetObjectType() != MEntityType::KoopasCrouch) {
-							MiniJumpDetect(true);
+							//MiniJumpDetect(true);
+							m->GetVelocity().y = -0.4;
 						}
 					}
 				}
@@ -152,15 +153,14 @@ void MarioPower::StatusUpdate()
 }
 
 void MarioPower::MoveProcess()
-{
-	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+{	
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (m->IsControllerLocked()) return;
 
-		if (keyboard.IsKeyDown(DIK_LEFT) || keyboard.IsKeyDown(DIK_RIGHT)) {
-			int keySign = keyboard.IsKeyDown(DIK_LEFT) ? -1 : 1;
+		if (m->GetKeyboard()->IsKeyDown(DIK_LEFT) || m->GetKeyboard()->IsKeyDown(DIK_RIGHT)) {
+			int keySign = m->GetKeyboard()->IsKeyDown(DIK_LEFT) ? -1 : 1;
 
 			if (m->IsOnGround()) {
 				m->SetMovingState(MovingStates::WALK);
@@ -168,7 +168,7 @@ void MarioPower::MoveProcess()
 			m->GetAccelerate().x = MARIO_WALK_ACCELERATION * keySign;
 			float maxSpeed = MARIO_WALK_SPEED;
 
-			if (keyboard.IsKeyDown(DIK_A)) {
+			if (m->GetKeyboard()->IsKeyDown(DIK_A)) {
 				if (m->IsOnGround()) {
 					m->SetMovingState(MovingStates::RUN);
 				}
@@ -179,7 +179,7 @@ void MarioPower::MoveProcess()
 			//skid start detect
 			if (m->GetVelocity().x * keySign < 0) {
 				m->SetSkid(1);
-				m->GetAccelerate().x = (keyboard.IsKeyDown(DIK_A) ? MARIO_SKID_ACCELERATION : MARIO_SKID_ACCELERATION * 0.5) * keySign;
+				m->GetAccelerate().x = (m->GetKeyboard()->IsKeyDown(DIK_A) ? MARIO_SKID_ACCELERATION : MARIO_SKID_ACCELERATION * 0.5) * keySign;
 
 				if (!m->IsOnGround()) {
 					m->GetAccelerate().x = MARIO_SKID_ACCELERATION * keySign * 2;
@@ -243,12 +243,11 @@ void MarioPower::PowerMeterProcess()
 }
 
 bool MarioPower::MiniJumpDetect(bool forceX)
-{
-	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+{	
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
-		if (keyboard.IsKeyDown(DIK_X) || forceX) {
+		if (m->GetKeyboard()->IsKeyDown(DIK_X) || forceX) {
 			if (m->IsOnGround()) {
 				m->SetJumpingState(JumpingStates::JUMP);
 				m->SetOnGround(false);
@@ -261,8 +260,7 @@ bool MarioPower::MiniJumpDetect(bool forceX)
 }
 
 void MarioPower::JumpProcess()
-{
-	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+{	
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
@@ -278,7 +276,7 @@ void MarioPower::JumpProcess()
 			height = abs(m->GetJumpBeginPosition() - m->GetPosition().y - m->GetVelocity().y * dt);
 			minJumpHeight = MARIO_MIN_HIGH_JUMP_HEIGHT;
 
-			if (height < minJumpHeight || (height < MARIO_SUPER_JUMP_HEIGHT && keyboard.IsKeyDown(DIK_S))) {
+			if (height < minJumpHeight || (height < MARIO_SUPER_JUMP_HEIGHT && m->GetKeyboard()->IsKeyDown(DIK_S))) {
 				m->GetVelocity().y = -MARIO_SUPER_PUSH_FORCE - MARIO_GRAVITY * dt;
 			} 
 			else {
@@ -292,7 +290,7 @@ void MarioPower::JumpProcess()
 		case JumpingStates::JUMP:
 			height = abs(m->GetJumpBeginPosition() - m->GetPosition().y - m->GetVelocity().y * dt);
 
-			if (height < minJumpHeight || (height < jumpHeight && (keyboard.IsKeyDown(DIK_S) || keyboard.IsKeyDown(DIK_X)))) {
+			if (height < minJumpHeight || (height < jumpHeight && (m->GetKeyboard()->IsKeyDown(DIK_S) || m->GetKeyboard()->IsKeyDown(DIK_X)))) {
 				m->GetVelocity().y = -MARIO_PUSH_FORCE - MARIO_GRAVITY * dt;
 			}
 			else {
@@ -309,13 +307,12 @@ void MarioPower::JumpProcess()
 }
 
 void MarioPower::CrouchUpdate()
-{
-	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+{	
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (m->IsControllerLocked()) return;
-		if (keyboard.IsKeyDown(DIK_DOWN)) {
+		if (m->GetKeyboard()->IsKeyDown(DIK_DOWN)) {
 			if (m->GetJumpingState() == JumpingStates::IDLE && !m->GetInhand()) {
 				m->SetMovingState(MovingStates::CROUCH);
 				m->SetDrag(MARIO_CROUCH_DRAG_FORCE);
@@ -349,7 +346,7 @@ void MarioPower::Update()
 		m->GetVelocity().y += m->GetGravity() * (float)dt;
 		m->GetDistance() = m->GetVelocity() * (float)dt;
 
-		if (CGame::GetInstance()->GetKeyBoard().IsKeyUp(DIK_A)) {
+		if (m->GetKeyboard()->IsKeyUp(DIK_A)) {
 			m->DropShell();
 		}
 

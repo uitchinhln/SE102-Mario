@@ -87,17 +87,15 @@ void IntroScene::OriginalUpdate()
 
 void IntroScene::OriginalRender(D3DCOLOR overlay)
 {
-	gameMap->Render(overlay);
-	vector<shared_ptr<GameObject>> renderObjects;
-	renderObjects.insert(renderObjects.end(), objectList.begin(), objectList.end());
-
-	sort(renderObjects.begin(), renderObjects.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
+	sort(objectList.begin(), objectList.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
 		return a->GetRenderOrder() < b->GetRenderOrder();
 		});
 
-	for each (shared_ptr<GameObject> obj in renderObjects)
+	for each (shared_ptr<GameObject> obj in objectList)
 	{
-		if (obj->Visible && obj->IsActive()) obj->Render(overlay);
+		if (obj->Visible && obj->IsActive()) {
+			obj->Render(overlay);
+		}
 	}
 }
 

@@ -26,6 +26,11 @@ void MapGate::InitResource()
 	}
 }
 
+void MapGate::Reset()
+{
+	finish = false;
+}
+
 void MapGate::Update()
 {
 }

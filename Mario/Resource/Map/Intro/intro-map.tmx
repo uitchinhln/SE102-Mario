@@ -23,6 +23,6 @@
 </data>
  </layer>
  <objectgroup id="7" name="Object Layer 1">
-  <object id="2" type="SolidBlock" x="0" y="561" width="768" height="110.331"/>
+  <object id="2" type="SolidBlock" x="-124" y="561" width="1042" height="110.331"/>
  </objectgroup>
 </map>

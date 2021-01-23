@@ -15,9 +15,7 @@ void BeginPortal::Update()
     WarpStates warpState = mario->GetWarpState();
 
     if (warpState == WarpStates::NONE) {
-        KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
-
-        if (direction == Direction::Top && keyboard.IsKeyDown(DIK_DOWN)) {
+        if (direction == Direction::Top && mario->GetKeyboard()->IsKeyDown(DIK_DOWN)) {
             SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetFreeze(true);
             mario->SetWarpState(WarpStates::VERTICAL);
             mario->GetDistance() = VECTOR_0;
@@ -27,7 +25,7 @@ void BeginPortal::Update()
             mario->GetPosition().x = this->Position.x - (marioWidth - size.x) / 2;
         }
 
-        if (direction == Direction::Bottom && keyboard.IsKeyDown(DIK_UP)) {
+        if (direction == Direction::Bottom && mario->GetKeyboard()->IsKeyDown(DIK_UP)) {
             SceneManager::GetInstance()->GetActiveScene()->GetCamera()->SetFreeze(true);
             mario->SetWarpState(WarpStates::VERTICAL);
             mario->GetDistance() = VECTOR_0;

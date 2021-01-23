@@ -17,6 +17,16 @@ RedMushroom::RedMushroom()
     this->Distance = Velocity * (float)dt;
 }
 
+void RedMushroom::SetMovingStep(int value)
+{
+    this->movingStep = value;
+}
+
+int RedMushroom::GetMovingStep()
+{
+    return movingStep;
+}
+
 void RedMushroom::InitResource()
 {
     if (this->animations.size() < 1) {

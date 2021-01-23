@@ -17,7 +17,6 @@ protected:
 	string sceneID;
 
 	unordered_map<Direction, int> adjacentNodes;
-	unordered_map<Direction, bool> adjacentLocks;
 
 	Vec2 size;
 
@@ -33,6 +32,8 @@ public:
 	MapGate(int nodeId, string sceneID, string uncheck, string checked);
 
 	virtual void InitResource();
+
+	virtual void Reset();
 
 
 	virtual void Update() override;

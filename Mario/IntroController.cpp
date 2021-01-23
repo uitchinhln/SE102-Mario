@@ -1,5 +1,7 @@
 #include "IntroController.h"
 #include "MarioGame.h"
+#include "Mario.h"
+#include "MarioKeyboard.h"
 #include "MainUI.h"
 #include "IntroScene.h"
 #include "EffectServer.h"
@@ -9,45 +11,80 @@
 #include "TreeRight.h"
 #include "TreeLeft.h"
 #include "MenuDialog.h"
+#include "Small.h"
+#include "BigMario.h"
+#include "Goomba.h"
 
 IntroController* IntroController::__instance = nullptr;
+
+IntroController::IntroController()
+{
+	this->mario = make_shared<Mario>();
+	this->mario->SetKeyboard(marioKeyboard = make_shared<MarioKeyboard>());
+	this->mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
+	this->mario->SetPowerUp(make_shared<BigMario>(mario));
+	this->mario->MovingBound = RectF(-100, -100, 1000, 1000);
+	this->marioKeyboard->SetGlobalKeyBoardEnable(false);
+
+	this->luigi = make_shared<Mario>();
+	this->luigi->SetKeyboard(luigiKeyboad = make_shared<MarioKeyboard>());
+	this->luigi->SetCollisionCalculator(make_shared<CollisionCalculator>(luigi));
+	this->luigi->SetPowerUp(make_shared<BigMario>(luigi));
+	this->luigi->MovingBound = RectF(-100, -100, 1000, 1000);
+	this->luigiKeyboad->SetGlobalKeyBoardEnable(false);
+}
 
 void IntroController::Reset()
 {
 	step = 0;
+	marioStep = 0;
+	luigiStep = 0;
+	itemStep = 0;
+	marioTimer.Restart();
+	luigiTimer.Restart();
+	itemTimer.Restart();
+
+	goomba.reset();
+	koopas.reset();
+	koopas2.reset();
+	leaf.reset();
+	mushroom.reset();
+	greenmushroom.reset();
 }
 
 void IntroController::Update()
 {
 	if (step == 0) {
-		EffectServer::GetInstance()->SpawnEffect(make_shared<CurtainFX>(1000, [](long playTime) {
+		EffectServer::GetInstance()->SpawnEffect(make_shared<CurtainFX>(2000, [](long playTime) {
+			if (playTime == 0) {
+				IntroController::GetInstance()->SetStep(2);
+			}
 			if (playTime == 1) {
-				shared_ptr<ThreeFX> fx = make_shared<ThreeFX>(Vec2(0, 0), 100000, [](long value) {
-					if (value == 1) {
-						IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DCOLOR_XRGB(91, 33, 0));						
-					}
-					if (value == 2) {
-						IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DCOLOR_XRGB(160, 81, 0));
-					}
-					if (value == 3) {
-						IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DCOLOR_XRGB(242, 158, 27));
-					}
-					if (value == 4) {
-						IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DCOLOR_XRGB(250, 217, 163));
-					}					
-					if (value == 5) {
-						IntroController::GetInstance()->GetScene()->SpawnEntityWithoutGrid(TreeRight::CreateTreeRight(Vec2(580, 271)));
-						IntroController::GetInstance()->GetScene()->SpawnEntityWithoutGrid(TreeLeft::CreateTreeLeft(Vec2(-1, 367)));
-						MarioGame::GetInstance()->GetMainUI()->ActiveDialog(make_shared<MenuDialog>());
-					}					
-				});
-				IntroController::GetInstance()->GetScene()->GetBackgroundEffect()->SpawnEffect(fx);
+				IntroController::GetInstance()->SetStep(4);
 			}
 			}));
 		step = 1;
 	}
 	else if (step == 1) {
+	}
+	else if (step == 2) {
+		luigi->SetPosition(Vec2(0, 480));
+		luigi->SetFacing(1);
+		scene->SpawnEntityWithoutGrid(luigi);
 
+		mario->SetPosition(Vec2(721, 480));
+		mario->SetFacing(-1);
+		scene->SpawnEntityWithoutGrid(mario);
+
+		timer.Restart();
+		step = 3;
+	}
+	else if (step == 3) {
+	}
+	else if (step == 4) {
+		MarioUpdate();
+		LuigiUpdate();
+		ItemUpdate();
 	}
 }
 

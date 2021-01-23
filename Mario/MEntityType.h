@@ -8,6 +8,8 @@ public:
 	static const ObjectType FireMario;
 	static const ObjectType RaccoonMario;
 
+	static const ObjectType BigLuigi;
+
 	static const ObjectType MarioFireBall;
 	static const ObjectType MarioTailed;
 

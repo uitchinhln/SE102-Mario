@@ -32,6 +32,8 @@ void IntroScene::Load()
 	this->camera = make_shared<Camera>(camSize);
 	this->camera->LoadFromTMX(root->FirstChildElement("Camera"));
 	this->camera->SetTracking(MarioGame::GetInstance()->GetMario());
+	this->camera->Position = Vec2(0, 0);
+	this->camera->SetFreeze(true);
 
 	this->gameMap = CGameMap::FromTMX(mapPath);
 	this->gameMap->SetCamera(camera);
@@ -69,6 +71,7 @@ void IntroScene::SetBackgroundColor(D3DCOLOR color)
 
 void IntroScene::Render(D3DCOLOR overlay)
 {
+	gameMap->Render(overlay);
 	backgroundEffect->Render(overlay);
 	OriginalRender(overlay);
 	EffectServer::GetInstance()->Render(overlay);

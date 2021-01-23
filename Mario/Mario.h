@@ -7,6 +7,7 @@
 #include "IEffect.h"
 #include "StopWatch.h"
 #include "PlayerData.h"
+#include "MarioKeyboard.h"
 
 #define INVULNERABLE_TIME 2000
 
@@ -77,6 +78,8 @@ protected:
 
 	shared_ptr<RayCast> raycaster;
 
+	shared_ptr<MarioKeyboard> keyboard;
+
 	BYTE keyState[255];
 
 public:
@@ -141,6 +144,9 @@ public:
 
 	virtual Vec2& GetDistance() override;
 	virtual Vec2& GetAccelerate();
+
+	virtual shared_ptr<MarioKeyboard> GetKeyboard();
+	virtual void SetKeyboard(shared_ptr<MarioKeyboard> value);
 
 	virtual RectF GetHitBox() override;
 

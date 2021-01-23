@@ -147,6 +147,7 @@
     <ClCompile Include="AchievementProcessor.cpp" />
     <ClCompile Include="AttackablePower.cpp" />
     <ClCompile Include="BeginPortal.cpp" />
+    <ClCompile Include="BigLuigi.cpp" />
     <ClCompile Include="BigMario.cpp" />
     <ClCompile Include="Boomerang.cpp" />
     <ClCompile Include="BoomerangBrother.cpp" />
@@ -190,6 +191,9 @@
     <ClCompile Include="IEffect.cpp" />
     <ClCompile Include="IEnviroment.cpp" />
     <ClCompile Include="IntroController.cpp" />
+    <ClCompile Include="IntroItemUpdate.cpp" />
+    <ClCompile Include="IntroLuigiUpdate.cpp" />
+    <ClCompile Include="IntroMarioUpdate.cpp" />
     <ClCompile Include="IntroOriginalUpdate.cpp" />
     <ClCompile Include="IntroScene.cpp" />
     <ClCompile Include="JumpingKoopas.cpp" />
@@ -206,6 +210,8 @@
     <ClCompile Include="MarioDeathFX.cpp" />
     <ClCompile Include="MarioFireBall.cpp" />
     <ClCompile Include="MarioFX.cpp" />
+    <ClCompile Include="MarioKeyboard.cpp" />
+    <ClCompile Include="MarioKeyListen.cpp" />
     <ClCompile Include="MarioProperties.cpp" />
     <ClCompile Include="MarioRaycast.cpp" />
     <ClCompile Include="MarioTailed.cpp" />
@@ -302,6 +308,7 @@
     <ClInclude Include="AchievementProcessor.h" />
     <ClInclude Include="AttackablePower.h" />
     <ClInclude Include="BeginPortal.h" />
+    <ClInclude Include="BigLuigi.h" />
     <ClInclude Include="BigMario.h" />
     <ClInclude Include="Boomerang.h" />
     <ClInclude Include="BoomerangBrother.h" />
@@ -357,6 +364,7 @@
     <ClInclude Include="MarioDeathFX.h" />
     <ClInclude Include="MarioFireBall.h" />
     <ClInclude Include="MarioFX.h" />
+    <ClInclude Include="MarioKeyboard.h" />
     <ClInclude Include="MarioTailed.h" />
     <ClInclude Include="HitStarFX.h" />
     <ClInclude Include="MarioUtils.h" />

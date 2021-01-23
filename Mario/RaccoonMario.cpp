@@ -67,11 +67,11 @@ void RaccoonMario::InAttackProgress()
 
 bool RaccoonMario::MiniJumpDetect(bool forceX)
 {
-	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+	
 	DWORD dt = CGame::Time().ElapsedGameTime;
 
 	if (shared_ptr<Mario> m = mario.lock()) {
-		if (keyboard.IsKeyDown(DIK_X) || forceX) {
+		if (m->GetKeyboard()->IsKeyDown(DIK_X) || forceX) {
 			if (m->GetPowerMeter() >= PMETER_MAX) {
 				m->SetJumpingState(JumpingStates::SUPER_JUMP);
 				m->SetOnGround(false);

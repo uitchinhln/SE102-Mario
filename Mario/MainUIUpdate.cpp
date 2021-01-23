@@ -7,6 +7,8 @@
 #include "PlaySceneFinishFX.h"
 #include "LifeDialog.h"
 #include "GameOverDialog.h"
+#include "AchievementProcessor.h"
+#include "FightProcessor.h"
 
 void MainUI::GameStartUpdate()
 {
@@ -15,6 +17,8 @@ void MainUI::GameStartUpdate()
 
 void MainUI::GameIntroUpdate()
 {
+	MarioGame::GetInstance()->GetAchievementProcessor()->SetEnable(false);
+	MarioGame::GetInstance()->GetFightProcessor()->SetEnable(false);
 	SceneManager::GetInstance()->Update();
 	MarioGame::GetInstance()->GetPlayerData()->Lives = 4;
 }
@@ -25,12 +29,16 @@ void MainUI::GameMenuUpdate()
 
 void MainUI::GameWorldMapUpdate()
 {
+	MarioGame::GetInstance()->GetAchievementProcessor()->SetEnable(true);
+	MarioGame::GetInstance()->GetFightProcessor()->SetEnable(true);
 	MarioGame::GetInstance()->GetPlayerData()->RemainingTime = 0;
 	SceneManager::GetInstance()->Update();
 }
 
 void MainUI::GamePlayUpdate(GameState state)
 {
+	MarioGame::GetInstance()->GetAchievementProcessor()->SetEnable(true);
+	MarioGame::GetInstance()->GetFightProcessor()->SetEnable(true);
 	long dt = MarioGame::Time().ElapsedGameTime;
 	shared_ptr<PlayerData> data = MarioGame::GetInstance()->GetPlayerData();
 

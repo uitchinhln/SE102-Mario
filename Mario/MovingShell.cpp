@@ -60,10 +60,10 @@ void MovingShell::StatusUpdate()
 		shared_ptr<CollisionCalculator> collisionCal = k->GetCollisionCalc();
 
 		if (collisionCal->HasOverlapped()) {
-			k->GetLiveState() = KoopasLifeStates::DIE;
-			OnDeath(Vec2(0 * 0.1f, -0.6f));
+			//k->GetLiveState() = KoopasLifeStates::DIE;
+			//OnDeath(Vec2(0 * 0.1f, -0.6f));
 
-			__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::SOLID_BLOCK, k->GetPosition(), k->GetObjectType());
+			//__raise (*GameEvent::GetInstance()).EnemyDamagedEvent(__FILE__, DamgeSource::SOLID_BLOCK, k->GetPosition(), k->GetObjectType());
 			return;
 		}
 

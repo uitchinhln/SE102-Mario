@@ -18,6 +18,16 @@ RaccoonLeaf::RaccoonLeaf()
 	this->Visible = false;
 }
 
+void RaccoonLeaf::SetMovingStep(int value)
+{
+	this->movingStep = value;
+}
+
+int RaccoonLeaf::GetMovingStep()
+{
+	return movingStep;
+}
+
 void RaccoonLeaf::InitResource()
 {
 	if (this->animations.size() < 1) {
@@ -27,10 +37,10 @@ void RaccoonLeaf::InitResource()
 
 void RaccoonLeaf::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
-	vector<shared_ptr<GameObject>> objs;
-	objs.push_back(MarioGame::GetInstance()->GetMario());
+	/*vector<shared_ptr<GameObject>> objs;
+	objs.push_back(MarioGame::GetInstance()->GetMario());*/
 
-	GetCollisionCalc()->CalcPotentialCollisions(&objs, false);
+	GetCollisionCalc()->CalcPotentialCollisions(coObj, false);
 }
 
 void RaccoonLeaf::PositionUpdate()

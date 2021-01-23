@@ -11,7 +11,7 @@ void CurtainFX::Update()
 	playtimeLeft -= MarioGame::Time().ElapsedGameTime;
 	Position.y -= 0.3 * MarioGame::Time().ElapsedGameTime;
 
-	if (!called && Position.y < -96) {
+	if (!called && Position.y < -size.y / 2) {
 		callback(0);
 		called = true;
 	}

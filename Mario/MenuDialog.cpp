@@ -6,7 +6,7 @@
 
 MenuDialog::MenuDialog()
 {
-	Position = Vec2(228, 410);
+	Position = Vec2(228, 430);
 	Size = Vec2(312, 120);
 }
 

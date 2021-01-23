@@ -197,5 +197,5 @@ Camera::~Camera()
 	{
 		delete iter.second;
 	}
-	DebugOut(L"Camera destroyed!!!");
+	DebugOut(L"Camera destroyed!!!\n");
 }

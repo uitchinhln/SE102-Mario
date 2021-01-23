@@ -8,6 +8,10 @@ class RedMushroom :
 public:
     RedMushroom();
 
+	virtual void SetMovingStep(int value);
+
+	virtual int GetMovingStep();
+
 	virtual void InitResource() override;
 
 	virtual void CollisionUpdate(vector<shared_ptr<GameObject>>* coObj) override;

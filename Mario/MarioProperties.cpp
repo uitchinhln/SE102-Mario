@@ -90,6 +90,16 @@ Vec2& Mario::GetAccelerate()
 	return accelerate;
 }
 
+shared_ptr<MarioKeyboard> Mario::GetKeyboard()
+{
+	return keyboard;
+}
+
+void Mario::SetKeyboard(shared_ptr<MarioKeyboard> value)
+{
+	this->keyboard = value;
+}
+
 RectF Mario::GetHitBox()
 {
 	return power->GetHitBox();

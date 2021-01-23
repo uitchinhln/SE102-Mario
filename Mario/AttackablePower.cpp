@@ -12,8 +12,6 @@ AttackablePower::AttackablePower(shared_ptr<Mario> mario) : MarioPower(mario)
 
 void AttackablePower::AttackUpdate()
 {
-	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
-
 	if (shared_ptr<Mario> m = mario.lock()) {
 		if (m->GetMovingState() == MovingStates::CROUCH) {
 			attackTimer.Stop();
@@ -34,7 +32,7 @@ void AttackablePower::AttackUpdate()
 			}
 		}
 		else {
-			if (keyboard.IsKeyDown(DIK_Z) && !IsAttacking() && CanAttack()) {
+			if (m->GetKeyboard()->IsKeyDown(DIK_Z) && !IsAttacking() && CanAttack()) {
 				attackTimer.Restart();
 				OnAttackStart();
 			}
@@ -45,11 +43,11 @@ void AttackablePower::AttackUpdate()
 
 void AttackablePower::MoveProcess()
 {
-	KeyboardProcessor keyboard = CGame::GetInstance()->GetKeyBoard();
+	
 
 	if (shared_ptr<Mario> m = mario.lock()) {
-		if (keyboard.IsKeyDown(DIK_LEFT) || keyboard.IsKeyDown(DIK_RIGHT)) {
-			int keySign = keyboard.IsKeyDown(DIK_LEFT) ? -1 : 1;
+		if (m->GetKeyboard()->IsKeyDown(DIK_LEFT) || m->GetKeyboard()->IsKeyDown(DIK_RIGHT)) {
+			int keySign = m->GetKeyboard()->IsKeyDown(DIK_LEFT) ? -1 : 1;
 			if (keySign * m->GetFacing() < 0 && IsAttacking()) {
 				return;
 			}			

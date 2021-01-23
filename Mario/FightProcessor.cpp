@@ -14,8 +14,19 @@ FightProcessor::FightProcessor(shared_ptr<PlayerData> data)
 	__hook(&GameEvent::PlaySceneClearEvent, GameEvent::GetInstance(), &FightProcessor::OnPlaySceneClear);
 }
 
+void FightProcessor::SetEnable(bool value)
+{
+	this->enable = value;
+}
+
+bool FightProcessor::IsEnable()
+{
+	return enable;
+}
+
 void FightProcessor::OnEnemyDamaged(const char* file, DamgeSource source, Vec2 Position, ObjectType& victimType)
 {
+	if (!enable) return;
 	switch (source)
 	{
 	case DamgeSource::ENEMY:
@@ -87,6 +98,7 @@ void FightProcessor::OnEnemyDamaged(const char* file, DamgeSource source, Vec2 P
 
 void FightProcessor::OnPlaySceneClear(const char* file, SceneResult result)
 {
+	if (!enable) return;
 	if (result == SceneResult::WIN) {
 		vector<shared_ptr<GameObject>> objects = SceneManager::GetInstance()->GetActiveScene()->GetUpdatingObjects();
 		RectF cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->GetBoundingBox();

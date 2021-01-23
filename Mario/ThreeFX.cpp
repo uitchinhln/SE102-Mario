@@ -39,16 +39,16 @@ void ThreeFX::Update()
 		}
 	}
 	else if (step == 3) {
-		if (timer > 1500) {
+		if (timer > 1200) {
 			callback(1);
 		}
-		if (timer > 1600) {
+		if (timer > 1300) {
 			callback(2);
 		}
-		if (timer > 1700) {
+		if (timer > 1400) {
 			callback(3);
 		}
-		if (timer > 1800) {
+		if (timer > 1500) {
 			callback(4);
 			timer = 0;
 			step = 4;

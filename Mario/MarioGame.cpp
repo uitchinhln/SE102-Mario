@@ -43,6 +43,7 @@ void MarioGame::LoadResources()
 	TiXmlDocument doc("Resource/GameData.xml");
 
 	mario = make_shared<Mario>();
+	mario->SetKeyboard(make_shared<MarioKeyboard>());
 	mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
 	mario->SetPowerUp(make_shared<Small>(mario));
 
