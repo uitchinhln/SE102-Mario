@@ -107,7 +107,7 @@ void IntroController::ItemUpdate()
 			koopas3 = Koopas::CreateKoopas(Vec2(0, 560));
 			koopas->GetVelocity().x = 0.14;
 			koopas2->GetVelocity().x = 0.14;
-			koopas3->GetVelocity().x = 0.14;
+			koopas3->GetVelocity().x = 0.25;
 			itemStep = 5;
 		}
 		else if (itemStep == 5) {
@@ -123,14 +123,14 @@ void IntroController::ItemUpdate()
 			}
 		}
 		else if (itemStep == 7) {
-			if (itemTimer.Elapsed() > 1000) {
+			if (itemTimer.Elapsed() > 2800) {
 				scene->SpawnEntityWithoutGrid(koopas3);
 				itemTimer.Restart();
 				itemStep = 8;
 			}
 		}
 		else if (itemStep == 8) {
-			if (itemTimer.Elapsed() > 8000) {
+			if (itemTimer.Elapsed() > 6000) {
 				itemTimer.Restart();
 				itemStep = 4;
 			}

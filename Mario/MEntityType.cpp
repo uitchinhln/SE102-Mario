@@ -80,7 +80,9 @@ bool MEntityType::IsMario(ObjectType obj)
     bool isFire = obj == FireMario;
     bool isRaccoon = obj == RaccoonMario;
 
-    return isSmall || isBig || isFire || isRaccoon;
+    bool isBigLuigi = obj == BigLuigi;
+
+    return isSmall || isBig || isFire || isRaccoon || isBigLuigi;
 }
 
 bool MEntityType::IsMarioWeapon(ObjectType obj)

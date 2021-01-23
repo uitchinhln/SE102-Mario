@@ -14,6 +14,7 @@
 #include "Small.h"
 #include "BigMario.h"
 #include "Goomba.h"
+#include "BigLuigi.h"
 
 IntroController* IntroController::__instance = nullptr;
 
@@ -23,13 +24,15 @@ IntroController::IntroController()
 	this->mario->SetKeyboard(marioKeyboard = make_shared<MarioKeyboard>());
 	this->mario->SetCollisionCalculator(make_shared<CollisionCalculator>(mario));
 	this->mario->SetPowerUp(make_shared<BigMario>(mario));
+	this->mario->SetRenderOrder(2000);
 	this->mario->MovingBound = RectF(-100, -100, 1000, 1000);
 	this->marioKeyboard->SetGlobalKeyBoardEnable(false);
 
 	this->luigi = make_shared<Mario>();
 	this->luigi->SetKeyboard(luigiKeyboad = make_shared<MarioKeyboard>());
 	this->luigi->SetCollisionCalculator(make_shared<CollisionCalculator>(luigi));
-	this->luigi->SetPowerUp(make_shared<BigMario>(luigi));
+	this->luigi->SetPowerUp(make_shared<BigLuigi>(luigi));	
+	this->luigi->SetRenderOrder(2000);
 	this->luigi->MovingBound = RectF(-100, -100, 1000, 1000);
 	this->luigiKeyboad->SetGlobalKeyBoardEnable(false);
 }

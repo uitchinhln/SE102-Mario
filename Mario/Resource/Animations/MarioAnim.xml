@@ -184,6 +184,112 @@
 			<Sprite id="spr-big-mario-roll-6" left="460" top="315"  width="20" height="22" frameTime="100"/>
 			<Sprite id="spr-big-mario-roll-7" left="483" top="318"  width="20" height="19" frameTime="100"/>
 		</Animation>
+		
+		<!--Big luigi-->
+	    <!-- Animation MAP-->
+	    <Animation aniId="ani-big-luigi-map" frameTime="100" name="IDLE-FRONT">
+	      <Sprite id="spr-big-luigi-map-0" left="397" top="8"  width="16" height="16"/>
+	      <Sprite id="spr-big-luigi-map-1" left="397" top="8"  width="16" height="16"/>
+	    </Animation>
+		<!-- Animation IDLE FRONT-->
+		<Animation aniId="ani-big-luigi-idle" frameTime="100" name="IDLE">
+			<Sprite id="spr-big-luigi-idle-0" left="197" top="48"  width="14" height="27" frameTime="100"/>
+		</Animation>
+		<!-- Animation IDLE-->
+		<Animation aniId="ani-big-luigi-idle-front" frameTime="100" name="IDLE-FRONT">
+			<Sprite id="spr-big-luigi-idle-front-0" left="415" top="48"  width="16" height="27" frameTime="100"/>
+		</Animation>
+		<!-- Animation WALK-->
+		<Animation aniId="ani-big-luigi-walk" frameTime="100" name="WALK">
+			<Sprite id="spr-big-luigi-walk-0" left="197" top="48"  width="14" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-walk-1" left="214" top="48"  width="16" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-walk-2" left="233" top="49"  width="16" height="26" frameTime="100"/>
+			<Sprite id="spr-big-luigi-walk-1" left="214" top="48"  width="16" height="27" frameTime="100"/>
+		</Animation>
+		<!-- Animation SKID-->
+		<Animation aniId="ani-big-luigi-skid" frameTime="100" name="SKID">
+			<Sprite id="spr-big-luigi-skid-0" left="252" top="47"  width="16" height="28" frameTime="100"/>
+		</Animation>
+		<!-- Animation RUN-->
+		<Animation aniId="ani-big-luigi-run" frameTime="100" name="RUN">
+			<Sprite id="spr-big-luigi-walk-0" left="197" top="48"  width="14" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-walk-1" left="214" top="48"  width="16" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-walk-2" left="233" top="49"  width="16" height="26" frameTime="100"/>
+			<Sprite id="spr-big-luigi-walk-1" left="214" top="48"  width="16" height="27" frameTime="100"/>
+
+		</Animation>
+		<!-- Animation HIGH SPEED-->
+		<Animation aniId="ani-big-luigi-high-speed" frameTime="100" name="RUN">
+			<Sprite id="spr-big-luigi-run-0" left="290" top="48"  width="19" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-run-1" left="312" top="48"  width="19" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-run-2" left="335" top="49"  width="19" height="26" frameTime="100"/>
+		</Animation>
+		<!-- Animation JUMP-->
+		<Animation aniId="ani-big-luigi-jump" frameTime="100" name="JUMP">
+			<Sprite id="spr-big-luigi-jump-0" left="271" top="49"  width="16" height="26" frameTime="100"/>
+		</Animation>
+		<!-- Animation FALL-->
+		<Animation aniId="ani-big-luigi-fall" frameTime="100" name="FALL">
+			<Sprite id="spr-big-luigi-fall-0" left="699" top="147"  width="16" height="26" frameTime="100"/>
+		</Animation>
+		<!-- Animation HIGH JUMP-->
+		<Animation aniId="ani-big-luigi-high-jump" frameTime="100" name="HIGH-JUMP">
+			<Sprite id="spr-big-luigi-high-jump-0" left="357" top="49"  width="19" height="26" frameTime="100"/>
+		</Animation>
+		<!-- Animation CROUCH-->
+		<Animation aniId="ani-big-luigi-crouch" frameTime="100" name="CROUCH">
+			<Sprite id="spr-big-luigi-crouch-0" left="379" top="57"  width="14" height="18" frameTime="100"/>
+		</Animation>
+		<!-- Animation SLIDE-->
+		<Animation aniId="ani-big-luigi-slide" frameTime="100" name="SLIDE">
+			<Sprite id="spr-big-luigi-slide-0" left="396" top="49"  width="16" height="26" frameTime="100"/>
+		</Animation>
+		<!-- Animation HOLD-->
+		<Animation aniId="ani-big-luigi-hold" frameTime="100" name="HOLD">
+			<Sprite id="spr-big-luigi-hold-0" left="434" top="48"  width="14" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-hold-1" left="451" top="48"  width="15" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-hold-2" left="469" top="49"  width="16" height="26" frameTime="100"/>
+		</Animation>
+		<!-- Animation HOLD-->
+		<Animation aniId="ani-big-luigi-hold-idle" frameTime="100" name="HOLD">
+			<Sprite id="spr-big-luigi-hold-0" left="434" top="48"  width="14" height="27" frameTime="100"/>
+		</Animation>
+		<!-- Animation HOLD-->
+		<Animation aniId="ani-big-luigi-hold-fall" frameTime="100" name="HOLD">
+			<Sprite id="spr-big-luigi-hold-2" left="469" top="49"  width="16" height="26" frameTime="100"/>
+		</Animation>
+		<!-- Animation KICK-->
+		<Animation aniId="ani-big-luigi-kick" frameTime="100" name="KICK">
+			<Sprite id="spr-big-luigi-kick-0" left="488" top="48"  width="21" height="27" frameTime="100"/>
+		</Animation>
+		<!-- Animation DIVE-->
+		<Animation aniId="ani-big-luigi-dive" frameTime="100" name="DIVE">
+			<Sprite id="spr-big-luigi-dive-0" left="512" top="48"  width="19" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-dive-1" left="534" top="49"  width="19" height="26" frameTime="100"/>
+		</Animation>
+		<!-- Animation SWIM-->
+		<Animation aniId="ani-big-luigi-swim" frameTime="100" name="SWIM">
+			<Sprite id="spr-big-luigi-swim-0" left="556" top="48"  width="19" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-swim-1" left="578" top="48"  width="18" height="27" frameTime="100"/>
+			<Sprite id="spr-big-luigi-swim-2" left="599" top="49"  width="19" height="26" frameTime="100"/>
+		</Animation>
+		<!-- Animation CLIMB-->
+		<Animation aniId="ani-big-luigi-climb" frameTime="100" name="CLIMB">
+			<Sprite id="spr-big-luigi-climb-0" left="621" top="50"  width="16" height="25" frameTime="100"/>
+			<Sprite id="spr-big-luigi-climb-1" left="640" top="50"  width="16" height="25" frameTime="100"/>
+		</Animation>
+		<!-- Animation ROLL-->
+		<Animation aniId="ani-big-luigi-roll" frameTime="100" name="ROLL">
+			<Sprite id="spr-big-luigi-roll-0" left="320" top="317"  width="22" height="20" frameTime="100"/>
+			<Sprite id="spr-big-luigi-roll-1" left="345" top="317"  width="19" height="20" frameTime="100"/>
+			<Sprite id="spr-big-luigi-roll-2" left="367" top="315"  width="20" height="22" frameTime="100"/>
+			<Sprite id="spr-big-luigi-roll-3" left="390" top="318"  width="20" height="19" frameTime="100"/>
+			<Sprite id="spr-big-luigi-roll-4" left="413" top="317"  width="22" height="20" frameTime="100"/>
+			<Sprite id="spr-big-luigi-roll-5" left="438" top="317"  width="19" height="20" frameTime="100"/>
+			<Sprite id="spr-big-luigi-roll-6" left="460" top="315"  width="20" height="22" frameTime="100"/>
+			<Sprite id="spr-big-luigi-roll-7" left="483" top="318"  width="20" height="19" frameTime="100"/>
+		</Animation>
+
 
 		<!--Raccoon Mario-->
 	    <!-- Animation MAP-->
