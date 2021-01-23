@@ -90,5 +90,48 @@ void IntroController::ItemUpdate()
 			koopas->SetPower(make_shared<CrouchKoopas>(koopas));
 			koopas->SetRenderOrder(1702);
 		}
+		if (itemTimer.Elapsed() > 10000) {
+			itemStep = 3;
+		}
+	}
+	else if (itemStep == 3) {
+		if (koopas2->GetPosition().x > 764 && itemTimer.Elapsed() > 16000) {
+			koopas2->GetPosition().x = 0;
+			itemStep = 4;
+		}
+	}
+	else if (marioStep == 18) {
+		if (itemStep == 4) {
+			koopas = Koopas::CreateKoopas(Vec2(-48, 560));
+			koopas2 = Koopas::CreateKoopas(Vec2(-48, 560));
+			koopas3 = Koopas::CreateKoopas(Vec2(-48, 560));
+			itemStep = 5;
+		}
+		else if (itemStep == 5) {
+			scene->SpawnEntity(koopas);
+			itemTimer.Restart();
+			itemStep = 6;
+		}
+		else if (itemStep == 6) {
+			if (itemTimer.Elapsed() > 1000) {
+				scene->SpawnEntity(koopas2);
+				itemTimer.Restart();
+				itemStep = 7;
+			}
+		}
+		else if (itemStep == 7) {
+			if (itemTimer.Elapsed() > 1000) {
+				scene->SpawnEntity(koopas2);
+				itemTimer.Restart();
+				itemStep = 8;
+			}
+		}
+		else if (itemStep == 8) {
+			if (itemTimer.Elapsed() > 1000) {
+				scene->SpawnEntity(koopas3);
+				itemTimer.Restart();
+				itemStep = 4;
+			}
+		}
 	}
 }

@@ -92,7 +92,7 @@ public:
 
 	virtual void InitResource() override;
 
-	virtual void SetPowerUp(shared_ptr<MarioPower> power);
+	virtual void SetPowerUp(shared_ptr<MarioPower> power, bool effect = true);
 	virtual void SetPowerUp(ObjectType power);
 
 	virtual void OverlapUpdate();
@@ -109,6 +109,7 @@ public:
 
 	virtual shared_ptr<RayCast> GetRayCaster();
 
+	virtual void ResetFreeze();
 
 	virtual bool IsControllerLocked();
 	virtual void SetLockController(bool value = true);

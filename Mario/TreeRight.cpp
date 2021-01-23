@@ -1,6 +1,11 @@
 #include "TreeRight.h"
 #include "SpriteManager.h"
 
+TreeRight::TreeRight()
+{
+	renderOrder = 500;
+}
+
 void TreeRight::InitResource()
 {
 	if (sprite == nullptr) {

@@ -92,7 +92,7 @@ void Mario::Reset()
 	collisionCal->Clear();
 }
 
-void Mario::SetPowerUp(shared_ptr<MarioPower> power)
+void Mario::SetPowerUp(shared_ptr<MarioPower> power, bool effect)
 {
 	if (power == nullptr) return;
 	if (this->power == nullptr) {
@@ -105,6 +105,8 @@ void Mario::SetPowerUp(shared_ptr<MarioPower> power)
 
 	this->power = power;
 	MarioGame::GetInstance()->GetPlayerData()->Power = next;
+
+	if (!effect) return;
 
 	if (cur == next) return;
 	if (freezeTimer.IsRunning()) return;
@@ -228,20 +230,7 @@ void Mario::Update()
 
 	if (!controllable) return;
 	shared_ptr<MarioPower> p = power;
-	p->Update();
-
-	switch (warpState)
-	{
-	case WarpStates::NONE:
-		renderOrder = 1001;
-		break;
-	case WarpStates::VERTICAL:
-		renderOrder = 124;
-		break;
-	case WarpStates::HORIZONTAL:
-		renderOrder = 499;
-		break;
-	}
+	p->Update();	
 }
 
 void Mario::Render(D3DCOLOR overlay)
@@ -252,6 +241,13 @@ void Mario::Render(D3DCOLOR overlay)
 shared_ptr<RayCast> Mario::GetRayCaster()
 {
 	return raycaster;
+}
+
+void Mario::ResetFreeze()
+{
+	this->freezeTime = 0;
+	this->freezeTimer.Stop();
+	this->freezeTimer.Reset();
 }
 
 bool Mario::IsControllerLocked()

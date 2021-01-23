@@ -80,6 +80,7 @@ void IntroController::LuigiUpdate()
 		if (luigi->GetPosition().x - koopas2->GetPosition().x < 144 && koopas2->GetVelocity().x > 0) {
 			luigiKeyboad->PressKey(DIK_RIGHT);
 			luigi->GetVelocity().x = 0.5f;
+			luigi->SetCollidibility(false);
 			luigiStep = 10;
 		}
 	} 

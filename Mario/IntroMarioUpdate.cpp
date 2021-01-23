@@ -2,6 +2,11 @@
 #include <dinput.h>
 #include "Mario.h"
 #include "Koopas.h"
+#include "Small.h"
+#include "BigMario.h"
+#include "MenuDialog.h"
+#include "MarioGame.h"
+#include "MainUI.h"
 
 
 void IntroController::MarioUpdate()
@@ -95,6 +100,44 @@ void IntroController::MarioUpdate()
 		if (mario->GetPosition().x > 370) {
 			marioKeyboard->ReleaseKey(DIK_RIGHT);
 			marioStep = 13;
+		}
+	}
+	else if (marioStep == 13) {
+		if (mario->GetObjectType() == MEntityType::BigMario) {
+			mario->ResetFreeze();
+			mario->GetPosition().y += 36;
+			mario->SetPowerUp(make_shared<Small>(mario));
+			marioStep = 14;
+		}
+	}
+	else if (marioStep == 14) {
+		marioKeyboard->PressKey(DIK_RIGHT);
+		marioStep = 15;
+	}
+	else if (marioStep == 15) {
+		if (mario->GetPosition().x > 576) {
+			marioKeyboard->ReleaseKey(DIK_RIGHT);
+			marioKeyboard->PressKey(DIK_LEFT);
+			marioStep = 16;
+		}
+	}
+	else if (marioStep == 16) {
+		if (mario->GetPosition().x < 370) {
+			marioKeyboard->ReleaseKey(DIK_LEFT);
+			marioKeyboard->PressKey(DIK_RIGHT);
+			mario->SetRenderOrder(1);
+			marioStep = 17;
+		}
+	}
+	else if (marioStep == 17) {
+		if (mario->GetPosition().x > 580) {
+			marioKeyboard->ReleaseKey(DIK_RIGHT);
+			mario->SetCollidibility(false);
+			mario->Visible = false;
+
+			MarioGame::GetInstance()->GetMainUI()->ActiveDialog(make_shared<MenuDialog>());
+
+			marioStep = 18;
 		}
 	}
 }

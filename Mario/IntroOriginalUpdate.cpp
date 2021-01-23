@@ -69,7 +69,7 @@ void IntroScene::OriginalUpdate()
 	for (shared_ptr<GameObject> obj : objectList) {
 		obj->FinalUpdate();
 
-		RectF objBox = obj->GetHitBox();
+		/*RectF objBox = obj->GetHitBox();
 		if (!CollisionCalculator::CommonAABB(camBox, objBox)) {
 			if (obj->GetInCamera) obj->OnLostCamera();
 			obj->GetInCamera = false;
@@ -77,7 +77,7 @@ void IntroScene::OriginalUpdate()
 		else {
 			if (!obj->GetInCamera) obj->OnGetInCamera();
 			obj->GetInCamera = true;
-		}
+		}*/
 	}
 
 	RemoveDespawnedObjects();

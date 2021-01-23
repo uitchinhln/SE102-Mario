@@ -133,6 +133,18 @@ WarpStates& Mario::GetWarpState()
 void Mario::SetWarpState(WarpStates state)
 {
 	this->warpState = state;
+	switch (warpState)
+	{
+	case WarpStates::NONE:
+		renderOrder = 1001;
+		break;
+	case WarpStates::VERTICAL:
+		renderOrder = 124;
+		break;
+	case WarpStates::HORIZONTAL:
+		renderOrder = 499;
+		break;
+	}
 }
 
 ObjectType Mario::GetObjectType()

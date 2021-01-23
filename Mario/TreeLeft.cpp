@@ -2,6 +2,12 @@
 #include "MEntityType.h"
 #include "SpriteManager.h"
 
+TreeLeft::TreeLeft()
+{
+	renderOrder = 500;
+	sprite = NULL;
+}
+
 void TreeLeft::InitResource()
 {
 	if (sprite == nullptr) {

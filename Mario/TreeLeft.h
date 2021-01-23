@@ -4,6 +4,8 @@ class TreeLeft :
     public MapBlock
 {
 public:
+	TreeLeft();
+
 	virtual void InitResource() override;
 
 	virtual void Render(D3DCOLOR overlay) override;

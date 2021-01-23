@@ -33,8 +33,7 @@ private:
 	IntroScene* scene;
 
 	shared_ptr<Goomba> goomba;
-	shared_ptr<Koopas> koopas;
-	shared_ptr<Koopas> koopas2;
+	shared_ptr<Koopas> koopas, koopas2, koopas3;
 	shared_ptr<RaccoonLeaf> leaf;
 	shared_ptr<RedMushroom> mushroom;
 	shared_ptr<GreenMushroom> greenmushroom;

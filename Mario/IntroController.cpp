@@ -68,11 +68,11 @@ void IntroController::Update()
 	else if (step == 1) {
 	}
 	else if (step == 2) {
-		luigi->SetPosition(Vec2(0, 480));
+		luigi->SetPosition(Vec2(0, 479));
 		luigi->SetFacing(1);
 		scene->SpawnEntityWithoutGrid(luigi);
 
-		mario->SetPosition(Vec2(721, 480));
+		mario->SetPosition(Vec2(721, 479));
 		mario->SetFacing(-1);
 		scene->SpawnEntityWithoutGrid(mario);
 
