@@ -72,7 +72,6 @@ void IntroController::MarioUpdate()
 	else if (marioStep == 8) {
 		if (mario->GetPosition().x + 70 > koopas2->GetPosition().x && !koopas2->GetHolder().lock()) {
 			marioKeyboard->PressKey(DIK_X);
-			marioKeyboard->ReleaseKey(DIK_LEFT);
 			marioStep = 9;
 		}
 	}
@@ -86,6 +85,7 @@ void IntroController::MarioUpdate()
 	else if (marioStep == 10) {
 		if (mario->IsOnGround()) {
 			marioKeyboard->PressKey(DIK_A);
+			marioKeyboard->ReleaseKey(DIK_LEFT);
 			marioKeyboard->PressKey(DIK_RIGHT);
 			marioStep = 11;
 		}

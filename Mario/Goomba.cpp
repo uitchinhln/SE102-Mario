@@ -176,4 +176,5 @@ Goomba::~Goomba()
 void Goomba::OnLostCamera()
 {
 	SceneManager::GetInstance()->GetActiveScene()->DespawnEntity(shared_from_this());
+	DebugOut(L"aaaa\n");
 }
