@@ -47,6 +47,16 @@ void IntroController::Reset()
 	luigiTimer.Restart();
 	itemTimer.Restart();
 
+	if (this->mario != NULL) {
+		this->mario->SetPowerUp(make_shared<BigMario>(mario));
+		this->mario->SetRenderOrder(2000);
+	}
+
+	if (this->luigi != NULL) {
+		this->luigi->SetPowerUp(make_shared<BigLuigi>(luigi));
+		this->luigi->SetRenderOrder(2000);
+	}
+
 	goomba.reset();
 	koopas.reset();
 	koopas2.reset();
