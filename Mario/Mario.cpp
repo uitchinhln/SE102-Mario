@@ -87,9 +87,8 @@ void Mario::Reset()
 	raycaster->Clear();
 	Gravity = 0.00093f;
 	renderOrder = 1001;
-	power.reset();
-	SetPowerUp(MarioGame::GetInstance()->GetPlayerData()->Power);
 	collisionCal->Clear();
+	SetPowerUp(MarioGame::GetInstance()->GetPlayerData()->Power);
 }
 
 void Mario::SetPowerUp(shared_ptr<MarioPower> power, bool effect)
