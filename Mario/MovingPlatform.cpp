@@ -47,7 +47,7 @@ void MovingPlatform::StatusUpdate()
                 Velocity.y = 0.2;
 
                 Vec2 veloc = rs->Object->GetVelocity();
-                veloc.y = Velocity.y + 0.1;
+                veloc.y = Velocity.y * 3 + 1;
                 rs->Object->SetVelocity(veloc);
             }
         }
