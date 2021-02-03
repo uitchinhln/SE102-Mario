@@ -52,30 +52,34 @@ int CGame::Run()
 
 	MSG msg;
 	gameTimer.Start();
-	DWORD tickPerFrame = 1000 / properties->TickRate;
+	long tickPerFrame = 1000 / properties->TickRate;
 
 	while (ProcessMessage(msg))
 	{
 		//tick
-		DWORD now = gameTimer.Elapsed();
-		DWORD accumulatedTime = now - gameTime.GetPreviousTicks();
+		long now = gameTimer.Elapsed();
+		long accumulatedTime = now - gameTime.GetPreviousTicks();
 
 		if (accumulatedTime >= tickPerFrame)
 		{
-			//auto start = std::chrono::high_resolution_clock::now();
-			gameTime.ElapsedGameTime = accumulatedTime * this->timescale;
-			gameTime.TotalGameTime += accumulatedTime * this->timescale;
-			gameTime.SetPreviousTicks(now);
+			long tempTime = accumulatedTime;
 
-			keyboard->ProcessKeyboard();
-			Update();
-			Render();
-			Sleep(0);
-			//auto finish = std::chrono::high_resolution_clock::now();
-			//DebugOut(L"Loop: %d\t%d\n", accumulatedTime, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
+			while (tempTime > 0) {
+				long delta = max(0, min(tempTime, tickPerFrame));
+				tempTime -= tickPerFrame;
+
+				gameTime.ElapsedGameTime = delta * this->timescale;
+				gameTime.TotalGameTime += delta * this->timescale;
+				gameTime.SetPreviousTicks(now);
+
+				keyboard->ProcessKeyboard();
+				Update();
+				Render();
+				Sleep(0);
+			}
 		}
 		else {
-			Sleep(tickPerFrame - accumulatedTime);
+			Sleep(max(tickPerFrame - accumulatedTime, 0));
 		}
 	}
 
