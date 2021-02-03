@@ -74,9 +74,10 @@ int CGame::Run()
 
 				keyboard->ProcessKeyboard();
 				Update();
-				Render();
-				Sleep(0);
 			}
+
+			Render();
+			Sleep(0);
 		}
 		else {
 			Sleep(max(tickPerFrame - accumulatedTime, 0));
