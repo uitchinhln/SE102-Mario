@@ -59,7 +59,7 @@ void RedGoomba::FinalUpdate()
 	state->FinalUpdate();
 }
 
-void RedGoomba::Render(D3DCOLOR overlay)
+void RedGoomba::Render(D3DXCOLOR overlay)
 {
 	shared_ptr<DefaultRedGoomba> state = objectState;
 	state->Render(overlay);

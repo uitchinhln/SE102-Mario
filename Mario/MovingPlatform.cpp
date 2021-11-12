@@ -54,7 +54,7 @@ void MovingPlatform::StatusUpdate()
     }
 }
 
-void MovingPlatform::Render(D3DCOLOR overlay)
+void MovingPlatform::Render(D3DXCOLOR overlay)
 {
     InitResource();
 

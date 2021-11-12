@@ -59,3 +59,12 @@ LPCWSTR ToLPCWSTR(string st)
 	// delete wcstring   // << can I ? 
 	return w->c_str();
 }
+
+D3DXCOLOR ToFloatColor(D3DXCOLOR color)
+{
+	float r = color.r > 1.0f ? color.r / 255.0f : color.r;
+	float g = color.g > 1.0f ? color.g / 255.0f : color.g;
+	float b = color.b > 1.0f ? color.b / 255.0f : color.b;
+	float a = color.a > 1.0f ? color.a / 255.0f : color.a;
+	return D3DXCOLOR(r, g, b, a);
+}

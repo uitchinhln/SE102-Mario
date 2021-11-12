@@ -5,7 +5,7 @@
 
 SpriteManager* SpriteManager::__instance = nullptr;
 
-Sprite SpriteManager::Add(string id, int left, int top, int width, int height, int xpivot, int ypivot, LPDIRECT3DTEXTURE9 tex)
+Sprite SpriteManager::Add(string id, int left, int top, int width, int height, int xpivot, int ypivot, LPTEXTURE tex)
 {
 	Sprite sprite = new CSprite(id, left, top, width, height, xpivot, ypivot, tex);
 	sprites[id] = sprite;
@@ -30,7 +30,7 @@ void SpriteManager::ImportFromXml(const char* filePath)
 			for (TiXmlElement* sNode = pRoot->FirstChildElement("Textures"); sNode != NULL ; sNode = sNode->NextSiblingElement("Textures"))
 			{
 				string textureId = sNode->Attribute("textureId");
-				LPDIRECT3DTEXTURE9 texture = TextureManager::GetInstance()->Get(textureId);
+				LPTEXTURE texture = TextureManager::GetInstance()->Get(textureId);
 
 				for (TiXmlElement* pNode = sNode->FirstChildElement(); pNode != nullptr; pNode = pNode->NextSiblingElement()) {
 					string id = pNode->Attribute("id");

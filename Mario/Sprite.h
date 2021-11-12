@@ -1,6 +1,7 @@
 #pragma once
 #include "Utils.h"
 #include "Transform.h"
+#include "Texture.h"
 
 class CSprite
 {
@@ -14,12 +15,12 @@ public:
 
 	D3DXVECTOR3 pivot;
 
-	LPDIRECT3DTEXTURE9 texture = nullptr;
+	LPTEXTURE texture = nullptr;
 
 public:
-	CSprite(string id, int left, int top, int width, int height, int xPivot, int yPivot, LPDIRECT3DTEXTURE9 texture);
+	CSprite(string id, int left, int top, int width, int height, int xPivot, int yPivot, LPTEXTURE texture);
 
-	virtual void Draw(float x, float y, Transform& transform, D3DCOLOR overlay);
+	virtual void Draw(float x, float y, Transform& transform, D3DXCOLOR overlay);
 };
 
 typedef CSprite* Sprite;

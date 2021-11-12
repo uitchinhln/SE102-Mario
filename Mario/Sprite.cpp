@@ -1,7 +1,7 @@
 #include "Sprite.h"
 #include "Game.h"
 
-CSprite::CSprite(string id, int left, int top, int width, int height, int xPivot, int yPivot, LPDIRECT3DTEXTURE9 texture)
+CSprite::CSprite(string id, int left, int top, int width, int height, int xPivot, int yPivot, LPTEXTURE texture)
 {
 	this->id = id;
 	this->left = left;
@@ -12,7 +12,7 @@ CSprite::CSprite(string id, int left, int top, int width, int height, int xPivot
 	this->texture = texture;
 }
 
-void CSprite::Draw(float x, float y, Transform& transform, D3DCOLOR overlay)
+void CSprite::Draw(float x, float y, Transform& transform, D3DXCOLOR overlay)
 {
 	RECT r;
 	r.left = this->left;

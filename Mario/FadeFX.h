@@ -1,6 +1,7 @@
 #pragma once
 #include "ICallbackEffect.h"
 #include "StopWatch.h"
+#include "Texture.h"
 
 class FadeFX :
     public ICallbackEffect
@@ -17,13 +18,13 @@ protected:
 	RECT r;
 	Transform trans;
 
-	LPDIRECT3DTEXTURE9 texture;
+	LPTEXTURE texture;
 
 public:
 	FadeFX(RECT screenRect, long playTime, function<void(long)> callback);
 
 	virtual void Update() override;
 
-	virtual void Render(D3DCOLOR overlay) override;
+	virtual void Render(D3DXCOLOR overlay) override;
 };
 

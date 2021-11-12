@@ -19,7 +19,7 @@ public:
 	virtual void Load() = 0;
 	virtual void Unload();
 	virtual void Update();
-	virtual void Render(D3DCOLOR overlay);
+	virtual void Render(D3DXCOLOR overlay);
 
 	virtual void SpawnEntity(shared_ptr<GameObject> entity);
 

@@ -5,7 +5,7 @@ class Dialog
 {
 public:
 	virtual void Update();
-	virtual void Render(D3DCOLOR overlay);
+	virtual void Render(D3DXCOLOR overlay);
 
 	virtual void OnKeyUp(int key);
 	virtual void OnKeyDown(int key);

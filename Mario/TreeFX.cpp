@@ -15,7 +15,7 @@ void TreeFX::Update()
 {
 }
 
-void TreeFX::Render(D3DCOLOR overlay)
+void TreeFX::Render(D3DXCOLOR overlay)
 {
     for each (Particle * particle in particles)
     {

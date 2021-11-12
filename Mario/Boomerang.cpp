@@ -88,7 +88,7 @@ void Boomerang::FinalUpdate()
     Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
 }
 
-void Boomerang::Render(D3DCOLOR overlay)
+void Boomerang::Render(D3DXCOLOR overlay)
 {
     InitResource();
 

@@ -17,16 +17,16 @@ void IntroController::ItemUpdate()
 		if (itemTimer.Elapsed() > 4300) {
 			shared_ptr<ThreeFX> fx = make_shared<ThreeFX>(Vec2(0, 0), 100000, [](long value) {
 				if (value == 1) {
-					IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DCOLOR_XRGB(91, 33, 0));						
+					IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DXCOLOR(91, 33, 0, 255));
 				}
 				if (value == 2) {
-					IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DCOLOR_XRGB(160, 81, 0));
+					IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DXCOLOR(160, 81, 0, 255));
 				}
 				if (value == 3) {
-					IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DCOLOR_XRGB(242, 158, 27));
+					IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DXCOLOR(242, 158, 27, 255));
 				}
 				if (value == 4) {
-					IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DCOLOR_XRGB(250, 217, 163));
+					IntroController::GetInstance()->GetScene()->SetBackgroundColor(D3DXCOLOR(250, 217, 163, 255));
 				}					
 				if (value == 5) {
 					IntroController::GetInstance()->GetScene()->SpawnEntityWithoutGrid(TreeRight::CreateTreeRight(Vec2(580, 271)));

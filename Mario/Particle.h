@@ -18,9 +18,9 @@ public:
 public:
 	virtual void Update();
 
-	virtual void Render(D3DCOLOR overlay);
+	virtual void Render(D3DXCOLOR overlay);
 
-	virtual void Render(int runTime, int totalTime, D3DCOLOR overlay);
+	virtual void Render(int runTime, int totalTime, D3DXCOLOR overlay);
 
 	virtual RectF GetBoundingBox();
 

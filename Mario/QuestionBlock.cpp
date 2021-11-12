@@ -154,7 +154,7 @@ void QuestionBlock::Update()
 	}
 }
 
-void QuestionBlock::Render(D3DCOLOR overlay)
+void QuestionBlock::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

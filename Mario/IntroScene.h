@@ -22,12 +22,12 @@ public:
 	void Update() override;
 
 
-	void SetBackgroundColor(D3DCOLOR color);
+	void SetBackgroundColor(D3DXCOLOR color);
 
 
-	void OriginalRender(D3DCOLOR overlay);
+	void OriginalRender(D3DXCOLOR overlay);
 
-	void Render(D3DCOLOR overlay) override;
+	void Render(D3DXCOLOR overlay) override;
 
 	EffectServer* GetBackgroundEffect();
 

@@ -189,7 +189,7 @@ void BoomerangBrother::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void BoomerangBrother::Render(D3DCOLOR overlay)
+void BoomerangBrother::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

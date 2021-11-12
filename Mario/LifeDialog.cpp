@@ -34,7 +34,7 @@ void LifeDialog::Update()
 	}
 }
 
-void LifeDialog::Render(D3DCOLOR overlay)
+void LifeDialog::Render(D3DXCOLOR overlay)
 {
 	SpriteManager::GetInstance()->Get("spr-dialog-mario-0")->Draw(Position.x + Size.x / 2, Position.y + Size.y / 2, trans, overlay);
 	life.Render(overlay);

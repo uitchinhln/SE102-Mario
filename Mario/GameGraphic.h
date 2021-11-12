@@ -1,33 +1,38 @@
 #pragma once
 #include "Utils.h"
 #include "Transform.h"
+#include "Texture.h"
 
 class Viewport;
 
 class GameGraphic
 {
-	LPDIRECT3D9 d3d = NULL;						// Direct3D handle
-	LPDIRECT3DDEVICE9 d3ddv = NULL;				// Direct3D device object
+	int backBufferWidth = 0;					// Backbuffer width & height, will be set during Direct3D initialization
+	int backBufferHeight = 0;
 
-	LPDIRECT3DSURFACE9 backBuffer = NULL;
-	LPD3DXSPRITE spriteHandler = NULL;
+	ID3D10Device* pD3DDevice = NULL;
+	IDXGISwapChain* pSwapChain = NULL;
+	ID3D10RenderTargetView* pRenderTargetView = NULL;
+	ID3D10BlendState* pBlendStateAlpha = NULL;			// To store alpha blending state
+
+	LPD3DX10SPRITE spriteObject;						// Sprite handling object, BIG MYSTERY: it has to be in this place OR will lead to access violation in D3D11.dll ????
 
 public:
-	void Init(D3DPRESENT_PARAMETERS d3dpp, HWND hwnd);
+	void Init(HWND hwnd);
 
-	LPDIRECT3DDEVICE9 GetDirect3DDevice() { return this->d3ddv; }
-	LPDIRECT3DSURFACE9 GetBackBuffer() { return backBuffer; }
-	LPD3DXSPRITE GetSpriteHandler() { return this->spriteHandler; }
+	ID3D10Device* GetDirect3DDevice() { return this->pD3DDevice; }
+	IDXGISwapChain* GetSwapChain() { return this->pSwapChain; }
+	ID3D10RenderTargetView* GetRenderTargetView() { return this->pRenderTargetView; }
+	ID3D10BlendState* GetAlphaBlending() { return this->pBlendStateAlpha; }
+	LPD3DX10SPRITE GetSpriteHandler() { return this->spriteObject; }
 
-	Vec2 GetSceneSize();
+	void Clear(D3DXCOLOR color);
 
-	void Clear(D3DCOLOR color);
-
-	void Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 texture, RECT r, Transform& transform, D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
+	void Draw(float x, float y, D3DXVECTOR3 pivot, LPTEXTURE texture, RECT r, Transform& transform, D3DXCOLOR overlay = D3DXCOLOR(255, 255, 255, 255));
 
 	//void DrawText(LPD3DXFONT font, );
 
-	LPDIRECT3DTEXTURE9 CreateTextureFromFile(LPCWSTR texturePath, D3DCOLOR transparentColor);
+	LPTEXTURE CreateTextureFromFile(LPCWSTR texturePath);
 
 	void SetViewport(shared_ptr<Viewport> viewport);
 

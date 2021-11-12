@@ -433,7 +433,7 @@ void MarioPower::MoveAnimation()
 	}
 }
 
-void MarioPower::Render(D3DCOLOR overlay)
+void MarioPower::Render(D3DXCOLOR overlay)
 {
 	this->InitResource();
 
@@ -450,7 +450,7 @@ void MarioPower::Render(D3DCOLOR overlay)
 		}
 
 		if (m->Invulnerable() > 0 && (m->Invulnerable() / 50) % 2) {
-			overlay = D3DCOLOR_ARGB(127, 255, 255, 255);
+			overlay = D3DXCOLOR(127, 255, 255, 255);
 		}
 
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;

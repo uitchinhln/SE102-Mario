@@ -139,7 +139,7 @@ void Spawner::CollisionUpdate(vector<shared_ptr<GameObject>>* coObj)
 {
 }
 
-void Spawner::Render(D3DCOLOR overlay)
+void Spawner::Render(D3DXCOLOR overlay)
 {
 }
 

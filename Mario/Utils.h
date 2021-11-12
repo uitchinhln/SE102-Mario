@@ -9,7 +9,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <vector>
-#include <d3dx9.h>
+#include <d3d10.h>
+#include <d3dx10.h>
 #include <map>
 #include <xtree>
 #include <unordered_map>
@@ -41,6 +42,8 @@ vector<string> split(string line, string delimeter = "\t");
 wstring ToWSTR(string st);
 
 LPCWSTR ToLPCWSTR(string st);
+
+D3DXCOLOR ToFloatColor(D3DXCOLOR color);
 
 template<class key_type, class value_type>
 pair<key_type, value_type> floor_entry(const map<key_type, value_type> &input, const key_type& key);

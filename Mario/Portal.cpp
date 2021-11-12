@@ -46,7 +46,7 @@ bool Portal::HasCollideWith(DWORD id)
 	return false;
 }
 
-void Portal::Render(D3DCOLOR overlay)
+void Portal::Render(D3DXCOLOR overlay)
 {
 }
 

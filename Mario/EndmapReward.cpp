@@ -118,7 +118,7 @@ void EndmapReward::Update()
 	}
 }
 
-void EndmapReward::Render(D3DCOLOR overlay)
+void EndmapReward::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

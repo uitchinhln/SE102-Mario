@@ -31,7 +31,7 @@ void CoinFX::Update()
 	}
 }
 
-void CoinFX::Render(D3DCOLOR overlay)
+void CoinFX::Render(D3DXCOLOR overlay)
 {
 	if (animation == nullptr) {
 		animation = AnimationManager::GetInstance()->Get("ani-coin-obtained")->Clone();

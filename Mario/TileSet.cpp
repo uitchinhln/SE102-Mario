@@ -10,7 +10,7 @@ CTileSet::CTileSet(int firstgid, Vec2 tileSize, int tileCount, int columns, stri
 	this->tileSize = Vec2(tileSize.x, tileSize.y);
 	this->tileCount = tileCount;
 	this->columns = columns;
-	this->texture = CGame::GetInstance()->GetGraphic().CreateTextureFromFile(ToLPCWSTR(imgPath), D3DCOLOR_ARGB(0, 0, 0, 0));
+	this->texture = CGame::GetInstance()->GetGraphic().CreateTextureFromFile(ToLPCWSTR(imgPath));
 }
 
 CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
@@ -23,7 +23,7 @@ CTileSet::CTileSet(TiXmlElement* data, string xmlPath)
 
 	TiXmlElement* imgDom = data->FirstChildElement("image");
 	string imgPath = xmlPath + "/" + imgDom->Attribute("source");
-	this->texture = CGame::GetInstance()->GetGraphic().CreateTextureFromFile(ToLPCWSTR(imgPath), D3DCOLOR_ARGB(0, 0, 0, 0));
+	this->texture = CGame::GetInstance()->GetGraphic().CreateTextureFromFile(ToLPCWSTR(imgPath));
 }
 
 int CTileSet::GetFirstGID()
@@ -31,7 +31,7 @@ int CTileSet::GetFirstGID()
 	return firstgid;
 }
 
-void CTileSet::Draw(int gid, float x, float y, Transform& transform, D3DCOLOR overlay)
+void CTileSet::Draw(int gid, float x, float y, Transform& transform, D3DXCOLOR overlay)
 {
 	if (gid < firstgid) return;
 
@@ -49,5 +49,5 @@ void CTileSet::Draw(int gid, float x, float y, Transform& transform, D3DCOLOR ov
 
 CTileSet::~CTileSet()
 {
-	texture->Release();
+	delete texture;
 }

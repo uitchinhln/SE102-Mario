@@ -71,7 +71,7 @@ void Koopas::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void Koopas::Render(D3DCOLOR overlay)
+void Koopas::Render(D3DXCOLOR overlay)
 {
 	power->Render(overlay);
 }

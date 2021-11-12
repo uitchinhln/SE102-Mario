@@ -150,9 +150,9 @@ void PlayScene::Update()
 	}
 }
 
-void PlayScene::Render(D3DCOLOR overlay)
+void PlayScene::Render(D3DXCOLOR overlay)
 {
-	CGame::GetInstance()->GetGraphic().Clear(D3DCOLOR_XRGB(0, 0, 0));	
+	CGame::GetInstance()->GetGraphic().Clear(D3DXCOLOR(0, 0, 0, 255));
 
 	gameMap->Render(overlay);
 	vector<shared_ptr<GameObject>> renderObjects;

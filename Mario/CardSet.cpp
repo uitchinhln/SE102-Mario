@@ -52,7 +52,7 @@ void CardSet::Update()
 	}
 }
 
-void CardSet::Render(D3DCOLOR overlay)
+void CardSet::Render(D3DXCOLOR overlay)
 {
 	for each (CardSlot * var in cards)
 	{

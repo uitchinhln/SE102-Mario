@@ -38,7 +38,7 @@
     </Resources>
     <GameContent>
         <Hud path="Resource/HUD.tmx" left="0" top="579"/>
-        <Scenes start="intro">
+        <Scenes start="overworld">
             <Scene id="intro" type="IntroScene" path="Resource/Scenes/Intro.xml"/>
             <Scene id="overworld" type="WorldScene" path="Resource/Scenes/Overworld.xml"/>
             <Scene id="world-1-1" type="PlayScene" path="Resource/Scenes/World1-1.xml"/>

@@ -197,7 +197,7 @@ void CrouchKoopas::StatusUpdate()
 	}
 }
 
-void CrouchKoopas::Render(D3DCOLOR overlay)
+void CrouchKoopas::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 	if (respawnTimer.IsRunning() && KP_RESPAWN_TIME - respawnTimer.Elapsed() <= 3000) {

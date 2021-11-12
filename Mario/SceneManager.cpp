@@ -41,7 +41,7 @@ void SceneManager::Update()
 	GetActiveScene()->Update();
 }
 
-void SceneManager::Render(D3DCOLOR overlay)
+void SceneManager::Render(D3DXCOLOR overlay)
 {
 	GetActiveScene()->Render(overlay);
 }

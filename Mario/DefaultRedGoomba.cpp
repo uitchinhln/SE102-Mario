@@ -147,7 +147,7 @@ void DefaultRedGoomba::FinalUpdate()
 	}
 }
 
-void DefaultRedGoomba::Render(D3DCOLOR overlay)
+void DefaultRedGoomba::Render(D3DXCOLOR overlay)
 {
 	if (shared_ptr<RedGoomba> g = holder.lock()) {
 		InitResource();

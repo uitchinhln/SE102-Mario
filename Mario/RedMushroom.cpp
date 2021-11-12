@@ -108,7 +108,7 @@ void RedMushroom::FinalUpdate()
     collisionCal->Clear();
 }
 
-void RedMushroom::Render(D3DCOLOR overlay)
+void RedMushroom::Render(D3DXCOLOR overlay)
 {
     InitResource();
 

@@ -16,7 +16,7 @@ public:
 
 	void Update() override;
 
-	void Render(D3DCOLOR overlay) override;
+	void Render(D3DXCOLOR overlay) override;
 
 	virtual void SpawnEntity(shared_ptr<GameObject> entity) override;
 

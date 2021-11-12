@@ -11,7 +11,7 @@ void Text::Update()
 {
 }
 
-void Text::Render(D3DCOLOR overlay)
+void Text::Render(D3DXCOLOR overlay)
 {
 	if (font == nullptr) return;
 

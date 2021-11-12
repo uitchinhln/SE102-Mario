@@ -16,6 +16,6 @@ public:
 
 	virtual void Update() = 0;
 
-	virtual void Render(D3DCOLOR overlay) = 0;
+	virtual void Render(D3DXCOLOR overlay) = 0;
 };
 

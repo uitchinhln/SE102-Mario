@@ -33,7 +33,7 @@ void SmokeSpotFX::Update()
     }
 }
 
-void SmokeSpotFX::Render(D3DCOLOR overlay)
+void SmokeSpotFX::Render(D3DXCOLOR overlay)
 {
     for each (Particle * particle in particles)
     {

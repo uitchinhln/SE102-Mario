@@ -113,7 +113,7 @@ void Goomba::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void Goomba::Render(D3DCOLOR overlay)
+void Goomba::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

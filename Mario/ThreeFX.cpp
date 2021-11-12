@@ -60,7 +60,7 @@ void ThreeFX::Update()
 	}
 }
 
-void ThreeFX::Render(D3DCOLOR overlay)
+void ThreeFX::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

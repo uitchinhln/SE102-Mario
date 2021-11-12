@@ -22,7 +22,7 @@ public:
 
     virtual void StatusUpdate() override;
 
-    virtual void Render(D3DCOLOR overlay) override;
+    virtual void Render(D3DXCOLOR overlay) override;
 
 
     virtual ObjectType GetObjectType() override;

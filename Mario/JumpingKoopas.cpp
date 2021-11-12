@@ -118,7 +118,7 @@ void JumpingKoopas::StatusUpdate()
 	}
 }
 
-void JumpingKoopas::Render(D3DCOLOR overlay)
+void JumpingKoopas::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 	if (shared_ptr<Koopas> k = koopas.lock()) {

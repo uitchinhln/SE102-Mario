@@ -109,7 +109,7 @@ void MarioFireBall::FinalUpdate()
 	//collisionCal->Clear();
 }
 
-void MarioFireBall::Render(D3DCOLOR overlay)
+void MarioFireBall::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

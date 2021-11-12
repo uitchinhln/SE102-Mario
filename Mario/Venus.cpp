@@ -211,7 +211,7 @@ void Venus::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void Venus::Render(D3DCOLOR overlay)
+void Venus::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 	Animation animation;

@@ -1,5 +1,7 @@
 #pragma once
 #include "ICallbackEffect.h"
+#include "Texture.h"
+
 class RectangleInFX :
     public ICallbackEffect
 {
@@ -21,13 +23,13 @@ protected:
 
 	Vec2 stepSize;
 
-	LPDIRECT3DTEXTURE9 texture;
+	LPTEXTURE texture;
 
 public:
     RectangleInFX(RECT screenRect, long playTime, Vec2 stepSize, function<void(long)> callback);
 
 	virtual void Update();
 
-	virtual void Render(D3DCOLOR overlay);
+	virtual void Render(D3DXCOLOR overlay);
 };
 

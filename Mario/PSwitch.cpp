@@ -97,7 +97,7 @@ void PSwitch::FinalUpdate()
     collisionCal->Clear();
 }
 
-void PSwitch::Render(D3DCOLOR overlay)
+void PSwitch::Render(D3DXCOLOR overlay)
 {
     InitResource();
 

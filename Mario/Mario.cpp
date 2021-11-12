@@ -232,7 +232,7 @@ void Mario::Update()
 	p->Update();	
 }
 
-void Mario::Render(D3DCOLOR overlay)
+void Mario::Render(D3DXCOLOR overlay)
 {
 	power->Render(overlay);
 }

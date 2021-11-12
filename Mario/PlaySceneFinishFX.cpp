@@ -43,7 +43,7 @@ void PlaySceneFinishFX::Update()
 	if (playtimeLeft < 0) Active = false;
 }
 
-void PlaySceneFinishFX::Render(D3DCOLOR overlay)
+void PlaySceneFinishFX::Render(D3DXCOLOR overlay)
 {
 	line1.Render(overlay);
 

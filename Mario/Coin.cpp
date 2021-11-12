@@ -97,7 +97,7 @@ void Coin::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void Coin::Render(D3DCOLOR overlay)
+void Coin::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

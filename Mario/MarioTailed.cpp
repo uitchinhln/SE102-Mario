@@ -109,7 +109,7 @@ void MarioTailed::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void MarioTailed::Render(D3DCOLOR overlay)
+void MarioTailed::Render(D3DXCOLOR overlay)
 {
 }
 

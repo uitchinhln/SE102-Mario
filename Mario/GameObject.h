@@ -6,6 +6,7 @@
 #include "CollisionCalculator.h"
 #include "DataTag.h"
 #include "ObjectType.h"
+#include "Texture.h"
 
 class GameObject
 {
@@ -95,7 +96,7 @@ public:
 
 	virtual void FinalUpdate();
 
-	virtual void Render(D3DCOLOR overlay) = 0;
+	virtual void Render(D3DXCOLOR overlay) = 0;
 
 	virtual void RenderTestBox();
 

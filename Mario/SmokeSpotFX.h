@@ -10,7 +10,7 @@ public:
 
     virtual void Update() override;
 
-    virtual void Render(D3DCOLOR overlay) override;
+    virtual void Render(D3DXCOLOR overlay) override;
 
     virtual void InitResource(Particle* particle);
 

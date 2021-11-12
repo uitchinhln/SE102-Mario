@@ -143,7 +143,7 @@ void DefaultKoopas::FinalUpdate()
 	}
 }
 
-void DefaultKoopas::Render(D3DCOLOR overlay)
+void DefaultKoopas::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

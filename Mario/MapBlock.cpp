@@ -43,6 +43,6 @@ bool MapBlock::HasCollideWith(DWORD id)
     return true;
 }
 
-void MapBlock::Render(D3DCOLOR overlay)
+void MapBlock::Render(D3DXCOLOR overlay)
 {
 }

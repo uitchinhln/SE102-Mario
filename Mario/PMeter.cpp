@@ -25,7 +25,7 @@ void PMeter::Update()
 	level = min(7, max(0, level));
 }
 
-void PMeter::Render(D3DCOLOR overlay)
+void PMeter::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 	float begin = Position.x;

@@ -153,7 +153,7 @@ void Piranha::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void Piranha::Render(D3DCOLOR overlay)
+void Piranha::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 	Animation animation;

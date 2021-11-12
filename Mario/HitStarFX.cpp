@@ -32,7 +32,7 @@ void HitStarFX::Update()
     }
 }
 
-void HitStarFX::Render(D3DCOLOR overlay)
+void HitStarFX::Render(D3DXCOLOR overlay)
 {
     for each (Particle * particle in particles)
     {

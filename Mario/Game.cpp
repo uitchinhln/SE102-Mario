@@ -27,22 +27,42 @@ void CGame::OnKeyDown(int key)
 
 void CGame::Render()
 {
-	//auto start = std::chrono::high_resolution_clock::now();
-	graphic->GetDirect3DDevice()->BeginScene();
-	//if (SUCCEEDED(graphic->GetDirect3DDevice()->BeginScene()))
-	//{
-	// Clear back buffer with a color
-	graphic->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
+
+#pragma region Old Code
+	////auto start = std::chrono::high_resolution_clock::now();
+	//graphic->GetDirect3DDevice()->BeginScene();
+	////if (SUCCEEDED(graphic->GetDirect3DDevice()->BeginScene()))
+	////{
+	//// Clear back buffer with a color
+	//graphic->GetSpriteHandler()->Begin(D3DXSPRITE_ALPHABLEND);
+
+	//Draw();
+
+	//graphic->GetSpriteHandler()->End();
+	//graphic->GetDirect3DDevice()->EndScene();
+	////}	       
+	//// Display back buffer content to the screen
+	//graphic->GetDirect3DDevice()->Present(NULL, NULL, NULL, NULL);
+	////auto finish = std::chrono::high_resolution_clock::now();
+	////DebugOut(L"Loop: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
+#pragma endregion
+
+	ID3D10Device* pD3DDevice = graphic->GetDirect3DDevice();
+	IDXGISwapChain* pSwapChain = graphic->GetSwapChain();
+	ID3D10RenderTargetView* pRenderTargetView = graphic->GetRenderTargetView();
+	ID3DX10Sprite* spriteHandler = graphic->GetSpriteHandler();
+
+	spriteHandler->Begin(D3DX10_SPRITE_SORT_TEXTURE);
+
+	FLOAT NewBlendFactor[4] = { 0,0,0,0 };
+	pD3DDevice->OMSetBlendState(graphic->GetAlphaBlending(), NewBlendFactor, 0xffffffff);
 
 	Draw();
 
-	graphic->GetSpriteHandler()->End();
-	graphic->GetDirect3DDevice()->EndScene();
-	//}	       
-	// Display back buffer content to the screen
-	graphic->GetDirect3DDevice()->Present(NULL, NULL, NULL, NULL);
-	//auto finish = std::chrono::high_resolution_clock::now();
-	//DebugOut(L"Loop: %d\t%d\n", 0, std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count());
+	spriteHandler->End();
+	pSwapChain->Present(0, 0);
+
+
 }
 
 int CGame::Run()
@@ -160,7 +180,7 @@ void CGame::Init(GameProperties properties)
 	window->CreateGameWindow();
 
 	graphic = make_unique<GameGraphic>();
-	graphic->Init(properties->d3dpp, window->GetWindowHandler());
+	graphic->Init(window->GetWindowHandler());
 
 	keyboard = make_unique<KeyboardProcessor>();
 	keyboard->InitKeyboard(window->GetWindowHandler());

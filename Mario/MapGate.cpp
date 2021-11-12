@@ -68,7 +68,7 @@ bool MapGate::HasCollideWith(DWORD id)
 	return false;
 }
 
-void MapGate::Render(D3DCOLOR overlay)
+void MapGate::Render(D3DXCOLOR overlay)
 {
 	if (sprites.size() == 2) {
 		Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;

@@ -32,7 +32,7 @@ void CAnimation::AddFrame(Sprite sprite, DWORD frameTime)
 	this->frames.push_back(frame);
 }
 
-void CAnimation::Render(D3DCOLOR overlay)
+void CAnimation::Render(D3DXCOLOR overlay)
 {
 	DWORD now = CGame::Time().TotalGameTime;
 
@@ -55,7 +55,7 @@ void CAnimation::Render(D3DCOLOR overlay)
 	frames[currentFrame]->GetSprite()->Draw(transform->Position.x, transform->Position.y, *transform, overlay);
 }
 
-void CAnimation::Render(int runTime, int totalTime, D3DCOLOR overlay)
+void CAnimation::Render(int runTime, int totalTime, D3DXCOLOR overlay)
 {
 	int frameIndex = (int)max(0, min(trunc(runTime / (totalTime / frames.size())), frames.size() - 1));
 

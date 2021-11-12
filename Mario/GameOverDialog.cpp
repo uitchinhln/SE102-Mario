@@ -13,7 +13,7 @@ void GameOverDialog::Update()
 {
 }
 
-void GameOverDialog::Render(D3DCOLOR overlay)
+void GameOverDialog::Render(D3DXCOLOR overlay)
 {
 	SpriteManager::GetInstance()->Get("spr-dialog-gameover-0")->Draw(Position.x + Size.x / 2, Position.y + Size.y / 2, trans, overlay);
 	if (state == GameOverDialogState::CONTINUE) {

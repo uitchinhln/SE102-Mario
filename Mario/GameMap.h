@@ -13,7 +13,7 @@ class CGameMap
 	int tileWidth;
 	int tileHeight;
 
-	D3DCOLOR backgroundColor = D3DCOLOR_XRGB(181, 235, 242);
+	D3DXCOLOR backgroundColor = D3DXCOLOR(181, 235, 242, 255);
 
 	shared_ptr<Camera> camera;
 
@@ -37,9 +37,9 @@ public:
 
 	virtual void Update();
 
-	virtual void Render(D3DCOLOR overlay);
+	virtual void Render(D3DXCOLOR overlay);
 
-	virtual void SetBackgroundColor(D3DCOLOR color);
+	virtual void SetBackgroundColor(D3DXCOLOR color);
 
 	static shared_ptr<CGameMap> FromTMX(string filePath);
 	~CGameMap();

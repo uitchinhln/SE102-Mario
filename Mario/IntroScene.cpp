@@ -64,12 +64,12 @@ void IntroScene::Update()
 	EffectServer::GetInstance()->Update();
 }
 
-void IntroScene::SetBackgroundColor(D3DCOLOR color)
+void IntroScene::SetBackgroundColor(D3DXCOLOR color)
 {
 	gameMap->SetBackgroundColor(color);
 }
 
-void IntroScene::Render(D3DCOLOR overlay)
+void IntroScene::Render(D3DXCOLOR overlay)
 {
 	gameMap->Render(overlay);
 	backgroundEffect->Render(overlay);

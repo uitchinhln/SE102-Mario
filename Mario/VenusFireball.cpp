@@ -86,7 +86,7 @@ void VenusFireball::FinalUpdate()
 	Distance = Velocity * (float)CGame::Time().ElapsedGameTime;
 }
 
-void VenusFireball::Render(D3DCOLOR overlay)
+void VenusFireball::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

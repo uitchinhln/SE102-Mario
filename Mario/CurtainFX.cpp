@@ -22,7 +22,7 @@ void CurtainFX::Update()
 	}
 }
 
-void CurtainFX::Render(D3DCOLOR overlay)
+void CurtainFX::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

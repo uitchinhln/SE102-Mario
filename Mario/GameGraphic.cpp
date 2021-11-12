@@ -1,141 +1,343 @@
 #include "GameGraphic.h"
 #include "Viewport.h"
 
-void GameGraphic::Init(D3DPRESENT_PARAMETERS d3dpp, HWND hwnd)
+void GameGraphic::Init(HWND hWnd)
 {
-	LPDIRECT3D9 d3d = Direct3DCreate9(D3D_SDK_VERSION);
+	// retrieve client area width & height so that we can create backbuffer height & width accordingly 
+	RECT r;
+	GetClientRect(hWnd, &r);
 
-	d3d->CreateDevice(
-		D3DADAPTER_DEFAULT,
-		D3DDEVTYPE_HAL,
-		hwnd,
-		D3DCREATE_HARDWARE_VERTEXPROCESSING,
-		&d3dpp,
-		&d3ddv);
+	backBufferWidth = r.right + 1;
+	backBufferHeight = r.bottom + 1;
 
-	if (d3ddv == NULL)
+	// Create & clear the DXGI_SWAP_CHAIN_DESC structure
+	DXGI_SWAP_CHAIN_DESC swapChainDesc;
+	ZeroMemory(&swapChainDesc, sizeof(swapChainDesc));
+
+	// Fill in the needed values
+	swapChainDesc.BufferCount = 1;
+	swapChainDesc.BufferDesc.Width = backBufferWidth;
+	swapChainDesc.BufferDesc.Height = backBufferHeight;
+	swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
+	swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
+	swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+	swapChainDesc.OutputWindow = hWnd;
+	swapChainDesc.SampleDesc.Count = 1;
+	swapChainDesc.SampleDesc.Quality = 0;
+	swapChainDesc.Windowed = TRUE;
+
+	// Create the D3D device and the swap chain
+	HRESULT hr = D3D10CreateDeviceAndSwapChain(NULL,
+		D3D10_DRIVER_TYPE_REFERENCE,
+		NULL,
+		0,
+		D3D10_SDK_VERSION,
+		&swapChainDesc,
+		&pSwapChain,
+		&pD3DDevice);
+
+	if (hr != S_OK)
 	{
-		OutputDebugString(L"[ERROR] CreateDevice failed\n");
+		DebugOut((wchar_t*)L"[ERROR] D3D10CreateDeviceAndSwapChain has failed %s %d", __FILE__, __LINE__);
 		return;
 	}
 
-	d3ddv->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &backBuffer);
+	// Get the back buffer from the swapchain
+	ID3D10Texture2D* pBackBuffer;
+	hr = pSwapChain->GetBuffer(0, __uuidof(ID3D10Texture2D), (LPVOID*)&pBackBuffer);
+	if (hr != S_OK)
+	{
+		DebugOut((wchar_t*)L"[ERROR] pSwapChain->GetBuffer has failed %s %d", __FILE__, __LINE__);
+		return;
+	}
 
-	// Initialize sprite helper from Direct3DX helper library
-	D3DXCreateSprite(d3ddv, &spriteHandler);
+	// create the render target view
+	hr = pD3DDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
 
-	d3ddv->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
+	pBackBuffer->Release();
+	if (hr != S_OK)
+	{
+		DebugOut((wchar_t*)L"[ERROR] CreateRenderTargetView has failed %s %d", __FILE__, __LINE__);
+		return;
+	}
 
-	d3ddv->SetRenderState(D3DRS_ZENABLE, D3DZB_FALSE);
-	d3ddv->SetRenderState(D3DRS_ZWRITEENABLE, D3DZB_FALSE);
-	d3ddv->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS);
+	// set the render target
+	pD3DDevice->OMSetRenderTargets(1, &pRenderTargetView, NULL);
 
-	OutputDebugString(L"[INFO] InitGame done;\n");
+	// create and set the viewport
+	D3D10_VIEWPORT viewPort;
+	viewPort.Width = backBufferWidth;
+	viewPort.Height = backBufferHeight;
+	viewPort.MinDepth = 0.0f;
+	viewPort.MaxDepth = 1.0f;
+	viewPort.TopLeftX = 0;
+	viewPort.TopLeftY = 0;
+	pD3DDevice->RSSetViewports(1, &viewPort);
+
+
+	// create the sprite object to handle sprite drawing 
+	hr = D3DX10CreateSprite(pD3DDevice, 0, &spriteObject);
+
+	if (hr != S_OK)
+	{
+		DebugOut((wchar_t*)L"[ERROR] D3DX10CreateSprite has failed %s %d", __FILE__, __LINE__);
+		return;
+	}
+
+	D3DXMATRIX matProjection;
+
+	// Create the projection matrix using the values in the viewport
+	D3DXMatrixOrthoOffCenterLH(&matProjection,
+		(float)viewPort.TopLeftX,
+		(float)viewPort.Width,
+		(float)viewPort.TopLeftY,
+		(float)viewPort.Height,
+		0.1f,
+		10);
+	hr = spriteObject->SetProjectionTransform(&matProjection);
+
+
+	// Initialize the blend state for alpha drawing
+	D3D10_BLEND_DESC StateDesc;
+	ZeroMemory(&StateDesc, sizeof(D3D10_BLEND_DESC));
+	StateDesc.AlphaToCoverageEnable = FALSE;
+	StateDesc.BlendEnable[0] = TRUE;
+	StateDesc.SrcBlend = D3D10_BLEND_SRC_ALPHA;
+	StateDesc.DestBlend = D3D10_BLEND_INV_SRC_ALPHA;
+	StateDesc.BlendOp = D3D10_BLEND_OP_ADD;
+	StateDesc.SrcBlendAlpha = D3D10_BLEND_ZERO;
+	StateDesc.DestBlendAlpha = D3D10_BLEND_ZERO;
+	StateDesc.BlendOpAlpha = D3D10_BLEND_OP_ADD;
+	StateDesc.RenderTargetWriteMask[0] = D3D10_COLOR_WRITE_ENABLE_ALL;
+	pD3DDevice->CreateBlendState(&StateDesc, &this->pBlendStateAlpha);
+
+	ID3D10RasterizerState* g_pRasterState;
+	D3D10_RASTERIZER_DESC rasterizerState;
+
+	rasterizerState.FillMode = D3D10_FILL_SOLID;
+	rasterizerState.CullMode = D3D10_CULL_FRONT;
+	rasterizerState.FrontCounterClockwise = true;
+	rasterizerState.DepthBias = false;
+	rasterizerState.DepthBiasClamp = 0;
+	rasterizerState.SlopeScaledDepthBias = 0;
+	rasterizerState.DepthClipEnable = true;
+	rasterizerState.ScissorEnable = true;
+	rasterizerState.MultisampleEnable = false;
+	rasterizerState.AntialiasedLineEnable = false;
+
+	pD3DDevice->CreateRasterizerState(&rasterizerState, &g_pRasterState);
+
+	pD3DDevice->RSSetState(g_pRasterState);
+
+	DebugOut((wchar_t*)L"[INFO] InitDirectX has been successful\n");
+
+	return;
 }
 
-Vec2 GameGraphic::GetSceneSize()
+void GameGraphic::Clear(D3DXCOLOR color)
 {
-	D3DVIEWPORT9 viewport;
-	d3ddv->GetViewport(&viewport);
-	return Vec2((float)viewport.Width, (float)viewport.Height);
+	pD3DDevice->ClearRenderTargetView(pRenderTargetView, ToFloatColor(color));
 }
 
-void GameGraphic::Clear(D3DCOLOR color)
+void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPTEXTURE texture, RECT r, Transform& transform, D3DXCOLOR overlay)
 {
-	d3ddv->Clear(0, NULL, D3DCLEAR_TARGET, color, 1.0f, 0);
-}
+#pragma region Old Code
+	//RECT viewport;
+	//this->d3ddv->GetScissorRect(&viewport);
 
-void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPDIRECT3DTEXTURE9 texture, RECT r, Transform& transform, D3DCOLOR overlay)
-{
+	//x += viewport.left;
+	//y += viewport.top;
+
+	//x = ceil(x);
+	//y = ceil(y);
+
+	//pivot.x = (pivot.x == 0 ? (r.right - r.left) / 2 : pivot.x) * abs(transform.Scale.x);
+	//pivot.y = (pivot.y == 0 ? (r.bottom - r.top) / 2 : pivot.y) * abs(transform.Scale.y);
+
+	//D3DXVECTOR3 p(x, y, 0);
+	////D3DXVECTOR3 p(x + (r.right - r.left) / 2, y + (r.bottom - r.top) / 2, 0);
+
+	//if (transform.Rotation == 0 && transform.Scale == Vec2(1.0f, 1.0f)) {
+	//	spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
+	//}
+	//else 
+	//{
+	//	D3DXMATRIX oldMatrix, newMatrix;
+	//	spriteHandler->GetTransform(&oldMatrix);
+
+	//	//Vec2 transformCenter = Vec2(x + (r.right - r.left) / 2, y + (r.bottom - r.top) / 2);
+	//	Vec2 transformCenter = Vec2(x, y);
+
+	//	D3DXMatrixTransformation2D(&newMatrix, &transformCenter, 0, &transform.Scale,
+	//		&transformCenter, transform.Rotation, &VECTOR_0);
+
+	//	spriteHandler->SetTransform(&newMatrix);
+	//	spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
+	//	spriteHandler->SetTransform(&oldMatrix);
+	//}
+#pragma endregion
+
+	if (texture == NULL) return;
+
 	RECT viewport;
-	this->d3ddv->GetScissorRect(&viewport);
+	UINT id = 1;
+	this->pD3DDevice->RSGetScissorRects(&id, &viewport);
 
 	x += viewport.left;
 	y += viewport.top;
 
-	x = ceil(x);
-	y = ceil(y);
+	int spriteWidth = 0;
+	int spriteHeight = 0;
 
-	pivot.x = (pivot.x == 0 ? (r.right - r.left) / 2 : pivot.x) * abs(transform.Scale.x);
-	pivot.y = (pivot.y == 0 ? (r.bottom - r.top) / 2 : pivot.y) * abs(transform.Scale.y);
+	D3DX10_SPRITE sprite;
 
-	D3DXVECTOR3 p(x, y, 0);
-	//D3DXVECTOR3 p(x + (r.right - r.left) / 2, y + (r.bottom - r.top) / 2, 0);
+	// Set the sprite’s shader resource view
+	sprite.pTexture = texture->getShaderResourceView();
 
-	if (transform.Rotation == 0 && transform.Scale == Vec2(1.0f, 1.0f)) {
-		spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
-	}
-	else 
-	{
-		D3DXMATRIX oldMatrix, newMatrix;
-		spriteHandler->GetTransform(&oldMatrix);
+	sprite.TexCoord.x = r.left / (float)texture->getWidth();
+	sprite.TexCoord.y = r.top / (float)texture->getHeight();
 
-		//Vec2 transformCenter = Vec2(x + (r.right - r.left) / 2, y + (r.bottom - r.top) / 2);
-		Vec2 transformCenter = Vec2(x, y);
+	spriteWidth = r.right - r.left;
+	spriteHeight = r.bottom - r.top;
 
-		D3DXMatrixTransformation2D(&newMatrix, &transformCenter, 0, &transform.Scale,
-			&transformCenter, transform.Rotation, &VECTOR_0);
+	sprite.TexSize.x = spriteWidth / (float)texture->getWidth();
+	sprite.TexSize.y = spriteHeight / (float)texture->getHeight();
 
-		spriteHandler->SetTransform(&newMatrix);
-		spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
-		spriteHandler->SetTransform(&oldMatrix);
-	}
+	// Set the texture index. Single textures will use 0
+	sprite.TextureIndex = 0;
+
+	// The color to apply to this sprite, full color applies white.
+	//sprite.ColorModulate = D3DXCOLOR(255, 255, 255, 255);
+	sprite.ColorModulate = ToFloatColor(overlay);
+
+
+	//
+	// Build the rendering matrix based on sprite location 
+	//
+
+	// The translation matrix to be created
+	D3DXMATRIX matTranslation;
+
+	// Create the translation matrix
+	D3DXMatrixTranslation(&matTranslation, x, (backBufferHeight - y), 0.1f);
+
+	// Scale the sprite to its correct width and height because by default, DirectX draws it with width = height = 1.0f 
+	D3DXMATRIX matScaling;
+	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
+
+	// Setting the sprite’s position and size
+	sprite.matWorld = (matScaling * matTranslation);
+
+	spriteObject->DrawSpritesImmediate(&sprite, 1, 0, 0);
 }
 
-LPDIRECT3DTEXTURE9 GameGraphic::CreateTextureFromFile(LPCWSTR texturePath, D3DCOLOR transparentColor)
+LPTEXTURE GameGraphic::CreateTextureFromFile(LPCWSTR texturePath)
 {
-	D3DXIMAGE_INFO info;
-	LPDIRECT3DTEXTURE9 texture;
+	ID3D10Resource* pD3D10Resource = NULL;
+	ID3D10Texture2D* tex = NULL;
 
-	HRESULT result = D3DXGetImageInfoFromFile(texturePath, &info);
-	if (result != D3D_OK)
+	// Retrieve image information first 
+	D3DX10_IMAGE_INFO imageInfo;
+	HRESULT hr = D3DX10GetImageInfoFromFile(texturePath, NULL, &imageInfo, NULL);
+	if (FAILED(hr))
 	{
-		DebugOut(L"[ERROR] GetImageInfoFromFile failed: %s\n", texturePath);
+		DebugOut((wchar_t*)L"[ERROR] D3DX10GetImageInfoFromFile failed for  file: %s with error: %d\n", texturePath, hr);
 		return NULL;
 	}
 
-	result = D3DXCreateTextureFromFileEx(
-		d3ddv,								// Pointer to Direct3D device object
-		texturePath,						// Path to the image to load
-		info.Width,							// Texture width
-		info.Height,						// Texture height
-		1,
-		D3DUSAGE_DYNAMIC,
-		D3DFMT_UNKNOWN,
-		D3DPOOL_DEFAULT,
-		D3DX_DEFAULT,
-		D3DX_DEFAULT,
-		transparentColor,			// Transparent color
+	D3DX10_IMAGE_LOAD_INFO info;
+	ZeroMemory(&info, sizeof(D3DX10_IMAGE_LOAD_INFO));
+	info.Width = imageInfo.Width;
+	info.Height = imageInfo.Height;
+	info.Depth = imageInfo.Depth;
+	info.FirstMipLevel = 0;
+	info.MipLevels = 1;
+	info.Usage = D3D10_USAGE_DEFAULT;
+	info.BindFlags = D3DX10_DEFAULT;
+	info.CpuAccessFlags = D3DX10_DEFAULT;
+	info.MiscFlags = D3DX10_DEFAULT;
+	info.Format = imageInfo.Format;
+	info.Filter = D3DX10_FILTER_NONE;
+	info.MipFilter = D3DX10_DEFAULT;
+	info.pSrcInfo = &imageInfo;
+
+	// Loads the texture into a temporary ID3D10Resource object
+	hr = D3DX10CreateTextureFromFile(pD3DDevice,
+		texturePath,
 		&info,
 		NULL,
-		&texture);								// Created texture pointer
+		&pD3D10Resource,
+		NULL);
 
-	if (result != D3D_OK)
+	// Make sure the texture was loaded successfully
+	if (FAILED(hr))
 	{
-		DebugOut(L"[ERROR] CreateTextureFromFile failed. File: %s\n", texturePath);
+		DebugOut((wchar_t*)L"[ERROR] Failed to load texture file: %s with error: %d\n", texturePath, hr);
 		return NULL;
 	}
 
-	DebugOut(L"[INFO] Texture loaded Ok: %s \n", texturePath);
-	return texture;
+	// Translates the ID3D10Resource object into a ID3D10Texture2D object
+	pD3D10Resource->QueryInterface(__uuidof(ID3D10Texture2D), (LPVOID*)&tex);
+	pD3D10Resource->Release();
+
+	if (!tex) {
+		DebugOut((wchar_t*)L"[ERROR] Failed to convert from ID3D10Resource to ID3D10Texture2D \n");
+		return NULL;
+	}
+
+	//
+	// Create the Share Resource View for this texture 
+	// 	   
+	// Get the texture details
+	D3D10_TEXTURE2D_DESC desc;
+	tex->GetDesc(&desc);
+
+	// Create a shader resource view of the texture
+	D3D10_SHADER_RESOURCE_VIEW_DESC SRVDesc;
+
+	// Clear out the shader resource view description structure
+	ZeroMemory(&SRVDesc, sizeof(SRVDesc));
+
+	// Set the texture format
+	SRVDesc.Format = desc.Format;
+
+	// Set the type of resource
+	SRVDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
+	SRVDesc.Texture2D.MipLevels = desc.MipLevels;
+
+	ID3D10ShaderResourceView* gSpriteTextureRV = NULL;
+
+	pD3DDevice->CreateShaderResourceView(tex, &SRVDesc, &gSpriteTextureRV);
+
+	DebugOut(L"[INFO] Texture loaded Ok from file: %s \n", texturePath);
+
+	return new Texture(tex, gSpriteTextureRV);
 }
 
 void GameGraphic::SetViewport(shared_ptr<Viewport> viewport)
 {
 	ClipScene();
-	d3ddv->SetScissorRect(&viewport->GetScissorRect());
+	//this->pD3DDevice->RSSetScissorRects()
+	//d3ddv->SetScissorRect(&viewport->GetScissorRect());
+	this->pD3DDevice->RSSetScissorRects(1, &viewport->GetScissorRect());
 }
 
 void GameGraphic::ClipScene()
 {
-	spriteHandler->End();
-	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+	//spriteHandler->End();
+	//spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+	spriteObject->End();
+	//pSwapChain->Present(0, 0);
+
+	spriteObject->Begin(D3DX10_SPRITE_SORT_TEXTURE);
 }
 
 GameGraphic::~GameGraphic()
 {
-	if (spriteHandler != NULL) spriteHandler->Release();
-	if (backBuffer != NULL) backBuffer->Release();
-	if (d3ddv != NULL) d3ddv->Release();
-	if (d3d != NULL) d3d->Release();
+	if (pD3DDevice != NULL) pD3DDevice->Release();
+	if (pSwapChain != NULL) pSwapChain->Release();
+	if (pRenderTargetView != NULL) pRenderTargetView->Release();
+	if (pBlendStateAlpha != NULL) pBlendStateAlpha->Release();
+	if (spriteObject != NULL) spriteObject->Release();
 }

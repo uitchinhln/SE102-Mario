@@ -10,7 +10,7 @@ void CScene::Update()
 
 }
 
-void CScene::Render(D3DCOLOR overlay)
+void CScene::Render(D3DXCOLOR overlay)
 {
 	//auto start = std::chrono::high_resolution_clock::now();
 

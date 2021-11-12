@@ -30,7 +30,7 @@ void MarioFX::Update()
     Active = true;
 }
 
-void MarioFX::Render(D3DCOLOR overlay)
+void MarioFX::Render(D3DXCOLOR overlay)
 {
     for each (Particle * particle in particles)
     {
@@ -40,7 +40,7 @@ void MarioFX::Render(D3DCOLOR overlay)
         }
 
         if (mario->Invulnerable() > 0 && (timer.Elapsed() / 50) % 2) {
-            overlay = D3DCOLOR_ARGB(127, 255, 255, 255);
+            overlay = D3DXCOLOR(127, 255, 255, 255);
         }
 
         particle->Animations.begin()->second->GetTransform()->Scale = Vec2((float)mario->GetFacing(), 1);

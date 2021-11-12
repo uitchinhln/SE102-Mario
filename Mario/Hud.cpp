@@ -58,9 +58,9 @@ void Hud::Update()
 	score->SetContent(txtScore);
 }
 
-void Hud::Render(D3DCOLOR overlay)
+void Hud::Render(D3DXCOLOR overlay)
 {
-	CGame::GetInstance()->GetGraphic().Clear(background);
+	//CGame::GetInstance()->GetGraphic().Clear(background);
 
 	panel.Render(overlay);
 	cards.Render(overlay);
@@ -91,7 +91,7 @@ void Hud::LoadFromTmx(string tmxPath)
 		hexColor.replace(0, 1, "");
 		unsigned int hex = stoul(hexColor, nullptr, 16);
 		int a = (hex >> 24) & 255 | 255 & (hexColor.length() <= 6 ? 0xff : 0x00);
-		background = D3DCOLOR_ARGB(a, (hex >> 16) & 255, (hex >> 8) & 255, hex & 255);
+		background = D3DXCOLOR((hex >> 16) & 255, (hex >> 8) & 255, hex & 255, a);
 	}
 
 	for (TiXmlElement* group = root->FirstChildElement("objectgroup"); group != nullptr; group = group->NextSiblingElement("objectgroup"))

@@ -23,9 +23,9 @@ public:
 
 	virtual void AddFrame(Sprite sprite, DWORD frameTime = 0);
 
-	virtual void Render(D3DCOLOR overlay);
+	virtual void Render(D3DXCOLOR overlay);
 
-	virtual void Render(int runTime, int totalTime, D3DCOLOR overlay);
+	virtual void Render(int runTime, int totalTime, D3DXCOLOR overlay);
 
 	virtual float GetPlayScale() { return this->playScale; }
 

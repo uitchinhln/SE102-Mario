@@ -9,7 +9,7 @@ class SpriteManager
 
 	unordered_map<string, Sprite> sprites;
 public:
-	virtual Sprite Add(string id, int left, int top, int width, int height, int xpivot, int ypivot, LPDIRECT3DTEXTURE9 tex);
+	virtual Sprite Add(string id, int left, int top, int width, int height, int xpivot, int ypivot, LPTEXTURE tex);
 
 	virtual Sprite Get(string id);
 

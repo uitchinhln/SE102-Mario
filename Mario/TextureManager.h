@@ -1,5 +1,6 @@
 #pragma once
 #include "Utils.h"
+#include "Texture.h"
 
 class TextureManager
 {
@@ -9,12 +10,12 @@ private:
 	TextureManager();
 
 	/*Class content*/
-	unordered_map<string, LPDIRECT3DTEXTURE9> textures;
+	unordered_map<string, LPTEXTURE> textures;
 
 public:
-	virtual void Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor);
+	virtual void Add(string id, LPCWSTR filePath);
 
-	virtual LPDIRECT3DTEXTURE9 Get(string i);
+	virtual LPTEXTURE Get(string i);
 
 	static TextureManager* GetInstance();
 	~TextureManager();

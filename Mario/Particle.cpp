@@ -10,7 +10,7 @@ void Particle::Update()
 	Position += Velocity * dt;
 }
 
-void Particle::Render(D3DCOLOR overlay)
+void Particle::Render(D3DXCOLOR overlay)
 {
 	if (Animations.size() < 1) return;
 	
@@ -22,7 +22,7 @@ void Particle::Render(D3DCOLOR overlay)
 	ani->Render(overlay);
 }
 
-void Particle::Render(int runTime, int totalTime, D3DCOLOR overlay)
+void Particle::Render(int runTime, int totalTime, D3DXCOLOR overlay)
 {
 	if (Animations.size() < 1) return;
 

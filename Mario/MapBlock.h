@@ -24,6 +24,6 @@ public:
 
     virtual bool HasCollideWith(DWORD id) override;
 
-    virtual void Render(D3DCOLOR overlay) override;
+    virtual void Render(D3DXCOLOR overlay) override;
 };
 

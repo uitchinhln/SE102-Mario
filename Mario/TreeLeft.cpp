@@ -15,7 +15,7 @@ void TreeLeft::InitResource()
 	}
 }
 
-void TreeLeft::Render(D3DCOLOR overlay)
+void TreeLeft::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

@@ -51,7 +51,7 @@ void IEffect::Update()
     }
 }
 
-void IEffect::Render(D3DCOLOR overlay)
+void IEffect::Render(D3DXCOLOR overlay)
 {
     for each (Particle * particle in particles)
     {

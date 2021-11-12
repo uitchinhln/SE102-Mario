@@ -55,7 +55,7 @@ void CardSlot::Update()
 	}
 }
 
-void CardSlot::Render(D3DCOLOR overlay)
+void CardSlot::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 	Sprite sprite = sprites["EMPTY"];

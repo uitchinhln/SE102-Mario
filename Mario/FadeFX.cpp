@@ -30,7 +30,7 @@ void FadeFX::Update()
 	}
 }
 
-void FadeFX::Render(D3DCOLOR overlay)
+void FadeFX::Render(D3DXCOLOR overlay)
 {
 	DWORD alpha = 0;
 	float range = playTime / 2;
@@ -43,7 +43,7 @@ void FadeFX::Render(D3DCOLOR overlay)
 		alpha = 255 - 255 * (played / range);
 	}
 
-	overlay = D3DCOLOR_ARGB(alpha, 255, 255, 255);
+	overlay = D3DXCOLOR(255, 255, 255, alpha);
 
 	for (int i = 0; i < width; i += 48)
 	{

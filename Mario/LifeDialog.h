@@ -9,7 +9,7 @@ class LifeDialog :
 public:
 	LifeDialog(long timeout);
 	virtual void Update();
-	virtual void Render(D3DCOLOR overlay);
+	virtual void Render(D3DXCOLOR overlay);
 protected:
 	Text life, world;
 

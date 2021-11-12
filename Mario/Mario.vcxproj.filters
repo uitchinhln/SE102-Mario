@@ -795,6 +795,9 @@
     <ClCompile Include="IntroItemUpdate.cpp">
       <Filter>MarioGame\Scenes\Intro\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Framework\Model\Texture</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -1337,5 +1340,11 @@
     <ClInclude Include="BigLuigi.h">
       <Filter>MarioGame\Entity\LivingEntity\Mario\Luigi</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Framework\Model\Texture</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

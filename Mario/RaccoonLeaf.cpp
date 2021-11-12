@@ -111,7 +111,7 @@ void RaccoonLeaf::FinalUpdate()
 	collisionCal->Clear();
 }
 
-void RaccoonLeaf::Render(D3DCOLOR overlay)
+void RaccoonLeaf::Render(D3DXCOLOR overlay)
 {
 	InitResource();
 

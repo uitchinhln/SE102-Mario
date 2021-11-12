@@ -85,7 +85,7 @@ void IntroScene::OriginalUpdate()
 
 
 
-void IntroScene::OriginalRender(D3DCOLOR overlay)
+void IntroScene::OriginalRender(D3DXCOLOR overlay)
 {
 	sort(objectList.begin(), objectList.end(), [](shared_ptr<GameObject> a, shared_ptr<GameObject> b) {
 		return a->GetRenderOrder() < b->GetRenderOrder();

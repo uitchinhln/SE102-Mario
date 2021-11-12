@@ -135,7 +135,7 @@ void JumpingRedGoomba::StatusUpdate()
 	}
 }
 
-void JumpingRedGoomba::Render(D3DCOLOR overlay)
+void JumpingRedGoomba::Render(D3DXCOLOR overlay)
 {
 	if (shared_ptr<RedGoomba> g = holder.lock()) {
 		InitResource();

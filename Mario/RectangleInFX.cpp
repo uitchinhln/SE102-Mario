@@ -34,7 +34,7 @@ void RectangleInFX::Update()
 	current = min(playtimeLeft, playTime) / max(speed, 1);
 }
 
-void RectangleInFX::Render(D3DCOLOR overlay)
+void RectangleInFX::Render(D3DXCOLOR overlay)
 {
 	Vec2 back = stepSize / 2;
 
@@ -48,7 +48,7 @@ void RectangleInFX::Render(D3DCOLOR overlay)
 		{
 			for (int j = 0; j < height; j += stepSize.y)
 			{
-				CGame::GetInstance()->GetGraphic().Draw(i + back.x, j + back.y, pivot, texture, r, trans, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+				CGame::GetInstance()->GetGraphic().Draw(i + back.x, j + back.y, pivot, texture, r, trans, D3DXCOLOR(alpha, 255, 255, 255));
 			}
 		}
 	}

@@ -37,7 +37,7 @@ public:
 
 	virtual void MoveAnimation();
 
-	virtual void Render(D3DCOLOR overlay);
+	virtual void Render(D3DXCOLOR overlay);
 
 	virtual shared_ptr<Mario> GetMario();
 

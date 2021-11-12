@@ -28,7 +28,7 @@ void CGameMap::Update()
 {
 }
 
-void CGameMap::Render(D3DCOLOR overlay)
+void CGameMap::Render(D3DXCOLOR overlay)
 {
 	//auto start = std::chrono::high_resolution_clock::now();
 	CGame::GetInstance()->GetGraphic().Clear(backgroundColor);
@@ -70,7 +70,7 @@ void CGameMap::Render(D3DCOLOR overlay)
 	//DebugOut(L"Render: \t%d\n", std::chrono::duration_cast<std::chrono::nanoseconds>(finish - start).count());
 }
 
-void CGameMap::SetBackgroundColor(D3DCOLOR color)
+void CGameMap::SetBackgroundColor(D3DXCOLOR color)
 {
 	this->backgroundColor = color;
 }
@@ -93,7 +93,7 @@ shared_ptr<CGameMap> CGameMap::FromTMX(string filePath)
 			hexColor.replace(0, 1, "");
 			unsigned int hex = stoul(hexColor, nullptr, 16);
 			int a = (hex >> 24) & 255 | 255 & (hexColor.length() <= 6 ? 0xff : 0x00);
-			gameMap->backgroundColor = D3DCOLOR_ARGB(a, (hex >> 16) & 255, (hex >> 8) & 255, hex & 255);
+			gameMap->backgroundColor = D3DXCOLOR((hex >> 16) & 255, (hex >> 8) & 255, hex & 255, a);
 		}
 
 		//Load custom properties

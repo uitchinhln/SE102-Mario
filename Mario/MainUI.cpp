@@ -10,6 +10,7 @@ MainUI::MainUI()
 {
 	worldView = make_shared<Viewport>(Vec2(0, 0), Vec2(769, 579));
 	fullView = make_shared<Viewport>(Vec2(0, 0), Vec2(769, 721));
+	//fullView = make_shared<Viewport>(Vec2(0, 0), Vec2(269, 321));
 
 	fullViewEffect = new EffectServer();
 	worldViewEffect = new EffectServer();
@@ -55,6 +56,7 @@ void MainUI::Update()
 	}
 
 	hud->Update();
+
 	worldViewEffect->Update();
 	hudViewEffect->Update();
 	fullViewEffect->Update();
@@ -90,7 +92,7 @@ void MainUI::Render()
 	}
 
 	if (dialog != nullptr) {
-		dialog->Render(D3DCOLOR_ARGB(255, 255, 255, 255));
+		dialog->Render(D3DXCOLOR(255, 255, 255, 255));
 	}
 }
 

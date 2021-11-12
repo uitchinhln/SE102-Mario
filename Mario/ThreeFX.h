@@ -26,7 +26,7 @@ public:
 
     void Update() override;
 
-    void Render(D3DCOLOR overlay);
+    void Render(D3DXCOLOR overlay);
 
     void InitResource();
 };

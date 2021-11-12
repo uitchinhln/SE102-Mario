@@ -3,12 +3,12 @@
 
 TextureManager* TextureManager::__instance = nullptr;
 
-void TextureManager::Add(string id, LPCWSTR filePath, D3DCOLOR transparentColor)
+void TextureManager::Add(string id, LPCWSTR filePath)
 {
-	this->textures[id] = CGame::GetInstance()->GetGraphic().CreateTextureFromFile(filePath, transparentColor);
+	this->textures[id] = CGame::GetInstance()->GetGraphic().CreateTextureFromFile(filePath);
 }
 
-LPDIRECT3DTEXTURE9 TextureManager::Get(string i)
+LPTEXTURE TextureManager::Get(string i)
 {
 	if (textures.find(i) == textures.end()) return nullptr;
 	return textures[i];
@@ -29,7 +29,7 @@ TextureManager::TextureManager() {
 TextureManager::~TextureManager()
 {
 	for (const auto& [key, value] : textures) {
-		value->Release();
+		delete value;
 	}
 	__instance = nullptr;
 }

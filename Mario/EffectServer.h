@@ -15,7 +15,7 @@ public:
 
 	void Update();
 
-	void Render(D3DCOLOR overlay);
+	void Render(D3DXCOLOR overlay);
 
 	void SpawnEffect(shared_ptr<IEffect> effect);
 

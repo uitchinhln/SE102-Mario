@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "TinyXML/tinyxml.h"
 #include "TinyXML/tinystr.h"
+#include "Texture.h"
 
 class CTileSet
 {
@@ -13,7 +14,7 @@ class CTileSet
 	int tileCount;
 	int columns;
 
-	LPDIRECT3DTEXTURE9 texture;
+	LPTEXTURE texture;
 
 public:
 	CTileSet(int firstgid, Vec2 tileSize, int tileCount, int columns, string imgPath);
@@ -21,7 +22,7 @@ public:
 
 	int GetFirstGID();
 
-	void Draw(int gid, float x, float y, Transform& transform, D3DCOLOR overlay = D3DCOLOR_ARGB(255, 255, 255, 255));
+	void Draw(int gid, float x, float y, Transform& transform, D3DXCOLOR overlay = D3DXCOLOR(255, 255, 255, 255));
 
 	~CTileSet();
 };

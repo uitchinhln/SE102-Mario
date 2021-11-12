@@ -29,7 +29,7 @@ float Pipe::GetDamageFor(GameObject& object, Direction direction)
     return 0.0f;
 }
 
-void Pipe::Render(D3DCOLOR overlay)
+void Pipe::Render(D3DXCOLOR overlay)
 {
     if (!head || !body) return;
     Vec2 cam = SceneManager::GetInstance()->GetActiveScene()->GetCamera()->Position;

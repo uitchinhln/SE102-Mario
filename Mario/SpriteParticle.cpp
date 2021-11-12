@@ -1,7 +1,7 @@
 #include "SpriteParticle.h"
 #include "SceneManager.h"
 
-void SpriteParticle::Render(D3DCOLOR overlay)
+void SpriteParticle::Render(D3DXCOLOR overlay)
 {
 	if (Sprites.size() < 1) return;
 
@@ -15,7 +15,7 @@ void SpriteParticle::Render(D3DCOLOR overlay)
 	sprite->Draw(renderPos.x, renderPos.y, this->Transform, overlay);
 }
 
-void SpriteParticle::Render(int runTime, int totalTime, D3DCOLOR overlay)
+void SpriteParticle::Render(int runTime, int totalTime, D3DXCOLOR overlay)
 {
 	this->Render(overlay);
 }
