@@ -10,6 +10,7 @@
             <Texture id="tex-pipe" path="Resource/Textures/pipe.png"/>
             <Texture id="tex-ui" path="Resource/Textures/ui_x3.png"/>
             <Texture id="tex-box" path="Resource/Textures/box-small.png"/>
+            <Texture id="tex-white" path="Resource/Textures/white.png"/>
             <Texture id="tex-reward" path="Resource/Textures/reward_x3.png"/>
             <Texture id="tex-overworld" path="Resource/Textures/overworld_x3.png"/>
             <Texture id="tex-menu" path="Resource/Textures/intro_x3.png"/>

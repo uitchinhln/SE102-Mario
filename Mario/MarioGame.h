@@ -14,6 +14,8 @@ class MarioGame : public CGame
 private:
 	static MarioGame* __instance;
 
+	D3DXCOLOR background;
+
 protected:
 	virtual void LoadDefaultFont();
 

@@ -35,6 +35,8 @@ MarioGame::MarioGame() : CGame(new CGameProperties())
 {
 	__instance = this;
 
+	background = ToFloatColor(D3DXCOLOR(0, 0, 0, 255));
+
 	this->main = new MainUI();	
 }
 
@@ -134,6 +136,7 @@ void MarioGame::Update()
 
 void MarioGame::Draw()
 {
+	GetGraphic().GetDirect3DDevice()->ClearRenderTargetView(GetGraphic().GetRenderTargetView(), background);
 	main->Render();
 }
 

@@ -1,5 +1,6 @@
 #include "GameGraphic.h"
 #include "Viewport.h"
+#include "TextureManager.h"
 
 void GameGraphic::Init(HWND hWnd)
 {
@@ -137,54 +138,32 @@ void GameGraphic::Init(HWND hWnd)
 
 void GameGraphic::Clear(D3DXCOLOR color)
 {
-	pD3DDevice->ClearRenderTargetView(pRenderTargetView, ToFloatColor(color));
+	LPTEXTURE white = TextureManager::GetInstance()->Get("tex-white");
+	RECT r;
+	r.left = r.top = 0;
+	r.right = white->getWidth();
+	r.bottom = white->getHeight();
+
+	RECT viewport;
+	UINT id = 1;
+	this->pD3DDevice->RSGetScissorRects(&id, &viewport);
+
+	LONG width = viewport.right - viewport.left;
+	LONG height = viewport.bottom - viewport.top;
+
+	D3DXVECTOR3 pivot(0, 0, 0);
+	Transform trans;
+
+	for (int i = 0; i < width / white->getWidth() + 2; i++) {
+		for (int j = 0; j < height / white->getHeight() + 2; j++) {
+			Draw(i * white->getWidth(), j * white->getHeight(), pivot, white, r, trans, color);
+		}
+	}
 }
 
 void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPTEXTURE texture, RECT r, Transform& transform, D3DXCOLOR overlay)
 {
-#pragma region Old Code
-	//RECT viewport;
-	//this->d3ddv->GetScissorRect(&viewport);
-
-	//x += viewport.left;
-	//y += viewport.top;
-
-	//x = ceil(x);
-	//y = ceil(y);
-
-	//pivot.x = (pivot.x == 0 ? (r.right - r.left) / 2 : pivot.x) * abs(transform.Scale.x);
-	//pivot.y = (pivot.y == 0 ? (r.bottom - r.top) / 2 : pivot.y) * abs(transform.Scale.y);
-
-	//D3DXVECTOR3 p(x, y, 0);
-	////D3DXVECTOR3 p(x + (r.right - r.left) / 2, y + (r.bottom - r.top) / 2, 0);
-
-	//if (transform.Rotation == 0 && transform.Scale == Vec2(1.0f, 1.0f)) {
-	//	spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
-	//}
-	//else 
-	//{
-	//	D3DXMATRIX oldMatrix, newMatrix;
-	//	spriteHandler->GetTransform(&oldMatrix);
-
-	//	//Vec2 transformCenter = Vec2(x + (r.right - r.left) / 2, y + (r.bottom - r.top) / 2);
-	//	Vec2 transformCenter = Vec2(x, y);
-
-	//	D3DXMatrixTransformation2D(&newMatrix, &transformCenter, 0, &transform.Scale,
-	//		&transformCenter, transform.Rotation, &VECTOR_0);
-
-	//	spriteHandler->SetTransform(&newMatrix);
-	//	spriteHandler->Draw(texture, &r, &pivot, &p, overlay);
-	//	spriteHandler->SetTransform(&oldMatrix);
-	//}
-#pragma endregion
-
 	if (texture == NULL) return;
-
-	pivot.x = pivot.x == 0 ? (r.right - r.left) / 2 : pivot.x;
-	pivot.y = pivot.y == 0 ? (r.bottom - r.top) / 2 : pivot.y;
-
-	/*pivot.x *= abs(transform.Scale.x);
-	pivot.y *= abs(transform.Scale.y);*/
 
 	RECT viewport;
 	UINT id = 1;
@@ -223,6 +202,9 @@ void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPTEXTURE texture, R
 
 	// The translation matrix to be created
 	D3DXMATRIX matTranslation;
+
+	pivot.x = pivot.x == 0 ? spriteWidth / 2 : pivot.x;
+	pivot.y = pivot.y == 0 ? spriteHeight / 2 : pivot.y;
 
 	FLOAT rx = x + (spriteWidth / 2 - pivot.x) * transform.Scale.x;
 	FLOAT ry = (backBufferHeight - y) - (spriteHeight / 2 - pivot.y) * transform.Scale.y;
@@ -328,18 +310,12 @@ LPTEXTURE GameGraphic::CreateTextureFromFile(LPCWSTR texturePath)
 void GameGraphic::SetViewport(shared_ptr<Viewport> viewport)
 {
 	ClipScene();
-	//this->pD3DDevice->RSSetScissorRects()
-	//d3ddv->SetScissorRect(&viewport->GetScissorRect());
 	this->pD3DDevice->RSSetScissorRects(1, &viewport->GetScissorRect());
 }
 
 void GameGraphic::ClipScene()
 {
-	//spriteHandler->End();
-	//spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 	spriteObject->End();
-	//pSwapChain->Present(0, 0);
-
 	spriteObject->Begin(D3DX10_SPRITE_SORT_TEXTURE);
 }
 
