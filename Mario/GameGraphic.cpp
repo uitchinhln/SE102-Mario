@@ -180,6 +180,12 @@ void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPTEXTURE texture, R
 
 	if (texture == NULL) return;
 
+	pivot.x = pivot.x == 0 ? (r.right - r.left) / 2 : pivot.x;
+	pivot.y = pivot.y == 0 ? (r.bottom - r.top) / 2 : pivot.y;
+
+	/*pivot.x *= abs(transform.Scale.x);
+	pivot.y *= abs(transform.Scale.y);*/
+
 	RECT viewport;
 	UINT id = 1;
 	this->pD3DDevice->RSGetScissorRects(&id, &viewport);
@@ -208,7 +214,6 @@ void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPTEXTURE texture, R
 	sprite.TextureIndex = 0;
 
 	// The color to apply to this sprite, full color applies white.
-	//sprite.ColorModulate = D3DXCOLOR(255, 255, 255, 255);
 	sprite.ColorModulate = ToFloatColor(overlay);
 
 
@@ -219,8 +224,11 @@ void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPTEXTURE texture, R
 	// The translation matrix to be created
 	D3DXMATRIX matTranslation;
 
+	FLOAT rx = x + (spriteWidth / 2 - pivot.x) * transform.Scale.x;
+	FLOAT ry = (backBufferHeight - y) - (spriteHeight / 2 - pivot.y) * transform.Scale.y;
+
 	// Create the translation matrix
-	D3DXMatrixTranslation(&matTranslation, x, (backBufferHeight - y), 0.1f);
+	D3DXMatrixTranslation(&matTranslation, rx, ry, 0.1f);
 
 	// Scale the sprite to its correct width and height because by default, DirectX draws it with width = height = 1.0f 
 	D3DXMATRIX matScaling;
