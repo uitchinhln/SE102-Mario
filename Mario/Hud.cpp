@@ -60,7 +60,7 @@ void Hud::Update()
 
 void Hud::Render(D3DXCOLOR overlay)
 {
-	//CGame::GetInstance()->GetGraphic().Clear(background);
+	CGame::GetInstance()->GetGraphic().Clear(background);
 
 	panel.Render(overlay);
 	cards.Render(overlay);
