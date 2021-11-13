@@ -309,7 +309,7 @@ LPTEXTURE GameGraphic::CreateTextureFromFile(LPCWSTR texturePath)
 
 void GameGraphic::SetViewport(shared_ptr<Viewport> viewport)
 {
-	ClipScene();
+	//ClipScene();
 	this->pD3DDevice->RSSetScissorRects(1, &viewport->GetScissorRect());
 }
 
