@@ -116,7 +116,7 @@ void GameGraphic::Init(HWND hWnd)
 	D3D10_RASTERIZER_DESC rasterizerState;
 
 	rasterizerState.FillMode = D3D10_FILL_SOLID;
-	rasterizerState.CullMode = D3D10_CULL_FRONT;
+	rasterizerState.CullMode = D3D10_CULL_NONE;
 	rasterizerState.FrontCounterClockwise = true;
 	rasterizerState.DepthBias = false;
 	rasterizerState.DepthBiasClamp = 0;
@@ -224,7 +224,7 @@ void GameGraphic::Draw(float x, float y, D3DXVECTOR3 pivot, LPTEXTURE texture, R
 
 	// Scale the sprite to its correct width and height because by default, DirectX draws it with width = height = 1.0f 
 	D3DXMATRIX matScaling;
-	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth, (FLOAT)spriteHeight, 1.0f);
+	D3DXMatrixScaling(&matScaling, (FLOAT)spriteWidth * transform.Scale.x, (FLOAT)spriteHeight * transform.Scale.y, 1.0f);
 
 	// Setting the sprite’s position and size
 	sprite.matWorld = (matScaling * matTranslation);
@@ -309,6 +309,8 @@ LPTEXTURE GameGraphic::CreateTextureFromFile(LPCWSTR texturePath)
 	ID3D10ShaderResourceView* gSpriteTextureRV = NULL;
 
 	pD3DDevice->CreateShaderResourceView(tex, &SRVDesc, &gSpriteTextureRV);
+
+	D3DX10FilterTexture(tex, 0, D3DX10_FILTER_MIRROR);
 
 	DebugOut(L"[INFO] Texture loaded Ok from file: %s \n", texturePath);
 
